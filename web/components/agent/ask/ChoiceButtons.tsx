@@ -1,12 +1,12 @@
 "use client";
 
-// Summit Agent — the button row for a blocking ask.
+// SearchOps Agent — the button row for a blocking ask.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §9.1 (two species of button), §9.3 (the card), §9.4 (three phases).
 //
 // This is the BLOCKING species: `variant="outline"`, full size, prominent, in its own card. It must
 // never be confused with the end-of-turn action strip (`size="sm" variant="ghost"
-// text-muted-foreground`), which is an optional thing you may click later. Summit renders one kind
+// text-muted-foreground`), which is an optional thing you may click later. SearchOps renders one kind
 // today, which is why a real question currently reads as decoration.
 //
 // The row owns NO state and does NO network. It is handed `status`/`chosenId` and calls `onChoose`.

@@ -86,7 +86,7 @@ export function DraftsShell({ initialDraftId }: { initialDraftId?: string }) {
   /** A deep link is followed ONCE. Without this guard, every list refresh would yank the editor back
    *  to the URL's draft while someone was reading a different one. */
   const deepLinkedRef = useRef(false);
-  /** What Summit is doing to each draft right now, keyed by draft id. Empty when nothing is running. */
+  /** What SearchOps is doing to each draft right now, keyed by draft id. Empty when nothing is running. */
   const [live, setLive] = useState<Record<string, LiveStatus>>({});
 
   const loadList = useCallback(async () => {

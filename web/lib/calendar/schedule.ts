@@ -95,7 +95,7 @@ export async function confirmMeeting(input: {
       attendeeEmail: input.attendeeEmail,
       attendeeName: input.attendeeName ?? null,
       summary: input.topic?.trim() || `ImagineArt — ${input.attendeeName ?? "collaboration"}`,
-      description: "Discussing a paid collaboration. Booked from Summit.",
+      description: "Discussing a paid collaboration. Booked from SearchOps.",
     });
     const reply = [
       `Booked for ${describeSlot({ start: booked.start, end: booked.end })}.`,

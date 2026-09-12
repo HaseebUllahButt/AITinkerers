@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the irreversible-action confirmation card.
+// SearchOps Agent — the irreversible-action confirmation card.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §9.8. MOVED verbatim in semantics from src/app/hermes/page.tsx.
 //

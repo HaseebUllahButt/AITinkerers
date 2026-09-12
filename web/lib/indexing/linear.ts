@@ -66,7 +66,7 @@ async function resolveProjectId(teamId: string): Promise<string> {
       input: {
         name: SEO_PROJECT_NAME,
         description:
-          "Auto-filed indexing + Core Web Vitals issues from the Summit Indexing tool. Safe to archive.",
+          "Auto-filed indexing + Core Web Vitals issues from the SearchOps Indexing tool. Safe to archive.",
         teamIds: [teamId],
       },
     },

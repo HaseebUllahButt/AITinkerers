@@ -7,7 +7,7 @@
 // gets written until you press Approve. That button is the only path past step 3 — the model has no
 // tool that can advance it, which is enforced server-side, not by prompt.
 //
-// The transcript, the streaming, the steps and the composer belong to the shared Summit Agent
+// The transcript, the streaming, the steps and the composer belong to the shared SearchOps Agent
 // surface (src/components/agent). What is left here is everything BESIDE the transcript: the
 // session rail, the status strip, the outline approval gate, the QA panel, and the HTTP shape of
 // the writer API. This page holds no transcript state — no `messages`, no `live`, no `activity`.

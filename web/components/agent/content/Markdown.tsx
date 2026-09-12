@@ -4,7 +4,7 @@
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §7.3 (rules), §7.4 (the cursor sentinel), §5.4 (the memo).
 //
-// This WRAPS Summit's existing zero-dependency renderer rather than replacing it: `parseBlocks` /
+// This WRAPS SearchOps's existing zero-dependency renderer rather than replacing it: `parseBlocks` /
 // `parseInline` / `safeUrl` come straight from src/lib/blog/markdown.ts, so the two surfaces share
 // one parser, one URL scheme gate, and one selfcheck (/api/blog/selfcheck asserts that module).
 // What is NOT shared is the element mapping — the blog preview renders `<p>` and the `.md-preview`

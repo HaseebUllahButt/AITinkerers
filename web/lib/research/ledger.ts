@@ -26,7 +26,7 @@ import { subjectTokens, tokenOverlap, specialisingTokens } from "./normalise";
 // would drift the first time the collection is renamed — with the failure showing up as a ledger that
 // silently reports everything as clear.
 /** The Strapi collection that holds cluster pages. Still queried by the coverage check: the pages
- *  exist and rank, we simply no longer build them from Summit. */
+ *  exist and rank, we simply no longer build them from SearchOps. */
 export const CLUSTER_PAGE_TYPE = "cluster-pages";
 
 export type LedgerKind = "CLEAR" | "NEAR_DUPLICATE" | "DUPLICATE";
@@ -135,7 +135,7 @@ async function fromStrapi(): Promise<{ rows: LedgerMatch[]; error: string | null
 /**
  * The live URL inventory, minus blogs.
  *
- * `site_urls` is Summit's own synced sitemap (1,500-odd rows). Blog posts are excluded: a post about a
+ * `site_urls` is SearchOps's own synced sitemap (1,500-odd rows). Blog posts are excluded: a post about a
  * model is not a landing page about it, and counting one as coverage would block the page the post
  * exists to support.
  */

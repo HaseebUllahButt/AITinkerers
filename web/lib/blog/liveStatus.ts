@@ -1,4 +1,4 @@
-// What Summit is doing to a draft RIGHT NOW.
+// What SearchOps is doing to a draft RIGHT NOW.
 //
 // ── Why this is derived, not stored ─────────────────────────────────────────────────────────────
 //

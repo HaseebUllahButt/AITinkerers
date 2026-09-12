@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the jump pill.
+// SearchOps Agent — the jump pill.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §6.10, §13 (a11y).
 //
@@ -45,7 +45,7 @@ function ScrollDownButtonImpl({ visible, pendingAsk = false, onClick, className 
       style={{ transitionDuration: `${JUMP_FADE_MS}ms` }}
       className={cn(
         // `--secondary` is 8–20% white; scrolling text would read straight through a floating
-        // pill. `--popover` is the token Summit already uses for surfaces that sit ON TOP of
+        // pill. `--popover` is the token SearchOps already uses for surfaces that sit ON TOP of
         // content, so the pill matches every menu and dialog in the app. The hover colour is
         // pinned too, or the variant's own hover swaps back to the translucent secondary.
         "rounded-full border-border/70 bg-popover/95 text-foreground shadow-[var(--glass-shadow)] backdrop-blur-md hover:bg-popover",

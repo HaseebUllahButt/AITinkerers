@@ -1,4 +1,4 @@
-// Summit Agent — the event reducer.
+// SearchOps Agent — the event reducer.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §5.5.
 //

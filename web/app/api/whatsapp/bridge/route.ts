@@ -15,7 +15,7 @@ import { acquireLock, releaseLock } from "@/lib/redis";
 export const maxDuration = 300;
 
 // Constant that stamps messages the person typed on their OWN phone, mirrored in by WAHA. Not a
-// Summit user and not the negotiator — a real human keystroke on the linked device.
+// SearchOps user and not the negotiator — a real human keystroke on the linked device.
 const DEVICE_ACTOR = "bridge@device";
 
 // POST /api/whatsapp/bridge — WAHA posts every message + ack here. Auth is a shared token WAHA

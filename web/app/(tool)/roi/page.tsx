@@ -4,7 +4,7 @@
 //
 // ── Why this page exists next to Site Audit and Render Lab ──────────────────────────────────────
 //
-// Every other SEO surface in Summit stops at the click: impressions, positions, broken links, render
+// Every other SEO surface in SearchOps stops at the click: impressions, positions, broken links, render
 // diffs. None of them can answer the only question anyone outside the SEO team asks, which is whether
 // the work made money. That answer is in Mixpanel, keyed on the page a person first landed on, and
 // until now it lived in a Mixpanel board nobody in this app could see.

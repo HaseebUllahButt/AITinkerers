@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — a downloadable file element.
+// SearchOps Agent — a downloadable file element.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §8.7.
 //

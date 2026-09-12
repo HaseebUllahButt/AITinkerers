@@ -1,4 +1,4 @@
-// Summit's own base URL, and the one rule that matters about it.
+// SearchOps's own base URL, and the one rule that matters about it.
 //
 // ── Why this is not just `process.env.APP_URL` ──────────────────────────────────────────────────
 //
@@ -29,7 +29,7 @@ function normalise(raw: string | undefined | null): string | null {
 }
 
 /**
- * The base URL for calls Summit makes to ITSELF.
+ * The base URL for calls SearchOps makes to ITSELF.
  *
  * Loopback is fine and expected here, so this deliberately does not filter it. Keeping the two
  * functions separate is the point: a self-call that silently stopped working in development
@@ -61,10 +61,10 @@ export function linkOr(path: string, label: string): string | null {
   const base = publicUrl();
   if (!base) {
     // Loud on the server, silent in the channel. Whoever is reading logs can fix it; the people in
-    // Slack should not be shown Summit's configuration problems.
+    // Slack should not be shown SearchOps's configuration problems.
     console.warn(
       "[slack] APP_URL is unset or points at a private host, so the %s link was left out of an outbound message. " +
-        "Set APP_URL to Summit's public URL.",
+        "Set APP_URL to SearchOps's public URL.",
       label,
     );
     return null;

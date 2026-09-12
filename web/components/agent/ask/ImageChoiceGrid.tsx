@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — image choices for a blocking ask.
+// SearchOps Agent — image choices for a blocking ask.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §9.5.
 //

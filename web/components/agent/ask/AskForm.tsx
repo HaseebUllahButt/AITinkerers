@@ -1,10 +1,10 @@
 "use client";
 
-// Summit Agent — a declarative form as a blocking ask.
+// SearchOps Agent — a declarative form as a blocking ask.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §9.6.
 //
-// The agent ships a `FormSpec` (§4.2) and this renders it with Summit's own field primitives. Two
+// The agent ships a `FormSpec` (§4.2) and this renders it with SearchOps's own field primitives. Two
 // behaviours are mandatory and are the reason this is a component and not a `prompt()`:
 //
 //  1. `allValid` over the REQUIRED fields drives `disabled` on Submit. An agent blocked on a form

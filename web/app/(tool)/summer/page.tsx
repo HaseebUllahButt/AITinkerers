@@ -1,6 +1,6 @@
 "use client";
 
-// Hermes — the conversational operator. A session rail beside the shared Summit Agent surface.
+// Hermes — the conversational operator. A session rail beside the shared SearchOps Agent surface.
 //
 // Everything that used to live here — the manual SSE reader, the live/thinking/steps overlays, the
 // bubbles, the table and options renderers, the confirmation card — now belongs to
@@ -477,8 +477,8 @@ export default function HermesPage({ initialSessionId }: { initialSessionId?: st
     }
     if (!restTitleRef.current) restTitleRef.current = document.title;
     document.title = waiting
-      ? `(${waiting}) Summer needs you — Summit`
-      : "● Summer is working — Summit";
+      ? `(${waiting}) Summer needs you — SearchOps`
+      : "● Summer is working — SearchOps";
   }, [running, attention]);
 
   /** Coming back to the tab clears the flag for the chat they are actually looking at. */

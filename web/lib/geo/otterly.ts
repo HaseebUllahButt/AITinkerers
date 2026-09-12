@@ -563,7 +563,7 @@ export const CRAWLER_IDENTITIES = ["ChatGPT-User", "OAI-SearchBot", "PerplexityC
 //
 // Everything above reads. These write, and they are what turn the page from a mirror of Otterly into
 // the place the work happens: the prompts ARE the measurement, so being able to add one without
-// leaving Summit is the difference between "we should track that" and tracking it.
+// leaving SearchOps is the difference between "we should track that" and tracking it.
 //
 // Bulk by design. POST takes an array, and a coverage gap or an unmentioned competitor usually suggests
 // several prompts at once — one call for ten of them rather than ten calls against a request cap.

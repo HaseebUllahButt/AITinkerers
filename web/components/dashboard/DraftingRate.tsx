@@ -1,6 +1,6 @@
 "use client";
 
-// Blog drafting rate, before and after Summit — on the dashboard because it is the one number that
+// Blog drafting rate, before and after SearchOps — on the dashboard because it is the one number that
 // answers "is this tool worth it".
 //
 // Two honesty rules shape what this renders, and both cost a bit of visual punch:
@@ -87,7 +87,7 @@ export function DraftingRate() {
       <Card>
         <CardHeader>
           <CardTitle className="text-xl font-semibold">Blog drafting rate</CardTitle>
-          <CardDescription>Reading the CMS history and Summit&apos;s drafts…</CardDescription>
+          <CardDescription>Reading the CMS history and SearchOps&apos;s drafts…</CardDescription>
         </CardHeader>
         <CardContent className="flex h-[240px] items-center justify-center">
           <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
@@ -100,7 +100,7 @@ export function DraftingRate() {
   const flat = r.changePct === 0;
   const Icon = flat ? Minus : up ? TrendingUp : TrendingDown;
   const data = r.months.map((m) => ({ ...m, name: label(m.month) }));
-  // The boundary sits between the last pre-Summit month and the first Summit one.
+  // The boundary sits between the last pre-SearchOps month and the first SearchOps one.
   const firstEra = data.find((d) => d.summitEra)?.name;
 
   return (
@@ -110,8 +110,8 @@ export function DraftingRate() {
           <div>
             <CardTitle className="text-xl font-semibold">Blog drafting rate</CardTitle>
             <CardDescription>
-              Blog content created per day — the CMS history, plus what Summit has drafted since{" "}
-              {r.summitStart}. Counted once: a Summit draft that reached the CMS is not counted twice.
+              Blog content created per day — the CMS history, plus what SearchOps has drafted since{" "}
+              {r.summitStart}. Counted once: a SearchOps draft that reached the CMS is not counted twice.
             </CardDescription>
           </div>
           <div className="flex items-baseline gap-2 shrink-0">
@@ -130,7 +130,7 @@ export function DraftingRate() {
             <span className="text-xs">({r.before.items} over {r.before.days}d, {r.before.from}–{r.before.to})</span>
           </span>
           <span className="text-muted-foreground">
-            Since Summit <span className="font-mono text-foreground">{r.after.perDay}/day</span>{" "}
+            Since SearchOps <span className="font-mono text-foreground">{r.after.perDay}/day</span>{" "}
             <span className="text-xs">({r.after.items} over {r.after.days}d)</span>
           </span>
           <span className="text-xs text-muted-foreground">
@@ -150,11 +150,11 @@ export function DraftingRate() {
               labelFormatter={(l: unknown) => {
                 const p = data.find((d) => d.name === l);
                 if (!p) return String(l);
-                return `${l} · ${p.days} day${p.days === 1 ? "" : "s"}${p.summitEra ? " · Summit era" : ""}`;
+                return `${l} · ${p.days} day${p.days === 1 ? "" : "s"}${p.summitEra ? " · SearchOps era" : ""}`;
               }}
             />
             <Legend wrapperStyle={{ fontSize: 11 }} formatter={(v) => (v === "perDay" ? "per day" : "items")} />
-            {/* Marks where Summit's pipeline starts, so the step is attributable rather than implied
+            {/* Marks where SearchOps's pipeline starts, so the step is attributable rather than implied
                 by colour alone. */}
             {firstEra && <ReferenceLine yAxisId="l" x={firstEra} stroke="var(--muted-foreground)" strokeDasharray="3 3" />}
             <Bar yAxisId="l" dataKey="unique" name="items" radius={[3, 3, 0, 0]} fill={POST}>
@@ -165,11 +165,11 @@ export function DraftingRate() {
         </ResponsiveContainer>
 
         {/* ── The caveat, on the card ──────────────────────────────────────────────────────────
-            Drafting is not publishing. Most of what Summit produced is still queued for review, so
+            Drafting is not publishing. Most of what SearchOps produced is still queued for review, so
             the gain above is throughput into the review queue, not posts on the site. */}
         <div className="rounded-md border border-border/60 bg-muted/30 px-3 py-2 text-xs leading-relaxed text-muted-foreground">
           <span className="font-medium text-foreground">Drafting, not publishing.</span>{" "}
-          Of {r.review.summitTotal} drafts Summit has produced, <b className="text-foreground">{r.review.synced}</b> reached the CMS
+          Of {r.review.summitTotal} drafts SearchOps has produced, <b className="text-foreground">{r.review.synced}</b> reached the CMS
           and <b className="text-foreground">{r.review.awaitingReview}</b> are still awaiting review
           {r.review.syncFailed > 0 && <> ({r.review.syncFailed} failed to sync)</>}. The gain above is
           throughput into the review queue — the bottleneck has moved from writing to reviewing.
@@ -186,8 +186,8 @@ export function DraftingRate() {
         )}
 
         <div className="flex flex-wrap gap-1.5">
-          <Badge variant="outline" className="text-xs">pre-Summit</Badge>
-          <Badge variant="outline" className="border-highlight/40 text-highlight text-xs">Summit era</Badge>
+          <Badge variant="outline" className="text-xs">pre-SearchOps</Badge>
+          <Badge variant="outline" className="border-highlight/40 text-highlight text-xs">SearchOps era</Badge>
         </div>
       </CardContent>
     </Card>

@@ -23,7 +23,7 @@ export interface LiveRegionProps {
    * arriving ask — belong to their own component, not here.
    */
   message?: string | null;
-  /** Announced when a run starts. Override per mode ("Summit is writing…"). */
+  /** Announced when a run starts. Override per mode ("SearchOps is writing…"). */
   startMessage?: string;
   className?: string;
 }
@@ -36,7 +36,7 @@ const END_MESSAGE: Record<Exclude<RunEndReason, "continue">, string> = {
 
 export function LiveRegion({
   message,
-  startMessage = "Summit is working…",
+  startMessage = "SearchOps is working…",
   className,
 }: LiveRegionProps) {
   const run = useRunState();

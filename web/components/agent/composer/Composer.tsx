@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the composer.
+// SearchOps Agent — the composer.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §11. Fixes D7 (both pages disable the whole composer while the
 // agent runs) and D8 (the writer has no stop button; Hermes' stop changes the footer's width).

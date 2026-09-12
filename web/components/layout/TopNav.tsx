@@ -88,7 +88,7 @@ export function TopNav() {
             never call one page two different things. */}
         <nav className="flex items-center gap-1.5 text-sm">
           <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors font-medium">
-            Summit
+            SearchOps
           </Link>
           {segments.filter((s) => !isOpaqueId(s)).map((seg, i, kept) => (
             <span key={seg} className="flex items-center gap-1.5">

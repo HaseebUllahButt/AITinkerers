@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the element bucket renderer.
+// SearchOps Agent — the element bucket renderer.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §8.1, §8.5, §8.6.
 //

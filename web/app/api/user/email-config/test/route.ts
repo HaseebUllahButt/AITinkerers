@@ -21,8 +21,8 @@ export async function POST() {
     pass,
     fromName: cfg.from_name,
     to: email, // to themselves
-    subject: "Summit — test email",
-    body: `This is a test from Summit.\n\nIf you're reading this, your Gmail app password works and outreach will send from ${email}.\n\nYou can change it anytime in Settings.`,
+    subject: "SearchOps — test email",
+    body: `This is a test from SearchOps.\n\nIf you're reading this, your Gmail app password works and outreach will send from ${email}.\n\nYou can change it anytime in Settings.`,
   });
 
   if (res.ok) return NextResponse.json({ ok: true });

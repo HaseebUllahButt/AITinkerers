@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the row router.
+// SearchOps Agent — the row router.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §5.4 (memo boundaries), §7 (per-kind rendering).
 //

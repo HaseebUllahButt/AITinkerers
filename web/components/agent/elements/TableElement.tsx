@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — a tabular result.
+// SearchOps Agent — a tabular result.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §8.6.
 //

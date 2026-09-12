@@ -6,7 +6,7 @@ import { Suspense, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { SummitMark } from "@/components/brand/SummitMark";
+import { SearchOpsMark } from "@/components/brand/SearchOpsMark";
 
 function LoginContent() {
   const params = useSearchParams();
@@ -24,7 +24,7 @@ function LoginContent() {
     <div className="flex h-full items-center justify-center">
       <div className="w-full max-w-sm space-y-6">
         <div className="flex flex-col items-center text-center gap-2">
-          <SummitMark className="h-10 w-10 mb-1" />
+          <SearchOpsMark className="h-10 w-10 mb-1" />
           <h1 className="text-2xl font-light tracking-tight">SearchOps</h1>
           <p className="text-sm text-muted-foreground">SEO, AEO and GEO agent</p>
         </div>

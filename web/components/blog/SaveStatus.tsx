@@ -61,7 +61,7 @@ export function SaveStatus({ state, lastSavedAt, retryInSec, onRetry, onResolveC
 
     case "saved":
       return (
-        <span className={cn(base, "text-muted-foreground")} title="Autosaved to Summit. Strapi is separate.">
+        <span className={cn(base, "text-muted-foreground")} title="Autosaved to SearchOps. Strapi is separate.">
           <CheckCircle2 className="h-3.5 w-3.5" />
           {lastSavedAt ? `Saved ${relative(lastSavedAt)}` : "Saved"}
         </span>

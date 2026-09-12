@@ -1,4 +1,4 @@
-// Who Summit can tag, by Slack member ID.
+// Who SearchOps can tag, by Slack member ID.
 //
 // ── Why IDs and not names ───────────────────────────────────────────────────────────────────────
 //
@@ -74,13 +74,13 @@ function idsFrom(envValue: string | undefined, fallback: readonly PersonKey[]): 
  * would look done and not be.
  */
 const AUDIENCES = {
-  /** A blog draft written in Summit — the writers who read and publish it. */
+  /** A blog draft written in SearchOps — the writers who read and publish it. */
   blog: { env: "SLACK_TAG_BLOG", who: ["tooba"] },
   /**
    * A blog draft from the Atlas endpoint. The writers, PLUS Ahmed, who owns that integration —
    * an externally-triggered draft can fail for reasons the writers cannot act on.
    *
-   * Ahmed is here for ATLAS specifically. A draft written by Summit's own autopilot is not an Atlas
+   * Ahmed is here for ATLAS specifically. A draft written by SearchOps's own autopilot is not an Atlas
    * draft and must not use this audience — see the requester check in lib/blog/request.ts.
    */
   atlas: { env: "SLACK_TAG_ATLAS", who: ["ahmed", "tooba"] },

@@ -1,12 +1,12 @@
-// How Summit posts to Slack, and why there are two ways.
+// How SearchOps posts to Slack, and why there are two ways.
 //
 // ── The webhook cannot do what was asked ────────────────────────────────────────────────────────
 //
 // An incoming webhook is bound to ONE channel at the moment it is minted, and Slack removed the
 // ability to override that from the payload years ago so a leaked URL cannot spam a workspace. It
-// also has no concept of a thread. Summit's webhook points at #sitemap-alerts.
+// also has no concept of a thread. SearchOps's webhook points at #sitemap-alerts.
 //
-// So "post notifications into the Summit-notifications-testing thread in #imagine-web-geo" is not
+// So "post notifications into the SearchOps-notifications-testing thread in #imagine-web-geo" is not
 // something the webhook can be configured into. It needs chat.postMessage, which needs a bot token.
 //
 // ── The two paths, and which wins ───────────────────────────────────────────────────────────────
@@ -49,7 +49,7 @@ export interface PostOptions {
  * Turn a Slack error code into the thing a person should actually go and do.
  *
  * Every one of these is a five-second fix by someone with Slack open, and every one of them
- * arrives as a bare snake_case token that reads like a fault in Summit. `not_in_channel` in
+ * arrives as a bare snake_case token that reads like a fault in SearchOps. `not_in_channel` in
  * particular is the one that WILL happen on first setup: a bot with chat:write can post, but only
  * to channels it has been invited to, and nothing in the install flow says so. Naming the remedy
  * next to the code is the difference between "Slack is broken" and "/invite @summit".
@@ -60,7 +60,7 @@ function remedyFor(code: string, channel: string): string {
     case "channel_not_found":
       // channel_not_found is the same cause seen from a private channel: the bot cannot see a
       // channel it is not in, so Slack will not even confirm it exists.
-      return ` — the Summit bot is not in that channel. Run "/invite @summit" in <#${channel}> and it will work; nothing needs redeploying.`;
+      return ` — the SearchOps bot is not in that channel. Run "/invite @summit" in <#${channel}> and it will work; nothing needs redeploying.`;
     case "missing_scope":
     case "not_allowed_token_type":
       return " — the bot token is missing a scope it needs. chat:write is required to post; re-install the Slack app with it and paste the new token.";
@@ -71,7 +71,7 @@ function remedyFor(code: string, channel: string): string {
     case "is_archived":
       return " — that channel is archived. Point SLACK_CHANNEL_ID at a live one.";
     case "msg_too_long":
-      return " — the message exceeded Slack's length limit, which is a Summit bug rather than a configuration one.";
+      return " — the message exceeded Slack's length limit, which is a SearchOps bug rather than a configuration one.";
     default:
       return "";
   }
@@ -103,7 +103,7 @@ async function postViaBot(text: string, opts: PostOptions): Promise<PostResult |
         text,
         ...(opts.threadTs ? { thread_ts: opts.threadTs } : {}),
         ...(opts.broadcast && opts.threadTs ? { reply_broadcast: true } : {}),
-        // Summit writes its own links and does not want Slack expanding every one of them into a
+        // SearchOps writes its own links and does not want Slack expanding every one of them into a
         // preview card — a digest of twenty URLs becomes unreadable.
         unfurl_links: false,
         unfurl_media: false,
@@ -130,7 +130,7 @@ async function postViaBot(text: string, opts: PostOptions): Promise<PostResult |
  * audit, the sweep are all real whether or not anybody was told about them.
  */
 /**
- * Channels Summit reads but must never write to.
+ * Channels SearchOps reads but must never write to.
  *
  * #imagine-general was opened to the bot on 2026-09-08 for ONE reason: so the blog pipeline can read
  * what shipped (src/lib/slack/read.ts). It is the company's general channel, not a bot channel, and
@@ -161,7 +161,7 @@ export async function slackPost(text: string, opts: PostOptions = {}): Promise<P
     return {
       ok: false,
       via: null,
-      error: `Refusing to post into <#${target}>: Summit may read that channel but never write to it. `
+      error: `Refusing to post into <#${target}>: SearchOps may read that channel but never write to it. `
         + "Point SLACK_CHANNEL_ID (or the channel argument) at a bot channel instead.",
     };
   }

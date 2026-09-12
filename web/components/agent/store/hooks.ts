@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the React binding for AgentStore.
+// SearchOps Agent — the React binding for AgentStore.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §5.1, §5.3.
 //

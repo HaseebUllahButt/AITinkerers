@@ -7,7 +7,7 @@
 // imagine-web's blog body is `ReactMarkdown` with `rehypePlugins={[rehypeRaw]}` and no element
 // whitelist, and BLOG_MARKDOWN_COMPONENTS defines an `iframe` component that pipes its src through
 // `convertYoutubeToEmbed()`. So a raw <iframe> in the markdown body renders as a real, responsive,
-// 16:9 player with rounded corners. That has been true the whole time — Summit simply never produced
+// 16:9 player with rounded corners. That has been true the whole time — SearchOps simply never produced
 // one, which is why 750 posts carry no video.
 //
 // ── The one detail that decides whether the embed works ─────────────────────────────────────────

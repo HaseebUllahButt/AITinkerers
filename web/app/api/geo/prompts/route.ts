@@ -10,7 +10,7 @@ import {
 // ── Why this is a route and not part of the overview ────────────────────────────────────────────
 //
 // The prompts ARE the measurement: everything on /geo is downstream of which questions get asked. So
-// being able to add one without leaving Summit is the difference between "we should track that" and
+// being able to add one without leaving SearchOps is the difference between "we should track that" and
 // tracking it — a coverage gap becomes a measured prompt in one click.
 //
 // Adding spends from the plan's prompt allowance (50 here, 15 used), so it is a POST behind a button

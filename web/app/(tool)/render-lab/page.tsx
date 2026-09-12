@@ -19,7 +19,7 @@ import { PageHeader } from "@/components/layout/PageHeader";
 //
 // DELIBERATELY NOT IN THE SIDEBAR. Same convention /indexing and /link-audit used before they folded
 // into Site Audit: a page under src/app that Sidebar.tsx does not list is reachable by URL and
-// invisible otherwise. That is what keeps this additive — no existing Summit surface changes.
+// invisible otherwise. That is what keeps this additive — no existing SearchOps surface changes.
 //
 // ── Layout note ────────────────────────────────────────────────────────────────────────────────
 //

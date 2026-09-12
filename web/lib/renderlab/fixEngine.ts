@@ -678,11 +678,11 @@ async function applyBlogResourceFix(
       if (!slug || toPath(newUrl).indexOf("/blogs/") !== 0) {
         throw new Error(`"${newUrl}" is not a /blogs/<slug> URL. A resource card can only point at a blog.`);
       }
-      // Resolved against STRAPI, not against Summit's own blog_drafts.strapi_id.
+      // Resolved against STRAPI, not against SearchOps's own blog_drafts.strapi_id.
       //
       // The first version preferred blog_drafts as a cheap shortcut and it produced a 400:
       // "1 relation(s) of type api::imagine-web.imagine-web associated with this entity do not exist".
-      // That column is Summit's record of a sync that happened once; the entry can since have been
+      // That column is SearchOps's record of a sync that happened once; the entry can since have been
       // deleted or replaced, and a stale id is indistinguishable from a good one until Strapi rejects
       // it. Strapi is the only authority on which entries exist, so ask it.
       newBlogId = await findBlogIdBySlug(slug);

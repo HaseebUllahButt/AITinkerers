@@ -16,7 +16,7 @@
 //
 //   1. Notion's own state — a status that reads as done, or the [DRAFTED] tag the template-launch
 //      skill stamps when it claims a row.
-//   2. Summit's own drafts — `blog_drafts`, so a piece somebody is mid-way through is not offered
+//   2. SearchOps's own drafts — `blog_drafts`, so a piece somebody is mid-way through is not offered
 //      again to a second person.
 //   3. Strapi and the live sitemap, through ledgerCheck — the same corpus the landing radar dedupes
 //      against. This is the one that matters: the backlog is months old in places and a good chunk of
@@ -245,7 +245,7 @@ export async function notionBacklog(opts: { limit?: number } = {}): Promise<Noti
   const { dbs, reason } = await resolveDatabases(h).catch((e) => ({ dbs: [] as Array<{ id: string; title: string }>, reason: String(e?.message ?? e) }));
   if (!dbs.length) return { ...out, reason };
 
-  // Summit's own drafts, once, rather than per row.
+  // SearchOps's own drafts, once, rather than per row.
   const { data: drafts } = await supabaseAdmin.from("blog_drafts").select("title").limit(1000);
   const draftTitles = (drafts ?? []).map((d) => String(d.title ?? "").toLowerCase()).filter(Boolean);
 
@@ -291,7 +291,7 @@ export async function notionBacklog(opts: { limit?: number } = {}): Promise<Noti
       } else {
         const s = subject.toLowerCase();
         const hit = draftTitles.find((t) => t === s || (t.length > 12 && s.includes(t)) || (s.length > 12 && t.includes(s)));
-        if (hit) { verdict = "being-drafted"; evidence = `a Summit draft already exists: “${hit.slice(0, 60)}”`; }
+        if (hit) { verdict = "being-drafted"; evidence = `a SearchOps draft already exists: “${hit.slice(0, 60)}”`; }
       }
 
       candidates.push({

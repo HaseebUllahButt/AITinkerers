@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — stick-to-bottom.
+// SearchOps Agent — stick-to-bottom.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §6.1–§6.8. This is the fix for D2.
 //

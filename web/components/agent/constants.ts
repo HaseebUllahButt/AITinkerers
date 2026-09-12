@@ -1,4 +1,4 @@
-// Summit Agent — the tuned constants.
+// SearchOps Agent — the tuned constants.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §6.2, §7.4, §7.6, §7.8, §8.3, §9.2, §9.7, §10.2, §11.2, §11.7.
 //

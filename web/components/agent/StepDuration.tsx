@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the step duration.
+// SearchOps Agent — the step duration.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §7.6.
 //

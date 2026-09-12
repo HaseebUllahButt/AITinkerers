@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the scrolling viewport.
+// SearchOps Agent — the scrolling viewport.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §6.5, §6.9, §6.10, §13.
 //

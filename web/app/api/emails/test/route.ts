@@ -19,8 +19,8 @@ export async function POST(req: NextRequest) {
 
   const result = await sendEmail({
     to,
-    subject: "Summit — test email",
-    body: `Hi,\n\nThis is a test email from Summit confirming the outbound SMTP sender is configured and working.\n\nIf you're reading this, emails will send from ${process.env.SMTP_FROM_EMAIL ?? process.env.SMTP_USER}.\n\n— Summit`,
+    subject: "SearchOps — test email",
+    body: `Hi,\n\nThis is a test email from SearchOps confirming the outbound SMTP sender is configured and working.\n\nIf you're reading this, emails will send from ${process.env.SMTP_FROM_EMAIL ?? process.env.SMTP_USER}.\n\n— SearchOps`,
   });
 
   const status = result.ok ? 200 : 500;

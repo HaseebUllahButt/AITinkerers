@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the human turn.
+// SearchOps Agent — the human turn.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §7.1.
 

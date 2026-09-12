@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the surface.
+// SearchOps Agent — the surface.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §2 (architecture + props), §3 (file tree), §5.1 (where state
 // lives), §11.5 (composer placement), §12 (build order).

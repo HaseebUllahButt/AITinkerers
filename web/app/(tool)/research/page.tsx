@@ -85,7 +85,7 @@ function blogPrompt(it: ResearchItem): string {
 /**
  * The landing-page brief, written to be pasted somewhere else.
  *
- * Summit no longer builds landing pages, so this is not a Summer prompt any more — it is a handover.
+ * SearchOps no longer builds landing pages, so this is not a Summer prompt any more — it is a handover.
  * That changes what it has to contain: a prompt aimed at Summer could lean on Summer already knowing
  * the house rules, the template registry and the ledger. Pasted into a fresh session with none of
  * that context, every one of those has to be stated, or the receiving agent invents a template name
@@ -421,7 +421,7 @@ const Row = {
               enough that hiding the option would make the person go and retag the item first, which is
               the friction the toggle used to be.
 
-              Copies rather than opening Summer: Summit does not build landing pages any more, so the
+              Copies rather than opening Summer: SearchOps does not build landing pages any more, so the
               brief has to leave the building. */}
           <button
             type="button"

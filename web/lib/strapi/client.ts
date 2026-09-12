@@ -42,7 +42,7 @@ export function strapiConfigured(): boolean {
 // Defaults point at the REAL blog collection, measured rather than assumed:
 //   /api/imagine-webs   759 entries  ← the live blog corpus ("blogs" in the Strapi sidebar)
 //   /api/resources       21 entries  ← the previous default; not where the content team works
-// Everything Summit synced before this went into the 21-row collection. Same story for categories:
+// Everything SearchOps synced before this went into the 21-row collection. Same story for categories:
 // blog-categories has 15 real ones, resource-categories has 2.
 export function blogType(): string {
   return process.env.STRAPI_BLOG_TYPE?.trim() || "imagine-webs";

@@ -69,7 +69,7 @@ export async function GET() {
         id: `draft:${d.id}`,
         kind: "draft",
         title: d.title || "Untitled draft",
-        detail: `${isMachineMade(d.created_by) ? `From ${who}` : `By ${who.split("@")[0]}`} · ${d.sync_state === "synced" ? "in Strapi" : "in Summit"}`,
+        detail: `${isMachineMade(d.created_by) ? `From ${who}` : `By ${who.split("@")[0]}`} · ${d.sync_state === "synced" ? "in Strapi" : "in SearchOps"}`,
         at: d.created_at,
         href: "/drafts",
         // A draft is news, not a task — it is read when somebody has time. Counting every one would

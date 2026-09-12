@@ -1,4 +1,4 @@
-// Summit Agent — the SSE `data:` line splitter.
+// SearchOps Agent — the SSE `data:` line splitter.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §5.6 (the stream loop).
 //
@@ -9,7 +9,7 @@
 //
 // ══ What it has to survive ══════════════════════════════════════════════════════════════════════
 //
-// Both Summit servers write `data: ${JSON.stringify(x)}\n\n`. A `ReadableStream` chunk boundary
+// Both SearchOps servers write `data: ${JSON.stringify(x)}\n\n`. A `ReadableStream` chunk boundary
 // falls wherever TCP feels like it, so all of these happen in production:
 //
 //   chunk 1: 'data: {"t":"tok'          ← split mid-JSON, mid-key
@@ -24,7 +24,7 @@
 //
 // ══ Why line-based and not full SSE frame semantics ═════════════════════════════════════════════
 //
-// The strict spec accumulates `data:` lines until a blank line dispatches the event. Summit's
+// The strict spec accumulates `data:` lines until a blank line dispatches the event. SearchOps's
 // servers emit exactly one JSON object per `data:` line (JSON.stringify escapes newlines, so a
 // payload can never contain a raw one) and always follow it with a blank line. Line-based
 // splitting therefore produces identical results, and it degrades better: if a server ever omits
@@ -44,7 +44,7 @@ export interface SseSplit {
  * The pure core. Feed it the carry-over buffer and one decoded chunk.
  *
  * Non-`data:` lines (SSE comments starting `:`, `event:`, `id:`, `retry:`, blank separators) are
- * dropped — Summit's servers emit none of them today, and silently ignoring them is what the SSE
+ * dropped — SearchOps's servers emit none of them today, and silently ignoring them is what the SSE
  * spec requires of a client that does not use them.
  */
 export function splitSseChunk(buffer: string, chunk: string): SseSplit {

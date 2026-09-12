@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the inline element reference chip.
+// SearchOps Agent — the inline element reference chip.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §8.5.
 //

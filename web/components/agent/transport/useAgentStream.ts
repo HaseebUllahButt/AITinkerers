@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the reader loop.
+// SearchOps Agent — the reader loop.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §5.6, §6.7 (re-arming follow), §11.4 (Stop).
 //
@@ -35,7 +35,7 @@ import { createSseParser, parseSsePayload } from "./parseSse";
  * needs `TextDecoder` and a `ReadableStream` and cannot be tested without them.
  *
  * `{ stream: true }` on the decoder is not optional: a multi-byte UTF-8 character (any em dash, any
- * smart quote — both of which Summit's agents emit constantly) can straddle a chunk boundary, and
+ * smart quote — both of which SearchOps's agents emit constantly) can straddle a chunk boundary, and
  * without it the two halves each decode to U+FFFD.
  */
 export async function* readSse(

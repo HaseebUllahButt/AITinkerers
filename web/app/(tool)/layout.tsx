@@ -6,7 +6,7 @@ import { TopNav } from "@/components/layout/TopNav"
 import { RouteProgress } from "@/components/layout/RouteProgress"
 import { UsageTracker } from "@/components/layout/UsageTracker"
 
-// The operator surface, ported from Summit: sidebar flush to the left edge,
+// The operator surface, ported from SearchOps: sidebar flush to the left edge,
 // flat top bar, content straight below. Chrome only renders for a signed-in
 // session so /login stays bare.
 export default async function ToolLayout({

@@ -43,7 +43,7 @@ export const stripHost = (u: string): string => u.replace(/^https?:\/\/(www\.)?i
 async function fetchSitemap(): Promise<string[]> {
   try {
     const res = await fetch(SITEMAP_URL, {
-      headers: { "User-Agent": "Mozilla/5.0 (compatible; Summit-linkfix/1.0)" },
+      headers: { "User-Agent": "Mozilla/5.0 (compatible; SearchOps-linkfix/1.0)" },
       signal: AbortSignal.timeout(45_000),
     });
     if (!res.ok) return [];

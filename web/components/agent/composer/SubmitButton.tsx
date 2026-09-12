@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — Send ⇄ Stop in ONE fixed slot.
+// SearchOps Agent — Send ⇄ Stop in ONE fixed slot.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §11.4. Fixes D8 (no stop button at all on the writer, and a
 // width-changing one on Hermes).

@@ -9,7 +9,7 @@ import { supabaseAdmin } from "@/lib/db/supabase";
 //
 // ── Why this is thirty lines and not a subsystem ────────────────────────────────────────────────
 //
-// Summit already owns all of the hard parts, and rebuilding any of them would be a second, worse copy:
+// SearchOps already owns all of the hard parts, and rebuilding any of them would be a second, worse copy:
 //
 //   extractLinks         every link with its anchor, its zone and its nearest heading — the "which
 //                        section is it in" answer, which is the part that makes a report actionable

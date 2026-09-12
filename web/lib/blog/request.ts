@@ -1,6 +1,6 @@
-// Externally-triggered blog drafts: brief in over HTTP, a draft in Summit out, Slack when it lands.
+// Externally-triggered blog drafts: brief in over HTTP, a draft in SearchOps out, Slack when it lands.
 //
-// Someone outside Summit sends a topic and whatever context they have. A full article gets written
+// Someone outside SearchOps sends a topic and whatever context they have. A full article gets written
 // through the normal research → outline → sections → validate flow, its images get generated and
 // attached, and Slack says so. Nobody has to be logged in and nobody has to be watching.
 //
@@ -64,7 +64,7 @@ import { checkCollectionFit } from "@/lib/strapi/collectionFit";
  * This used to be tagFor("atlas") at the one call site, which was right while Atlas was the only
  * caller. The autopilot then started using the same startBlogRequest path and inherited Atlas's
  * audience — so Ahmed, who is in that list because he owns the Atlas integration and can act on ITS
- * failures, got pinged about a post Summit chose and wrote by itself.
+ * failures, got pinged about a post SearchOps chose and wrote by itself.
  *
  * `created_by` is `api:autopilot:<slot>` for the autopilot and `api:<whoever>` for Atlas.
  */
@@ -266,7 +266,7 @@ function firstImageUrl(urls: string[]): string | undefined {
  * silently render a generated hero instead of the video they are about.
  *
  * A video id is derivable from any YouTube link, and the thumbnail URL is derivable from the id. So
- * Summit stops asking and works it out: if the request mentions a video anywhere, the article gets
+ * SearchOps stops asking and works it out: if the request mentions a video anywhere, the article gets
  * that video's poster frame.
  */
 export function youtubeIdFrom(text: string): string | null {
@@ -758,7 +758,7 @@ export function composeBlogRequestMessage(input: {
   // This said tagFor("atlas") unconditionally, which was right while Atlas was the only caller. The
   // autopilot then started using the same startBlogRequest path and inherited Atlas's audience — so
   // Ahmed, who is in that list because he owns the Atlas integration and can act on ITS failures,
-  // got pinged about a post Summit chose and wrote by itself. Nothing he can do with that.
+  // got pinged about a post SearchOps chose and wrote by itself. Nothing he can do with that.
   //
   // Keyed on requested_by, which the autopilot sets to `autopilot:<slot>` and Atlas does not.
   const audience = audienceFor(input.requestedBy);
@@ -770,7 +770,7 @@ export function composeBlogRequestMessage(input: {
     ? tagFor(audience)
     : namesFor(audience);
   lines.push(worthPinging
-    ? `${who} — a new blog draft is ready for review in Summit.`
+    ? `${who} — a new blog draft is ready for review in SearchOps.`
     : `${who} — this run did not produce a reviewable draft.`);
   lines.push("");
   lines.push(`*${input.title || "Untitled"}*`);
@@ -787,15 +787,15 @@ export function composeBlogRequestMessage(input: {
     lines.push("Validation: *failed* — this one needs work before it is usable.");
   }
 
-  // Summit, not Strapi. These drafts stop in Summit on purpose now — a reviewer reads and edits it
+  // SearchOps, not Strapi. These drafts stop in SearchOps on purpose now — a reviewer reads and edits it
   // here, and pushing to the CMS is their call, made with the Sync button once they are happy.
   // /blog has no per-draft deep link, so the title above is how you find it in the list rather than
   // a URL that would only look like one.
-  const open = linkOr(input.draftId ? `/drafts/${input.draftId}` : "/drafts", "Open it in Summit →");
+  const open = linkOr(input.draftId ? `/drafts/${input.draftId}` : "/drafts", "Open it in SearchOps →");
   if (open) lines.push(open);
   if (input.strapiUrl) lines.push(`Also in Strapi: ${input.strapiUrl}`);
   lines.push("");
-  lines.push("Not in the CMS and not published. Review it in Summit, then sync and publish when it is right.");
+  lines.push("Not in the CMS and not published. Review it in SearchOps, then sync and publish when it is right.");
   return lines.join("\n");
 }
 
@@ -1034,14 +1034,14 @@ export async function runBlogRequest(sessionId: string): Promise<{ ok: boolean; 
     }
   }
 
-  // ── The draft STOPS in Summit ────────────────────────────────────────────────────────────────
+  // ── The draft STOPS in SearchOps ────────────────────────────────────────────────────────────────
   //
   // It used to sync straight to Strapi as an unpublished entry, which put an unreviewed machine
   // draft into the CMS on every external call — the one place the team treats as "real work" — and
   // left somebody to find and delete it if the article was poor. Nothing published, but the CMS
   // filled up with work nobody had read.
   //
-  // Now it lands in Summit, a person reads it, and THEY press Sync. The push is one button away and
+  // Now it lands in SearchOps, a person reads it, and THEY press Sync. The push is one button away and
   // it is the reviewer's call, which is the same shape as every other draft in this tool.
   //
   // BLOG_REQUEST_AUTOSYNC=1 restores the old behaviour, for a batch where an entry in the CMS is
@@ -1073,7 +1073,7 @@ export async function runBlogRequest(sessionId: string): Promise<{ ok: boolean; 
     ? { ok: false as const, error: "article failed validation" }
     : autoSync
       ? await syncDraft(draft)
-      : { ok: false as const, error: "held in Summit for review (autosync off)" };
+      : { ok: false as const, error: "held in SearchOps for review (autosync off)" };
 
   const text = composeBlogRequestMessage({
     title: draft.title,

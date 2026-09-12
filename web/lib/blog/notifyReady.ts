@@ -69,7 +69,7 @@ export function composeReadyMessage(d: BlogDraft, tag: string): string {
     `*${d.title || "Untitled"}*`,
     `Slug: \`${d.slug}\``,
     attributionFor(d.created_by) ? `Written by: ${attributionFor(d.created_by)}` : null,
-    `Status: ${state === "published" ? "published" : state === "synced" ? "in Strapi as a draft" : "in Summit only"}`,
+    `Status: ${state === "published" ? "published" : state === "synced" ? "in Strapi as a draft" : "in SearchOps only"}`,
     linkOr(`/drafts/${d.id}`, "Open it:"),
     "",
     "Nothing is published automatically. Read it, then publish.",

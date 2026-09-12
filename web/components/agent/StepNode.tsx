@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — one step (tool call or summarized thinking).
+// SearchOps Agent — one step (tool call or summarized thinking).
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §7.5 (the row, disclosure, open-state machine, nesting,
 // partitioning), §7.6 (duration), §7.8 (accordion animation).
@@ -234,7 +234,7 @@ export const StepNode = memo(function StepNode({ id, runActive, depth }: StepNod
         className={cn(
           // `min-w-0` is the load-bearing part: without it a wide table or <pre> inside an expanded
           // body sets this flex item's min-content width and blows the whole transcript out
-          // horizontally (Summit's table output hits this immediately). The spec writes `w-0`,
+          // horizontally (SearchOps's table output hits this immediately). The spec writes `w-0`,
           // which assumes Chainlit's flex-ROW parent; every parent here is a flex COLUMN, where
           // `w-0` wins over stretch and collapses the row to zero width.
           "flex w-full min-w-0 flex-grow flex-col",

@@ -24,7 +24,7 @@ import { SegmentedControl } from "@/components/ui/segmented-control";
  * filters — all email concepts that mean nothing for a vendor chat. The verbatim feedback was
  * "need a separate whatsapp section because ese bilkul samajh nahi aa raha", plus a voice note
  * asking for exactly this layout. So the WhatsApp logic MOVED here (the Inbox is email-only now),
- * it did not fork: same routes, same trust model — Summit records, and unless the Cloud API or
+ * it did not fork: same routes, same trust model — SearchOps records, and unless the Cloud API or
  * bridge is cleared to send, the keypress in WhatsApp is the send.
  */
 
@@ -778,7 +778,7 @@ export default function WhatsappPage() {
               )}
               {pasteOpen && (
                 <div className="mb-2 rounded-md border border-border bg-muted/20 p-2 space-y-1.5">
-                  <p className="text-xs text-muted-foreground">Paste one message from {selected.name}, or a whole chat (WhatsApp export or straight off the screen) — Summit files each message on the right side.</p>
+                  <p className="text-xs text-muted-foreground">Paste one message from {selected.name}, or a whole chat (WhatsApp export or straight off the screen) — SearchOps files each message on the right side.</p>
                   <Textarea placeholder="Paste here…" value={pasteText} onChange={(e) => setPasteText(e.target.value)} className="min-h-[80px] max-h-48 resize-none text-sm" />
                   <div className="flex items-center gap-1.5">
                     <Button size="xs" variant="outline" disabled={pasting || !pasteText.trim()} onClick={() => void logPaste("single")}>Log as their message</Button>

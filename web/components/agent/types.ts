@@ -1,4 +1,4 @@
-// Summit Agent — the type contract for the shared chat surface.
+// SearchOps Agent — the type contract for the shared chat surface.
 //
 // This module is the single source of truth for every other file under src/components/agent/.
 // It is pure types plus one error class, so it is safe to import from a server component; nothing
@@ -77,7 +77,7 @@ export interface OptionsData {
   options: string[];
 }
 
-/** Payload for the Summit-specific irreversible-action confirmation card. */
+/** Payload for the SearchOps-specific irreversible-action confirmation card. */
 export interface ConfirmData {
   kind: "confirm";
   actionId: string;
@@ -284,7 +284,7 @@ export type AgentEvent =
   | { t: "ask_timeout"; askId: string }
   | { t: "ask_cancelled"; askId: string }
 
-  // irreversible-action confirmation (Summit-specific, keep)
+  // irreversible-action confirmation (SearchOps-specific, keep)
   | {
       t: "confirm";
       actionId: string;

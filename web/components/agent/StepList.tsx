@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — a sibling group of steps.
+// SearchOps Agent — a sibling group of steps.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §7.5 (nesting, depth cap), §13 ("each sibling group uses one
 // accordion, not one root per step, so arrow keys work").

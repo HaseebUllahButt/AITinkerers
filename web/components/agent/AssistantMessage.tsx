@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the model turn.
+// SearchOps Agent — the model turn.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §7.2 (layout), §7.4 (cursor), §9.3 (ask placement), §10.1 (actions).
 //

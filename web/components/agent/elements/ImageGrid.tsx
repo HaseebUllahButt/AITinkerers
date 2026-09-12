@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the image bucket: single-image fast path, quilted grid for the rest, one lightbox.
+// SearchOps Agent — the image bucket: single-image fast path, quilted grid for the rest, one lightbox.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §8.3, §8.4.
 

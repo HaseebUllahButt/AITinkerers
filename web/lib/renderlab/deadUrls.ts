@@ -2,7 +2,7 @@
 //
 // ── Why this exists alongside the link audit ────────────────────────────────────────────────────
 //
-// Summit's link audit crawls our own pages and checks what they point at, which answers "which LINKS
+// SearchOps's link audit crawls our own pages and checks what they point at, which answers "which LINKS
 // are broken". It cannot answer "which PAGES are broken", because a page nothing links to is invisible
 // to a link crawl no matter how thoroughly it runs.
 //

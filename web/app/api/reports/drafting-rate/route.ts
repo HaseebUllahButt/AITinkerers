@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { isAuthorized } from "@/lib/auth/service";
 import { buildDraftingRateReport } from "@/lib/reports/draftingRate";
 
-// GET /api/reports/drafting-rate — the blog drafting rate, before and after Summit.
+// GET /api/reports/drafting-rate — the blog drafting rate, before and after SearchOps.
 //
 // Reads ~830 CMS entries across nine pages plus the local draft table, so it is not instant. The
 // dashboard renders its card in a loading state and fills in, rather than holding the whole page.

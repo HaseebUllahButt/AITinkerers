@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight, Menu, Loader2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { SummitMark } from "@/components/brand/SummitMark";
+import { SearchOpsMark } from "@/components/brand/SearchOpsMark";
 import { NAV_GROUPS, isNavActive } from "@/lib/nav";
 
 /**
@@ -82,9 +82,9 @@ export function Sidebar() {
         <div className={cn("flex h-14 items-center border-b border-sidebar-border px-4 shrink-0", collapsed && "justify-center px-0")}>
           {!collapsed && (
             <Link href="/" className="flex min-w-0 items-center gap-2.5">
-              <SummitMark className="size-7 shrink-0" />
+              <SearchOpsMark className="size-7 shrink-0" />
               <span className="min-w-0">
-                <span className="block truncate text-sm font-medium tracking-tight leading-tight">Summit</span>
+                <span className="block truncate text-sm font-medium tracking-tight leading-tight">SearchOps</span>
                 <span className="block truncate text-xs text-muted-foreground leading-tight">SEO engine</span>
               </span>
             </Link>
@@ -99,7 +99,7 @@ export function Sidebar() {
               aria-label="Expand sidebar"
               className="grid size-9 place-items-center rounded-md hover:bg-sidebar-accent"
             >
-              <SummitMark className="size-7" />
+              <SearchOpsMark className="size-7" />
             </button>
           ) : (
             <Button

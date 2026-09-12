@@ -1,4 +1,4 @@
-// Summit Agent — today's wire format → AgentEvent.
+// SearchOps Agent — today's wire format → AgentEvent.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §4.1, §4.3, §4.4. Ships in P0, DELETED in P1.1 once the server owns
 // ids.

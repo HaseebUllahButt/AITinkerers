@@ -132,10 +132,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 
       // ── Verify the ENTRY, not our own row, before going live ────────────────────────────────
       //
-      // publishReadiness() above reads the Summit draft. That is the right check for "has a person
+      // publishReadiness() above reads the SearchOps draft. That is the right check for "has a person
       // finished writing this", and the wrong one for "is the thing about to go live complete",
       // because the two can disagree: media relations are set by integer id and an id Strapi
-      // declines to link is dropped SILENTLY rather than refused. Measured on entry 861 — Summit
+      // declines to link is dropped SILENTLY rather than refused. Measured on entry 861 — SearchOps
       // held thumbnail 17133 and the entry's thumbnail read back empty, with blogHeroCTA empty too,
       // while every gate passed.
       //
@@ -165,10 +165,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
         if (!String((raw.description as string) ?? "").trim()) inStrapi.push("description is empty in Strapi");
         if (!String((raw.body as string) ?? "").trim()) inStrapi.push("body is empty in Strapi");
         if (draft.thumbnail_media_id && mediaId(raw.thumbnail) !== draft.thumbnail_media_id) {
-          inStrapi.push(`thumbnail did not attach (Summit has ${draft.thumbnail_media_id}, Strapi has ${mediaId(raw.thumbnail) ?? "nothing"})`);
+          inStrapi.push(`thumbnail did not attach (SearchOps has ${draft.thumbnail_media_id}, Strapi has ${mediaId(raw.thumbnail) ?? "nothing"})`);
         }
         if (draft.cover_media_id && mediaId(raw.cover) !== draft.cover_media_id) {
-          inStrapi.push(`cover did not attach (Summit has ${draft.cover_media_id}, Strapi has ${mediaId(raw.cover) ?? "nothing"})`);
+          inStrapi.push(`cover did not attach (SearchOps has ${draft.cover_media_id}, Strapi has ${mediaId(raw.cover) ?? "nothing"})`);
         }
         if (!ctaInner?.text?.trim() || !ctaInner?.url?.trim()) inStrapi.push("hero CTA is empty in Strapi");
         if (inStrapi.length) {

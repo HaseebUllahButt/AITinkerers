@@ -1,4 +1,4 @@
-// The adoption report: who uses Summit, how much, and what it produced.
+// The adoption report: who uses SearchOps, how much, and what it produced.
 //
 // Built almost entirely from tables that already exist, on purpose. Every outcome this tool cares about
 // is already stamped with an owner and a timestamp somewhere — blog_drafts.created_by,

@@ -96,7 +96,7 @@ async function searchOne(
         headers: {
           Accept: "application/json",
           // SearXNG rejects requests it reads as bot traffic on some builds; a plain UA is enough.
-          "User-Agent": "Summit/1.0",
+          "User-Agent": "SearchOps/1.0",
           ...(process.env.SEARXNG_TOKEN ? { Authorization: `Bearer ${process.env.SEARXNG_TOKEN}` } : {}),
         },
         signal: sig,

@@ -1,6 +1,6 @@
 // Mixpanel Query API client — the read side only.
 //
-// Summit needs product analytics for one question the rest of the app cannot answer: did the SEO work
+// SearchOps needs product analytics for one question the rest of the app cannot answer: did the SEO work
 // earn anything. Rankings, impressions and clicks all stop at the door; signups, generations and
 // revenue happen on the other side of it, and they live in Mixpanel.
 //

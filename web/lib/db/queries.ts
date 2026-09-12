@@ -1661,7 +1661,7 @@ export async function insertWaInboundOnce(row: {
 
 /** Bridge ingest (WAHA): one row per mirrored message, either direction, deduped on the WhatsApp
  *  id. Unlike the Cloud path this also files OUR OWN outbound — a message the person types on their
- *  phone is echoed here so Summit's thread stays in sync with the real chat. Returns the row when
+ *  phone is echoed here so SearchOps's thread stays in sync with the real chat. Returns the row when
  *  inserted, null when it was a duplicate (WAHA redelivers; our own bridge-sends echo back). */
 export async function insertWaBridgeMessageOnce(row: {
   author_id: string;

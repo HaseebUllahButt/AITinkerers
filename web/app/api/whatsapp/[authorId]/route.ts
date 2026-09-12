@@ -31,7 +31,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ auth
     if (caller.kind === "user") await markInboxSeen(caller.email, authorId).catch(() => {});
     const [messages, anchor] = await Promise.all([getWhatsappThread(authorId), getWaAnchor(authorId)]);
     // How a send will actually leave, so the composer can say so honestly. "cloud"/"bridge" =
-    // Summit sends it; "manual" = wa.me keypress (no transport, or bridge in read-only mode).
+    // SearchOps sends it; "manual" = wa.me keypress (no transport, or bridge in read-only mode).
     const sendMode = waCloudEnabled() ? "cloud" : waBridgeSendEnabled() ? "bridge" : "manual";
     // Bridge configured to read but not cleared to send: the negotiator drafts suggestions, the
     // human sends. The UI uses this to frame the suggestion panel.

@@ -137,7 +137,7 @@ async function sweepHackerNews(days: number, minPoints = 20): Promise<{ rows: Ra
     });
     try {
       const res = await fetch(`${url}?${params}`, {
-        headers: { "User-Agent": "Summit-Research/1.0" },
+        headers: { "User-Agent": "SearchOps-Research/1.0" },
         signal: AbortSignal.timeout(15_000),
       });
       if (!res.ok) { failures++; return; }

@@ -7,7 +7,7 @@ import { buildRoiReport, type Scope } from "@/lib/mixpanel/seoRoi";
 // GET — the SEO ROI report: signups, purchases, revenue and generations by landing page and channel.
 //
 // Read-only by construction. There is no POST here and there should not be one: everything this
-// surface knows comes out of Mixpanel, and nothing Summit does should write back into product
+// surface knows comes out of Mixpanel, and nothing SearchOps does should write back into product
 // analytics.
 //
 // Mixpanel is slow (seconds per segmentation call, seven of them in parallel), so this sits well

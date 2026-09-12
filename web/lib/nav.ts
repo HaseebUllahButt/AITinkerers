@@ -22,7 +22,7 @@ import {
 import type { LucideIcon } from "lucide-react";
 
 /**
- * The one list of what Summit's pages are called.
+ * The one list of what SearchOps's pages are called.
  *
  * The sidebar renders NAV_GROUPS; the breadcrumb resolves a URL segment through ROUTE_LABELS. They
  * used to be two separate lists in two files, which is how the nav came to say "Compose & Send" while

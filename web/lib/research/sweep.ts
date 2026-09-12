@@ -125,7 +125,7 @@ async function coverageFor(subject: string, existing: { ledger: RadarCandidate["
     if (hit) {
       return {
         coverage: hit.sync_state === "published" ? "covered" : "drafting",
-        detail: hit.sync_state === "published" ? "Published from a Summit draft." : `Draft in progress (${hit.sync_state}).`,
+        detail: hit.sync_state === "published" ? "Published from a SearchOps draft." : `Draft in progress (${hit.sync_state}).`,
         draftId: hit.id,
       };
     }

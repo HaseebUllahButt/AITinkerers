@@ -388,12 +388,12 @@ export default function GeoPage() {
                   )}
                   <p className="text-xs leading-relaxed text-muted-foreground">
                     Every number on this page comes from Otterly&apos;s public API. It runs our prompts
-                    against the engines on its own schedule; Summit only reads the results.
+                    against the engines on its own schedule; SearchOps only reads the results.
                   </p>
                   <ol className="ml-4 list-decimal space-y-1.5 text-xs leading-relaxed text-muted-foreground">
                     <li>
                       Set <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">OTTERLY_API_KEY</code> in
-                      Summit&apos;s environment. The public API is a paid add-on on Otterly&apos;s side —
+                      SearchOps&apos;s environment. The public API is a paid add-on on Otterly&apos;s side —
                       a key that works in their UI can still return 403 here.
                     </li>
                     <li>

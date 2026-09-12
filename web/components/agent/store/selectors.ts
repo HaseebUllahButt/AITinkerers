@@ -1,4 +1,4 @@
-// Summit Agent — whole-tree predicates.
+// SearchOps Agent — whole-tree predicates.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §7.5 (the running predicate), §7.7 (dead air), §11.7 (starters).
 //

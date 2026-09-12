@@ -9,16 +9,20 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ============================================================
-   Summit — flat surfaces, teal register.
+   SearchOps — flat surfaces, monochrome ground, one orange accent.
 
-   The original neutral register, restored by request after the teal-glass rebrand: flat white (or
-   near-black) surfaces, gray hairline borders, near-black actions, no wash, no blur. Everything is
-   done by re-valuing tokens — every token and utility class from the glass era still EXISTS (pages
-   reference --glass-border, .glass-panel, text-highlight-ink, …), they just resolve to plain
-   monochrome values now. A future re-skin is again a token edit, not a search-and-replace.
+   Inherited from Summit and re-skinned: flat white (or near-black) surfaces, hairline borders,
+   square corners, no wash, no blur. The accent is the landing page's orange, so the operator
+   surface and the public page read as one product.
 
-   Only STATE keeps color: --success / --warning / --destructive mark email trust, funnel stages and
-   failures, and turning those gray would erase information, not decoration.
+   Every token and utility class from Summit's glass era still EXISTS — pages reference
+   --glass-border, .glass-panel, text-highlight-ink and so on — they simply resolve to these
+   values now. That is why a re-skin is a token edit rather than a search-and-replace, and why
+   nothing below line ~250 needed to change.
+
+   Only STATE keeps its own hue: --success / --warning / --destructive mark trust tiers, funnel
+   stages and failures. Painting a warning in the accent would say nothing, since orange already
+   means "action" here — turning them gray would erase information, not decoration.
    ============================================================ */
 
 @theme inline {
@@ -83,168 +87,160 @@
 }
 
 :root {
-  /* ── The wash ────────────────────────────────────────────────────────────────────────────────
-     A cool blue-to-mint field, high-key: pale mint top-left, a wide white haze through the middle
-     where content actually sits, and blue-grey settling into the bottom-right. Radial blobs rather
-     than one linear ramp, because a single ramp bands visibly across a wide viewport and puts its
-     darkest end under whichever corner the content happens to reach.
+  /* ── SearchOps, light ────────────────────────────────────────────────────────────────────────
+     The identity comes from the landing page: a monochrome ground with a single orange accent and
+     square corners. Summit's teal-on-glass is gone — two surfaces of one product should not read as
+     two different companies.
 
-     The middle stop is deliberately the lightest thing on the page — cards are near-white glass, and
-     they need somewhere bright to sit or the "glass" reads as grey plastic. */
-  /* Flat. The token stays so a re-skin is a token edit, not a rule edit. */
+     Flat, not washed. A dense table page has enough going on without a gradient under it. */
   --canvas: #ffffff;
   --wash: none;
 
-  /* The old "glass recipe" tokens, resolved flat: plain surfaces, hairline gray rims, a whisper of
-     shadow. Chrome that referenced these (sidebar, top nav, cards) goes minimal without a touch. */
+  /* Surfaces are separated by hairlines and tone, never by blur. */
   --glass-bg: #ffffff;
-  --glass-border: rgba(15, 118, 110, 0.14);
+  --glass-border: rgba(18, 18, 20, 0.12);
   --glass-blur: none;
-  --glass-shadow: 0 1px 2px rgba(18, 38, 43, 0.05);
-  --glass-shadow-lg: 0 2px 6px rgba(18, 38, 43, 0.08);
+  --glass-shadow: 0 1px 2px rgba(18, 18, 20, 0.06);
+  --glass-shadow-lg: 0 2px 8px rgba(18, 18, 20, 0.09);
 
-  /* Quiet fills — segmented tracks, icon buttons, inert chips, inline sticky bars. */
   --glass-bar: #ffffff;
-  --quiet: rgba(15, 118, 110, 0.06);
-  --quiet-hover: rgba(15, 118, 110, 0.11);
+  --quiet: rgba(18, 18, 20, 0.05);
+  --quiet-hover: rgba(18, 18, 20, 0.09);
 
   --background: #ffffff;
-  --foreground: #12262b;
+  --foreground: #121214;
 
   --card: #ffffff;
-  --card-foreground: #12262b;
+  --card-foreground: #121214;
   --popover: #ffffff;
-  --popover-foreground: #12262b;
+  --popover-foreground: #121214;
 
-  /* Teal is the action colour. teal-700 rather than teal-600 because white on teal-600 measures
-     3.6:1 and fails AA for body-size label text; teal-700 clears it. */
-  --primary: #0f766e;
+  /* The action colour, darkened from the landing's #FF7A2F. White on the bright orange measures
+     about 2.6:1 and fails AA outright; this clears it for button labels. */
+  --primary: #c2540a;
   --primary-foreground: #ffffff;
-  --primary-shadow: 0 14px 30px -14px rgba(15, 118, 110, 0.45);
+  --primary-shadow: 0 14px 30px -14px rgba(194, 84, 10, 0.40);
 
-  --secondary: #f2f7f7;
-  --secondary-foreground: #12262b;
-  --muted: #f2f7f7;
-  --muted-foreground: rgba(18, 38, 43, 0.62);
-  --accent: #eaf4f3;
-  --accent-foreground: #14262a;
+  --secondary: #f5f5f4;
+  --secondary-foreground: #121214;
+  --muted: #f5f5f4;
+  --muted-foreground: rgba(18, 18, 20, 0.60);
+  --accent: #fdf0e7;
+  --accent-foreground: #3d1e08;
 
-  /* State keeps color — these mark trust tiers, funnel stages and failures, and a gray version of
-     them would erase information rather than decoration. Muted on purpose so they read as marks on
-     a monochrome page, not as a palette. */
-  --destructive: oklch(0.577 0.245 27.325);
+  /* Semantic colour is NOT the accent. Orange already means "action" here, so a warning painted
+     orange would say nothing — these three keep their own hues and carry information. */
+  --destructive: #c8322f;
   --destructive-foreground: #ffffff;
   --success: #1f6b4a;
-  --warning: #7a5a10;
+  --warning: #8a6206;
 
-  /* Emphasis is teal again. --highlight-ink is a SEPARATE, darker teal because the accent itself is
-     too light to read as text on a pale pane — one token cannot be both a fill and a label colour. */
-  --highlight: #0d9488;
-  --highlight-soft: rgba(13, 148, 136, 0.12);
-  --highlight-ink: #0b4f4a;
+  /* Fill and label cannot be one token: the accent light enough to sit behind text is too light to
+     BE text. --highlight-ink is the readable one. */
+  --highlight: #e8620d;
+  --highlight-soft: rgba(232, 98, 13, 0.12);
+  --highlight-ink: #9c4408;
 
-  --border: rgba(15, 118, 110, 0.14);
-  --input: rgba(15, 118, 110, 0.18);
-  --ring: rgba(13, 148, 136, 0.34);
+  --border: rgba(18, 18, 20, 0.12);
+  --input: rgba(18, 18, 20, 0.18);
+  --ring: rgba(232, 98, 13, 0.38);
 
-  /* Teal-led, then cool neighbours — distinguishable by hue AND by tone, so a series stays readable
-     printed in grey or seen by a colour-blind reader. */
-  --chart-1: #0d9488;
-  --chart-2: #2f7f9e;
-  --chart-3: #6aa9b8;
-  --chart-4: #9ac6c6;
-  --chart-5: #c3dcdc;
+  /* Orange leads, then warm and cool neutrals. Every step drops in luminance as well as hue, so a
+     series stays readable in greyscale and to a colour-blind reader — the ramp does not rely on
+     hue alone to separate five things. */
+  --chart-1: #e8620d;
+  --chart-2: #c98a4b;
+  --chart-3: #8d8b86;
+  --chart-4: #5f6368;
+  --chart-5: #3a3d42;
 
-  --radius: 0.625rem;
+  /* Square. The landing page's whole character is the flat grid and the split-flap; rounded cards
+     would undo it. */
+  --radius: 0rem;
 
-  /* Teal, not near-black. The back face is the SAME teal at low alpha rather than a neutral grey, so
-     the two faces read as one object lit from one side instead of two unrelated shapes. */
-  --mark-front: #0f766e;
-  --mark-back: rgba(13, 148, 136, 0.5);
+  --mark-front: #c2540a;
+  --mark-back: rgba(232, 98, 13, 0.45);
 
-  --sidebar: #fafcfc;
-  --sidebar-foreground: rgba(18, 38, 43, 0.74);
-  --sidebar-primary: #0f766e;
+  --sidebar: #fafaf9;
+  --sidebar-foreground: rgba(18, 18, 20, 0.74);
+  --sidebar-primary: #c2540a;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #eaf4f3;
-  --sidebar-accent-foreground: #12262b;
-  --sidebar-border: rgba(15, 118, 110, 0.12);
-  --sidebar-ring: rgba(15, 118, 110, 0.32);
+  --sidebar-accent: #f5f5f4;
+  --sidebar-accent-foreground: #121214;
+  --sidebar-border: rgba(18, 18, 20, 0.10);
+  --sidebar-ring: rgba(232, 98, 13, 0.34);
 }
 
 .dark {
-  /* Teal over near-black. The wash is the same idea as light — blobs, not a ramp — but pitched far
-     darker and desaturated, because on a dark ground a saturated gradient turns every white glyph
-     into coloured fringing. Teal shows up as a lift at the corners, not as a field. */
-  /* Flat near-black. Teal lives in the accents, not in the ground. */
-  --canvas: #12191a;
+  /* ── SearchOps, dark — the theme the app actually runs in ───────────────────────────────────
+     The landing page sits on near-pure #0A0A0A, which works for one editorial column and fails for
+     stacked panels: with nothing between ground and card, every surface needs a border to exist.
+     So the tool gets four steps of elevation off the same near-black instead of one flat field. */
+  --canvas: #0c0c0d;
   --wash: none;
 
-  --glass-bg: #182122;
-  --glass-border: rgba(255, 255, 255, 0.09);
+  --glass-bg: #151517;
+  --glass-border: rgba(255, 255, 255, 0.10);
   --glass-blur: none;
-  --glass-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --glass-shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.5);
+  --glass-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --glass-shadow-lg: 0 2px 8px rgba(0, 0, 0, 0.55);
 
-  --glass-bar: #12191a;
-  --quiet: rgba(255, 255, 255, 0.06);
-  --quiet-hover: rgba(255, 255, 255, 0.1);
+  --glass-bar: #0c0c0d;
+  --quiet: rgba(255, 255, 255, 0.055);
+  --quiet-hover: rgba(255, 255, 255, 0.10);
 
-  --background: #12191a;
-  --foreground: #e6efee;
+  --background: #0c0c0d;
+  --foreground: #ededed;
 
-  --card: #182122;
-  --card-foreground: #e6efee;
-  --popover: #1a2325;
-  --popover-foreground: #e6efee;
+  --card: #151517;
+  --popover: #1a1a1c;
+  --card-foreground: #ededed;
+  --popover-foreground: #ededed;
 
-  /* teal-500 here, not the light theme's teal-700: on near-black the darker teal reads as a muddy
-     rectangle, and #06231f text on it is what keeps the label legible. */
-  --primary: #14b8a6;
-  --primary-foreground: #06231f;
-  --primary-shadow: 0 14px 30px -14px rgba(0, 0, 0, 0.6);
+  /* The landing page's orange exactly. On near-black it needs no darkening, and near-black text on
+     it is what keeps a button label legible. */
+  --primary: #ff7a2f;
+  --primary-foreground: #14100c;
+  --primary-shadow: 0 14px 30px -14px rgba(0, 0, 0, 0.65);
 
-  --secondary: #1e2829;
-  --secondary-foreground: #e6efee;
-  --muted: #1c2526;
-  --muted-foreground: rgba(230, 239, 238, 0.56);
-  --accent: rgba(255, 255, 255, 0.12);
-  --accent-foreground: #e6efee;
+  --secondary: #1f1f22;
+  --secondary-foreground: #ededed;
+  --muted: #1c1c1e;
+  --muted-foreground: rgba(237, 237, 237, 0.56);
+  --accent: rgba(255, 255, 255, 0.10);
+  --accent-foreground: #ededed;
 
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: #ffffff;
-  --success: #6fb392;
-  --warning: #d9a94e;
+  --destructive: #f0605c;
+  --destructive-foreground: #14100c;
+  --success: #5aa17f;
+  --warning: #e0b341;
 
-  /* teal-300 as the accent and a lighter teal again for accent TEXT — the same fill-vs-label split
-     as the light theme, inverted. */
-  --highlight: #5eead4;
-  --highlight-soft: rgba(94, 234, 212, 0.16);
-  --highlight-ink: #7ff0dc;
+  --highlight: #ff8a45;
+  --highlight-soft: rgba(255, 122, 47, 0.15);
+  --highlight-ink: #ffa672;
 
-  --border: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.10);
   --input: rgba(255, 255, 255, 0.15);
-  --ring: rgba(94, 234, 212, 0.36);
+  --ring: rgba(255, 122, 47, 0.40);
 
-  /* Teal-led, lightest first on the dark ground. */
-  --chart-1: #5eead4;
-  --chart-2: #7fc9de;
-  --chart-3: #5f9fb8;
-  --chart-4: #437b93;
-  --chart-5: #325c6e;
+  /* Lightest first on the dark ground, same luminance staircase as the light ramp. */
+  --chart-1: #ff8a45;
+  --chart-2: #d9a273;
+  --chart-3: #9a968f;
+  --chart-4: #6d7076;
+  --chart-5: #4a4d53;
 
-  --sidebar: #151d1e;
-  --sidebar-foreground: rgba(230, 239, 238, 0.74);
-  --sidebar-primary: #14b8a6;
-  --sidebar-primary-foreground: #06231f;
-  --sidebar-accent: #1e2829;
-  --sidebar-accent-foreground: #e6efee;
-  --sidebar-border: rgba(255, 255, 255, 0.1);
-  --sidebar-ring: rgba(94, 234, 212, 0.36);
+  --sidebar: #101012;
+  --sidebar-foreground: rgba(237, 237, 237, 0.74);
+  --sidebar-primary: #ff7a2f;
+  --sidebar-primary-foreground: #14100c;
+  --sidebar-accent: #1f1f22;
+  --sidebar-accent-foreground: #ededed;
+  --sidebar-border: rgba(255, 255, 255, 0.10);
+  --sidebar-ring: rgba(255, 122, 47, 0.40);
 
-  /* Fully saturated on the dark ground — teal-500 front, teal-300 back. */
-  --mark-front: #14b8a6;
-  --mark-back: #5eead4;
+  --mark-front: #ff7a2f;
+  --mark-back: #ffa672;
 }
 
 @layer base {
@@ -611,8 +607,8 @@ select:not([data-slot]):not([multiple]):disabled { opacity: 0.5; }
 
    The caret is var(--primary). It used to need a hardcoded accent because --primary resolved to
    near-black under the old neutral theme, so a caret drawn with it read as a stray hard line on the
-   text. Now that --primary IS the teal accent in both themes, the token is the correct source and the
-   caret matches the selection tint automatically.
+   text. Now that --primary IS the orange accent in both themes, the token is the correct source and
+   the caret matches the selection tint automatically.
 
    The selection is painted with the CSS Custom Highlight API, so it lands on the exact characters and
    reads like a native selection. It replaced a block-level band with a left rule, which highlighted a

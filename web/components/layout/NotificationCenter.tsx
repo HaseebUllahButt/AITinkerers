@@ -75,7 +75,7 @@ export function NotificationCenter() {
   useEffect(() => { void load(); }, [load]);
 
   // Every two minutes, and only while the tab is visible. A background tab polling forever is a
-  // request every two minutes per open Summit tab, for a number nobody is looking at.
+  // request every two minutes per open SearchOps tab, for a number nobody is looking at.
   useEffect(() => {
     const tick = () => { if (document.visibilityState === "visible") void load(); };
     const id = setInterval(tick, 120_000);

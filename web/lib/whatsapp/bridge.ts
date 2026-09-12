@@ -1,6 +1,6 @@
 // WAHA (WhatsApp HTTP API) bridge — the unofficial transport (docs/WHATSAPP_CHANNEL_PLAN.md).
 // A linked-device relay running on the droplet next to the hermes/ sidecar: the SEO person scans
-// a QR once, and WAHA mirrors their PERSONAL number's messages to Summit and (optionally) sends
+// a QR once, and WAHA mirrors their PERSONAL number's messages to SearchOps and (optionally) sends
 // on its behalf. This exists because the vendor chats already live on personal numbers with full
 // history; the Cloud API (lib/whatsapp/cloudApi.ts) can't see any of that.
 //

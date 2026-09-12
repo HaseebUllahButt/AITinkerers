@@ -6,7 +6,7 @@
 //
 // ── What this will and will not touch ───────────────────────────────────────────────────────────
 //
-// ONLY the `body` of blog entries in Strapi, because that is the only content Summit owns. The sweep's
+// ONLY the `body` of blog entries in Strapi, because that is the only content SearchOps owns. The sweep's
 // most useful output is `site_wide`, which means the reference lives in a shared React template in
 // imagine-web — one code change, in another repo, via a PR. A content corrector cannot fix those, and
 // the dangerous version of this module is the one that reports success after changing nothing. So a

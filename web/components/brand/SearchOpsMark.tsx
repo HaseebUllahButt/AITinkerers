@@ -1,5 +1,5 @@
 /**
- * The Summit mark — twin peaks.
+ * The SearchOps mark — twin peaks.
  *
  * Vector rather than an image file: it has to sit at 16px in a browser tab and at 32px in the sidebar
  * without a second asset, and a transparent background is guaranteed by construction rather than by
@@ -16,9 +16,9 @@
  * `src/app/icon.svg` is the favicon Next serves by file convention. It carries the same geometry but
  * switches on `prefers-color-scheme` instead, since a static file cannot see the in-app theme.
  */
-export function SummitMark({ className }: { className?: string }) {
+export function SearchOpsMark({ className }: { className?: string }) {
   return (
-    <svg viewBox="14 14 72 72" className={className} role="img" aria-label="Summit">
+    <svg viewBox="14 14 72 72" className={className} role="img" aria-label="SearchOps">
       {/* Back peak first, so the front peak overlaps it. */}
       <path d="M53.6 24.8 L84 75.3 L60.2 75.3 L42 45 Z" fill="var(--mark-back)" />
       <path d="M36.4 41.4 L56.5 75.3 L16.4 75.3 Z" fill="var(--mark-front)" />

@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the composer's textarea.
+// SearchOps Agent — the composer's textarea.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §11.2 (autosize), §11.3 (Enter/IME), §11.6 (focus).
 //

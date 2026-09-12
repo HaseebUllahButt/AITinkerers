@@ -142,11 +142,11 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     // ── Verify what actually landed, before calling this synced ───────────────────────────────────
     //
     // A 2xx from Strapi is not proof the fields arrived. Measured on draft
-    // 3c200005 / entry 861: Summit held thumbnail_media_id 17133 (a real file —
+    // 3c200005 / entry 861: SearchOps held thumbnail_media_id 17133 (a real file —
     // deepseek-v4-pro-ga-and-v4-flash-explained-thumbnail.png), the sync returned success, synced_rev
     // was stamped equal to rev so the UI said "In Strapi (draft)" with no staleness — and the entry's
     // thumbnail read back as {"data":null}. The publish gate then passed it, because the gate checks
-    // Summit's OWN row rather than the CMS. That is how a draft was "ready to go" with an empty
+    // SearchOps's OWN row rather than the CMS. That is how a draft was "ready to go" with an empty
     // required media field in the place it actually has to be filled.
     //
     // Media relations are the fields this happens to: they are set by integer id, and an id Strapi
@@ -179,7 +179,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
         if (!expected) continue;              // nothing to land
         const actual = landed(got);
         if (actual !== expected) {
-          mediaDrift.push(`${field}: Summit has media ${expected}, Strapi has ${actual ?? "nothing"}`);
+          mediaDrift.push(`${field}: SearchOps has media ${expected}, Strapi has ${actual ?? "nothing"}`);
         }
       }
     } catch {
@@ -195,7 +195,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
         `Strapi accepted the sync but did not store every image: ${mediaDrift.join("; ")}. ` +
         "Re-attach the image in Strapi, or re-sync — this draft is NOT ready to publish.";
       // Record the entry id BEFORE failing the sync. The entry was created; only the verification
-      // failed. Returning without stamping it orphans a real Strapi entry that Summit has no record
+      // failed. Returning without stamping it orphans a real Strapi entry that SearchOps has no record
       // of, so the next sync takes the `!strapiId` branch and CREATES A SECOND ONE. Observed: entry
       // 862 existed with both images attached while the draft's strapi_id was still null.
       //

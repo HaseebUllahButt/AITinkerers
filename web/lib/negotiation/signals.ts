@@ -64,7 +64,7 @@ function countOutbound(html: string, host: string): { total: number; external: n
 async function fetchHomepage(host: string): Promise<string | null> {
   try {
     const res = await fetch(`https://${host}`, {
-      headers: { "user-agent": "Mozilla/5.0 (compatible; SummitBot/1.0; +https://www.imagine.art)" },
+      headers: { "user-agent": "Mozilla/5.0 (compatible; SearchOpsBot/1.0; +https://www.imagine.art)" },
       redirect: "follow",
       signal: AbortSignal.timeout(8_000),
     });

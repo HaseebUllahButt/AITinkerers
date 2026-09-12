@@ -554,7 +554,7 @@ async function recentlyDrafted(days = 30): Promise<string[]> {
   return (data ?? []).map((r: { subject: string | null }) => r.subject).filter((s): s is string => !!s);
 }
 
-/** Draft titles already in Summit, written by anyone. The judge needs these to spot an overlap the
+/** Draft titles already in SearchOps, written by anyone. The judge needs these to spot an overlap the
  *  board's own coverage check may have missed — it matches on tokens, and a differently-worded title
  *  about the same thing gets through. */
 async function existingTitles(limit = 200): Promise<string[]> {
@@ -1159,7 +1159,7 @@ export async function runAutopilot(opts: { slot?: string; force?: boolean } = {}
     // Deliberately NOT posted on a skip. Three "nothing to write today" pings a day is how a channel
     // learns to ignore this bot; the skip is on the audit table for anyone who asks.
     if (process.env.BLOG_AUTOPILOT_ANNOUNCE_PICKS === "1" && (await getWebhook())) {
-      const open = linkOr(`/drafts/${started.accepted.draft_id}`, "Follow it in Summit →");
+      const open = linkOr(`/drafts/${started.accepted.draft_id}`, "Follow it in SearchOps →");
       await slackPost([
         `:robot_face: *Autopilot — writing a post* (${slot})`,
         `${tagFor("blog")} — heads-up, no action yet.`,
@@ -1168,7 +1168,7 @@ export async function runAutopilot(opts: { slot?: string; force?: boolean } = {}
         `Type: ${type?.label ?? typeKey} · keyword: ${keyword}${keywordWas ? ` (retargeted off "${keywordWas}")` : ""}`,
         `Chosen from ${candidates.length} candidate(s) · source: ${chosen.source ?? "—"}`,
         open,
-        "_Nothing is published. A draft will land in Summit for review._",
+        "_Nothing is published. A draft will land in SearchOps for review._",
       ].filter(Boolean).join("\n")).catch(() => {});
     }
 

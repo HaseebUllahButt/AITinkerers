@@ -132,7 +132,7 @@ export async function checkCollectionFit(
       ok: false,
       error: e instanceof Error ? e.message : "could not read the Strapi schema",
       reason:
-        `This draft is set to sync into "${collection}" rather than the blog, and Summit could not read ` +
+        `This draft is set to sync into "${collection}" rather than the blog, and SearchOps could not read ` +
         "that collection's schema to check the fields would survive. Refusing rather than guessing — " +
         "clear the draft's Strapi collection to publish it to the blog, or retry when Strapi answers.",
     };

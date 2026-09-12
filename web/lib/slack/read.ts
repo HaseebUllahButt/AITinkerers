@@ -13,7 +13,7 @@
 //
 // ── Read-only, and deliberately so ──────────────────────────────────────────────────────────────
 //
-// This module calls conversations.history and nothing else. Summit's bot posts through slack/post.ts;
+// This module calls conversations.history and nothing else. SearchOps's bot posts through slack/post.ts;
 // nothing here writes, reacts, joins or invites. A writing surface that can also read a general
 // channel is one prompt injection away from quoting an internal conversation into a public blog post,
 // so the guard is at the other end too: practitioner.ts tells the writer that channel content is
@@ -138,7 +138,7 @@ export async function readUpdatesChannel(
 function explain(err: string, channel: string): string {
   switch (err) {
     case "not_in_channel":
-      return `Summit's bot is not in <#${channel}>. Someone in the workspace needs to run "/invite @summit" there once; the token already has channels:history.`;
+      return `SearchOps's bot is not in <#${channel}>. Someone in the workspace needs to run "/invite @summit" there once; the token already has channels:history.`;
     case "channel_not_found":
       return `Channel ${channel} does not exist or is private. Set SLACK_UPDATES_CHANNEL_ID to a public channel the bot can join.`;
     case "missing_scope":

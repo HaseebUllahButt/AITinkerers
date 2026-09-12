@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — starter chips.
+// SearchOps Agent — starter chips.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §11.7.
 //

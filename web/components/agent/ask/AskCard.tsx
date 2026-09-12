@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the blocking question card.
+// SearchOps Agent — the blocking question card.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §9.2 (protocol), §9.3 (the card), §9.4 (three phases),
 // §9.7 (countdown), §9.9 (scroll).

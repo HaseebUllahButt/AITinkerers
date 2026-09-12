@@ -7,10 +7,10 @@
 // Until now this mapped onto `api::resource.resource`. That was the wrong collection. Measured against
 // the live instance (https://imagine-blog.vyro.ai):
 //
-//     /api/resources       21 entries   ← what Summit was publishing into
+//     /api/resources       21 entries   ← what SearchOps was publishing into
 //     /api/imagine-webs   759 entries   ← the real blog corpus, "blogs" in the Strapi sidebar
 //
-// So every draft Summit synced landed in a 21-row collection the content team does not work in. It also
+// So every draft SearchOps synced landed in a 21-row collection the content team does not work in. It also
 // explains two things that looked like separate problems: `markupSchema` appeared "missing" (it exists on
 // imagine-web, not on resources), and the Strapi field arrangement never matched what the team sees,
 // because it was mirroring a different content type.
@@ -21,7 +21,7 @@
 //     resourceHeroCTA   -> blogHeroCTA     (same component: blog-components.blog-hero-cta)
 //     resourceMetaData  -> blogsMetaData   (same component: components.metadata)
 //     + markupSchema  json         JSON-LD, the field the SEO team asked for
-//     + likes         biginteger   not Summit's to write
+//     + likes         biginteger   not SearchOps's to write
 //
 // `category` also retargets: api::resource-category (2 entries) -> api::blog-category (15 real ones).
 //

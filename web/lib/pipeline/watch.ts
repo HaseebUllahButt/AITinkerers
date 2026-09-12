@@ -84,7 +84,7 @@ export async function checkAndNotifyAuthor(
         notified++;
         const info = await getSenderInfo(userEmail);
         const subject = `New post from ${author.full_name}`;
-        const body = `${author.full_name} just published something new:\n\n${article.title ?? "(untitled)"}\n${article.url}\n\nYou're getting this because you're watching ${author.full_name} in Summit.`;
+        const body = `${author.full_name} just published something new:\n\n${article.title ?? "(untitled)"}\n${article.url}\n\nYou're getting this because you're watching ${author.full_name} in SearchOps.`;
         const result = info.pass
           ? await sendEmailAs({ user: userEmail, pass: info.pass, fromName: info.fromName, to: userEmail, subject, body })
           : await sendEmail({ to: userEmail, subject, body });

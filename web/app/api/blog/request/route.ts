@@ -4,7 +4,7 @@ import {
   blogRequestAuthorised, parseBlogRequest, startBlogRequest, blogRequestStatus,
 } from "@/lib/blog/request";
 
-// The public entry point: someone outside Summit asks for a blog draft.
+// The public entry point: someone outside SearchOps asks for a blog draft.
 //
 // POST /api/blog/request      { topic, ... }  → 202 { request_id, draft_id, status_url }
 // GET  /api/blog/request?id=… → progress for that request

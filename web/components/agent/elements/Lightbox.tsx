@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the full-size image viewer.
+// SearchOps Agent — the full-size image viewer.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §8.4.
 //

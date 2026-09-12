@@ -11,7 +11,7 @@
 // on every token is a perf sink AND a DOM-ownership fight with React (Chainlit papers over it with a
 // `data-highlighted` guard). And every off-the-shelf theme ships as a global, theme-blind stylesheet
 // — `import 'highlight.js/styles/monokai-sublime.css'` makes code blocks dark in light mode. The
-// tokenizer below is ~60 lines, colours itself from Summit's own tokens (so it is correct in both
+// tokenizer below is ~60 lines, colours itself from SearchOps's own tokens (so it is correct in both
 // themes automatically), and adds no dependency.
 
 import { Check, Copy } from "lucide-react";
@@ -158,7 +158,7 @@ export function tokenize(code: string, lang: string): Token[] {
   return out;
 }
 
-// Colours come from Summit's own tokens, which are defined for both themes in globals.css. No
+// Colours come from SearchOps's own tokens, which are defined for both themes in globals.css. No
 // hardcoded hex, no imported theme stylesheet.
 const TOKEN_CLASS: Readonly<Record<TokenKind, string>> = {
   comment: "text-muted-foreground italic",

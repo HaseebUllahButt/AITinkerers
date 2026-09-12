@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — dead air.
+// SearchOps Agent — dead air.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §7.7.
 //

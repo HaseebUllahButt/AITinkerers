@@ -1,10 +1,10 @@
 "use client";
 
-// Summit Agent — one image, in a box whose height is known before the bytes are.
+// SearchOps Agent — one image, in a box whose height is known before the bytes are.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §8.2.
 //
-// This file exists because of D4: Summit's agent generates images through the generate_assets tool
+// This file exists because of D4: SearchOps's agent generates images through the generate_assets tool
 // and neither of the old chat surfaces ever displayed them.
 //
 // Four things a bare <img> does not do, all of them required here:

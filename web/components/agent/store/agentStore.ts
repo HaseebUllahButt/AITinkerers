@@ -1,4 +1,4 @@
-// Summit Agent — the transcript store.
+// SearchOps Agent — the transcript store.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §5.1, §5.2, §5.5.
 //

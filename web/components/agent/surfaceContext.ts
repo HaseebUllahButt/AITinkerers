@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the one context value the surface is allowed to have.
+// SearchOps Agent — the one context value the surface is allowed to have.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §5.1 hard rule 3 — "Nothing that changes at token frequency goes
 // into React context. Context bypasses `memo` entirely. `runActive` is a PROP, not context. The

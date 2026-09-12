@@ -1,6 +1,6 @@
 "use client";
 
-// Summit Agent — the transcript.
+// SearchOps Agent — the transcript.
 //
 // Spec: SUMMIT-AGENT-UI-SPEC.md §5.4 (memo boundaries), §7.7 (dead air).
 //
