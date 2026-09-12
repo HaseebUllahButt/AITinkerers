@@ -6,7 +6,7 @@
 // own header comment says it covers a draft that "arrived from Atlas or was written by Summer". The
 // second half was never true: Summer stamped `ctx.userEmail`, so every draft it wrote was
 // indistinguishable from one somebody typed by hand, and the sweep skipped all of them. Measured on
-// draft a21111ed ("Grok 4.6", created_by raamiz.niazi@imagine.art) — written by Summer, never
+// draft a21111ed ("Grok 4.6", created_by owner@northwind.example) — written by Summer, never
 // thumbnailed, and a missing thumbnail is a hard publish blocker.
 //
 // The gate itself was right. What was missing was any way for Summer's writes to say so.
@@ -72,7 +72,7 @@ export function actedFor(createdBy: string | null | undefined): string | null {
 /**
  * A short, scannable origin label — what a badge shows and a sentence names.
  *
- * `api:summer:raamiz.niazi@imagine.art` → "summer", not "summer:raamiz.niazi@imagine.art". The raw
+ * `api:summer:owner@northwind.example` → "summer", not "summer:owner@northwind.example". The raw
  * value stays searchable wherever search reads created_by directly, so nothing is lost by shortening
  * the label; a badge is a glance, not a record.
  */

@@ -33,7 +33,7 @@ export async function classifyContentSafety(title: string, text: string, abortSi
       headers: {
         "Authorization": `Bearer ${apiKey}`,
         "Content-Type": "application/json",
-        "HTTP-Referer": "https://genai-scout.imaginearts.ai",
+        "HTTP-Referer": "https://genai-scout.northwinds.ai",
       },
       body: JSON.stringify({
         model: DEFAULT_LLM_MODEL,

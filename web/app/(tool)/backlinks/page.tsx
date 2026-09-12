@@ -135,7 +135,7 @@ const INTERVENTION_LABEL: Record<string, { label: string; icon: typeof Phone }> 
 
 type SortKey = "score" | "dr" | "email";
 
-/** "hussain.abbas@imagine.art" → "Hussain Abbas"; null → "shared" (a pre-ownership campaign). */
+/** "editor@northwind.example" → "Hussain Abbas"; null → "shared" (a pre-ownership campaign). */
 function ownerLabel(createdBy: string | null): string {
   if (!createdBy) return "shared";
   return createdBy.split("@")[0].split(/[._-]+/).filter(Boolean)

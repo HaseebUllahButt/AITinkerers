@@ -76,7 +76,7 @@ const BROKEN: ReadonlySet<string> = new Set(["404", "410", "soft", "home", "serv
  * that falsely pinging writers is the worse failure there. Correct for a crawl over the whole live
  * site; wrong for this gate.
  *
- * On imagine.art the reasoning inverts. There is no bot-block to be fooled by on our own domain, so
+ * On northwind.example the reasoning inverts. There is no bot-block to be fooled by on our own domain, so
  * a genuine 404 status is our page being missing, and the cost of ignoring it is shipping a post
  * that links to it. Measured while building this: a nonexistent /features/ path returns 404 with a
  * full app shell, so the audit reports `unreach` and this gate would have waved it through.
@@ -166,7 +166,7 @@ function similarity(a: string, b: string): number {
 }
 
 const slugOf = (url: string) => {
-  try { return new URL(url, "https://www.imagine.art").pathname.replace(/\/+$/, "").split("/").pop() ?? ""; }
+  try { return new URL(url, "https://www.northwind.example").pathname.replace(/\/+$/, "").split("/").pop() ?? ""; }
   catch { return ""; }
 };
 

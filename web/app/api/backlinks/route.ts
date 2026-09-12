@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
   }
   try {
     const keywords = normalizeKeywords(body.keywords);
-    // "/" is the site itself. The pitch then asks for a link to imagine.art rather than to one
+    // "/" is the site itself. The pitch then asks for a link to northwind.example rather than to one
     // page, which is what a brand-level round wants anyway.
     const bl = await ensureBacklinkCampaign(target ?? "/", {
       name: name ?? undefined,

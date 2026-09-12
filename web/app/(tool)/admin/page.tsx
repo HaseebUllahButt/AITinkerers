@@ -357,7 +357,7 @@ export default function AdminPage() {
                     <Input
                       value={brandName}
                       onChange={(e) => setBrandName(e.target.value)}
-                      placeholder="e.g. imagineart"
+                      placeholder="e.g. northwind"
                     />
                   </div>
                   <div className="space-y-1">
@@ -365,7 +365,7 @@ export default function AdminPage() {
                     <Input
                       value={brandAliases}
                       onChange={(e) => setBrandAliases(e.target.value)}
-                      placeholder="e.g. imagine.art, ImagineArt, Imagine Art"
+                      placeholder="e.g. northwind.example, Northwind, Northwind"
                     />
                   </div>
                   <div className="flex gap-2">

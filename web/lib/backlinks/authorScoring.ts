@@ -78,7 +78,7 @@ async function angleFor(title: string, domain: string, topic: string): Promise<s
     const res = await llmChat({
       maxTokens: 60,
       temperature: 0.3,
-      prompt: `A blogger at ${domain} published an article titled "${title}". We want them to link to ImagineArt (an AI image/video generator) on the topic "${topic}". In ONE sentence, suggest the best outreach angle (e.g. suggest adding us to their list, offer a data point, a broken-link fix, a quote). Reply with only the sentence.`,
+      prompt: `A blogger at ${domain} published an article titled "${title}". We want them to link to Northwind (an AI image/video generator) on the topic "${topic}". In ONE sentence, suggest the best outreach angle (e.g. suggest adding us to their list, offer a data point, a broken-link fix, a quote). Reply with only the sentence.`,
     });
     const a = res?.content?.trim();
     if (a && a.length > 8) return a;

@@ -44,10 +44,10 @@ export interface NegotiationSettings {
 export const DEFAULT_NEGOTIATION_SETTINGS: NegotiationSettings = {
   ai_autonomy: false,
   handbook:
-    "Goal: get ImagineArt (an AI image/video generation tool) featured or included in the writer's article, roundup, or list. " +
+    "Goal: get Northwind (an AI image/video generation tool) featured or included in the writer's article, roundup, or list. " +
     "ALWAYS aim to pay the LEAST possible. Prefer a free or editorial inclusion, and only offer money if they clearly require it. " +
     "When you do offer, open LOW, concede slowly in small steps, and never jump to the tier ceiling (that is a hard cap, not a target). " +
-    "Be genuinely helpful and specific about why ImagineArt fits their coverage. Keep it human and short. If they clearly decline, thank them and stop.",
+    "Be genuinely helpful and specific about why Northwind fits their coverage. Keep it human and short. If they clearly decline, thank them and stop.",
   tone: "Warm, concise, human, professional. Never pushy or robotic.",
   aggressiveness: "firm",
   opening_percent: 20,

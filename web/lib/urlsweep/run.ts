@@ -6,7 +6,7 @@
 //
 // The audit already crawls the sitemap and reads every anchor on every page, so the expensive half
 // of this is built. But it only stores links that are DEAD, and a retired URL is almost never dead:
-// /dashboard/ 308s to /dashboard, trust.imagine.art answers 200. All four of the URLs this was
+// /dashboard/ 308s to /dashboard, trust.northwind.example answers 200. All four of the URLs this was
 // asked about are classified "ok" and discarded, and links that ARE in the sitemap are skipped
 // before they are even looked at. No run of that audit could ever have answered this.
 //

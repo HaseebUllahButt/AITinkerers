@@ -2,7 +2,7 @@
 //
 // The sweep finds every place the site points at something decommissioned and groups it into a work
 // list. Nothing acted on that list, so a run ended with a person opening Strapi and editing bodies by
-// hand — 106 published posts reference imagine.art/dashboard, which is not a by-hand job.
+// hand — 106 published posts reference northwind.example/dashboard, which is not a by-hand job.
 //
 // ── What this will and will not touch ───────────────────────────────────────────────────────────
 //
@@ -27,8 +27,8 @@
 //   2. The destination is verified against `site_urls` — the real sitemap — BEFORE anything is written.
 //      Replacing a dead link with a dead link is the one outcome worse than leaving it alone, and it is
 //      exactly what a plausible-looking replacement path produces.
-//   3. Whole URLs are replaced, never substrings. A literal replace of "imagine.art/dashboard" also
-//      rewrites "imagine.art/dashboard/billing" into a path nobody chose.
+//   3. Whole URLs are replaced, never substrings. A literal replace of "northwind.example/dashboard" also
+//      rewrites "northwind.example/dashboard/billing" into a path nobody chose.
 //   4. publishedAt is never sent, so a live page stays live and a draft stays a draft.
 import { supabaseAdmin } from "@/lib/db/supabase";
 import { updateEntry, blogType } from "@/lib/strapi/client";
@@ -85,7 +85,7 @@ function strapiConfig(): { url: string; token: string } | null {
  *
  * Deliberately greedy about what counts as a URL and deliberately careful about where it stops:
  * markdown puts a closing paren right after the href, and HTML puts a quote there, so both terminate
- * the match. Trailing punctuation is trimmed because "see https://x.imagine.art/foo." is a sentence,
+ * the match. Trailing punctuation is trimmed because "see https://x.northwind.example/foo." is a sentence,
  * not a path ending in a full stop.
  */
 export function urlsIn(body: string): string[] {
@@ -101,7 +101,7 @@ export function urlsIn(body: string): string[] {
 async function destinationLive(to: string): Promise<{ ok: boolean; why: string }> {
   let path: string;
   try {
-    const u = new URL(to, "https://www.imagine.art");
+    const u = new URL(to, "https://www.northwind.example");
     if (!/(^|\.)imagine\.art$/i.test(u.hostname)) {
       // An external destination cannot be checked against our sitemap. Allowed, but said out loud.
       return { ok: true, why: `${u.hostname} is external, so it was not checked against the sitemap.` };
@@ -122,7 +122,7 @@ async function destinationLive(to: string): Promise<{ ok: boolean; why: string }
  * Work out the run, and optionally perform it.
  *
  * `from` is matched as a whole URL against the sweep's own pattern logic when it looks like a host or a
- * path prefix, so "shorts.imagine.art" catches every URL on that host rather than only the exact
+ * path prefix, so "shorts.northwind.example" catches every URL on that host rather than only the exact
  * string. That is the shape the sweep reports in, so it is the shape a caller has in hand.
  */
 export async function correctRetiredLinks(input: {
@@ -340,7 +340,7 @@ export function replacementFor(url: string, from: string, to: string): string {
     if (bare.startsWith("/")) {
       const prefix = bare.replace(/\/$/, "");
       const tail = u.pathname.startsWith(prefix) ? u.pathname.slice(prefix.length) : "";
-      const dest = new URL(to.includes("://") ? to : `https://www.imagine.art${to.startsWith("/") ? to : `/${to}`}`);
+      const dest = new URL(to.includes("://") ? to : `https://www.northwind.example${to.startsWith("/") ? to : `/${to}`}`);
       return `${dest.origin}${dest.pathname.replace(/\/$/, "")}${tail}${u.search}${u.hash}`;
     }
   } catch { /* fall through */ }

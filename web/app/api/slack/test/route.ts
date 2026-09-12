@@ -23,7 +23,7 @@ async function authorized(req: NextRequest): Promise<boolean> {
 
 // Minimal but valid IndexingReport so we exercise the REAL page-health composer (not a mock of it).
 const SAMPLE_REPORT = {
-  target: "imagine.art",
+  target: "northwind.example",
   analyzed: 20,
   counts: { verdicts: { pass: 14, flag: 5, block: 1 }, jsGated: 3, templates: 6, issues: 8, p0: 1 },
   urls: [],
@@ -42,10 +42,10 @@ function samples(): { type: string; text: string }[] {
     {
       type: "link-audit digest",
       text: [
-        ":link: *imagine.art link audit*",
+        ":link: *northwind.example link audit*",
         "Found *2* broken links across 1,482 pages checked.",
         ":writing_hand: *By author*",
-        "• <https://imagine.art/blog/sample|/blog/sample> — 404 (dead outbound link)",
+        "• <https://northwind.example/blog/sample|/blog/sample> — 404 (dead outbound link)",
       ].join("\n"),
     },
     {
@@ -55,7 +55,7 @@ function samples(): { type: string; text: string }[] {
     {
       type: "GEO citation share",
       text: [
-        ":mag: *AI citation check — ImagineArt*",
+        ":mag: *AI citation check — Northwind*",
         "Appears in *40%* of AI answers (5 answers across 2 engines: Perplexity, Gemini).",
         "*Source gaps* (sites the AI cites for competitors, not us):",
         "• zapier.com (2)",

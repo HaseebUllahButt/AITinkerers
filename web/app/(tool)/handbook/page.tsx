@@ -134,7 +134,7 @@ export default function HandbookPage() {
         <CardContent className="space-y-4">
           <div className="space-y-1.5">
             <Label className="text-xs uppercase tracking-wide text-muted-foreground">Goal & criteria</Label>
-            <Textarea rows={5} value={s.handbook} onChange={(e) => set("handbook", e.target.value)} placeholder="e.g. Get ImagineArt featured in their article…" />
+            <Textarea rows={5} value={s.handbook} onChange={(e) => set("handbook", e.target.value)} placeholder="e.g. Get Northwind featured in their article…" />
           </div>
           <div className="space-y-1.5">
             <Label className="text-xs uppercase tracking-wide text-muted-foreground">Tone</Label>

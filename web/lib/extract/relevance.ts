@@ -9,7 +9,7 @@ const STRONG_SIGNALS = [
   "text-to-image", "text to image", "diffusion model", "sora", "runway ml", "ideogram",
   "flux model", "ai video", "ai music", "ai writing", "udio", "suno", "pika labs",
   "leonardo ai", "adobe firefly", "gpt-4", "gpt4", "ai tool", "ai tools",
-  "imagine.art", "imagineart", "kling ai", "luma ai", "heygen", "invideo",
+  "northwind.example", "northwind", "kling ai", "luma ai", "heygen", "invideo",
 ];
 
 const OFF_TOPIC = [

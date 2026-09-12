@@ -386,7 +386,7 @@ export const BrokenLinksPanel = forwardRef<BrokenLinksHandle, { onSummary?: (s: 
       {/* Controls */}
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <p className="text-sm text-muted-foreground max-w-2xl">
-          Crawls every page in imagine.art&apos;s sitemap and flags links that 404 (including soft 404s). Runs in the
+          Crawls every page in northwind.example&apos;s sitemap and flags links that 404 (including soft 404s). Runs in the
           background — safe to leave this tab.
         </p>
         <div className="flex items-center gap-2 shrink-0">

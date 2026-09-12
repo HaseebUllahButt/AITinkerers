@@ -3,7 +3,7 @@
 // Voice profiles: the brand styles the AI writer can be pointed at.
 //
 // The reason this is a page rather than a config file: the SEO team owns tone of voice, they have
-// more than one (the ImagineArt house voice plus the Misher F&B persona), and they need to change a
+// more than one (the Northwind house voice plus the Misher F&B persona), and they need to change a
 // banned word or add an internal link without waiting for a deploy.
 //
 // The "What the model actually sees" panel is the important part of this screen. Everything else is

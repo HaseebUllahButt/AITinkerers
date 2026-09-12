@@ -59,7 +59,7 @@ export function DailyDigestCard() {
         <div className="space-y-1.5">
           <Label className="text-xs uppercase tracking-wide text-muted-foreground">Recipient</Label>
           <div className="flex gap-2">
-            <Input type="email" placeholder="zain@imagine.art" value={recipient} onChange={(e) => setRecipient(e.target.value)} />
+            <Input type="email" placeholder="writer@northwind.example" value={recipient} onChange={(e) => setRecipient(e.target.value)} />
             <Button variant="outline" onClick={() => save({ recipient })} disabled={saving || !recipient.trim()} className="shrink-0">
               {saving && <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />}Save
             </Button>

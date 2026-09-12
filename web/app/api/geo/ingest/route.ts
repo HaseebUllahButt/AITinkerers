@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ingestLines, type IngestLine } from "@/lib/geo/store";
 
-// Where imagine.art's access logs arrive.
+// Where northwind.example's access logs arrive.
 //
 // ── Why this is a shared-secret endpoint and not a session one ───────────────────────────────────
 //

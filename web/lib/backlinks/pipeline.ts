@@ -82,7 +82,7 @@ function sanitizeModelText(text: string): string {
 }
 
 function normalizeTarget(input: string): { url: string; path: string } {
-  const domain = "imagine.art";
+  const domain = "northwind.example";
   const path = toPath(input.startsWith("http") ? input : `https://${domain}${input.startsWith("/") ? "" : "/"}${input}`);
   return { url: `https://${domain}${path}`, path };
 }
@@ -114,7 +114,7 @@ export async function ensureBacklinkCampaign(
 
   // No slug means no topic to read (the campaign targets the site itself — an "alternatives" round,
   // say, where the point is the brand rather than one money page). The pitch then talks about
-  // ImagineArt rather than about a page, and the campaign's own name is what labels it.
+  // Northwind rather than about a page, and the campaign's own name is what labels it.
   const pageTopic = topicFromOrNull(path);
   const label = name ?? path;
   // Seeding the discovery keywords with "our tool" would make every later search useless, so with no
@@ -124,7 +124,7 @@ export async function ensureBacklinkCampaign(
 
   // The offer is stated in the subject and in the first line of the ask, not buried.
   //
-  // The version this replaces asked "would you consider adding ImagineArt as an option?" and offered a
+  // The version this replaces asked "would you consider adding Northwind as an option?" and offered a
   // free account, assets, or data. To a publisher who sells placements that is not an incentive — it asks
   // them to work for nothing and makes the sender look like they do not know how the business works. The
   // measured result was a 0.4% win rate, and the target of 50 links a week is arithmetically unreachable
@@ -142,10 +142,10 @@ export async function ensureBacklinkCampaign(
   const body =
     `Hi {{first_name}},\n\n{{custom_line}}\n\n` +
     `I'll be direct, since I know you get a lot of these: we'd like to pay for a collaboration. ` +
-    `ImagineArt is an AI image and video generator ({{target_url}}), and we'd like to be included in that piece. ` +
+    `Northwind is an AI image and video generator ({{target_url}}), and we'd like to be included in that piece. ` +
     `We have budget allocated for this and we're happy to work to your usual rate and terms.\n\n` +
     `If you're open to it, reply with what you charge and how you prefer to handle it, and I'll get it moving.\n\n` +
-    `The piece I mean: {{article_link}}\n\nThanks,\nThe ImagineArt team`;
+    `The piece I mean: {{article_link}}\n\nThanks,\nThe Northwind team`;
   // The old guidance said "(title given) … naming a detail a skim would miss" — with only a title
   // to work from, that is an instruction to fabricate, and the fabricated specifics are what the
   // team read as "generic and robotic". The prompt now carries extracted article text; the
@@ -390,12 +390,12 @@ export function sitePitch(input: {
     `Hi ${first},\n\n` +
     `I'll be direct, since I know you get a lot of these: we'd like to pay for a content collaboration ` +
     `with ${publication}.\n\n` +
-    `ImagineArt is an AI image and video generator (${input.targetUrl}). We're open to whatever suits ` +
+    `Northwind is an AI image and video generator (${input.targetUrl}). We're open to whatever suits ` +
     `how you work — a guest post we write to your brief and your standards, a sponsored piece, or a ` +
     `mention in something you already have planned. We have budget allocated for this and we're happy ` +
     `to work to your usual rate and terms.\n\n` +
     `If you're open to it, reply with what you charge and how you prefer to handle it, and I'll get it ` +
-    `moving.\n\nThanks,\nThe ImagineArt team`;
+    `moving.\n\nThanks,\nThe Northwind team`;
   return { subject, body };
 }
 
@@ -946,7 +946,7 @@ export async function verifyBacklinks(
     let found = false;
     $?.("a[href]").each((_, el) => {
       const href = $(el).attr("href") || "";
-      try { if (toPath(new URL(href, p.prospect_url).toString()) === bl.target_path && new URL(href, p.prospect_url).host.includes("imagine.art")) found = true; } catch { /* ignore */ }
+      try { if (toPath(new URL(href, p.prospect_url).toString()) === bl.target_path && new URL(href, p.prospect_url).host.includes("northwind.example")) found = true; } catch { /* ignore */ }
     });
 
     if (found) {
@@ -976,12 +976,12 @@ export async function verifyBacklinks(
 // ── Wins the campaign boards can't see ─────────────────────────────────────────
 // verifyBacklinks only crawls backlink_prospects.prospect_url — but most of the funnel's real
 // wins were closed through PLAIN workflows with no prospect row at all. Measured 2026-08-18:
-// three live imagine.art links from replied threads (wireflow.ai, abyssale.com, a Substack),
+// three live northwind.example links from replied threads (wireflow.ai, abyssale.com, a Substack),
 // of which two were invisible to every board because no backlink campaign held the author.
 // This sweep closes that hole: every author who ever REPLIED to an initial that has no recorded
-// success gets their stored article pages re-crawled for a live imagine.art link, and a sighting
+// success gets their stored article pages re-crawled for a live northwind.example link, and a sighting
 // stamps success_at/success_link on the thread — the same fields the inbox and sending pages
-// already badge. ANY imagine.art path counts (a /workflow link won off a Freepik piece is a real
+// already badge. ANY northwind.example path counts (a /workflow link won off a Freepik piece is a real
 // win even though no campaign targets /workflow). Idempotent via the success_at IS NULL filter.
 export async function sweepRepliedWins(
   opts: { timeBudgetMs?: number } = {},
@@ -1033,7 +1033,7 @@ export async function sweepRepliedWins(
     let target: string | null = null;
     $("a[href]").each((_, el) => {
       const href = $(el).attr("href") || "";
-      try { if (new URL(href, page.url).host.includes("imagine.art")) target = href; } catch { /* ignore */ }
+      try { if (new URL(href, page.url).host.includes("northwind.example")) target = href; } catch { /* ignore */ }
     });
     if (!target) return;
     wonAuthors.add(page.authorId);
@@ -1041,7 +1041,7 @@ export async function sweepRepliedWins(
     await updateOutreachEmail(emailByAuthor.get(page.authorId)!, {
       success_at: new Date().toISOString(),
       success_link: page.url,
-      success_notes: `imagine.art link (${target}) found live by the replied-authors sweep.`,
+      success_notes: `northwind.example link (${target}) found live by the replied-authors sweep.`,
     });
   })));
   return { checked, won, unreachable, remaining };

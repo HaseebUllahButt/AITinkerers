@@ -75,8 +75,8 @@ export async function generateWhatsappNote(authorName: string, pubName: string, 
 
   const fallback = clampWaNote(
     leadTitle
-      ? `Hi ${first}, I read your piece "${leadTitle}" and wanted to reach out about it. I'm with ImagineArt (AI creative tools) and we'd love to talk about a collaboration on that page. Is this a good place to chat?`
-      : `Hi ${first}, I came across your writing${pubName && pubName !== "your work" ? ` at ${pubName}` : ""} and wanted to reach out. I'm with ImagineArt (AI creative tools) and we'd love to talk about a collaboration. Is this a good place to chat?`
+      ? `Hi ${first}, I read your piece "${leadTitle}" and wanted to reach out about it. I'm with Northwind (AI creative tools) and we'd love to talk about a collaboration on that page. Is this a good place to chat?`
+      : `Hi ${first}, I came across your writing${pubName && pubName !== "your work" ? ` at ${pubName}` : ""} and wanted to reach out. I'm with Northwind (AI creative tools) and we'd love to talk about a collaboration. Is this a good place to chat?`
   );
   if (!OPENROUTER_KEY || (!leadTitle && !leadTopic)) return fallback;
 
@@ -90,7 +90,7 @@ HARD RULES (follow ALL):
 - Under ${MAX_CHARS} characters TOTAL. Two to four short sentences, one paragraph, chat register.
 - Start with "Hi ${first},".
 - Reference their work specifically but briefly. NEVER invent details not listed above.
-- Say you're from ImagineArt (AI creative tools) and want to talk about a collaboration on their piece. Do not name money or terms.
+- Say you're from Northwind (AI creative tools) and want to talk about a collaboration on their piece. Do not name money or terms.
 - End with a short question so replying is easy.
 - NO links or URLs. NEVER use bracketed placeholders like [topic] or {{name}}.
 - NEVER use em-dashes or en-dashes. No hashtags, no emojis, no "I hope this finds you well".${guidance ? `\n\nSENDER'S DIRECTION (obey, still under ${MAX_CHARS} chars):\n${guidance}` : ""}`;

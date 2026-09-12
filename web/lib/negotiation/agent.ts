@@ -254,11 +254,11 @@ export async function draftNegotiationReply(input: DraftInput): Promise<DraftRes
     const pushing = input.action === "push_exchange";
     const assistX = input.assistInput?.trim();
     const out = await llm(
-      `You are doing outreach for ImagineArt (an AI image/video creation tool) via email, leading with a LINK EXCHANGE. Write ONLY the next email body (a reply in an ongoing thread; do not re-introduce yourself fully).
+      `You are doing outreach for Northwind (an AI image/video creation tool) via email, leading with a LINK EXCHANGE. Write ONLY the next email body (a reply in an ongoing thread; do not re-introduce yourself fully).
 
 BRIEF (obey): ${input.exchangeBrief || settings.link_exchange_brief}
 TONE: ${settings.tone}
-THE OFFER: Offer to add THEIR link on our blog post: ${offer.url}. In return, ask for a mention of ImagineArt with a link to ${target.url} (a natural anchor such as "${target.anchor}", but keep anchors varied, never a repeated exact-match phrase). Be specific about why THIS post of ours fits their coverage.
+THE OFFER: Offer to add THEIR link on our blog post: ${offer.url}. In return, ask for a mention of Northwind with a link to ${target.url} (a natural anchor such as "${target.anchor}", but keep anchors varied, never a repeated exact-match phrase). Be specific about why THIS post of ours fits their coverage.
 ${pushing ? "This is a gentle SECOND push: they hesitated on our first offer, so reaffirm the value and present this post as a strong, relevant alternative. Confident, not pushy. One clear ask." : "This is our opening exchange proposal."}
 ${overLength ? "You have already sent several messages, so if there is no clear progress, say you will follow up and wind down rather than nagging." : ""}
 ${assistX ? `\nASSIST CONTEXT (human-provided, real, safe to quote verbatim): ${assistX}\n` : ""}
@@ -311,7 +311,7 @@ After the email, on a NEW last line, output exactly: <<META status=negotiating|a
     const openPctA = Math.min(100, Math.max(0, settings.opening_percent ?? 40));
     const closeAt = Math.max(floor, Math.round(floor + (ceiling - floor) * (openPctA / 100)));
     return {
-      body: sanitizeBody(`Hi ${first},\n\nGreat, glad it works. I'll follow up shortly with a short blurb and everything you need from our side so you can add ImagineArt. Thanks ${first}.\n\nBest,\n${signer}`),
+      body: sanitizeBody(`Hi ${first},\n\nGreat, glad it works. I'll follow up shortly with a short blurb and everything you need from our side so you can add Northwind. Thanks ${first}.\n\nBest,\n${signer}`),
       suggestedOffer: closeAt, shouldStop: true, statusHint: "agreed",
     };
   }
@@ -334,7 +334,7 @@ After the email, on a NEW last line, output exactly: <<META status=negotiating|a
     : "";
 
   const out = await llm(
-    `You are negotiating on behalf of ImagineArt via email. Write ONLY the next email body (a reply in an ongoing thread, so do not re-introduce yourself fully).
+    `You are negotiating on behalf of Northwind via email. Write ONLY the next email body (a reply in an ongoing thread, so do not re-introduce yourself fully).
 
 NEGOTIATION BRIEF (obey): ${settings.handbook}
 TONE: ${settings.tone}

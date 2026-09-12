@@ -123,7 +123,7 @@ export interface SyncResult {
  * `xml` lets a caller sync from a file they already have instead of the network.
  */
 export async function syncSitemap(opts: { sourceUrl?: string; xml?: string; maxChildren?: number } = {}): Promise<SyncResult> {
-  const sourceUrl = opts.sourceUrl ?? "https://www.imagine.art/sitemap.xml";
+  const sourceUrl = opts.sourceUrl ?? "https://www.northwind.example/sitemap.xml";
   const maxChildren = opts.maxChildren ?? 20;
 
   const log = async (r: SyncResult) => {

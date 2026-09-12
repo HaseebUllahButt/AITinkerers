@@ -12,7 +12,7 @@
 // — expected — to return null, and a skip is recorded as a SUCCESS with its reasoning.
 //
 // That is also why the judge is a model call over real rows rather than a score threshold. "Is this
-// worth a post for ImagineArt right now" is an editorial question about novelty, intent and overlap
+// worth a post for Northwind right now" is an editorial question about novelty, intent and overlap
 // with what we already rank for. A cutoff on a confidence field would answer a different, easier
 // question and answer it wrong.
 //
@@ -278,7 +278,7 @@ export async function gapCandidates(limit = 40): Promise<{ candidates: Candidate
       summary: `We have a ${a.category ?? "feature"} page at /${slug} with no article supporting it. `
         + `A post on this term would feed that page rather than compete with it.`,
       source: `Coverage gap — /${slug}`,
-      sourceUrl: `https://www.imagine.art/features/${slug}`,
+      sourceUrl: `https://www.northwind.example/features/${slug}`,
       date: null,
       modality: String(a.category ?? "") || null,
       confidence: null,
@@ -431,7 +431,7 @@ export async function gatherCandidates(): Promise<{ candidates: Candidate[]; not
 
   // ── A launch we do not host is not a candidate ────────────────────────────────────────────────
   //
-  // The guide's one test decides this: an article has to be able to carry real ImagineArt output. We can
+  // The guide's one test decides this: an article has to be able to carry real Northwind output. We can
   // generate on a model we host and we cannot on one we do not, so a research-board launch is only
   // writable when it turns out to be something we run. Where it is, the model page travels with it as
   // the hub to link up to — and the judge is told to prefer those.
@@ -525,7 +525,7 @@ export async function gatherCandidates(): Promise<{ candidates: Candidate[]; not
     notes.push(
       `${answerableLaunches} board launch(es) are models we do NOT host. Writing about them is deliberate — `
       + "user value and domain authority — but each one owes the reader the boundary said plainly (this does "
-      + "not run in ImagineArt) plus what we do offer for the same job. Never a recap of somebody else's "
+      + "not run in Northwind) plus what we do offer for the same job. Never a recap of somebody else's "
       + "announcement.",
     );
   }
@@ -579,12 +579,12 @@ export interface Judgement {
   persona?: string;
 }
 
-const JUDGE_SYSTEM = `You decide whether ImagineArt should publish a blog post right now, about what, and in what form.
+const JUDGE_SYSTEM = `You decide whether Northwind should publish a blog post right now, about what, and in what form.
 
-ImagineArt is an AI creative suite: image generation, video generation, audio/music, avatars, and an
+Northwind is an AI creative suite: image generation, video generation, audio/music, avatars, and an
 "Imagine Computer" side covering chat models, agents and MCP. It hosts over a hundred named models —
-Nano Banana, Seedream, Seedance, Kling, Hailuo, Wan, FLUX, Veo, Sora, Runway and its own ImagineArt
-models. It publishes at imagine.art: feature and model pages under /features and /apps, comparisons
+Nano Banana, Seedream, Seedance, Kling, Hailuo, Wan, FLUX, Veo, Sora, Runway and its own Northwind
+models. It publishes at northwind.example: feature and model pages under /features and /apps, comparisons
 under /compare, articles under /blogs.
 
 ## THE TEST THAT DECIDES EVERYTHING
@@ -659,7 +659,7 @@ ${describeAudiences()}
 
 Choose AT MOST ONE candidate. It must clear all of these:
 - Passes the test at the top of this prompt.
-- Genuinely about what ImagineArt does. Funding, org news, policy and general developer tooling are
+- Genuinely about what Northwind does. Funding, org news, policy and general developer tooling are
   industry news, not posts for this site.
 - Serves a real search intent: do a thing, choose between things, get more out of a model, serve an
   audience.
@@ -838,10 +838,10 @@ and the working title, as little as possible, so that:
 ${HEAD_TERM_RULES.map((r, i) => `${i + 1}. ${r}`).join("\n")}
 3. The keyword is a query a person would actually type. A phrase assembled to dodge a rule is worse
    than the collision — if you cannot find a real query, say so.
-4. It is still an article for imagine.art, about the same subject. Retargeting means moving the query
+4. It is still an article for northwind.example, about the same subject. Retargeting means moving the query
    down-funnel, not changing what the piece is about. If the type calls for named products, at least one
-   side has to be a capability ImagineArt actually offers or a model it runs — a head-to-head between two
-   competitors with ImagineArt absent is not a retarget, it is a different article for a different site.
+   side has to be a capability Northwind actually offers or a model it runs — a head-to-head between two
+   competitors with Northwind absent is not a retarget, it is a different article for a different site.
 ${t ? `5. It takes the shape required for a ${t.label.toLowerCase()}: ${t.keywordShape}` : ""}
 
 Reply with ONLY a JSON object, no prose and no fence:

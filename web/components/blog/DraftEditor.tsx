@@ -947,7 +947,7 @@ export function DraftEditor({ draft, authors, categories, onDraftChanged, onDele
         <div className="grid grid-cols-2 gap-3">
           <Input placeholder="Button text, e.g. Try it free" value={form.hero_cta_text ?? ""}
             onChange={(e) => set("hero_cta_text", e.target.value)} />
-          <Input placeholder="https://imagine.art/..." value={form.hero_cta_url ?? ""}
+          <Input placeholder="https://northwind.example/..." value={form.hero_cta_url ?? ""}
             onChange={(e) => set("hero_cta_url", e.target.value)} />
         </div>
       </div>

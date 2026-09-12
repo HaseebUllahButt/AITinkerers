@@ -181,7 +181,7 @@ export default function GeoPage() {
   const [openPrompt, setOpenPrompt] = useState<string | null>(null);
   const [answers, setAnswers] = useState<Record<string, AiResponse[] | "loading" | "failed">>({});
   const [showDetected, setShowDetected] = useState(false);
-  const [auditUrl, setAuditUrl] = useState("https://www.imagine.art");
+  const [auditUrl, setAuditUrl] = useState("https://www.northwind.example");
   const [fanQuery, setFanQuery] = useState("");
   const [running, setRunning] = useState<string | null>(null);
   const [runNote, setRunNote] = useState<string | null>(null);
@@ -603,7 +603,7 @@ export default function GeoPage() {
                     : "By mentions, against the competitor set in Otterly"} />
               </div>
               <p className="text-xs leading-relaxed text-muted-foreground">
-                {pct(s.domainCoverage)} of answers cited imagine.art itself rather than only naming us, from{" "}
+                {pct(s.domainCoverage)} of answers cited northwind.example itself rather than only naming us, from{" "}
                 {num(s.totalSources)} sources in total. Otterly also reports an average position of{" "}
                 <span className="tabular-nums">{s.averagePosition?.toFixed?.(2) ?? "—"}</span> — the mean place
                 our mention appears inside an answer. It is shown for completeness and nothing on this page is
@@ -1099,7 +1099,7 @@ export default function GeoPage() {
                   <label className="flex-1 min-w-[240px] space-y-1">
                     <span className="text-xs uppercase tracking-wide text-muted-foreground">URL to audit</span>
                     <input value={auditUrl} onChange={(e) => setAuditUrl(e.target.value)}
-                      placeholder="https://www.imagine.art/features/…"
+                      placeholder="https://www.northwind.example/features/…"
                       className="w-full rounded-md border bg-background px-2.5 py-1.5 text-sm" />
                   </label>
                   <Button size="sm" variant="outline" disabled={running !== null}

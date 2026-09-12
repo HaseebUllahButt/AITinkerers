@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import type { ProviderStatus } from "@/app/api/status/route";
 import { clearHistory, clearLastResult, loadHistory, loadLastResult, type AuditRecord } from "@/lib/audit/history";
 import type { AuditResult, Severity } from "@/lib/audit/run";
+import { DEMO_AUDIT } from "@/lib/demo";
 import { ScoreComparison, Scorecards, ShareByEngine, ShareOfVoiceChart } from "@/components/audit/ResultCharts";
 
 const GROUP_LABEL: Record<ProviderStatus["group"], string> = {
@@ -200,9 +201,21 @@ export default function DashboardClient() {
           }
         >
           {history.length === 0 ? (
-            <p className="text-sm text-muted-foreground">
-              Nothing yet. Run an audit from the sidebar and it will appear here.
-            </p>
+            <div className="space-y-3">
+              <p className="text-sm text-muted-foreground">
+                Nothing yet. Run an audit from the landing page or the sidebar.
+              </p>
+              <button
+                onClick={() => setResult(DEMO_AUDIT)}
+                className="border border-border px-4 py-2 text-xs uppercase tracking-wider text-muted-foreground hover:border-primary hover:text-primary"
+              >
+                Load demo data
+              </button>
+              <p className="text-xs text-muted-foreground">
+                A complete audit of a site that does not exist, so every panel can be seen without
+                spending a minute of real crawls and model calls.
+              </p>
+            </div>
           ) : (
             <div className="space-y-1">
               {history.map((h) => (

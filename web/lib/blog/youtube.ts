@@ -1,4 +1,4 @@
-// Embedding ImagineArt's own YouTube videos in blog posts.
+// Embedding Northwind's own YouTube videos in blog posts.
 //
 // A leaf module: no database, no Strapi. The blog writer, Summer and the validator read from here.
 //
@@ -41,9 +41,9 @@
 //
 // If someone enables the Data API later, set YOUTUBE_API_KEY and searchChannel() will use it.
 
-/** ImagineArt's channel — @imagineartofficial. Resolved from the channel page's externalId. */
-export const IMAGINEART_CHANNEL_ID = "UCPo3m7P4hC0ZYDA5ty8CAOg";
-export const IMAGINEART_CHANNEL_URL = "https://www.youtube.com/@imagineartofficial";
+/** Northwind's channel — @northwindofficial. Resolved from the channel page's externalId. */
+export const NORTHWIND_CHANNEL_ID = "UCPo3m7P4hC0ZYDA5ty8CAOg";
+export const NORTHWIND_CHANNEL_URL = "https://www.youtube.com/@northwindofficial";
 
 export interface ChannelVideo {
   id: string;
@@ -83,7 +83,7 @@ function unescapeXml(s: string): string {
  * Never throws — the callers are a writing turn and an autopilot run, and neither should die because
  * YouTube was slow.
  */
-export async function recentChannelVideos(channelId = IMAGINEART_CHANNEL_ID): Promise<ChannelFeed> {
+export async function recentChannelVideos(channelId = NORTHWIND_CHANNEL_ID): Promise<ChannelFeed> {
   try {
     const res = await fetch(
       `https://www.youtube.com/feeds/videos.xml?channel_id=${encodeURIComponent(channelId)}`,
@@ -154,7 +154,7 @@ export function isOurEmbeddableUrl(url: string): boolean {
 
 const STOP = new Set([
   "the", "a", "an", "and", "or", "for", "with", "to", "in", "on", "of", "is", "are", "how", "what",
-  "your", "you", "it", "at", "by", "from", "best", "new", "using", "use", "ai", "imagineart", "imagine",
+  "your", "you", "it", "at", "by", "from", "best", "new", "using", "use", "ai", "northwind", "imagine",
 ]);
 
 /**
@@ -219,7 +219,7 @@ export function relevantVideos(
 export const MAX_EMBEDS = 2;
 
 export const YOUTUBE_RULES = [
-  "Embed ONLY videos from ImagineArt's own channel, and only ones genuinely about this subject. A "
+  "Embed ONLY videos from Northwind's own channel, and only ones genuinely about this subject. A "
     + "loosely related video teaches the reader that our embeds are decorative.",
   `At most ${MAX_EMBEDS} per article, and zero is the right number when nothing on the channel fits. `
     + "Never pad a post with a video to look richer.",
@@ -248,7 +248,7 @@ export function briefVideoNote(
 ): string {
   if (videos === undefined) {
     return [
-      "## ImagineArt video embeds",
+      "## Northwind video embeds",
       "",
       "The channel feed could not be read for this run, so no video was matched. Do not guess a URL or",
       "an id — an invented one renders as an empty player. Write the article without a video, and do",
@@ -257,7 +257,7 @@ export function briefVideoNote(
   }
   if (videos.length === 0) {
     return [
-      "## ImagineArt video embeds",
+      "## Northwind video embeds",
       "",
       "Nothing on the channel's recent uploads matches this subject closely enough, so this article gets",
       "no video. That is a correct outcome, not a gap to fill — and it means 'not in the last 15",
@@ -265,7 +265,7 @@ export function briefVideoNote(
     ].join("\n");
   }
   return [
-    "## ImagineArt video embeds",
+    "## Northwind video embeds",
     "",
     `${videos.length} of our own videos match this subject. Embed them where the prose reaches what they show:`,
     ...videos.flatMap((v) => [
@@ -283,7 +283,7 @@ export function briefVideoNote(
 export function youtubeReminder(count: number): string {
   if (count <= 0) return "";
   return (
-    "If a section reaches what one of the ImagineArt videos shows, embed it there: a bare "
+    "If a section reaches what one of the Northwind videos shows, embed it there: a bare "
     + "<iframe src=\"https://www.youtube.com/watch?v=ID\"></iframe> on its own line, with a sentence "
     + "above saying what it shows. Only the ids you were given, and never a youtu.be or /shorts link."
   );
@@ -293,14 +293,14 @@ export function youtubeReminder(count: number): string {
 export function youtubeNote(feed: ChannelFeed, subject: string): string {
   if (!feed.ok) {
     return [
-      "## ImagineArt video embeds",
+      "## Northwind video embeds",
       "",
       `The channel feed could not be read: ${feed.problem}`,
       "Write the article without a video rather than guessing a URL — an invented video id renders as a broken player.",
     ].join("\n");
   }
   const hits = relevantVideos(feed.videos, subject, { limit: MAX_EMBEDS });
-  const lines = ["## ImagineArt video embeds", ""];
+  const lines = ["## Northwind video embeds", ""];
 
   if (hits.length === 0) {
     lines.push(

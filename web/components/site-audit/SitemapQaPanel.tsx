@@ -64,7 +64,7 @@ export function SitemapQaPanel() {
         </p>
         <Textarea
           value={text} onChange={(e) => setText(e.target.value)} rows={5}
-          placeholder={"https://imagine.art/ai-image-generator\nhttps://imagine.art/tools/new-feature"}
+          placeholder={"https://northwind.example/ai-image-generator\nhttps://northwind.example/tools/new-feature"}
           className="font-mono text-xs"
         />
         <Button onClick={run} disabled={running}>

@@ -94,7 +94,7 @@ export async function confirmMeeting(input: {
       slot: input.slot,
       attendeeEmail: input.attendeeEmail,
       attendeeName: input.attendeeName ?? null,
-      summary: input.topic?.trim() || `ImagineArt — ${input.attendeeName ?? "collaboration"}`,
+      summary: input.topic?.trim() || `Northwind — ${input.attendeeName ?? "collaboration"}`,
       description: "Discussing a paid collaboration. Booked from SearchOps.",
     });
     const reply = [

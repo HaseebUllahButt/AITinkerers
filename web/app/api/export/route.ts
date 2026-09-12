@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
     competitor_overlap: p.score?.competitor_overlap ?? 0,
     contact_confidence: p.score?.contact_confidence ?? 0,
     tools_mentioned: p.mentions.join("; "),
-    imagineart_mentioned: p.mentions.some((m) => m.toLowerCase().includes("imagin")) ? "yes" : "no",
+    northwind_mentioned: p.mentions.some((m) => m.toLowerCase().includes("imagin")) ? "yes" : "no",
     contacts: p.contacts.map((c) => `${c.type}: ${c.value}`).join("; "),
     email: p.contacts.find((c) => c.type === "mailto")?.value?.replace("mailto:", "") ?? "",
     twitter: p.contacts.find((c) => c.type === "twitter")?.value ?? "",

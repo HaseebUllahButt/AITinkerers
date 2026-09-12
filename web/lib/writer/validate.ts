@@ -240,7 +240,7 @@ export function autoFixTypography(input: string): { text: string; violations: Vi
 
   // ── tracking parameters on links ──
   // A model asked to cite a source hands back the URL it was given, and those increasingly carry the
-  // referring tool's own name: `utm_source=chatgpt.com`, `ref=perplexity`. Published on an imagine.art
+  // referring tool's own name: `utm_source=chatgpt.com`, `ref=perplexity`. Published on an northwind.example
   // page that credits a third party for traffic from our own content, in the destination's analytics.
   //
   // Auto-fix rather than flag: there is exactly one correct answer (remove them), no judgement involved,
@@ -428,7 +428,7 @@ export function validateArticle(input: ValidateInput): ValidationResult {
     if (/\bwhether\s+you'?re\s+a(?:n)?\s+[^,.;\n]{2,30}\s+or\s+(?:an?\s+)?[^,.;\n]{2,30}\b/i.test(masked)) {
       shapeHits.push('a "whether you\'re a X or a Y" opener');
     }
-    // Participial throat-clearing: "Designed to empower creators everywhere, ImagineArt is built to..."
+    // Participial throat-clearing: "Designed to empower creators everywhere, Northwind is built to..."
     if (/^(?:Designed|Built|Aimed|Created|Engineered)\s+to\s+\w[^.\n]{0,70},\s+\w+\s+(?:is|are)\b/im.test(masked)) {
       shapeHits.push("a participial throat-clearing opener (\"Designed to X, Y is Z\")");
     }
@@ -774,7 +774,7 @@ export function validateArticle(input: ValidateInput): ValidationResult {
   // We publish about models we do not host on purpose, for user value and domain authority. The cost
   // of that decision is that such an article has no natural reason to mention us, and the two ways it
   // goes wrong are opposite: zero mentions (a well-ranked page that sends the reader to a competitor
-  // and converts nothing) or a closing "Ready to create? Try ImagineArt free!" (which tells the
+  // and converts nothing) or a closing "Ready to create? Try Northwind free!" (which tells the
   // reader the preceding 1,500 words were an advert).
   //
   // Both gates are `repair` rather than `flag`: each has an obvious fix that does not need a human to
@@ -784,7 +784,7 @@ export function validateArticle(input: ValidateInput): ValidationResult {
     if (mentions < BRAND_MENTIONS_MIN) {
       violations.push({
         gate: "brand_absent", severity: "repair",
-        detail: "The article never references ImagineArt. Add it once where it does work for the reader — "
+        detail: "The article never references Northwind. Add it once where it does work for the reader — "
           + "the studio they would use for this job, the setting that fixes the problem, or the provenance "
           + "of a generation shown here. Mid-article, where they are deciding. NOT a closing call to action.",
       });
@@ -798,7 +798,7 @@ export function validateArticle(input: ValidateInput): ValidationResult {
       if (dense.over) {
         violations.push({
           gate: "brand_excess", severity: "repair",
-          detail: `ImagineArt is named ${dense.mentions} times — ${dense.per1k} per 1,000 characters, which `
+          detail: `Northwind is named ${dense.mentions} times — ${dense.per1k} per 1,000 characters, which `
             + "reads as padding rather than as the subject. Keep the mentions whose sentence would be worse "
             + "without them and cut the rest.",
         });
@@ -808,7 +808,7 @@ export function validateArticle(input: ValidateInput): ValidationResult {
     // The closing CTA, matched on the shapes it actually takes rather than on the word "try".
     const tail = body.slice(-700);
     const cta = tail.match(
-      /\b(ready to (get started|create|try|begin)|start (creating|generating|your free)|sign up (today|now|free)|try (it )?(imagineart )?(free|now|today)|get started (today|now|free)|create your (first|own)[^.\n]{0,40}(today|now|free))\b/i,
+      /\b(ready to (get started|create|try|begin)|start (creating|generating|your free)|sign up (today|now|free)|try (it )?(northwind )?(free|now|today)|get started (today|now|free)|create your (first|own)[^.\n]{0,40}(today|now|free))\b/i,
     );
     if (cta) {
       violations.push({
@@ -843,7 +843,7 @@ export function validateArticle(input: ValidateInput): ValidationResult {
     if (foreign.length) {
       violations.push({
         gate: "video_embed_foreign", severity: "flag",
-        detail: `An embed points somewhere that is not an ImagineArt YouTube video (${foreign[0]}). `
+        detail: `An embed points somewhere that is not an Northwind YouTube video (${foreign[0]}). `
           + "We embed our own channel only.",
       });
     }
@@ -960,11 +960,11 @@ export function validateArticle(input: ValidateInput): ValidationResult {
   // ── GEO: never head a section with a doubt about us ──────────────────────────
   //
   // A question heading is text on the page, and an engine can quote the QUESTION rather than the
-  // answer. "Is ImagineArt legit" on our own page poses the doubt it then answers. Both that and
+  // answer. "Is Northwind legit" on our own page poses the doubt it then answers. Both that and
   // "most common complaints" were deliberately removed from the reviews site's FAQ for exactly this
   // reason — the first invites a negative extraction, the second plants the doubt itself.
   {
-    const brandWords = ["imagineart", "imagine art", "imagine.art", "vyro"];
+    const brandWords = ["northwind", "north wind", "northwind.example"];
     const doubt = /\b(scam|legit|safe to use|a rip.?off|shut(ting)? down|lawsuit|dangerous|steal(ing)? (your )?data|complaints?|problems? with|worse than)\b/i;
     const offenders = [...body.matchAll(/^#{2,3}\s+(.+)$/gm)]
       .map((mm) => mm[1].trim())
@@ -1023,7 +1023,7 @@ export function validateArticle(input: ValidateInput): ValidationResult {
   // that is deliberately never auto-retried and always needs a human.
   //
   // Observed on "Best AI logo generators for graphic designers": link_provenance called
-  // blogs-cdn.imagine.art/...best_ai_logo_generators... fabricated. That is our own CDN, holding an
+  // blogs-cdn.northwind.example/...best_ai_logo_generators... fabricated. That is our own CDN, holding an
   // image this pipeline rendered and re-hosted a minute earlier.
   //
   // Provenance governs CLAIMS — a URL offered to the reader as a source. An asset the pipeline

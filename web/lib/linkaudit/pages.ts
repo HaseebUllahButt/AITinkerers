@@ -136,13 +136,13 @@ async function saveFp(m: FingerprintMap): Promise<void> {
 // subdomains' own sitemaps. Each candidate is probed first — syncSitemap logs every attempt
 // to site_url_syncs, and three "no such sitemap" failure rows per day is noise, so only a
 // URL that actually answers with sitemap XML gets synced.
-const EXTRA_SITEMAP_HOSTS = ["app.imagine.art", "shorts.imagine.art", "ideate.imagine.art"];
+const EXTRA_SITEMAP_HOSTS = ["app.northwind.example", "shorts.northwind.example", "ideate.northwind.example"];
 
 async function syncExtraSitemaps(): Promise<number> {
   const candidates = new Set<string>();
   try {
-    for (const u of await discoverRobotsSitemaps("https://www.imagine.art")) {
-      if (u !== "https://www.imagine.art/sitemap.xml") candidates.add(u);
+    for (const u of await discoverRobotsSitemaps("https://www.northwind.example")) {
+      if (u !== "https://www.northwind.example/sitemap.xml") candidates.add(u);
     }
   } catch { /* robots discovery is additive */ }
   for (const h of EXTRA_SITEMAP_HOSTS) candidates.add(`https://${h}/sitemap.xml`);

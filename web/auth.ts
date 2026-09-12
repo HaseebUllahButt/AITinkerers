@@ -3,7 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 
 // ── Open sign-in ────────────────────────────────────────────────────────────────────────────────
 //
-// Google OAuth and the @imagine.art domain allowlist have been removed. There is one provider and
+// Google OAuth and the @northwind.example domain allowlist have been removed. There is one provider and
 // it accepts ANY email with no password and no verification: type an address, get a session.
 //
 // Read that plainly before deploying this. Anyone who can reach the URL can sign in AS ANYONE,

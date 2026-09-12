@@ -636,8 +636,8 @@
       }
     }
   },
-  "ai-video-components.imagine-art-explorer": {
-    "uid": "ai-video-components.imagine-art-explorer",
+  "ai-video-components.northwind-explorer": {
+    "uid": "ai-video-components.northwind-explorer",
     "kind": "component",
     "attributes": {
       "title": {
@@ -3485,8 +3485,8 @@
       }
     }
   },
-  "industry-components.why-choose-imagine-art-item-bullets": {
-    "uid": "industry-components.why-choose-imagine-art-item-bullets",
+  "industry-components.why-choose-northwind-item-bullets": {
+    "uid": "industry-components.why-choose-northwind-item-bullets",
     "kind": "component",
     "attributes": {
       "bullet": {
@@ -3494,8 +3494,8 @@
       }
     }
   },
-  "industry-components.why-choose-imagine-art-item": {
-    "uid": "industry-components.why-choose-imagine-art-item",
+  "industry-components.why-choose-northwind-item": {
+    "uid": "industry-components.why-choose-northwind-item",
     "kind": "component",
     "attributes": {
       "icon": {
@@ -3506,12 +3506,12 @@
       },
       "bulletPoints": {
         "kind": "component",
-        "targetUid": "industry-components.why-choose-imagine-art-item-bullets"
+        "targetUid": "industry-components.why-choose-northwind-item-bullets"
       }
     }
   },
-  "industry-components.why-choose-imagine-art": {
-    "uid": "industry-components.why-choose-imagine-art",
+  "industry-components.why-choose-northwind": {
+    "uid": "industry-components.why-choose-northwind",
     "kind": "component",
     "attributes": {
       "heading": {
@@ -3525,7 +3525,7 @@
       },
       "items": {
         "kind": "component",
-        "targetUid": "industry-components.why-choose-imagine-art-item"
+        "targetUid": "industry-components.why-choose-northwind-item"
       }
     }
   },
@@ -3541,9 +3541,9 @@
         "kind": "component",
         "targetUid": "industry-components.generate-anything"
       },
-      "whyChooseImagineArt": {
+      "whyChooseNorthwind": {
         "kind": "component",
-        "targetUid": "industry-components.why-choose-imagine-art"
+        "targetUid": "industry-components.why-choose-northwind"
       },
       "generateProVisual": {
         "kind": "component",
@@ -5350,9 +5350,9 @@
         "kind": "component",
         "targetUid": "solution-component.hero-section"
       },
-      "whyChooseImagineArt": {
+      "whyChooseNorthwind": {
         "kind": "component",
-        "targetUid": "industry-components.why-choose-imagine-art"
+        "targetUid": "industry-components.why-choose-northwind"
       },
       "teamsFeatures": {
         "kind": "component",
@@ -6440,9 +6440,9 @@
         "kind": "component",
         "targetUid": "ai-video-components.creative-suite"
       },
-      "ImagineArtExplorerSection": {
+      "NorthwindExplorerSection": {
         "kind": "component",
-        "targetUid": "ai-video-components.imagine-art-explorer"
+        "targetUid": "ai-video-components.northwind-explorer"
       },
       "blogResources": {
         "kind": "component",
@@ -6680,9 +6680,9 @@
         "kind": "component",
         "targetUid": "ai-video-components.creative-suite"
       },
-      "ImagineArtExplorerSection": {
+      "NorthwindExplorerSection": {
         "kind": "component",
-        "targetUid": "ai-video-components.imagine-art-explorer"
+        "targetUid": "ai-video-components.northwind-explorer"
       },
       "blogResources": {
         "kind": "component",

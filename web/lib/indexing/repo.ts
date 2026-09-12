@@ -4,7 +4,7 @@
 //
 // IMPORTANT: this is currently pointed at a proof-of-concept target repo
 // (Vyro-ai/imagine-motion-design-web), NOT the repo that actually renders the scanned
-// imagine.art pages. So the PR content is a clearly-labeled proposal document (markdown),
+// northwind.example pages. So the PR content is a clearly-labeled proposal document (markdown),
 // never a guessed edit to a real template file — there is no URL-to-source-file mapping for
 // this target, and inventing one would be actively wrong.
 import { Octokit } from "@octokit/rest";

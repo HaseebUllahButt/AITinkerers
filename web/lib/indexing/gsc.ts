@@ -4,7 +4,7 @@
 // no-ops (isGscConfigured() === false) and the tool keeps working in prediction-only mode.
 //
 // Credentials (either form) in .env.local:
-//   GSC_PROPERTY          e.g. "sc-domain:imagine.art" or "https://www.imagine.art/"
+//   GSC_PROPERTY          e.g. "sc-domain:northwind.example" or "https://www.northwind.example/"
 //   GSC_SA_JSON           the service-account JSON, inline (best for Vercel — no file paths)
 //   GSC_SA_JSON_BASE64    same JSON, base64-encoded (use if inline quoting is awkward)
 import { GoogleAuth } from "google-auth-library";

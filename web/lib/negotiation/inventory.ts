@@ -1,4 +1,4 @@
-// The Link Exchange inventory — ImagineArt's own blog pages, classified exactly as in the
+// The Link Exchange inventory — Northwind's own blog pages, classified exactly as in the
 // SEO team's "Link Exchange Guidelines" (Appendix A). This is the SINGLE source of truth for
 // what the negotiation agent may offer a partner in a link swap, and under what conditions.
 //
@@ -25,7 +25,7 @@ export interface InventoryPage {
   topics: string[];         // keywords describing the page's subject, for relevance matching
 }
 
-const BLOG = "https://www.imagine.art/blogs/";
+const BLOG = "https://www.northwind.example/blogs/";
 export const pageUrl = (slug: string) => `${BLOG}${slug}`;
 
 // Appendix A, verbatim classification. Keep this list in sync with the guidelines doc; re-run the
@@ -78,7 +78,7 @@ export const INVENTORY: InventoryPage[] = [
   { slug: "kling-ai-vs-other-ai-video-generators", tier: "governed", traffic: 0, topics: ["kling", "vs", "video"] },
   { slug: "pix-verse-vs-other-ai-video-generators", tier: "governed", traffic: 0, topics: ["pixverse", "vs", "video"] },
   { slug: "nano-banana-vs-other-ai-image-generation-models", tier: "governed", traffic: 0, topics: ["nano banana", "vs", "image"] },
-  { slug: "higgsfield-vs-artlist-vs-imagineart", tier: "governed", traffic: 0, topics: ["higgsfield", "artlist", "vs", "video"] },
+  { slug: "higgsfield-vs-artlist-vs-northwind", tier: "governed", traffic: 0, topics: ["higgsfield", "artlist", "vs", "video"] },
 
   // ── Off-table — not offered to competitors (idea / inspiration / how-to) ──
   { slug: "product-photography-ideas", tier: "offtable", traffic: 75, topics: ["product photography", "ideas"] },
@@ -96,12 +96,12 @@ export const INVENTORY: InventoryPage[] = [
 
 // A link-back target: a page on our site we want the partner to link TO, plus a natural anchor.
 // Defaults mirror the real winning threads in the sample data (they offered a link on one of our
-// blogs and asked for a mention of ImagineArt + a link to /workflow). Editable in settings.
+// blogs and asked for a mention of Northwind + a link to /workflow). Editable in settings.
 export interface LinkTarget { url: string; anchor: string; topics?: string[] }
 
 export const DEFAULT_LINK_TARGETS: LinkTarget[] = [
-  { url: "https://www.imagine.art/workflow", anchor: "AI creative workflow", topics: ["workflow", "video", "creative", "pipeline", "automation"] },
-  { url: "https://www.imagine.art", anchor: "ImagineArt", topics: [] },
+  { url: "https://www.northwind.example/workflow", anchor: "AI creative workflow", topics: ["workflow", "video", "creative", "pipeline", "automation"] },
+  { url: "https://www.northwind.example", anchor: "Northwind", topics: [] },
 ];
 
 // One-paragraph internal brief the model follows for exchange offers. Kept human and short; the
@@ -109,7 +109,7 @@ export const DEFAULT_LINK_TARGETS: LinkTarget[] = [
 // this is about TONE and WHAT to ask for, not the rules the code already guarantees.
 export const DEFAULT_LINK_EXCHANGE_BRIEF =
   "Lead with a link exchange, no money. Offer to add the partner's link on one of our relevant blog " +
-  "posts, and in return ask for a mention of ImagineArt with a link to one of our pages (a natural, " +
+  "posts, and in return ask for a mention of Northwind with a link to one of our pages (a natural, " +
   "varied anchor, never the same exact-match phrase every time). Be specific about which post of ours " +
   "fits their coverage and why. Prefer a three-way (ABC) arrangement over a direct reciprocal swap once " +
   "a relationship exists. Keep it warm, concise, and human.";

@@ -25,7 +25,7 @@ const CONFIG: ConfigItem[] = [
   { key: "AUTH_SECRET", label: "Auth Secret", description: "32+ char random string for session signing", required: true, set: true, category: "Auth" },
   { key: "GOOGLE_CLIENT_ID", label: "Google Client ID", description: "Google OAuth 2.0 client ID", required: true, set: true, category: "Auth" },
   { key: "GOOGLE_CLIENT_SECRET", label: "Google Client Secret", description: "Google OAuth 2.0 client secret", required: true, set: true, category: "Auth" },
-  { key: "ALLOWED_DOMAINS", label: "Allowed Domains", description: "Comma-separated domains for login (e.g. imagine.art)", required: true, set: true, category: "Auth" },
+  { key: "ALLOWED_DOMAINS", label: "Allowed Domains", description: "Comma-separated domains for login (e.g. northwind.example)", required: true, set: true, category: "Auth" },
   { key: "OPENROUTER_API_KEY", label: "OpenRouter API Key", description: "Used for AI-generated author descriptions (Claude Haiku)", required: false, set: true, category: "AI/LLM" },
   { key: "PLAYWRIGHT_ENABLED", label: "Playwright Enabled", description: "Set to 'true' to enable JS-rendered scraping locally", required: false, set: true, category: "Scraping" },
   { key: "BRAVE_SEARCH_API_KEY", label: "Brave Search API Key", description: "Free tier: 2000 queries/month. Enables Brave harvester.", required: false, set: false, category: "Scraping" },
@@ -105,7 +105,7 @@ export default function SettingsPage() {
             { step: 1, label: "Run the SQL migration", desc: "Copy migrations/001_initial.sql into your Supabase SQL Editor and run it." },
             { step: 2, label: "Set .env.local", desc: "Copy .env.example → .env.local and fill in Supabase + Google OAuth credentials." },
             { step: 3, label: "Install Playwright browser", desc: "Run: npx playwright install chromium (skip for Vercel deployment)." },
-            { step: 4, label: "Start the app", desc: "npm run dev — visit http://localhost:3000 and sign in with your @imagine.art account." },
+            { step: 4, label: "Start the app", desc: "npm run dev — visit http://localhost:3000 and sign in with your @northwind.example account." },
             { step: 5, label: "Run first discovery", desc: "Click Run Discovery on the Prospects page. GDELT + HN + Reddit will populate your first prospects." },
           ].map(({ step, label, desc }) => (
             <div key={step} className="flex gap-3">

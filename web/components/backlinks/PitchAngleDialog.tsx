@@ -186,7 +186,7 @@ export function PitchAngleDialog({
               onChange={(e) => setInstruction(e.target.value)}
               rows={5}
               className="text-sm"
-              placeholder={"e.g. Never lead with payment. Pitch it as a genuine resource for their readers: what ImagineArt does, why it fits their piece, and offer to collaborate however suits them."}
+              placeholder={"e.g. Never lead with payment. Pitch it as a genuine resource for their readers: what Northwind does, why it fits their piece, and offer to collaborate however suits them."}
               disabled={busy !== ""}
             />
             <div className="flex items-center justify-between gap-4">

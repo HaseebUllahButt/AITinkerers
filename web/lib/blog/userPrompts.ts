@@ -1,4 +1,4 @@
-// What people actually type into ImagineArt, and how to write an example prompt that reads like it.
+// What people actually type into Northwind, and how to write an example prompt that reads like it.
 //
 // A client-safe leaf: no database, no Strapi, no server imports. The blog writer, Summer and the
 // validator all read from here.
@@ -63,7 +63,7 @@ export const STUDIO_PROMPTS: StudioPromptProfile[] = [
       "far more often than the prompt's own intent implies.",
     models: [
       "Nano Banana 2", "Nano Banana Pro", "Nano Banana", "GPT Image 2", "Seedream v4.5",
-      "ImagineArt 2.0", "ImagineArt 2.0 Edit", "Ideogram v3", "Dreamina 3.1", "xAI Grok Imagine", "V7",
+      "Northwind 2.0", "Northwind 2.0 Edit", "Ideogram v3", "Dreamina 3.1", "xAI Grok Imagine", "V7",
     ],
     examples: [
       "design the interior for this kitchen",
@@ -287,7 +287,7 @@ export function userPromptsNote(studio?: string): string {
     "## Example prompts, and making them read as real",
     "",
     "Concrete prompts are the citable unit of a prompting article — an answer engine lifts the prompt, not the",
-    "paragraph about prompting. These shapes are read from live ImagineArt traffic (Mixpanel, 30 days to",
+    "paragraph about prompting. These shapes are read from live Northwind traffic (Mixpanel, 30 days to",
     "2026-09-08), so write examples that sit inside them.",
     "",
     body,

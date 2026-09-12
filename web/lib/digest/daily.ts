@@ -7,7 +7,7 @@ import { sendEmail } from "@/lib/email/smtp";
 // sites the team is targeting. Config (on/off + recipient) lives in Redis so it's editable and
 // the midnight cron can be turned off without a deploy.
 const CFG_KEY = "digest:daily";
-const DEFAULT = { enabled: true, recipient: "zain@imagine.art" };
+const DEFAULT = { enabled: true, recipient: "writer@northwind.example" };
 
 export interface DigestConfig { enabled: boolean; recipient: string }
 

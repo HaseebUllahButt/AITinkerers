@@ -25,7 +25,7 @@ interface MetaOption { id: number; name?: string; title?: string; slug?: string 
  * Where a draft came from, as a short searchable label.
  *
  * DERIVED from created_by rather than stored in the tags column, because created_by is already the
- * truth — `api:atlas`, `api:atlas (ImagineArt automation)` and `api:atlas-endpoint-test` are all in
+ * truth — `api:atlas`, `api:atlas (Northwind automation)` and `api:atlas-endpoint-test` are all in
  * the live data. A copy in `tags` would be a second place to keep correct and would be wrong the
  * first time somebody edited it.
  */

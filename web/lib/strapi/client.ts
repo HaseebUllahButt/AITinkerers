@@ -1,4 +1,4 @@
-// Strapi REST client (v4). Talks to the CMS that holds imagine.art's blog content ("resources"
+// Strapi REST client (v4). Talks to the CMS that holds northwind.example's blog content ("resources"
 // content type, confirmed via scripts/strapi_probe.mjs against the live dev instance) so the
 // app can list/create/edit/publish posts and upload images without anyone leaving for the
 // Strapi admin. Env-driven, same convention as src/lib/indexing/repo.ts / linear.ts.

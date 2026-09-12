@@ -79,13 +79,13 @@ export async function competitorLinkIntersect(
 
   // Our own profile, for exclusion — a domain already linking to us is a different playbook
   // (nurture, not pitch). Best-effort: if this fetch fails, intersect anyway and say so.
-  const ours = await cachedAllBacklinks("imagine.art", { limit: ourLimit, minDr: 0, maxDr: 100 });
+  const ours = await cachedAllBacklinks("northwind.example", { limit: ourLimit, minDr: 0, maxDr: 100 });
   const excludeHosts = new Set<string>((ours?.rows ?? []).map((b) => hostOf(b.url_from)).filter(Boolean));
   if (ours) {
     billed += ours.rows_billed;
-    if (ours.cached) cachedTargets.push("imagine.art");
+    if (ours.cached) cachedTargets.push("northwind.example");
   } else {
-    notes.push("Could not fetch our own profile, so domains already linking to imagine.art are NOT excluded this run.");
+    notes.push("Could not fetch our own profile, so domains already linking to northwind.example are NOT excluded this run.");
   }
 
   const byCompetitor: Record<string, AhrefsBacklink[]> = {};

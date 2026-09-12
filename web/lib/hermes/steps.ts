@@ -70,7 +70,7 @@ export function describeHermesTool(
     case "practitioner_brief":
       return { label: input.persona ? "Reading the practitioner brief" : "Listing practitioner personas", detail: s(input.persona) };
     case "imagine_updates":
-      return { label: "Reading what ImagineArt shipped" };
+      return { label: "Reading what Northwind shipped" };
     case "prompt_examples":
       return { label: input.studio ? "Reading how people prompt" : "Reading prompt patterns", detail: s(input.studio) };
     case "house_style":

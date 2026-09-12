@@ -95,7 +95,7 @@ function landingPrompt(it: ResearchItem): string {
   const path = it.subject
     .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   return [
-    `Build the ImagineArt landing page for "${it.subject}".`,
+    `Build the Northwind landing page for "${it.subject}".`,
     evidenceFor(it),
     "\n\n## What this page is",
     `\nA cluster-page entry in Strapi, assembled from a registered template — not a blog post. It has`,

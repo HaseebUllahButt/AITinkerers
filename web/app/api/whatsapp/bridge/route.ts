@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
             //  2. the sender's pushname — self-declared, and the reason this order exists. Stored
             //     as a label only; the negotiator will not address anyone by it until a human
             //     confirms it. On a fromMe mirror notifyName is OUR OWN account name (it labelled
-            //     every counterparty "Imagine art"), so it is only ever read for inbound.
+            //     every counterparty "Northwind"), so it is only ever read for inbound.
             //  3. a neutral placeholder.
             const saved = await fetchBridgeContactName(digits).catch(() => null);
             const pushName = !fromMe ? String(p?.notifyName ?? p?._data?.notifyName ?? "").trim() : "";

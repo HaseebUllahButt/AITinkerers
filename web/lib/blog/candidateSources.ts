@@ -21,7 +21,7 @@
 //
 // ── The rule every source here obeys ───────────────────────────────────────────────────────────
 //
-// A candidate is only offered if a real ImagineArt generation could go in the finished article — the
+// A candidate is only offered if a real Northwind generation could go in the finished article — the
 // guide's own one test. That is why `model` reads OUR model pages rather than the research board's 331
 // known models: we can run a generation on a model we host, and we cannot on one we do not.
 import { supabaseAdmin } from "@/lib/db/supabase";
@@ -54,7 +54,7 @@ export interface Candidate {
    *
    * Not a disqualifier — covering these is a deliberate editorial choice for user value and domain
    * authority. It travels so the WRITING knows: a piece about something we do not host owes the
-   * reader the boundary said plainly, and must never imply the model runs in ImagineArt.
+   * reader the boundary said plainly, and must never imply the model runs in Northwind.
    */
   notHosted?: boolean;
   /** A page this article must link up to, when the source knows it. */
@@ -89,7 +89,7 @@ const VENDORS: Array<{ key: string; name: string }> = [
   { key: "ideogram", name: "Ideogram" },
   { key: "recraft", name: "Recraft" },
   { key: "grok", name: "xAI" },
-  { key: "imagineart", name: "ImagineArt" },
+  { key: "northwind", name: "Northwind" },
 ];
 
 /** True when a feature slug names a specific model rather than a capability. */
@@ -111,19 +111,19 @@ function familyOf(slug: string): string {
 }
 
 /**
- * `nano-banana-2-lite` → `Nano Banana 2 Lite`, `imagineart-1-5-pro` → `ImagineArt 1.5 Pro`.
+ * `nano-banana-2-lite` → `Nano Banana 2 Lite`, `northwind-1-5-pro` → `Northwind 1.5 Pro`.
  *
  * Two things a naive title-caser gets wrong, and both showed up in the first run of this source:
  *
  *   Version numbers are split across slug segments. `wan-2-6-flash` came out as "Wan 2 6 Flash" and
- *   `imagineart-1-5-pro` as "Imagineart 1 5 Pro". Consecutive all-digit segments are one version number
+ *   `northwind-1-5-pro` as "Northwind 1 5 Pro". Consecutive all-digit segments are one version number
  *   and rejoin with a dot.
  *
- *   Brand casing is not title case. "Ai" is not a word, and "Imagineart" is not how the company writes
+ *   Brand casing is not title case. "Ai" is not a word, and "Northwind" is not how the company writes
  *   its own name — a model guide whose title misspells the product is not publishable.
  */
 const CASING: Record<string, string> = {
-  ai: "AI", imagineart: "ImagineArt", pixverse: "PixVerse", gpt: "GPT", openai: "OpenAI",
+  ai: "AI", northwind: "Northwind", pixverse: "PixVerse", gpt: "GPT", openai: "OpenAI",
   xai: "xAI", minimax: "MiniMax", bytedance: "ByteDance", o3: "o3", o1: "o1", hd: "HD",
   "3d": "3D", api: "API", mcp: "MCP", tts: "TTS", sdxl: "SDXL", ui: "UI",
 };
@@ -231,7 +231,7 @@ export async function modelGuideCandidates(inv: Inventory | null, limit = 24): P
         + "A guide can carry real generations from it, a side-by-side against another model on the same "
         + "prompt, and its actual credit cost — none of which a competitor can copy.",
       source: `Model we host — ${m.path}`,
-      sourceUrl: `https://www.imagine.art${m.path}`,
+      sourceUrl: `https://www.northwind.example${m.path}`,
       date: null, modality: null, confidence: null,
       suggestsType: "model-guide", hubPath: m.path,
     });
@@ -280,7 +280,7 @@ export async function comparisonCandidates(inv: Inventory | null, limit = 16): P
           + `on each and the outputs shown side by side, which is the one thing a reader choosing between `
           + `two versions of ${titleise(family)} cannot get anywhere else.`,
         source: "Both models hosted — no /compare page exists",
-        sourceUrl: `https://www.imagine.art/features/${a}`,
+        sourceUrl: `https://www.northwind.example/features/${a}`,
         date: null, modality: null, confidence: null,
         suggestsType: "comparison", hubPath: `/features/${a}`,
       });
@@ -328,7 +328,7 @@ export async function geoCandidates(limit = 12): Promise<SourceResult> {
     .sort((a, b) => b[1].misses - a[1].misses)
     .map(([prompt, v]) => ({
       kind: "geo" as const, id: prompt.slice(0, 120), subject: prompt,
-      summary: `Answer engines answered this ${v.total} time(s) and left ImagineArt out of ${v.misses} of them`
+      summary: `Answer engines answered this ${v.total} time(s) and left Northwind out of ${v.misses} of them`
         + `${v.cited.size ? `, citing ${[...v.cited].slice(0, 6).join(", ")} instead` : ""}. Real demand, `
         + "already being answered by somebody else.",
       source: `Answer-engine gap — ${[...v.engines].filter(Boolean).join(", ") || "GEO checks"}`,
@@ -364,7 +364,7 @@ export async function demandCandidates(hostedSlugs: string[] = [], limit = 14): 
     .filter((r) => r.q && r.imp >= 50 && r.pos > 8)
     // Brand queries are not content gaps: we already own them and a post would cannibalise the pages
     // that rank.
-    .filter((r) => !/imagine\s?art|imagineart/i.test(r.q))
+    .filter((r) => !/imagine\s?art|northwind/i.test(r.q))
     .sort((a, b) => b.imp - a.imp)
     .slice(0, limit)
     .map((r) => {

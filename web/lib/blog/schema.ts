@@ -18,8 +18,8 @@
 import type { BlogDraft } from "@/lib/db/queries";
 import { parseBlocks } from "@/lib/blog/markdown";
 
-const SITE = "https://www.imagine.art";
-const ORG = "ImagineArt";
+const SITE = "https://www.northwind.example";
+const ORG = "Northwind";
 
 /** FAQ pairs from the body: an H2 phrased as a question, followed by prose.
  *

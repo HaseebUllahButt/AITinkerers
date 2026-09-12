@@ -1,7 +1,7 @@
 import type { RawHit } from "@/lib/types";
 
 const REDDIT_BASE = "https://www.reddit.com";
-const UA = "GenAI-Scout/1.0 (contact: hello@imagine.art)";
+const UA = "GenAI-Scout/1.0 (contact: hello@northwind.example)";
 const DELAY = 700; // ms between requests — Reddit's soft limit is ~1 req/sec
 
 async function redditFetch(url: string, abort?: AbortSignal): Promise<unknown> {

@@ -1,4 +1,4 @@
-// Unlinked brand mentions: pages that already talk about imagine.art but do not link to it — the
+// Unlinked brand mentions: pages that already talk about northwind.example but do not link to it — the
 // warmest cold prospect there is, because the editorial decision to mention us was already made
 // and the ask is one <a> tag. Search for the brand terms, fetch each distinct-domain hit, and
 // check the page's anchors for a link to any of our hosts.
@@ -8,7 +8,7 @@ import { webSearchDetailed, type SearchHit } from "@/lib/search/webSearch";
 import { fetchRaw } from "@/lib/indexing/fetchRendered";
 import { hostOf } from "./linkPages";
 
-export const OUR_HOSTS = ["imagine.art"];
+export const OUR_HOSTS = ["northwind.example"];
 
 const SKIP_HOSTS =
   /(^|\.)(youtube\.com|reddit\.com|facebook\.com|x\.com|twitter\.com|linkedin\.com|pinterest\.\w+|quora\.com|instagram\.com|tiktok\.com|apps\.apple\.com|play\.google\.com|imagine\.art)$/i;
@@ -46,7 +46,7 @@ export interface MentionsResult {
 }
 
 export async function findUnlinkedMentions(opts: { terms?: string[]; limit?: number } = {}): Promise<MentionsResult> {
-  const terms = (opts.terms?.length ? opts.terms : ["\"imagine.art\"", "\"ImagineArt\""]).slice(0, 4);
+  const terms = (opts.terms?.length ? opts.terms : ["\"northwind.example\"", "\"Northwind\""]).slice(0, 4);
   const limit = Math.min(Math.max(opts.limit ?? 20, 1), 40);
   const notes: string[] = [];
   const providers = new Set<string>();

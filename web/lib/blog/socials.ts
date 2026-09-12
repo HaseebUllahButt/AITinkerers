@@ -1,4 +1,4 @@
-// ImagineArt's own social accounts, and when an article has earned the right to link one.
+// Northwind's own social accounts, and when an article has earned the right to link one.
 //
 // A client-safe leaf: no database, no Strapi, no server imports. The blog writer, Summer and the
 // validator all read from here, so there is exactly one place a handle can be wrong.
@@ -39,7 +39,7 @@ export const SOCIALS: Social[] = [
   {
     platform: "Discord",
     url: "https://discord.gg/z7kjUyvAbv",
-    handle: "the ImagineArt Discord",
+    handle: "the Northwind Discord",
     whenRelevant:
       "The article leaves the reader somewhere something can go wrong — a generation that came out "
       + "distorted, a prompt that will not behave, a setting whose effect is hard to predict. The "
@@ -56,16 +56,16 @@ export const SOCIALS: Social[] = [
   },
   {
     platform: "YouTube",
-    url: "https://www.youtube.com/@imagineartofficial",
-    handle: "the ImagineArt YouTube channel",
+    url: "https://www.youtube.com/@northwindofficial",
+    handle: "the Northwind YouTube channel",
     whenRelevant:
       "The workflow is one a reader would rather watch than read: a multi-step walkthrough through the "
       + "interface, or a video feature where the result is motion and a still cannot show it.",
   },
   {
     platform: "X",
-    url: "https://x.com/ImagineArt_X",
-    handle: "@ImagineArt_X",
+    url: "https://x.com/Northwind_X",
+    handle: "@Northwind_X",
     whenRelevant:
       "The article covers something that is still moving — a model that just shipped, a capability in "
       + "rollout, a version whose limits are still being published. Suits model guides and comparisons, "
@@ -73,16 +73,16 @@ export const SOCIALS: Social[] = [
   },
   {
     platform: "Instagram",
-    url: "https://www.instagram.com/imagineartofficial/",
-    handle: "@imagineartofficial",
+    url: "https://www.instagram.com/northwindofficial/",
+    handle: "@northwindofficial",
     whenRelevant:
       "The subject is visual output as inspiration rather than as instruction — style, composition, "
       + "before-and-after. A reader wanting to see more of what the tool produces is served by it.",
   },
   {
     platform: "LinkedIn",
-    url: "https://www.linkedin.com/company/imagineartai/",
-    handle: "ImagineArt on LinkedIn",
+    url: "https://www.linkedin.com/company/northwindai/",
+    handle: "Northwind on LinkedIn",
     whenRelevant:
       "The audience is professional rather than hobbyist — an agency, a marketing team, an ecommerce "
       + "operation. Use-case guides written for a business audience, and nothing else.",

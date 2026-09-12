@@ -1,0 +1,1137 @@
+{
+  "url": "https://northwind.example/",
+  "origin": "https://northwind.example",
+  "domain": "northwind.example",
+  "brand": "Northwind",
+  "fetchedAt": "2026-09-12T09:00:00.000Z",
+  "durationMs": 106593,
+  "reachable": true,
+  "status": 200,
+  "onpage": {
+    "hasTitle": true,
+    "title": "Northwind \u2013 The system for product development",
+    "hasMetaDescription": true,
+    "h1Count": 1,
+    "hasH1": true,
+    "canonical": "https://northwind.example/",
+    "metaNoindex": false,
+    "hasJsonLd": false,
+    "text": "Skip to content \u2192ProductResourcesCustomersPricingNowContactDocsOpen appLog inSign upThe product development system for teams and agentsThe product developmentsystem for teams and agentsThe product development system for teams and agentsPurpose-built for planning and building products. Designed for the AI era.NewLoops \u2192NewLoops \u2192LinearPulseInboxMy issuesReviewsWorkspace InitiativesProjectsMoreFavorites Faster app launchAgent tasksAgent InsightsUI RefreshDRV-8852Faster app launch1 / 84Faster app launchRender UI before vehicle_state sync when minimum required state is present, instead of blocking on full refresh during iOS startup.ActivityLinear created the issue via Slack on behalf of Karri\u00b72min agoTriage Intelligence added the labels Performance and iOS\u00b72min agokarri\u00b74 min agoRight now we show a spinner forever, which makes it look like the car disappeared...jori\u00b7just now@Northwind can you take a stab at this?Linearconnected by Jori\u00b72 min agoChanged 2 filesDraft PR awaiting your review\u00b72 min agoLinear moved from Todo to In Progress\u00b7just nowReviewsRevertPropertiesIn ProgressMediumKarriLinearCycle 144LabelsPerformanceiOSReleasesLinear App1.6881...\u22c5Jun 25Powering the companies building the futureA new species of product tool. Purpose-built for modern teams with AI workflows at its core, Northwind sets a new standard for planning and building products.Purpose-builtLinear is shaped by the practices and principles of world-class product teams.Powered by agentsDesigned for workflows shared by humans and agents. From drafting PRDs to pushing PRs.Designed for speedReduces noise and restores momentum to help teams ship with high velocity and focus.Fig 0.1Purpose-builtLinear is shaped by the practices and principles of world-class product teams.Fig 0.2Powered by agentsDesigned for workflows shared by humans and agents. From drafting PRDs to pushing PRs.Designed for workflows shared by humans and agents. From drafting PRDs to pushing PRs.Fig 0.3Designed for speedReduces noise and restores momentum to help teams ship with high velocity and focus.Intakeand integrationsAutomatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.Learn more\u2192Backlog8ENG-2085Reduce UI flicker during autonomy...ENG-2094Add buffering for autonomy event streamsENG-2092Reduce startup delay caused by vehicle syncENG-2200Fix delayed route updates during reroutingTodo71ENG-926Remove UI inconsistenciesBugDesignENG-2088TypeError: Cannot read propertiesBugENG-924Upgrade to Claude Opus 5AIENG-1882Optimize load timesPerformanceIn Progress3ENG-1487Remove contentData from GraphQL API61039MKT-1028Launch page assetsDesignENG-2187Prevent duplicate ride requests on poor...Bug62048Done53ENG-2074Clean up deprecated APIs...API61002ENG-1912Reduce latency in autonomy st...61005ENG-1951Reduce ETA fluctuations durin...61202ENG-1960Improve fallback messagingUI61149ENG-1991Improve rider visibility into veh...Thread#productdidierHas anyone been looking into the iOS startup performance issues?lenaAnyone else noticing the iOS app feels slow to open if you haven\u2019t used it in a bit?didierYea, we\u2019re still blocking initial render on a full vehicle_state sync every time\u2026andreasFeels like we could render sooner and load the rest in the background. Probably also worth tracking startup timing so we know how often this happens!@Linearcreate issues and assign to meFeaturesLinear Agent +Customer Requests +Triage +Northwind Asks +Planningand monitoringPlan and navigate from idea to launch. Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.Learn more\u2192MARAPRMAYJUNJULAUGSEP29162361320274111825181522613202731017247142128UI RefreshCore screensPolishSplit faresInternalPublic BetaAutonomy status clarityAlphaAutonomy telemetry reliabilityBetaGACycle time by agentOct 2025Nov 2025Dec 2025Jan 2026Feb 2026FeaturesProjects +Documents +Pulse +Initiatives +Visual planning +Insights +AI andautomationsBuild and deploy AI agents that work alongside you as teammates. Work on complex tasks together or delegate entire issues end-to-end.Learn more\u2192LinearOpus 5what are the three most important customer requests around permissions? add them to the Access Controls projectWorked for 8 secThree issues ranked by customer impact:ENG-2298Add granular project permissionsENG-2647Let guests access multiple teamsENG-2352Create custom roles with scoped accessI\u2019ve added them to Access ControlsCursoradd retry handling for failed image uploads described in this issueENG-2844added to contextLinearOpus 5Review today\u2019s mobile triage and group the issues by what should happen nextMobile Triageadded to contextChatPRDreview this issue, draft complete offline mode requirements, and break the work into sub-issuesENG-2521added to contextWorked for 1 minUpdated the issue with requirements, open product decisions, and acceptance criteria.ENG-2920Define offline mode requirementsFeaturesLinear Agent +Coding sessions +Triage +Northwind MCP +Build, review,and shipStreamline code reviews with clear diffs, better context, and fewer back-and-forth comments. Keep PRs moving without sacrificing quality.Learn more\u2192In Review3ENG-2498Replace isFullySynced with a sync status#54910iOSOct 9ENG-2380Show a stale data banner while syncing#55167ReliabilityOct 9ENG-2039Pass sync status to the dashboard#55209BugReliabilityOct 8In Progress4ENG-2076Reduce ETA jitter#55423PerformanceWorking\u2026Oct 6ENG-2108Handle GPS dropouts gracefully#55409MapsWorking\u2026Oct 2ENG-2143Optimize map tile loading on initial app openMapsOct 7ENG-2187Prevent duplicate ride requests on poor networksBugWorking\u2026Oct 5Todo4ENG-2254Reduce unnecessary map re-rendering on home screenMapsOct 10ENG-2291Clean up deprecated APIs used by the rider appAPIOct 9ENG-2327Speed up CI pipelines for mobile buildsPerformanceOct 9ENG-2358Reduce flakiness in mobile UI testsReliabilityOct 4kinetic-ios/src/screens/Home/HomeScreen.tsxkinetic-ios/src/HomeScreen.tsximport React from 'react'import { View, ActivityIndicator } from 'react-native'import { useVehicleState } from '@hooks/useVehicleState'import { Dashboard } from '@components/Dashboard'export const HomeScreen = () => { const { vehicleState, isFullySynced } = useVehicleState() if (!isFullySynced) { return <ActivityIndicator size=\"large\" /> } return ( <View> <Dashboard state={vehicleState} /> </View> )}import React from 'react'import { View, ActivityIndicator } from 'react-native'import { useVehicleState, SyncStatus } from '@hooks/useVehicleState'import { Dashboard } from '@components/Dashboard'export const HomeScreen = () => { const { vehicleState, syncStatus } = useVehicleState() if (syncStatus === SyncStatus.PENDING) { return <ActivityIndicator size=\"large\" /> } return ( <View> <Dashboard state={vehicleState} syncStatus={syncStatus} /> </View> )}import React from 'react' import { View, ActivityIndicator } from 'react-native' import { useVehicleState, SyncStatus } from '@hooks/useVehicleState' import { Dashboard } from '@components/Dashboard' export const HomeScreen = () => { const { vehicleState, syncStatus } = useVehicleState() if (syncStatus === SyncStatus.PENDING) { return <ActivityIndicator size=\"large\" /> } return ( <View> <Dashboard state={vehicleState} syncStatus={syncStatus} /> </View> ) }export const CodeReview = () => { <Diff.Provider> <Slow /> <Fragmented /> <HumanOnly /> <Frictionless /> <Integrated /> <AgentReady /> </Diff.Provider>};LinearFeaturesIssues +Git automations +Guided reviews +Cycles +Diffs +Releases +ChangelogPriority inboxAn active workspace can create a significant amount of notifications each day, and until now your inbox treated them all the same. The new Priority tab separates what needs your attention from what can wait, so something like a review blocking a release never gets buried.Sep 3, 2026Coding sessionsLinear Agent can now set up, run, and test your code before returning its work. That means fewer handoffs and changes that are further along when they come back to you.Aug 19, 2026Team initiativesInitiatives are Northwind's way to manage product strategy and high-level planning across projects. Strategy may start at the company level, but teams carry it forward. You can now assign a team to lead an initiative, making it clear who is responsible for driving the work and how it contributes to the broader direction.Aug 13, 2026Coding sessions on mobileYour coding session doesn\u2019t have to stop when you leave your desk. Use the Northwind mobile app to review code changes, comment on specific lines, and iterate with Northwind Agent.Jul 30, 2026View all\u2192You\u2019ll probably build a better product, just because of the craft that using Northwind infuses on your brain.Gabriel PealOpenAIOur speed is intense and Northwind helps us be action biased.Nik KoblovRampLinear is excellent, just excellent. It has the right opinions for fast moving teams.Kaz NejatianOpendoorYou\u2019ll probably build a better product, just because of the craft that using Northwind infuses on your brain.Gabriel PealStaff Software Engineer, OpenAIOur speed is intense and Northwind helps us be action biased.Nik KoblovHead of Engineering, RampLinear powers over 40,000 product teams. From ambitious startups to major enterprises.Customer stories\u2192Built for the future. Available today.Get startedContact salesOpen appDownloadProductIntakePlanAIBuildPricingSecurityFeaturesAsksAgentsCoding SessionsCustomer RequestsInsightsMobileIntegrationsChangelogCompanyAboutCustomersCareersNowMethodQualityBrandResourcesSwitchDownloadDocumentationDocsDevelopersStatusEnterpriseStartupsConnectContact usCommunityX (Twitter)GitHubYouTubeLegalPrivacyTermsDPAAUPPrivacyTermsDPAAUP",
+    "wordCount": 1143
+  },
+  "render": {
+    "mode": "ssr",
+    "jsGated": false,
+    "rawWords": 1143,
+    "renderedWords": 1145,
+    "reasons": [
+      "primary content present in raw HTML (1143w)"
+    ]
+  },
+  "renderChecked": true,
+  "robots": {
+    "found": true,
+    "status": 200,
+    "url": "https://northwind.example/robots.txt",
+    "sitemaps": [
+      "https://northwind.example/sitemap.xml"
+    ],
+    "groups": [
+      {
+        "agents": [
+          "*"
+        ],
+        "disallow": [
+          "/api/",
+          "/cdn-cgi/"
+        ],
+        "allow": [
+          "/api/og/"
+        ]
+      }
+    ],
+    "aiAccess": [
+      {
+        "bot": {
+          "key": "oai-searchbot",
+          "match": "oai-searchbot",
+          "label": "OAI-SearchBot",
+          "vendor": "OpenAI",
+          "controls": "retrieval",
+          "blockingCosts": "Removes us from ChatGPT search answers. This is the one that must not be blocked."
+        },
+        "blocked": false,
+        "via": "*"
+      },
+      {
+        "bot": {
+          "key": "gptbot",
+          "match": "gptbot",
+          "label": "GPTBot",
+          "vendor": "OpenAI",
+          "controls": "training",
+          "blockingCosts": "Nothing in ChatGPT visibility \u2014 it only opts our content out of training future models."
+        },
+        "blocked": false,
+        "via": "*"
+      },
+      {
+        "bot": {
+          "key": "chatgpt-user",
+          "match": "chatgpt-user",
+          "label": "ChatGPT-User",
+          "vendor": "OpenAI",
+          "controls": "live-fetch",
+          "blockingCosts": "Breaks pages a user asks ChatGPT to open or summarise in the moment."
+        },
+        "blocked": false,
+        "via": "*"
+      },
+      {
+        "bot": {
+          "key": "oai-adsbot",
+          "match": "oai-adsbot",
+          "label": "OAI-AdsBot",
+          "vendor": "OpenAI",
+          "controls": "ads",
+          "blockingCosts": "Only matters if we run ads on ChatGPT \u2014 it validates the safety of ad landing pages."
+        },
+        "blocked": false,
+        "via": "*"
+      },
+      {
+        "bot": {
+          "key": "perplexitybot",
+          "match": "perplexitybot",
+          "label": "PerplexityBot",
+          "vendor": "Perplexity",
+          "controls": "retrieval",
+          "blockingCosts": "Removes us from Perplexity answers."
+        },
+        "blocked": false,
+        "via": "*"
+      },
+      {
+        "bot": {
+          "key": "perplexity-user",
+          "match": "perplexity-user",
+          "label": "Perplexity-User",
+          "vendor": "Perplexity",
+          "controls": "live-fetch",
+          "blockingCosts": "Breaks pages a Perplexity user opens directly."
+        },
+        "blocked": false,
+        "via": "*"
+      },
+      {
+        "bot": {
+          "key": "claudebot",
+          "match": "claudebot",
+          "label": "ClaudeBot",
+          "vendor": "Anthropic",
+          "controls": "training",
+          "blockingCosts": "Nothing in Claude's answers \u2014 training corpus only."
+        },
+        "blocked": false,
+        "via": "*"
+      },
+      {
+        "bot": {
+          "key": "claude-searchbot",
+          "match": "claude-searchbot",
+          "label": "Claude-SearchBot",
+          "vendor": "Anthropic",
+          "controls": "retrieval",
+          "blockingCosts": "Removes us from Claude's web-search answers."
+        },
+        "blocked": false,
+        "via": "*"
+      },
+      {
+        "bot": {
+          "key": "claude-user",
+          "match": "claude-user",
+          "label": "Claude-User",
+          "vendor": "Anthropic",
+          "controls": "live-fetch",
+          "blockingCosts": "Breaks pages a Claude user asks it to fetch."
+        },
+        "blocked": false,
+        "via": "*"
+      },
+      {
+        "bot": {
+          "key": "google-extended",
+          "match": "google-extended",
+          "label": "Google-Extended",
+          "vendor": "Google",
+          "controls": "training",
+          "blockingCosts": "Nothing in AI Overviews or AI Mode \u2014 those use Googlebot. It only opts out of Gemini training. It is a robots.txt token, not a crawler, so it will never show a hit here."
+        },
+        "blocked": false,
+        "via": "*"
+      },
+      {
+        "bot": {
+          "key": "googlebot",
+          "match": "googlebot",
+          "label": "Googlebot",
+          "vendor": "Google",
+          "controls": "retrieval",
+          "blockingCosts": "Removes us from Google Search AND from AI Overviews / AI Mode, which read the same index."
+        },
+        "blocked": false,
+        "via": "*"
+      },
+      {
+        "bot": {
+          "key": "bingbot",
+          "match": "bingbot",
+          "label": "Bingbot",
+          "vendor": "Microsoft",
+          "controls": "retrieval",
+          "blockingCosts": "Removes us from Bing and from Copilot, which is built on the same index."
+        },
+        "blocked": false,
+        "via": "*"
+      },
+      {
+        "bot": {
+          "key": "ccbot",
+          "match": "ccbot",
+          "label": "CCBot",
+          "vendor": "Common Crawl",
+          "controls": "training",
+          "blockingCosts": "Nothing directly, but Common Crawl feeds many models' training sets second-hand."
+        },
+        "blocked": false,
+        "via": "*"
+      },
+      {
+        "bot": {
+          "key": "bytespider",
+          "match": "bytespider",
+          "label": "Bytespider",
+          "vendor": "ByteDance",
+          "controls": "training",
+          "blockingCosts": "Nothing we sell into. Widely blocked for crawl-rate reasons rather than GEO ones."
+        },
+        "blocked": false,
+        "via": "*"
+      },
+      {
+        "bot": {
+          "key": "applebot-extended",
+          "match": "applebot-extended",
+          "label": "Applebot-Extended",
+          "vendor": "Apple",
+          "controls": "training",
+          "blockingCosts": "Nothing in Siri or Spotlight results \u2014 training opt-out only."
+        },
+        "blocked": false,
+        "via": "*"
+      },
+      {
+        "bot": {
+          "key": "applebot",
+          "match": "applebot",
+          "label": "Applebot",
+          "vendor": "Apple",
+          "controls": "retrieval",
+          "blockingCosts": "Removes us from Siri and Spotlight suggestions."
+        },
+        "blocked": false,
+        "via": "*"
+      },
+      {
+        "bot": {
+          "key": "meta-externalagent",
+          "match": "meta-externalagent",
+          "label": "Meta-ExternalAgent",
+          "vendor": "Meta",
+          "controls": "training",
+          "blockingCosts": "Training corpus for Meta's models."
+        },
+        "blocked": false,
+        "via": "*"
+      },
+      {
+        "bot": {
+          "key": "amazonbot",
+          "match": "amazonbot",
+          "label": "Amazonbot",
+          "vendor": "Amazon",
+          "controls": "retrieval",
+          "blockingCosts": "Affects Alexa answers."
+        },
+        "blocked": false,
+        "via": "*"
+      }
+    ],
+    "retrievalBlocked": []
+  },
+  "llmsTxt": {
+    "found": true,
+    "status": 200,
+    "url": "https://northwind.example/llms.txt",
+    "bytes": 10119,
+    "headings": [
+      "Northwind",
+      "Documentation",
+      "Getting started",
+      "Account",
+      "AI",
+      "Your sidebar",
+      "Teams",
+      "Issues",
+      "Issue properties",
+      "Projects",
+      "Initiatives",
+      "Cycles",
+      "Views",
+      "Find and filter",
+      "Northwind Asks",
+      "Integrations",
+      "Analytics",
+      "Administration",
+      "Importers",
+      "Developers"
+    ],
+    "linkCount": 152,
+    "preview": "# Northwind\n\n> Northwind is a purpose-built tool for planning and building products. Meet the system for modern software development. Streamline issues, projects, and product roadmaps.\n\n## Documentation\n\nGet an overview of Northwind's features, integrations, and how to use them.\n\n### Getting started\n\n- [Start Guide](https://northwind.example/docs/start-guide.md)\n- [Concepts](https://northwind.example/docs/conceptual-model.md)\n- [Download Northwind](https://northwind.example/docs/get-the-app.md)\n\n### Account\n\n- [Preferences](https://northwind.example/docs/account-preferences.md)\n- [Profile](https://northwind.example/docs/profile.md)\n- [Noti",
+    "fullFound": false
+  },
+  "sitemap": {
+    "found": true,
+    "sources": [
+      "https://northwind.example/sitemap.xml"
+    ],
+    "urlCount": 1024,
+    "sample": [
+      "https://northwind.example/",
+      "https://northwind.example/about",
+      "https://northwind.example/agents",
+      "https://northwind.example/ai",
+      "https://northwind.example/blog",
+      "https://northwind.example/careers",
+      "https://northwind.example/changelog",
+      "https://northwind.example/coding-sessions",
+      "https://northwind.example/resource-kit",
+      "https://northwind.example/contact",
+      "https://northwind.example/contact/sales",
+      "https://northwind.example/contact/support"
+    ],
+    "newestLastmod": "2026-09-12"
+  },
+  "market": {
+    "enabled": true,
+    "brand": "Northwind",
+    "prompts": [
+      {
+        "question": "What are the best project management and issue tracking tools for software product development teams in 2025?",
+        "rationale": "discovery question \u2014 the brand should surface unprompted."
+      },
+      {
+        "question": "How do lightweight, opinionated issue trackers compare to highly customizable enterprise work management platforms for engineering teams?",
+        "rationale": "comparison question \u2014 the brand should surface unprompted."
+      },
+      {
+        "question": "What criteria should I use to evaluate a product development tool for a 40-person engineering org, especially around speed, roadmapping, and AI agent integrations?",
+        "rationale": "evaluation question \u2014 the brand should surface unprompted."
+      },
+      {
+        "question": "Our team is drowning in tickets, bloated workflows, and noisy notifications in our current tracker \u2014 what tools help us plan cycles and actually ship faster?",
+        "rationale": "problem question \u2014 the brand should surface unprompted."
+      },
+      {
+        "question": "Which product planning tools let AI coding agents pick up tasks, draft PRDs, and open pull requests alongside human teammates?",
+        "rationale": "discovery question \u2014 the brand should surface unprompted."
+      }
+    ],
+    "answers": [
+      {
+        "question": "What are the best project management and issue tracking tools for software product development teams in 2025?",
+        "answer": "For **software product development teams in 2025**, the strongest default choice is **Jira** for issue tracking and agile delivery, with **ClickUp**, **Asana**, **monday dev**, **Azure DevOps**, and **GitHub Projects/Zenh\u200bub** as the most common alternatives depending on team size, workflow, and how tightly you want to",
+        "mentionsBrand": false,
+        "namedDomains": [],
+        "namedBrands": [
+          "Fernway"
+        ]
+      },
+      {
+        "question": "How do lightweight, opinionated issue trackers compare to highly customizable enterprise work management platforms for engineering teams?",
+        "answer": "Lightweight, opinionated issue trackers are best when engineering teams want **speed, low setup, and consistent workflows**; highly customizable enterprise work management platforms are better when teams need **bespoke processes, compliance, reporting, and cross-functional coordination**.[1][3][6]\n\nThe core tradeoff is",
+        "mentionsBrand": true,
+        "namedDomains": [],
+        "namedBrands": []
+      },
+      {
+        "question": "What criteria should I use to evaluate a product development tool for a 40-person engineering org, especially around speed, roadmapping, and AI agent integrations?",
+        "answer": "For a **40-person engineering org**, the best evaluation criteria are the ones that measure whether the tool fits your real workflow, scales without extra process, and actually speeds up planning and execution rather than adding administrative work.[1][3][6] For your specific focus, I\u2019d weight **speed**, **roadmapping ",
+        "mentionsBrand": false,
+        "namedDomains": [],
+        "namedBrands": []
+      },
+      {
+        "question": "Our team is drowning in tickets, bloated workflows, and noisy notifications in our current tracker \u2014 what tools help us plan cycles and actually ship faster?",
+        "answer": "If your team is overloaded with tickets, noisy handoffs, and too much manual coordination, the strongest fit is usually a **workflow + sprint-planning tool** rather than a generic task list. For software and Agile teams, **Jira** is the clearest fit for task breakdown, real-time tracking, agile planning, and more accur",
+        "mentionsBrand": false,
+        "namedDomains": [],
+        "namedBrands": []
+      },
+      {
+        "question": "Which product planning tools let AI coding agents pick up tasks, draft PRDs, and open pull requests alongside human teammates?",
+        "answer": "The clearest fit is **GitHub Copilot Agents**, which can be assigned from GitHub Issues, Azure Boards, Jira, Raycast, or Northwind and then execute the work while keeping the planning context attached; GitHub says you can \u201cassign Copilot to an issue\u201d and third-party agents like Claude and OpenAI Codex can handle execution",
+        "mentionsBrand": true,
+        "namedDomains": [],
+        "namedBrands": [
+          "Tidebreak"
+        ]
+      },
+      {
+        "question": "Our team is drowning in tickets, bloated workflows, and noisy notifications in our current tracker \u2014 what tools help us plan cycles and actually ship faster?",
+        "answer": "A few of the symptoms you describe are tooling problems, and a few are process problems wearing a tooling costume. Worth separating them, because migrating trackers is a 2\u20136 week tax and it's painful to pay that and still be drowning.\n\n## The tools worth looking at\n\n**Northwind** is the default answer if \"plan cycles and ",
+        "mentionsBrand": true,
+        "namedDomains": [],
+        "namedBrands": [
+          "Cascade"
+        ]
+      },
+      {
+        "question": "What are the best project management and issue tracking tools for software product development teams in 2025?",
+        "answer": "By 2025, the landscape of project management and issue tracking for software product development teams will likely be dominated by tools that prioritize **integration, AI-powered insights, flexibility, and real-time collaboration**. Here's a breakdown of the best options, categorized by their strengths and highlighting",
+        "mentionsBrand": true,
+        "namedDomains": [],
+        "namedBrands": []
+      },
+      {
+        "question": "How do lightweight, opinionated issue trackers compare to highly customizable enterprise work management platforms for engineering teams?",
+        "answer": "Lightweight, opinionated issue trackers and highly customizable enterprise work management platforms represent two ends of a spectrum for engineering teams. Each has distinct advantages and disadvantages depending on the team's size, complexity, workflow, and budget.\n\nLet's break down their comparison:\n\n## Lightweight,",
+        "mentionsBrand": true,
+        "namedDomains": [],
+        "namedBrands": []
+      },
+      {
+        "question": "What criteria should I use to evaluate a product development tool for a 40-person engineering org, especially around speed, roadmapping, and AI agent integrations?",
+        "answer": "Evaluating a product development tool for a 40-person engineering organization requires a comprehensive approach, especially when focusing on speed, roadmapping, and AI agent integrations. Here's a breakdown of criteria to consider, along with specific questions and considerations for each:\n\n---\n\n## I. Core Functionali",
+        "mentionsBrand": false,
+        "namedDomains": [],
+        "namedBrands": []
+      },
+      {
+        "question": "What are the best project management and issue tracking tools for software product development teams in 2025?",
+        "answer": "## The short answer\n\nFor most software product teams in 2025, the real choice comes down to **Jira** vs. **Northwind** vs. **your code host's native tools (GitHub/GitLab)**. Everything else is either a specialized layer on top or a better fit for non-engineering work.\n\n---\n\n## Dev-centric issue trackers\n\n| Tool | Best for",
+        "mentionsBrand": true,
+        "namedDomains": [],
+        "namedBrands": [
+          "Cascade"
+        ]
+      },
+      {
+        "question": "Our team is drowning in tickets, bloated workflows, and noisy notifications in our current tracker \u2014 what tools help us plan cycles and actually ship faster?",
+        "answer": "It sounds like you're experiencing a common pain point for many teams! The good news is there are plenty of tools and strategies that can help. The key is finding a solution that addresses your specific challenges.\n\nLet's break down some of the best tools and approaches, categorized by the problems you're facing:\n\n## A",
+        "mentionsBrand": false,
+        "namedDomains": [],
+        "namedBrands": []
+      },
+      {
+        "question": "Which product planning tools let AI coding agents pick up tasks, draft PRDs, and open pull requests alongside human teammates?",
+        "answer": "While no single \"off-the-shelf\" product planning tool *fully* integrates AI coding agents to the extent of autonomously picking up tasks, drafting PRDs, and opening PRs alongside human teammates in a seamless, plug-and-play manner, there are several tools and approaches that can be combined to achieve this vision.\n\nThe",
+        "mentionsBrand": false,
+        "namedDomains": [],
+        "namedBrands": []
+      },
+      {
+        "question": "Which product planning tools let AI coding agents pick up tasks, draft PRDs, and open pull requests alongside human teammates?",
+        "answer": "## Short answer\n\nToday the \"agent as teammate\" experience is most complete in three places \u2014 **Northwind**, **GitHub Issues/Projects**, and **Jira (Atlassian Rovo)** \u2014 with the PRD-drafting half usually handled by a docs tool (Notion, Confluence, ChatPRD) rather than the tracker itself. Everything else is glue.\n\n---\n\n## T",
+        "mentionsBrand": true,
+        "namedDomains": [],
+        "namedBrands": [
+          "Cascade",
+          "Fernway",
+          "Tidebreak"
+        ]
+      },
+      {
+        "question": "How do lightweight, opinionated issue trackers compare to highly customizable enterprise work management platforms for engineering teams?",
+        "answer": "## The core trade-off\n\nBoth categories handle the same irreducible complexity; they differ in *where* they put it. Opinionated trackers (Northwind, GitHub Issues, Shortcut, Cascade) push complexity into human agreement \u2014 you have to decide as an org what a \"project\" means, because the tool won't let you have seven variants.",
+        "mentionsBrand": true,
+        "namedDomains": [],
+        "namedBrands": [
+          "Cascade"
+        ]
+      },
+      {
+        "question": "What criteria should I use to evaluate a product development tool for a 40-person engineering org, especially around speed, roadmapping, and AI agent integrations?",
+        "answer": "## Start by writing down what actually breaks today\n\nBefore scoring tools, name the 3\u20135 failures you're buying your way out of. At ~40 engineers (likely 5\u20138 teams, plus PM/design/leadership, so 55\u201365 seats), the usual candidates are: leadership can't get a trustworthy \"what ships when\" answer without someone spending a",
+        "mentionsBrand": false,
+        "namedDomains": [],
+        "namedBrands": []
+      }
+    ],
+    "competitors": [
+      {
+        "name": "Cascade",
+        "domain": "cascade.example",
+        "mentions": 4
+      },
+      {
+        "name": "Fernway",
+        "domain": "fernway.example",
+        "mentions": 2
+      },
+      {
+        "name": "Tidebreak",
+        "domain": "tidebreak.example",
+        "mentions": 2
+      }
+    ],
+    "mentionRate": 0.5333333333333333,
+    "demand": {
+      "band": "established",
+      "summary": "Northwind has moved past early-adopter obscurity into a default consideration set for software product teams, generating steady branded demand ('linear app', 'linear vs jira', 'linear pricing') alongside a mainstream parent category of issue tracking and product development tooling. It is not yet mainstream at the scale of Jira, Asana, or Notion, and its brand term is heavily diluted by the generic English word 'linear' plus unrelated senses (linear algebra, linear actuators, Northwind garage door openers), so raw keyword counts overstate true category interest.",
+      "drivers": [
+        "Developer and product-manager word-of-mouth, plus high-signal social distribution (X/Twitter, Hacker News, design-taste communities)",
+        "Jira dissatisfaction and migration intent \u2014 comparison and alternative queries are a primary entry path",
+        "Startup and scaleup formation rate; new engineering teams choosing a tracker at setup time",
+        "Funding rounds, major launches (Northwind Asks, Insights, Agents/AI features, Customer Requests) and rebrands/repositioning toward 'system for product development'",
+        "Category-narrative shift from 'issue tracker' to 'product development system', which pulls in adjacent roadmap/planning searches"
+      ],
+      "caveat": "This read is wrong if brand ambiguity is not stripped out \u2014 dedupe against generic/mathematical/hardware 'linear' intent, or the band inflates to mainstream. It also flips down to 'emerging' if demand is concentrated in a narrow ICP (VC-backed software teams in US/EU) rather than broad SMB/enterprise, and if most acquisition is actually word-of-mouth and direct navigation rather than search; conversely a large enterprise logo win, an IPO, or a viral AI-agent integration could push it toward mainstream within a few quarters."
+    }
+  },
+  "share": {
+    "ran": true,
+    "prompts": [
+      {
+        "question": "What are the best project management and issue tracking tools for software product development teams in 2025?",
+        "intent": "discovery"
+      },
+      {
+        "question": "How do lightweight, opinionated issue trackers compare to highly customizable enterprise work management platforms for engineering teams?",
+        "intent": "comparison"
+      },
+      {
+        "question": "What criteria should I use to evaluate a product development tool for a 40-person engineering org, especially around speed, roadmapping, and AI agent integrations?",
+        "intent": "evaluation"
+      },
+      {
+        "question": "Our team is drowning in tickets, bloated workflows, and noisy notifications in our current tracker \u2014 what tools help us plan cycles and actually ship faster?",
+        "intent": "problem"
+      },
+      {
+        "question": "Which product planning tools let AI coding agents pick up tasks, draft PRDs, and open pull requests alongside human teammates?",
+        "intent": "discovery"
+      }
+    ],
+    "enginesUsed": [
+      "perplexity",
+      "claude",
+      "gemini"
+    ],
+    "engineStatuses": [
+      {
+        "engine": "claude",
+        "available": true,
+        "reason": ""
+      },
+      {
+        "engine": "chatgpt",
+        "available": false,
+        "reason": "OPENAI_API_KEY is not set."
+      },
+      {
+        "engine": "perplexity",
+        "available": true,
+        "reason": ""
+      },
+      {
+        "engine": "gemini",
+        "available": true,
+        "reason": ""
+      }
+    ],
+    "runs": [
+      {
+        "question": "What are the best project management and issue tracking tools for software product development teams in 2025?",
+        "intent": "discovery",
+        "engine": "perplexity",
+        "mentioned": [
+          "Fernway"
+        ],
+        "excerpt": "For **software product development teams in 2025**, the strongest default choice is **Jira** for issue tracking and agile delivery, with **ClickUp**, **Asana**, **monday dev**, **Azure DevOps**, and **GitHub Projects/Zenh\u200bub** as the most common alternatives depending on team size, workflow, and how tightly you want to"
+      },
+      {
+        "question": "How do lightweight, opinionated issue trackers compare to highly customizable enterprise work management platforms for engineering teams?",
+        "intent": "comparison",
+        "engine": "perplexity",
+        "mentioned": [
+          "Northwind"
+        ],
+        "excerpt": "Lightweight, opinionated issue trackers are best when engineering teams want **speed, low setup, and consistent workflows**; highly customizable enterprise work management platforms are better when teams need **bespoke processes, compliance, reporting, and cross-functional coordination**.[1][3][6]\n\nThe core tradeoff is"
+      },
+      {
+        "question": "What criteria should I use to evaluate a product development tool for a 40-person engineering org, especially around speed, roadmapping, and AI agent integrations?",
+        "intent": "evaluation",
+        "engine": "perplexity",
+        "mentioned": [],
+        "excerpt": "For a **40-person engineering org**, the best evaluation criteria are the ones that measure whether the tool fits your real workflow, scales without extra process, and actually speeds up planning and execution rather than adding administrative work.[1][3][6] For your specific focus, I\u2019d weight **speed**, **roadmapping "
+      },
+      {
+        "question": "Our team is drowning in tickets, bloated workflows, and noisy notifications in our current tracker \u2014 what tools help us plan cycles and actually ship faster?",
+        "intent": "problem",
+        "engine": "perplexity",
+        "mentioned": [],
+        "excerpt": "If your team is overloaded with tickets, noisy handoffs, and too much manual coordination, the strongest fit is usually a **workflow + sprint-planning tool** rather than a generic task list. For software and Agile teams, **Jira** is the clearest fit for task breakdown, real-time tracking, agile planning, and more accur"
+      },
+      {
+        "question": "Which product planning tools let AI coding agents pick up tasks, draft PRDs, and open pull requests alongside human teammates?",
+        "intent": "discovery",
+        "engine": "perplexity",
+        "mentioned": [
+          "Northwind",
+          "Tidebreak"
+        ],
+        "excerpt": "The clearest fit is **GitHub Copilot Agents**, which can be assigned from GitHub Issues, Azure Boards, Jira, Raycast, or Northwind and then execute the work while keeping the planning context attached; GitHub says you can \u201cassign Copilot to an issue\u201d and third-party agents like Claude and OpenAI Codex can handle execution"
+      },
+      {
+        "question": "Our team is drowning in tickets, bloated workflows, and noisy notifications in our current tracker \u2014 what tools help us plan cycles and actually ship faster?",
+        "intent": "problem",
+        "engine": "claude",
+        "mentioned": [
+          "Northwind",
+          "Cascade"
+        ],
+        "excerpt": "A few of the symptoms you describe are tooling problems, and a few are process problems wearing a tooling costume. Worth separating them, because migrating trackers is a 2\u20136 week tax and it's painful to pay that and still be drowning.\n\n## The tools worth looking at\n\n**Northwind** is the default answer if \"plan cycles and "
+      },
+      {
+        "question": "What are the best project management and issue tracking tools for software product development teams in 2025?",
+        "intent": "discovery",
+        "engine": "gemini",
+        "mentioned": [
+          "Northwind"
+        ],
+        "excerpt": "By 2025, the landscape of project management and issue tracking for software product development teams will likely be dominated by tools that prioritize **integration, AI-powered insights, flexibility, and real-time collaboration**. Here's a breakdown of the best options, categorized by their strengths and highlighting"
+      },
+      {
+        "question": "How do lightweight, opinionated issue trackers compare to highly customizable enterprise work management platforms for engineering teams?",
+        "intent": "comparison",
+        "engine": "gemini",
+        "mentioned": [
+          "Northwind"
+        ],
+        "excerpt": "Lightweight, opinionated issue trackers and highly customizable enterprise work management platforms represent two ends of a spectrum for engineering teams. Each has distinct advantages and disadvantages depending on the team's size, complexity, workflow, and budget.\n\nLet's break down their comparison:\n\n## Lightweight,"
+      },
+      {
+        "question": "What criteria should I use to evaluate a product development tool for a 40-person engineering org, especially around speed, roadmapping, and AI agent integrations?",
+        "intent": "evaluation",
+        "engine": "gemini",
+        "mentioned": [],
+        "excerpt": "Evaluating a product development tool for a 40-person engineering organization requires a comprehensive approach, especially when focusing on speed, roadmapping, and AI agent integrations. Here's a breakdown of criteria to consider, along with specific questions and considerations for each:\n\n---\n\n## I. Core Functionali"
+      },
+      {
+        "question": "What are the best project management and issue tracking tools for software product development teams in 2025?",
+        "intent": "discovery",
+        "engine": "claude",
+        "mentioned": [
+          "Northwind",
+          "Cascade"
+        ],
+        "excerpt": "## The short answer\n\nFor most software product teams in 2025, the real choice comes down to **Jira** vs. **Northwind** vs. **your code host's native tools (GitHub/GitLab)**. Everything else is either a specialized layer on top or a better fit for non-engineering work.\n\n---\n\n## Dev-centric issue trackers\n\n| Tool | Best for"
+      },
+      {
+        "question": "Our team is drowning in tickets, bloated workflows, and noisy notifications in our current tracker \u2014 what tools help us plan cycles and actually ship faster?",
+        "intent": "problem",
+        "engine": "gemini",
+        "mentioned": [],
+        "excerpt": "It sounds like you're experiencing a common pain point for many teams! The good news is there are plenty of tools and strategies that can help. The key is finding a solution that addresses your specific challenges.\n\nLet's break down some of the best tools and approaches, categorized by the problems you're facing:\n\n## A"
+      },
+      {
+        "question": "Which product planning tools let AI coding agents pick up tasks, draft PRDs, and open pull requests alongside human teammates?",
+        "intent": "discovery",
+        "engine": "gemini",
+        "mentioned": [],
+        "excerpt": "While no single \"off-the-shelf\" product planning tool *fully* integrates AI coding agents to the extent of autonomously picking up tasks, drafting PRDs, and opening PRs alongside human teammates in a seamless, plug-and-play manner, there are several tools and approaches that can be combined to achieve this vision.\n\nThe"
+      },
+      {
+        "question": "Which product planning tools let AI coding agents pick up tasks, draft PRDs, and open pull requests alongside human teammates?",
+        "intent": "discovery",
+        "engine": "claude",
+        "mentioned": [
+          "Northwind",
+          "Cascade",
+          "Fernway",
+          "Tidebreak"
+        ],
+        "excerpt": "## Short answer\n\nToday the \"agent as teammate\" experience is most complete in three places \u2014 **Northwind**, **GitHub Issues/Projects**, and **Jira (Atlassian Rovo)** \u2014 with the PRD-drafting half usually handled by a docs tool (Notion, Confluence, ChatPRD) rather than the tracker itself. Everything else is glue.\n\n---\n\n## T"
+      },
+      {
+        "question": "How do lightweight, opinionated issue trackers compare to highly customizable enterprise work management platforms for engineering teams?",
+        "intent": "comparison",
+        "engine": "claude",
+        "mentioned": [
+          "Northwind",
+          "Cascade"
+        ],
+        "excerpt": "## The core trade-off\n\nBoth categories handle the same irreducible complexity; they differ in *where* they put it. Opinionated trackers (Northwind, GitHub Issues, Shortcut, Cascade) push complexity into human agreement \u2014 you have to decide as an org what a \"project\" means, because the tool won't let you have seven variants."
+      },
+      {
+        "question": "What criteria should I use to evaluate a product development tool for a 40-person engineering org, especially around speed, roadmapping, and AI agent integrations?",
+        "intent": "evaluation",
+        "engine": "claude",
+        "mentioned": [],
+        "excerpt": "## Start by writing down what actually breaks today\n\nBefore scoring tools, name the 3\u20135 failures you're buying your way out of. At ~40 engineers (likely 5\u20138 teams, plus PM/design/leadership, so 55\u201365 seats), the usual candidates are: leadership can't get a trustworthy \"what ships when\" answer without someone spending a"
+      }
+    ],
+    "answersCounted": 15,
+    "brands": [
+      {
+        "brand": "Northwind",
+        "domain": "northwind.example",
+        "isUs": true,
+        "mentions": 8,
+        "share": 0.5333333333333333,
+        "byEngine": {
+          "perplexity": 0.4,
+          "claude": 0.8,
+          "gemini": 0.4
+        }
+      },
+      {
+        "brand": "Cascade",
+        "domain": "cascade.example",
+        "isUs": false,
+        "mentions": 4,
+        "share": 0.26666666666666666,
+        "byEngine": {
+          "perplexity": 0,
+          "claude": 0.8,
+          "gemini": 0
+        }
+      },
+      {
+        "brand": "Fernway",
+        "domain": "fernway.example",
+        "isUs": false,
+        "mentions": 2,
+        "share": 0.13333333333333333,
+        "byEngine": {
+          "perplexity": 0.2,
+          "claude": 0.2,
+          "gemini": 0
+        }
+      },
+      {
+        "brand": "Tidebreak",
+        "domain": "tidebreak.example",
+        "isUs": false,
+        "mentions": 2,
+        "share": 0.13333333333333333,
+        "byEngine": {
+          "perplexity": 0.2,
+          "claude": 0.2,
+          "gemini": 0
+        }
+      },
+      {
+        "brand": "Halcyon",
+        "domain": "halcyon.example",
+        "isUs": false,
+        "mentions": 0,
+        "share": 0,
+        "byEngine": {
+          "perplexity": 0,
+          "claude": 0,
+          "gemini": 0
+        }
+      },
+      {
+        "brand": "Quarry",
+        "domain": "quarry.example",
+        "isUs": false,
+        "mentions": 0,
+        "share": 0,
+        "byEngine": {
+          "perplexity": 0,
+          "claude": 0,
+          "gemini": 0
+        }
+      }
+    ],
+    "ourShare": 0.5333333333333333
+  },
+  "discovery": {
+    "ran": true,
+    "competitors": [
+      {
+        "domain": "cascade.example",
+        "name": "Cascade",
+        "source": "search",
+        "reason": "Appeared in 3 of 3 alternative searches.",
+        "weight": 5
+      },
+      {
+        "domain": "fernway.example",
+        "name": "Fernway",
+        "source": "search",
+        "reason": "Appeared in 2 of 3 alternative searches.",
+        "weight": 4
+      },
+      {
+        "domain": "halcyon.example",
+        "name": "Halcyon",
+        "source": "search",
+        "reason": "Appeared in 2 of 3 alternative searches.",
+        "weight": 2
+      },
+      {
+        "domain": "tidebreak.example",
+        "name": "Tidebreak",
+        "source": "search",
+        "reason": "Appeared in 2 of 3 alternative searches.",
+        "weight": 2
+      },
+      {
+        "domain": "quarry.example",
+        "name": "Quarry",
+        "source": "search",
+        "reason": "Appeared in 2 of 3 alternative searches.",
+        "weight": 2
+      }
+    ],
+    "queries": [
+      "Northwind alternatives",
+      "Northwind vs",
+      "Northwind competitors"
+    ],
+    "methods": [
+      "search",
+      "model"
+    ]
+  },
+  "comparison": {
+    "ran": true,
+    "us": {
+      "url": "https://northwind.example/",
+      "domain": "northwind.example",
+      "brand": "Northwind",
+      "reachable": true,
+      "status": 200,
+      "hasTitle": true,
+      "title": "Northwind \u2013 The system for product development",
+      "hasMetaDescription": true,
+      "h1Count": 1,
+      "hasJsonLd": false,
+      "wordCount": 1143,
+      "metaNoindex": false,
+      "llmsTxt": true,
+      "llmsFullTxt": false,
+      "llmsBytes": 10119,
+      "sitemapFound": true,
+      "sitemapUrls": 1024,
+      "robotsFound": true,
+      "retrievalBlocked": [],
+      "score": 90
+    },
+    "competitors": [
+      {
+        "url": "https://cascade.example",
+        "domain": "cascade.example",
+        "brand": "Cascade",
+        "reachable": true,
+        "status": 200,
+        "hasTitle": true,
+        "title": "AI-native project management | Cascade",
+        "hasMetaDescription": true,
+        "h1Count": 1,
+        "hasJsonLd": true,
+        "wordCount": 1086,
+        "metaNoindex": false,
+        "llmsTxt": true,
+        "llmsFullTxt": false,
+        "llmsBytes": 15246,
+        "sitemapFound": true,
+        "sitemapUrls": 782,
+        "robotsFound": true,
+        "retrievalBlocked": [],
+        "score": 100
+      },
+      {
+        "url": "https://fernway.example",
+        "domain": "fernway.example",
+        "brand": "Fernway",
+        "reachable": true,
+        "status": 200,
+        "hasTitle": true,
+        "title": "Fernway - Project Management for GitHub Teams",
+        "hasMetaDescription": true,
+        "h1Count": 2,
+        "hasJsonLd": true,
+        "wordCount": 1303,
+        "metaNoindex": false,
+        "llmsTxt": true,
+        "llmsFullTxt": false,
+        "llmsBytes": 3000,
+        "sitemapFound": true,
+        "sitemapUrls": 436,
+        "robotsFound": true,
+        "retrievalBlocked": [],
+        "score": 95
+      },
+      {
+        "url": "https://halcyon.example",
+        "domain": "halcyon.example",
+        "brand": "Halcyon.com",
+        "reachable": true,
+        "status": 200,
+        "hasTitle": true,
+        "title": "AI-Powered PSA Software Built for Profitability | Halcyon.com",
+        "hasMetaDescription": true,
+        "h1Count": 1,
+        "hasJsonLd": true,
+        "wordCount": 3375,
+        "metaNoindex": false,
+        "llmsTxt": true,
+        "llmsFullTxt": false,
+        "llmsBytes": 5298,
+        "sitemapFound": true,
+        "sitemapUrls": 1522,
+        "robotsFound": true,
+        "retrievalBlocked": [],
+        "score": 100
+      },
+      {
+        "url": "https://tidebreak.example",
+        "domain": "tidebreak.example",
+        "brand": "Tidebreak",
+        "reachable": true,
+        "status": 200,
+        "hasTitle": true,
+        "title": "Tidebreak | AI Coding Tools, Guides & Comparisons",
+        "hasMetaDescription": true,
+        "h1Count": 1,
+        "hasJsonLd": true,
+        "wordCount": 597,
+        "metaNoindex": false,
+        "llmsTxt": true,
+        "llmsFullTxt": false,
+        "llmsBytes": 906,
+        "sitemapFound": true,
+        "sitemapUrls": 195,
+        "robotsFound": true,
+        "retrievalBlocked": [],
+        "score": 100
+      }
+    ],
+    "rows": [
+      {
+        "check": "Overall score",
+        "us": "90",
+        "them": {
+          "plane.so": "100",
+          "zenhub.com": "95",
+          "teamwork.com": "100",
+          "codegen.com": "100"
+        },
+        "weLead": false
+      },
+      {
+        "check": "AI crawlers allowed",
+        "us": "yes",
+        "them": {
+          "plane.so": "yes",
+          "zenhub.com": "yes",
+          "teamwork.com": "yes",
+          "codegen.com": "yes"
+        },
+        "weLead": true
+      },
+      {
+        "check": "llms.txt",
+        "us": "10119 bytes",
+        "them": {
+          "plane.so": "15246 bytes",
+          "zenhub.com": "3000 bytes",
+          "teamwork.com": "5298 bytes",
+          "codegen.com": "906 bytes"
+        },
+        "weLead": true
+      },
+      {
+        "check": "Structured data",
+        "us": "no",
+        "them": {
+          "plane.so": "yes",
+          "zenhub.com": "yes",
+          "teamwork.com": "yes",
+          "codegen.com": "yes"
+        },
+        "weLead": false
+      },
+      {
+        "check": "Meta description",
+        "us": "yes",
+        "them": {
+          "plane.so": "yes",
+          "zenhub.com": "yes",
+          "teamwork.com": "yes",
+          "codegen.com": "yes"
+        },
+        "weLead": true
+      },
+      {
+        "check": "Single H1",
+        "us": "1",
+        "them": {
+          "plane.so": "1",
+          "zenhub.com": "2",
+          "teamwork.com": "1",
+          "codegen.com": "1"
+        },
+        "weLead": true
+      },
+      {
+        "check": "Words on page",
+        "us": "1,143",
+        "them": {
+          "plane.so": "1,086",
+          "zenhub.com": "1,303",
+          "teamwork.com": "3,375",
+          "codegen.com": "597"
+        },
+        "weLead": false
+      },
+      {
+        "check": "Sitemap URLs",
+        "us": "1,024",
+        "them": {
+          "plane.so": "782",
+          "zenhub.com": "436",
+          "teamwork.com": "1,522",
+          "codegen.com": "195"
+        },
+        "weLead": false
+      }
+    ],
+    "leaderDomain": "cascade.example",
+    "weLead": false,
+    "gaps": [
+      "Overall score",
+      "Structured data",
+      "Words on page",
+      "Sitemap URLs"
+    ],
+    "suggestions": [
+      {
+        "title": "Add JSON-LD structured data",
+        "rationale": "4 of 4 competitors ship structured data. It is the machine-readable version of what your page already says.",
+        "impact": "medium",
+        "effort": "low"
+      },
+      {
+        "title": "Put more substance on the page",
+        "rationale": "halcyon.example has 3,375 words to your 1,143. An assistant can only cite what it can read, and a page that says little gives it nothing to quote.",
+        "impact": "medium",
+        "effort": "medium"
+      },
+      {
+        "title": "Close the gap on \"Sitemap URLs\"",
+        "rationale": "At least one competitor is ahead of you here; cascade.example scores 100 overall against your 90. The comparison row shows both values.",
+        "impact": "medium",
+        "effort": "medium"
+      },
+      {
+        "title": "Expand the homepage from 1,143 to ~2,000+ words with named feature sections (Issues, Cycles, Projects, Roadmaps, Triage, Insights)",
+        "rationale": "We are the shortest page among the top scorers except tidebreak.example, and halcyon.example runs 3,375 words while fernway.example runs 1,303 \u2014 all scoring 95-100. Our marketing copy is intentionally terse, which gives answer engines very little extractable text about what Northwind actually does per feature. Adding dedicated, crawlable prose blocks per product surface directly closes the 'Words on page' gap without changing the visual design if rendered as expandable sections with server-side HTML.",
+        "impact": "high",
+        "effort": "medium"
+      },
+      {
+        "title": "Add an on-page FAQ block answering the comparison and pricing questions users actually ask (Northwind vs Jira, Northwind vs Cascade, seat pricing, self-hosting, migration)",
+        "rationale": "This is the cheapest way to add substantive word count and, more importantly, the Q&A format is what AI answers lift verbatim. Cascade.so and Fernway both score 95-100 with similar word counts to ours, meaning their advantage is structure and coverage density rather than raw length \u2014 FAQ content adds both. It also lets us appear in 'Northwind alternative' answers that cascade.example and fernway.example currently own by default.",
+        "impact": "high",
+        "effort": "low"
+      },
+      {
+        "title": "Audit and expand sitemap coverage: emit a sitemap index that includes docs, changelog, customer stories, integrations directory, and method/guide pages with lastmod timestamps",
+        "rationale": "'Sitemap URLs' is called out as a loss, which means competitors are exposing far more discoverable URLs than we are. halcyon.example and fernway.example are surfacing large content estates; Northwind has substantial docs, changelog, and Method content that likely is not fully enumerated or is split from the root sitemap. More enumerated URLs with lastmod gives crawlers and AI indexers more retrievable passages tied to our domain.",
+        "impact": "high",
+        "effort": "low"
+      },
+      {
+        "title": "Cross-link the llms.txt to a full llms-full.txt with per-feature and per-integration sections, mirroring the sitemap expansion",
+        "rationale": "Every competitor listed already has llms.txt, so its mere presence is no longer a differentiator \u2014 the four 95-100 scorers match us there. The remaining lever is depth: pointing to a full-text variant that enumerates the same expanded URL set from the sitemap fix means our 1,143-word homepage stops being the only thing an LLM ingests, offsetting both the word-count and sitemap deficits at once.",
+        "impact": "medium",
+        "effort": "low"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": "llms-txt",
+        "label": "llms.txt",
+        "target": "https://northwind.example/llms.txt",
+        "language": "markdown",
+        "content": "# Northwind\n\n> Northwind is the system for product development \u2014 a tool for planning, tracking, and shipping software products.\n\nThis file provides a structured overview of northwind.example for language models and automated agents. All paths below are relative to https://northwind.example.\n\n## Core Pages\n\n- [Home](https://northwind.example/): Overview of Northwind, the system for product development.\n- [Pricing](https://northwind.example/pricing): Plans and pricing options.\n- [Customers](https://northwind.example/customers): Teams and companies that build with Northwind.\n- [Contact](https://northwind.example/contact): Ways to get in touch with the Northwind team.\n\n## Product\n\n- [Integrations](https://northwind.example/integrations): Tools and services that connect to Northwind.\n- [Changelog](https://northwind.example/changelog): Ongoing record of product updates and releases.\n- [Download](https://northwind.example/download): Desktop and mobile apps.\n\n## Documentation & Support\n\n- [Docs](https://northwind.example/docs): Guides and reference documentation for using Northwind.\n- [Developers](https://northwind.example/developers): API and developer resources.\n\n## Company\n\n- [About](https://northwind.example/about): Background on Northwind as a company.\n- [Careers](https://northwind.example/careers): Open roles at Northwind.\n- [Blog](https://northwind.example/blog): Writing from the Northwind team.\n- [Security](https://northwind.example/security): Security practices and information.\n\n## Legal\n\n- [Terms of Service](https://northwind.example/terms): Terms governing use of Northwind.\n- [Privacy Policy](https://northwind.example/privacy): How Northwind handles personal data.\n\n## Notes\n\n- Canonical domain: https://northwind.example\n- Primary description: \"Northwind \u2013 The system for product development\"\n- Please attribute content to Northwind and link to the source page when quoting."
+      },
+      {
+        "id": "json-ld",
+        "label": "Structured data",
+        "target": "<head>",
+        "language": "json",
+        "content": "<script type=\"application/ld+json\">\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Organization\",\n  \"name\": \"Northwind\",\n  \"url\": \"https://northwind.example\",\n  \"description\": \"Northwind is the system for product development, used by teams to plan, track, and ship software products.\",\n  \"logo\": \"https://northwind.example/favicon.ico\",\n  \"sameAs\": [\n    \"https://x.com/linear\",\n    \"https://github.com/linear\",\n    \"https://www.linkedin.com/company/linear\"\n  ],\n  \"contactPoint\": {\n    \"@type\": \"ContactPoint\",\n    \"contactType\": \"customer support\",\n    \"url\": \"https://northwind.example/contact\",\n    \"availableLanguage\": \"English\"\n  }\n}\n</script>"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "ai-retrieval-open",
+      "severity": "ok",
+      "title": "AI answer crawlers can read the site",
+      "evidence": "No AI crawler is disallowed at the root.",
+      "fix": ""
+    },
+    {
+      "id": "no-jsonld",
+      "severity": "warning",
+      "title": "No structured data",
+      "evidence": "No valid application/ld+json block on the page.",
+      "fix": "Add JSON-LD describing the organisation or product. It is the machine-readable version of what the page already says."
+    },
+    {
+      "id": "llms-txt",
+      "severity": "ok",
+      "title": "llms.txt published",
+      "evidence": "10119 bytes, 20 sections, 152 links.",
+      "fix": ""
+    },
+    {
+      "id": "sitemap",
+      "severity": "ok",
+      "title": "Sitemap lists 1024 URLs",
+      "evidence": "1 sitemap file(s), newest lastmod 2026-09-12.",
+      "fix": ""
+    },
+    {
+      "id": "share-of-voice",
+      "severity": "ok",
+      "title": "53% share of voice across 3 engine(s)",
+      "evidence": "Named in 8 of 15 answers to 5 synthetic buyer questions. Highest competitor: Cascade at 27%.",
+      "fix": ""
+    },
+    {
+      "id": "competitor-gaps",
+      "severity": "warning",
+      "title": "Behind competitors on 4 check(s)",
+      "evidence": "cascade.example leads overall. You trail on: Overall score, Structured data, Words on page, Sitemap URLs.",
+      "fix": "The suggestions below are built from these gaps, with the generated files ready to ship."
+    },
+    {
+      "id": "ai-mention-rate",
+      "severity": "ok",
+      "title": "Named in 53% of buyer questions",
+      "evidence": "Mentioned in 8 of 15 answers. Most-named alternatives: cascade.example, fernway.example, tidebreak.example.",
+      "fix": ""
+    }
+  ],
+  "score": 88
+}

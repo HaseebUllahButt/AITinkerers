@@ -12,7 +12,7 @@
 import { resolvePage } from "./strapiLinks";
 import { strapiGet } from "./strapiEntry";
 
-const FIRST_PARTY_HOST = "imagine.art"; // resolvePage already assumes this site's route scheme
+const FIRST_PARTY_HOST = "northwind.example"; // resolvePage already assumes this site's route scheme
 
 interface SlugGroup { pluralApi: string; slugField: string; urlsBySlug: Map<string, string[]> }
 

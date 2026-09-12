@@ -1,5 +1,5 @@
 // Live SERP lookup via Serper (google.serper.dev) — real "who outranks us and why" data for the
-// Rank Watcher. Returns the organic results ranking above imagine.art for a query. No key → null
+// Rank Watcher. Returns the organic results ranking above northwind.example for a query. No key → null
 // (the caller then simply omits the competitor line rather than showing a stub).
 import { meteredProviderEnabled, meteredKey } from "@/lib/providers/policy";
 export interface SerpCompetitor {
@@ -23,7 +23,7 @@ export async function topCompetitors(
 ): Promise<SerpCompetitor[] | null> {
   const key = meteredKey(process.env.SERPER_API_KEY);
   if (!key || !query) return null;
-  const ourDomain = opts.ourDomain ?? "imagine.art";
+  const ourDomain = opts.ourDomain ?? "northwind.example";
   const limit = opts.limit ?? 4;
   try {
     const res = await fetch("https://google.serper.dev/search", {

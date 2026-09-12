@@ -157,7 +157,7 @@ const SURFACE_PRESETS: Record<AssetSurface, SurfacePreset> = {
     // Clean light studio is IN this list on purpose, not an oversight. Before this, landing worlds
     // were dark premium / brand saturated / gradient wash only — three ways to end up with the exact
     // failure the imagine-lp-assets skill names as the commonest one: "a set of near-black cards with
-    // violet glows." Measured against real ImagineArt surfaces, the app shell, homepage rails and
+    // violet glows." Measured against real Northwind surfaces, the app shell, homepage rails and
     // feature pages run white / lavender-white / cream; dark is a register earned by cinematic film
     // content, not the default register for "premium." Light stays first in the list — the common
     // case, not the exception — with dark/saturated still available for launches and film-adjacent

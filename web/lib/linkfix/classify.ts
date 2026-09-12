@@ -17,7 +17,7 @@ import type { FoundLink, Verdict } from "./types";
 import { MEDIA_RE } from "./extract";
 import { normPath, type Inventory } from "./sources";
 
-const SITE_HOSTS = new Set(["www.imagine.art", "imagine.art"]);
+const SITE_HOSTS = new Set(["www.northwind.example", "northwind.example"]);
 const UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36";
 const TITLE_RE = /<title[^>]*>\s*([^<]*?)\s*<\/title>/i;
 
@@ -68,7 +68,7 @@ export function classifyOffline(link: FoundLink, inv: Inventory): FoundLink {
     const live = Boolean(b?.published);
     return {
       ...link,
-      target: `https://www.imagine.art/blogs/${link.relSlug}`,
+      target: `https://www.northwind.example/blogs/${link.relSlug}`,
       targetId: b?.id,
       targetTitle: b?.title ?? link.text,
       verdict: live ? "ok" : "broken",
@@ -82,17 +82,17 @@ export function classifyOffline(link: FoundLink, inv: Inventory): FoundLink {
 
   let host = "";
   let url: URL | null = null;
-  try { url = new URL(raw, "https://www.imagine.art"); host = url.hostname.toLowerCase(); } catch { /* keep as external */ }
+  try { url = new URL(raw, "https://www.northwind.example"); host = url.hostname.toLowerCase(); } catch { /* keep as external */ }
 
   if (/(^|\.)shorts\.imagine\.art$/.test(host) || /\/dashboard(\/|$)/.test(raw)) {
     return { ...link, target: raw, verdict: "dashboard", why: "app route behind login, not a public page" };
   }
-  // Other imagine.art subdomains (help., platform., mcp.) route independently — judging their paths
+  // Other northwind.example subdomains (help., platform., mcp.) route independently — judging their paths
   // against the marketing sitemap judges them against the wrong site.
   if (!url || !SITE_HOSTS.has(host)) return { ...link, target: raw, verdict: "unchecked" };
 
   const p = normPath(url.pathname);
-  const target = `https://www.imagine.art${p}`;
+  const target = `https://www.northwind.example${p}`;
   if (inv.livePaths.has(p)) return { ...link, target, verdict: "ok" };
 
   const seg = (p.split("/").pop() ?? "").toLowerCase();
@@ -107,7 +107,7 @@ export function classifyOffline(link: FoundLink, inv: Inventory): FoundLink {
       return {
         ...link, target, targetId: hit.id, targetTitle: hit.title, verdict: "broken",
         why: `published, but its live URL is ${real}`,
-        fixTo: `https://www.imagine.art${real}`,
+        fixTo: `https://www.northwind.example${real}`,
       };
     }
     return { ...link, target, targetId: hit.id, targetTitle: hit.title, verdict: "unchecked" };

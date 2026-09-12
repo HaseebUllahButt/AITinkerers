@@ -22,7 +22,7 @@ async function authorized(req: NextRequest): Promise<boolean> {
  * Patterns from a request body, or the defaults.
  *
  * Accepts the same shape the library uses, plus a bare-string shorthand so a caller can say
- * "old-thing.imagine.art" or "/old-path" without knowing the object form — the sweep is meant to be
+ * "old-thing.northwind.example" or "/old-path" without knowing the object form — the sweep is meant to be
  * usable the next time a URL is retired, and that is the moment nobody wants to read a type.
  */
 function patternsFrom(input: unknown): SweepPattern[] {

@@ -57,7 +57,7 @@ const CATS = [
 // What to ask the human for on the Assist path, per intervention type.
 const ASSIST_FIELD: Record<string, { label: string; placeholder: string; kind: "text" | "url" | "email"; allowUpload?: boolean }> = {
   asset_request: { label: "Paste a link to the document, or upload it below", placeholder: "https://link-to-your-one-pager.pdf", kind: "url", allowUpload: true },
-  identity_verification: { label: "Website / LinkedIn / registration or references", placeholder: "https://imagine.art  ·  linkedin.com/in/...", kind: "text" },
+  identity_verification: { label: "Website / LinkedIn / registration or references", placeholder: "https://northwind.example  ·  linkedin.com/in/...", kind: "text" },
   scheduling: { label: "Your availability (with timezone) or a booking link", placeholder: "Tue/Wed 2-5pm PT, or https://cal.com/you", kind: "text" },
   redirect: { label: "Correct contact email to redirect this thread to", placeholder: "editor@publication.com", kind: "email" },
   payment_details: { label: "Invoice link / PO / billing detail to send", placeholder: "https://invoice-link  or  PO #12345", kind: "text", allowUpload: true },

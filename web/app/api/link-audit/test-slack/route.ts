@@ -26,7 +26,7 @@ export async function POST() {
       ? await postToSlack(`${TEST_LABEL}\n${composed.text}`)
       : { ok: false, error: composed.error };
   } else {
-    res = await postToSlack(`${TEST_LABEL}\n:link: *imagine.art link audit* — test message from SearchOps. The webhook works; daily digests will arrive here.`);
+    res = await postToSlack(`${TEST_LABEL}\n:link: *northwind.example link audit* — test message from SearchOps. The webhook works; daily digests will arrive here.`);
   }
   if (!res.ok) return NextResponse.json({ ok: false, error: res.error }, { status: 500 });
 

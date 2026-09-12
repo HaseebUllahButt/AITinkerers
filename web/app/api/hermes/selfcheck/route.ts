@@ -52,11 +52,11 @@ export async function GET(req: NextRequest) {
   {
     const fakeAction: HermesAction = {
       id: "a", session_id: "s", kind: "publish_draft", summary: "Publish X", params: {},
-      status: "executed", proposed_at: "", resolved_at: "", resolved_by: "someone@imagine.art",
+      status: "executed", proposed_at: "", resolved_at: "", resolved_by: "someone@northwind.example",
       result: { http_status: 200 },
     };
     const ops = opsDirective({
-      userEmail: "probe@imagine.art", isAdmin: false, overview: null, pendingActions: [fakeAction],
+      userEmail: "probe@northwind.example", isAdmin: false, overview: null, pendingActions: [fakeAction],
       now: new Date("2026-01-01T00:00:00Z"),
     });
     check("directives", "ops directive is wholly wrapped", ops.startsWith("<ops>") && ops.endsWith("</ops>"));
@@ -66,7 +66,7 @@ export async function GET(req: NextRequest) {
     check("directives", "human text survives stripping",
       stripHermesDirectives("what needs my attention?") === "what needs my attention?");
     check("directives", "ops directive is deterministic given a fixed clock",
-      ops === opsDirective({ userEmail: "probe@imagine.art", isAdmin: false, overview: null, pendingActions: [fakeAction], now: new Date("2026-01-01T00:00:00Z") }));
+      ops === opsDirective({ userEmail: "probe@northwind.example", isAdmin: false, overview: null, pendingActions: [fakeAction], now: new Date("2026-01-01T00:00:00Z") }));
   }
 
   // ── tools: one frozen registry, fully labeled ──
@@ -442,8 +442,8 @@ export async function GET(req: NextRequest) {
       !shaped.some((r) => r.domain.includes("youtube")), JSON.stringify(shaped));
     const { htmlLinksToUs } = await import("@/lib/sourcing/mentions");
     check("prospecting", "mention classifier sees our link, and a mere text mention is not one",
-      htmlLinksToUs('<p>x</p><a href="https://www.imagine.art/ai-video">y</a>') === true &&
-      htmlLinksToUs('<a href="https://other.example">imagine.art is great</a>') === false);
+      htmlLinksToUs('<p>x</p><a href="https://www.northwind.example/ai-video">y</a>') === true &&
+      htmlLinksToUs('<a href="https://other.example">northwind.example is great</a>') === false);
     check("tools", "machine + prospecting tools are registered",
       HERMES_TOOL_NAMES.has("automation_status") && HERMES_TOOL_NAMES.has("find_link_pages") && HERMES_TOOL_NAMES.has("find_unlinked_mentions"));
     check("prompt", "revision bumped for the autonomy tool-shape change", HERMES_PROMPT_REVISION >= 7);
@@ -471,7 +471,7 @@ export async function GET(req: NextRequest) {
     check("prompt", "revision bumped for the address-book tool-shape change", HERMES_PROMPT_REVISION >= 8);
     check("tools", "pitch editing is registered", HERMES_TOOL_NAMES.has("edit_pitches"));
     check("prompt", "revision bumped for the pitch-editing tool-shape change", HERMES_PROMPT_REVISION >= 9);
-    const emptyEdit = await runHermesTool("edit_pitches", { edits: [] }, { sessionId: "s", userEmail: "probe@imagine.art" });
+    const emptyEdit = await runHermesTool("edit_pitches", { edits: [] }, { sessionId: "s", userEmail: "probe@northwind.example" });
     check("tools", "edit_pitches refuses an empty edit list as a tool error", emptyEdit.is_error === true);
   }
 
@@ -522,7 +522,7 @@ export async function GET(req: NextRequest) {
       classifySmtpReply(252, "252 cannot VRFY user") === "unclear");
 
     // An acceptance means nothing until the control address has been REFUSED — this is what caught
-    // theverge.com and imagine.art, both of which accept every address.
+    // theverge.com and northwind.example, both of which accept every address.
     check("verify-free", "target accepted + control accepted = catch-all, never safe",
       foldSmtpOutcomes("accepted", "accepted", "smtp").catchAll === true &&
       foldSmtpOutcomes("accepted", "accepted", "smtp").safe === false);
@@ -658,13 +658,13 @@ export async function GET(req: NextRequest) {
       )) === JSON.stringify(["https://x.test/r.xml"]));
     check("tools", "verify_emails is registered", HERMES_TOOL_NAMES.has("verify_emails"));
     check("prompt", "revision bumped for the verification tool-shape change", HERMES_PROMPT_REVISION >= 29);
-    const emptyVerify = await runHermesTool("verify_emails", { emails: ["nonsense"] }, { sessionId: "s", userEmail: "probe@imagine.art" });
+    const emptyVerify = await runHermesTool("verify_emails", { emails: ["nonsense"] }, { sessionId: "s", userEmail: "probe@northwind.example" });
     check("tools", "verify_emails refuses an all-junk list as a tool error", emptyVerify.is_error === true);
   }
 
   // ── picker: the selection UI is pure, capped and clamps its key column ──
   {
-    const ctx = { sessionId: "s", userEmail: "probe@imagine.art" };
+    const ctx = { sessionId: "s", userEmail: "probe@northwind.example" };
     const r = await runHermesTool("show_picker", {
       title: "t", columns: ["url", "dr"], key_column_index: 5,
       rows: Array.from({ length: 60 }, (_, i) => [`https://x${i}.example/post`, String(i)]),
@@ -730,7 +730,7 @@ export async function GET(req: NextRequest) {
       !!first.page && !!second.page && first.page.slug !== second.page.slug);
     const target = pickLinkTarget("workflow video", DEFAULT_NEGOTIATION_SETTINGS.link_targets);
     check("inventory", "a link-back target resolves to one of our pages",
-      typeof target.url === "string" && target.url.startsWith("https://www.imagine.art"));
+      typeof target.url === "string" && target.url.startsWith("https://www.northwind.example"));
     check("prompt", "revision bumped for the link-exchange ladder", HERMES_PROMPT_REVISION >= 11);
     check("prompt", "the soul teaches the link-exchange ladder", /link exchange/i.test(HERMES_SOUL));
   }
@@ -866,7 +866,7 @@ export async function GET(req: NextRequest) {
   // ── sla: the unanswered-reply verdicts the sweep, the page and the digest all rely on ──
   {
     const base: UnansweredReply = {
-      anchorId: "a", authorId: "au", workflowId: "w", senderEmail: "me@imagine.art", aiManaged: false,
+      anchorId: "a", authorId: "au", workflowId: "w", senderEmail: "you@northwind.example", aiManaged: false,
       negotiationStatus: null, replyIntent: null, replyExcerpt: "Sure, happy to include you.", replyFrom: "them@site.test",
       repliedAt: "2026-01-01T00:00:00Z", lastAnswerAt: null, ageHours: 3, hasFreshDraft: false,
     };

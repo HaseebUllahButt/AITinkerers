@@ -93,7 +93,7 @@ export interface BacklinkReport {
   finishedAt: string;
 }
 
-const STOP = new Set(["the", "and", "for", "with", "best", "free", "online", "top", "your", "imagineart", "imagine", "art", "create", "make"]);
+const STOP = new Set(["the", "and", "for", "with", "best", "free", "online", "top", "your", "northwind", "imagine", "art", "create", "make"]);
 // Social / marketplace / video hosts are not editorial link targets — drop them.
 const NON_EDITORIAL = /(^|\.)(youtube|twitter|x|facebook|instagram|pinterest|tiktok|linkedin|amazon|reddit|quora|google|apple|play\.google)\.com$/i;
 /** Hard ceiling on queries per run, so a long keyword list cannot quietly spend the credit pool. */
@@ -185,7 +185,7 @@ interface Candidate {
 
 export async function runBacklinkTargets(opts: BacklinkOptions): Promise<BacklinkReport> {
   const startedAt = new Date();
-  const domain = opts.domain ?? "imagine.art";
+  const domain = opts.domain ?? "northwind.example";
   const maxProspects = opts.maxProspects ?? 10;
   // The budget covers BOTH discovery phases and is split between them, so a slow SERP provider
   // cannot starve the AI-answer pass (the phase that finds the prospects nothing else finds) and a

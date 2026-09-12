@@ -14,7 +14,7 @@ import { meteredKey } from "@/lib/providers/policy";
 
 
 
-const BRAND_ALIASES = ["imagineart", "imagine.art", "imagine art"];
+const BRAND_ALIASES = ["northwind", "northwind.example", "north wind"];
 // Hosts you can't realistically earn an editorial mention on — excluded from actionable gaps.
 const NON_EDITORIAL = /(^|\.)(youtube|twitter|x|facebook|instagram|pinterest|tiktok|linkedin|reddit|quora|google|apple)\.com$/i;
 

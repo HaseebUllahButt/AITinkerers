@@ -137,7 +137,7 @@ async function checkAhrefs(): Promise<KeyHealth> {
   const base = { service: "ahrefs", label: "Ahrefs (domain rating)", checkedAt: new Date().toISOString() };
   if (!k) return { ...base, configured: false, ok: true, message: "Not configured (free DR endpoint still works unauthenticated)" };
   try {
-    const res = await fetch("https://api.ahrefs.com/v3/public/domain-rating-free?target=imagine.art&output=json", {
+    const res = await fetch("https://api.ahrefs.com/v3/public/domain-rating-free?target=northwind.example&output=json", {
       headers: { Accept: "application/json", Authorization: `Bearer ${k}` }, signal: AbortSignal.timeout(12_000),
     });
     if (!res.ok) return { ...base, configured: true, ok: false, message: `HTTP ${res.status}` };
@@ -170,7 +170,7 @@ async function checkOpenPageRank(): Promise<KeyHealth> {
   const base = { service: "openpagerank", label: "Open PageRank (free authority signal)", checkedAt: new Date().toISOString() };
   if (!k) return { ...base, configured: false, ok: true, message: "Not configured — the PBN check runs on domain age + Tranco only" };
   try {
-    const res = await fetch("https://openpagerank.com/api/v1.0/getPageRank?domains%5B%5D=imagine.art", {
+    const res = await fetch("https://openpagerank.com/api/v1.0/getPageRank?domains%5B%5D=northwind.example", {
       headers: { "API-OPR": k }, signal: AbortSignal.timeout(10_000),
     });
     if (res.status === 403) return { ...base, configured: true, ok: false, message: "Rejected (403) — key invalid" };

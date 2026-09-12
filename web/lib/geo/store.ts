@@ -29,7 +29,7 @@ export interface IngestResult {
  * Take a batch of access-log lines and keep only the two kinds we care about.
  *
  * Filtering happens HERE rather than at the sender, because the sender is a log drain on another
- * project and pushing our taxonomy into its config would mean redeploying imagine.art every time a new
+ * project and pushing our taxonomy into its config would mean redeploying northwind.example every time a new
  * AI crawler appears. The trade is bandwidth: we accept every line and throw most away. That is the
  * right side of the trade — a missed crawler is invisible for months, and bytes are cheap.
  */

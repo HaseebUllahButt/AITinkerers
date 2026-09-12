@@ -437,7 +437,7 @@ export default function EmailsPage() {
         setTemplateForm({
           name: "",
           subject: "Loved your recent piece on {{tool_mentioned}}",
-          body: `Hi {{author_name}},\n\n{{custom_line}}\n\nI read this at: {{article_link}}\n\nI work at ImagineArt, one of the leading AI image generation platforms. I think your audience would love to hear about what we've been building.\n\nWould you be open to a quick chat, or to covering us in a future piece?\n\nBest,\nAbdullah\nImagineArt`,
+          body: `Hi {{author_name}},\n\n{{custom_line}}\n\nI read this at: {{article_link}}\n\nI work at Northwind, one of the leading AI image generation platforms. I think your audience would love to hear about what we've been building.\n\nWould you be open to a quick chat, or to covering us in a future piece?\n\nBest,\nAbdullah\nNorthwind`,
           guidance: "",
           channel: "email",
         });

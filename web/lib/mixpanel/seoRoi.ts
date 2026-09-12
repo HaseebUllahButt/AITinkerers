@@ -65,7 +65,7 @@ const SOCIAL_HOSTS = ["facebook.com", "instagram.com", "youtube.com", "twitter.c
   "reddit.com", "linkedin.com", "tiktok.com", "pinterest.", "threads.com", "discord.com",
   "telegram.org", "quora.com", "medium.com", "vk.ru"];
 /** Our own estate. A self-referral is not a channel — it is a person bouncing through auth or billing. */
-const INTERNAL_HOSTS = ["imagine.art", "vyro.ai", "checkout.stripe.com", "app.link.com"];
+const INTERNAL_HOSTS = ["northwind.example", "vyro.ai", "checkout.stripe.com", "app.link.com"];
 
 /**
  * Which channel a (referring domain, utm_medium) pair belongs to.

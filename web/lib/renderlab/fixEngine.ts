@@ -62,7 +62,7 @@ function isInternal(url: string): boolean {
 /** Root-relative links appear in real content (and past applies WROTE them); checkLink and the
  *  draft probe both need an absolute URL, so internal paths get the canonical host. */
 function absolutize(url: string): string {
-  return url.startsWith("/") ? `https://www.imagine.art${url}` : url;
+  return url.startsWith("/") ? `https://www.northwind.example${url}` : url;
 }
 
 /**
@@ -240,7 +240,7 @@ export async function scanForFixes(opts: ScanOptions): Promise<ScanResult> {
   const wantedPages = opts.pages?.length ? new Set(opts.pages.map(toPath)) : null;
   const fresh = candidates.filter((s) => !seen.has(s.url));
   const queue = wantedPages
-    ? [...wantedPages].map((p) => ({ url: `https://www.imagine.art${p === "/" ? "" : p}`, path: p }))
+    ? [...wantedPages].map((p) => ({ url: `https://www.northwind.example${p === "/" ? "" : p}`, path: p }))
     : opts.refresh
       ? [...fresh, ...(done ?? []).map((d) => candidates.find((c) => c.url === d.url)).filter((c): c is { url: string; path: string } => !!c)]
       : fresh;

@@ -14,7 +14,7 @@
 import { strapiGetRaw } from "./strapiRaw";
 import type { Surface } from "./types";
 
-export const SITE = "https://www.imagine.art";
+export const SITE = "https://www.northwind.example";
 const SITEMAP_URL = `${SITE}/sitemap.xml`;
 
 export interface EntryState {

@@ -76,7 +76,7 @@ export function serperEnabled(): boolean {
  * Live SERP for a keyword. This is the grounding source for "what does the reader actually get when
  * they search this", which is what search intent means concretely.
  */
-export async function serpAnalysis(keyword: string, ourDomains: string[] = ["imagine.art"]): Promise<SerpAnalysis | null> {
+export async function serpAnalysis(keyword: string, ourDomains: string[] = ["northwind.example"]): Promise<SerpAnalysis | null> {
   const key = meteredKey(process.env.SERPER_API_KEY);
   if (!key || !keyword.trim()) return null;
   try {

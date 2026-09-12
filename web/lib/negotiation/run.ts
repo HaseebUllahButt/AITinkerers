@@ -186,7 +186,7 @@ export async function negotiateThread(emailId: string, opts?: { forceDraft?: boo
       draft = { body: `Hi ${first},\n\nTotally understand, thanks for letting me know and no worries at all. If anything changes down the line, my door is open. Wishing you well.\n\nBest,\n${signer}`, suggestedOffer: null, shouldStop: true, statusHint: "declined" };
     } else if (decision.action === "close_agreed") {
       const onOur = (initial as any).exchange_offer?.current?.url ? ` on ${(initial as any).exchange_offer.current.url}` : "";
-      draft = { body: `Hi ${first},\n\nPerfect, glad it works. I'll get your link added${onOur} and send over the short blurb for the ImagineArt mention so you can add it on your side. Thanks ${first}, great to be working together.\n\nBest,\n${signer}`, suggestedOffer: null, shouldStop: true, statusHint: "agreed" };
+      draft = { body: `Hi ${first},\n\nPerfect, glad it works. I'll get your link added${onOur} and send over the short blurb for the Northwind mention so you can add it on your side. Thanks ${first}, great to be working together.\n\nBest,\n${signer}`, suggestedOffer: null, shouldStop: true, statusHint: "agreed" };
     } else if (decision.action === "go_money") {
       mode = "money"; action = "go_money";
     } else {

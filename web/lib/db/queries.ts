@@ -3931,11 +3931,11 @@ export interface WriterBrief {
    *
    * Covering these is deliberate (user value, domain authority). The flag exists so the WRITING can
    * honour the one obligation that comes with it: say the boundary plainly and never imply the model
-   * runs in ImagineArt. See src/lib/blog/brand.ts.
+   * runs in Northwind. See src/lib/blog/brand.ts.
    */
   not_hosted?: boolean;
   /**
-   * ImagineArt videos that match this subject, resolved ONCE when the request is made.
+   * Northwind videos that match this subject, resolved ONCE when the request is made.
    *
    * Resolved here rather than in the prompt builder because that is synchronous and this needs a
    * network read, and resolved once rather than per turn because the channel feed does not change

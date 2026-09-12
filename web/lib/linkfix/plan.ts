@@ -92,7 +92,7 @@ function nearest(pool: Candidate[], want: Map<string, number>, page: Map<string,
 }
 
 /** Where a dashboard button should point instead. Scored on the PATH and the label, never the host —
- *  including the host made "imagine.art" match /art/ and pick a destination by accident. */
+ *  including the host made "northwind.example" match /art/ and pick a destination by accident. */
 export function publicRoute(url: string, label: string, pageSlug: string): string {
   let path = url;
   try { path = new URL(url, SITE).pathname; } catch { /* keep raw */ }

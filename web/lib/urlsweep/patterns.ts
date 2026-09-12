@@ -6,8 +6,8 @@
 // would have to be rewritten next time.
 
 /** The canonical host. Everything else on the domain is, by default, something to look at. */
-export const CANONICAL_HOST = "www.imagine.art";
-const APEX = "imagine.art";
+export const CANONICAL_HOST = "www.northwind.example";
+const APEX = "northwind.example";
 
 export interface SweepPattern {
   /** Human label — findings group by this, so it should read as a cause. */
@@ -16,7 +16,7 @@ export interface SweepPattern {
   host?: string;
   /** Match any URL on the canonical host whose path starts here. */
   pathPrefix?: string;
-  /** Match any *.imagine.art host that is not the canonical host or the apex. */
+  /** Match any *.northwind.example host that is not the canonical host or the apex. */
   subdomainCatchAll?: boolean;
   note?: string;
 }
@@ -27,19 +27,19 @@ export interface SweepPattern {
  * The first four are the URLs the team named. The fifth is the one that actually matters: nobody
  * can enumerate every subdomain that has ever been linked, and "plus any other subdomain URLs"
  * is not a list somebody can hand you — it is the output of a crawl. So the catch-all reports
- * EVERY non-canonical imagine.art host it finds, and the team decides which are legitimate.
+ * EVERY non-canonical northwind.example host it finds, and the team decides which are legitimate.
  * Reporting a live subdomain as a finding is the right failure here: a false positive costs one
  * glance, a missed subdomain is the exact thing this sweep exists to prevent.
  */
 export const DEFAULT_PATTERNS: SweepPattern[] = [
   { label: "old dashboard", pathPrefix: "/dashboard", note: "Retired dashboard path on the main site." },
-  { label: "ideate subdomain", host: "ideate.imagine.art" },
-  { label: "shorts subdomain", host: "shorts.imagine.art" },
-  { label: "trust subdomain", host: "trust.imagine.art" },
+  { label: "ideate subdomain", host: "ideate.northwind.example" },
+  { label: "shorts subdomain", host: "shorts.northwind.example" },
+  { label: "trust subdomain", host: "trust.northwind.example" },
   {
-    label: "other imagine.art subdomain",
+    label: "other northwind.example subdomain",
     subdomainCatchAll: true,
-    note: "Any imagine.art host that is not www — reported so the team can confirm which are still meant to be linked.",
+    note: "Any northwind.example host that is not www — reported so the team can confirm which are still meant to be linked.",
   },
 ];
 
@@ -50,7 +50,7 @@ function bareHost(h: string): string {
 /**
  * Which pattern does this URL trip, if any?
  *
- * Explicit patterns are tested before the catch-all so a link to ideate.imagine.art is labelled
+ * Explicit patterns are tested before the catch-all so a link to ideate.northwind.example is labelled
  * "ideate subdomain" rather than swallowed into the generic bucket — the label is what tells the
  * team whether this is a known retirement or a surprise.
  */
@@ -84,7 +84,7 @@ export function matchUrl(rawUrl: string, patterns: SweepPattern[] = DEFAULT_PATT
  * serialised router payload — and "or on CTA buttons" was named explicitly as part of the ask, so
  * anchors alone would answer the wrong question. These needles drive a second, coarser pass.
  *
- * The catch-all gets no needles: grepping for `.imagine.art` would hit the canonical host on every
+ * The catch-all gets no needles: grepping for `.northwind.example` would hit the canonical host on every
  * page and return the whole site. Subdomains are found by the anchor pass and by their own explicit
  * patterns once somebody adds them.
  */

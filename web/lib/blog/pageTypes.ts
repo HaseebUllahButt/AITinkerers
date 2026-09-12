@@ -14,7 +14,7 @@
 //   formats and scaling", which is exactly the article the guide says Wikipedia already owns.
 //
 //   It described types by their SHAPE and said nothing about their EVIDENCE. The guide's whole thesis
-//   is the opposite: what makes a post worth publishing is that it contains real ImagineArt output,
+//   is the opposite: what makes a post worth publishing is that it contains real Northwind output,
 //   real prompts and firsthand observation. Every type below therefore carries an `evidence` rule, and
 //   it is the part the writer is briefed on hardest.
 //
@@ -46,7 +46,7 @@ export interface BlogPageType {
   /**
    * What has to be IN it. The guide's DO rules, as instructions to the writer.
    *
-   * Separate from `brief` because these are the checkable part: "step-by-step tied to ImagineArt's
+   * Separate from `brief` because these are the checkable part: "step-by-step tied to Northwind's
    * actual interface, with the exact prompt used" is verifiable, "a useful how-to" is not.
    */
   evidence: string[];
@@ -74,13 +74,13 @@ export const BLOG_PAGE_TYPES: BlogPageType[] = [
     key: "how-to",
     label: "How-to guide",
     tier: "informational",
-    subIntent: "complete a task in ImagineArt",
+    subIntent: "complete a task in Northwind",
     keywordShape: "how to <task> — the task, never the tool's own head term",
     slugShape: "how-to-<task>",
     brief:
-      "A reader with the task in front of them, walked to a finished result inside ImagineArt.",
+      "A reader with the task in front of them, walked to a finished result inside Northwind.",
     evidence: [
-      "Step by step against ImagineArt's actual interface: the specific model, the specific settings, "
+      "Step by step against Northwind's actual interface: the specific model, the specific settings, "
         + "the exact prompt used, and the real output at each step.",
       "Step 1 covers the INPUTS and their specifications — which image, what resolution, what the "
         + "prompt has to contain. A guide that starts at step two assumes the reader already got the "
@@ -113,7 +113,7 @@ export const BLOG_PAGE_TYPES: BlogPageType[] = [
       "Honesty about where the other side wins. If one tool is better on a dimension, say so plainly.",
     ],
     avoid: [
-      "A comparison where ImagineArt wins every category. Readers notice and stop trusting the page.",
+      "A comparison where Northwind wins every category. Readers notice and stop trusting the page.",
       "Comparing without testing. A pricing table with no quality assessment is not a comparison.",
       "Testing on a single prompt and generalising from it.",
       "Giving either side its own \"What is X?\" section. Introduce both briefly in the intro and spend "
@@ -151,14 +151,14 @@ export const BLOG_PAGE_TYPES: BlogPageType[] = [
     subIntent: "get better output from a named model",
     keywordShape: "<model> prompts / prompts for <outcome>",
     slugShape: "<model>-prompt-guide",
-    brief: "Prompts that were actually run on ImagineArt, with the output as the evidence.",
+    brief: "Prompts that were actually run on Northwind, with the output as the evidence.",
     evidence: [
       "Every prompt tested, with its actual output shown. The generated image IS the evidence.",
       "Organised by use case AND by model — readers need to know which prompt works where.",
       "A weak prompt next to a strong one. The contrast is the value.",
     ],
     avoid: [
-      "Prompts not tested on ImagineArt specifically.",
+      "Prompts not tested on Northwind specifically.",
       "Prompts generic enough to work identically on Midjourney or DALL-E.",
     ],
   },
@@ -170,7 +170,7 @@ export const BLOG_PAGE_TYPES: BlogPageType[] = [
     keywordShape: "ai <capability> for <audience or vertical>",
     slugShape: "ai-<capability>-for-<audience>",
     brief:
-      "One named audience, and ImagineArt's workflow for the exact job they are trying to do.",
+      "One named audience, and Northwind's workflow for the exact job they are trying to do.",
     evidence: [
       "A real example output for that use case — the product mockup, the social post, the headshot.",
       "The practical questions that audience actually asks: licensing, file format, batch size.",
@@ -190,12 +190,12 @@ export const BLOG_PAGE_TYPES: BlogPageType[] = [
     brief: "For a reader already using something else and looking to move.",
     evidence: [
       "Every tool listed actually tested: a grade, a real output, or one specific honest observation each.",
-      "ImagineArt assessed on the same framework as everything else, including a real con.",
+      "Northwind assessed on the same framework as everything else, including a real con.",
       "A comparison table with actual pricing, not ranges.",
     ],
     avoid: [
       "Twenty tools at 150 generic words each. Pick seven to ten and go deep.",
-      "Putting ImagineArt first in every row of the mapping table unless it genuinely wins that row.",
+      "Putting Northwind first in every row of the mapping table unless it genuinely wins that row.",
     ],
     deprioritised: true,
   },
@@ -223,7 +223,7 @@ export const BLOG_PAGE_TYPES: BlogPageType[] = [
         + "cares about text rendering, brand palette control and vector-ready output; a video editor "
         + "cares about duration, consistency across shots and whether the result survives a grade.",
       "Every tool actually tested on the SAME brief, with the output shown.",
-      "ImagineArt assessed on the same framework as everything else, including a real con.",
+      "Northwind assessed on the same framework as everything else, including a real con.",
       "A recognisable working detail — the file format they hand over, the client round, the deadline. "
         + "Somebody in that role should recognise their own week in the first paragraph.",
     ],
@@ -232,7 +232,7 @@ export const BLOG_PAGE_TYPES: BlogPageType[] = [
         + "specific to them. That is the deprioritised listicle wearing a costume.",
       "A vague audience. \"For creatives\" is not a role and does not narrow the intent.",
       "First person. This type is third person; the lived-experience version is `practitioner`.",
-      "Untested entries, or ImagineArt winning every category.",
+      "Untested entries, or Northwind winning every category.",
     ],
   },
   {
@@ -248,11 +248,11 @@ export const BLOG_PAGE_TYPES: BlogPageType[] = [
       + "\"how <role>s use <feature>\". Never a bare product term.",
     slugShape: "<feature-or-task>-for-<role>  |  how-<role>s-use-<feature>",
     brief:
-      "A working creative describing how ImagineArt changed a job they actually do. The one type that is "
+      "A working creative describing how Northwind changed a job they actually do. The one type that is "
       + "openly ours, where admitted friction is what makes the advocacy believable.",
     evidence: [
       "Written as a specific role from src/lib/blog/practitioner.ts, using that trade's vocabulary correctly.",
-      "Opens on a working problem a peer recognises, before ImagineArt is named at all.",
+      "Opens on a working problem a peer recognises, before Northwind is named at all.",
       "At least one failure admitted in detail — the attempt that did not work and the change that fixed it.",
       "The specifics the genre normally omits: the model, the exact prompt, the settings, the number of "
         + "attempts, roughly how long it took.",
@@ -278,7 +278,7 @@ export const BLOG_PAGE_TYPES: BlogPageType[] = [
     brief: "A shortlist a reader can act on, with the selection criteria stated up front.",
     evidence: [
       "Every tool listed actually tested.",
-      "ImagineArt assessed on the same framework as everything else, including a real con.",
+      "Northwind assessed on the same framework as everything else, including a real con.",
       "A comparison table with actual pricing, not ranges.",
     ],
     avoid: [
@@ -344,9 +344,9 @@ export function pageType(key: string | null | undefined): BlogPageType | null {
  * pipeline was already doing.
  */
 export const THE_ONE_TEST =
-  "Can we put real ImagineArt-generated images, specific prompts, and firsthand observations in this — "
-  + "content that couldn't exist if we swapped ImagineArt out for another tool? If yes: write it. If no: "
-  + "it does not belong on the ImagineArt blog at all.";
+  "Can we put real Northwind-generated images, specific prompts, and firsthand observations in this — "
+  + "content that couldn't exist if we swapped Northwind out for another tool? If yes: write it. If no: "
+  + "it does not belong on the Northwind blog at all.";
 
 /**
  * Article shapes this pipeline must not produce, with the team's reason for each.
@@ -356,9 +356,9 @@ export const THE_ONE_TEST =
  * reason is what makes the rule generalise.
  */
 export const AVOID = [
-  "\"What is X\" explainers — no ImagineArt angle, and Wikipedia and established sites already own these.",
-  "AI trends and predictions — off-topic for ImagineArt's authority, and no original substance is possible.",
-  "News recaps — ImagineArt is not a news site and will not win on speed. A newly released model is "
+  "\"What is X\" explainers — no Northwind angle, and Wikipedia and established sites already own these.",
+  "AI trends and predictions — off-topic for Northwind's authority, and no original substance is possible.",
+  "News recaps — Northwind is not a news site and will not win on speed. A newly released model is "
     + "still worth covering, but as a model guide or a comparison with real generations in it, never as a "
     + "restatement of the announcement.",
   "Roundups without real testing — twenty tools at 200 words each has no credibility.",

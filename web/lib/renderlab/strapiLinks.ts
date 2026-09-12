@@ -105,7 +105,7 @@ export interface ResolvedPage {
 
 export function toPath(raw: string): string {
   try {
-    const u = raw.startsWith("http") ? new URL(raw) : new URL(raw, "https://www.imagine.art");
+    const u = raw.startsWith("http") ? new URL(raw) : new URL(raw, "https://www.northwind.example");
     return u.pathname.replace(/\/+$/, "") || "/";
   } catch { return raw; }
 }
@@ -311,7 +311,7 @@ function walk(node: unknown, path: Array<string | number>, out: FoundLink[], cur
         out.push({
           id: [...path, key, i].join("."),
           // The live URL the card points a reader at. Null slug means the relation itself is missing.
-          url: slug ? `https://www.imagine.art/blogs/${slug}` : "",
+          url: slug ? `https://www.northwind.example/blogs/${slug}` : "",
           text: typeof blog?.title === "string" ? blog.title : "(no blog attached)",
           source: "blog-resource",
           fieldPath: [...path, key, i].map(String),

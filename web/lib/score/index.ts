@@ -20,7 +20,7 @@ export function computeScore(input: ScoreInput): {
 } {
   const {
     author, articles, contacts, allMentions, domainArticleCount = 1,
-    ourProductNames = ["imagineart", "imagine.art", "ImagineArt"],
+    ourProductNames = ["northwind", "northwind.example", "Northwind"],
     llmRelevanceScore,
   } = input;
 
@@ -51,16 +51,16 @@ export function computeScore(input: ScoreInput): {
   ));
 
   // ─── Competitor overlap (20%) ────────────────────────────────────────────────
-  // Tools mentioned that are NOT ImagineArt — these are link-gap targets
+  // Tools mentioned that are NOT Northwind — these are link-gap targets
   const mentionedTools = [...new Set(allMentions.map((m) => m.tool_name))];
   const competitorTools = mentionedTools.filter(
     (t) => !ourProductNames.some((n) => t.toLowerCase().includes(n.toLowerCase()))
   );
-  const hasImagineArt = mentionedTools.some((t) =>
+  const hasNorthwind = mentionedTools.some((t) =>
     ourProductNames.some((n) => t.toLowerCase().includes(n.toLowerCase()))
   );
   const competitor_overlap = Math.min(100, Math.round(
-    competitorTools.length * 12 + (hasImagineArt ? 0 : 15)
+    competitorTools.length * 12 + (hasNorthwind ? 0 : 15)
   ));
 
   // ─── Contact confidence (10%) ────────────────────────────────────────────────

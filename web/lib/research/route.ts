@@ -11,7 +11,7 @@
 //
 // That resolves two examples that looked contradictory. GPT Work is a product built on models, so:
 // blog. GPT Cyber is a model, so: landing page AND blog. An earlier reading of this rule asked "can
-// ImagineArt host it?", which put GPT Cyber in the blog column and disagreed with the brief. Hosting
+// Northwind host it?", which put GPT Cyber in the blog column and disagreed with the brief. Hosting
 // is not the question. Being a model is.
 //
 // An uncertain candidate still gets its blog — nothing is lost — and simply does not get the landing

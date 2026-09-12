@@ -16,7 +16,7 @@
 //   forbes.com     (Mimecast) → 550 Listed by PBL, spamhaus   ... OUR PROBE was refused
 //   microsoft.com  (M365)     → 550 5.7.1 Service unavailable, Client host blocked using Spamhaus
 //   theverge.com   (Google)   → 250 on a random address       ... catch-all, proves nothing
-//   imagine.art    (Google)   → 250 on a random address       ... our own domain is catch-all too
+//   northwind.example    (Google)   → 250 on a random address       ... our own domain is catch-all too
 // Scoring those middle two as "invalid" would have deleted good prospects on the strength of our
 // own IP reputation. So `classifySmtpReply` separates a statement about the MAILBOX from a
 // statement about the PROBE — the same distinction verifyBulk.ts already draws between a verdict
@@ -25,7 +25,7 @@
 // Two consequences worth knowing before reading a verdict:
 //   - A random CONTROL address is always probed alongside the target. A 250 on the target means
 //     nothing until the control has been refused; both 250 means catch-all. This is what the paid
-//     verifiers do internally, and it is what caught imagine.art and theverge.com above.
+//     verifiers do internally, and it is what caught northwind.example and theverge.com above.
 //   - Probes from a residential/PBL-listed IP get refused by reputation-sensitive hosts (that is
 //     the forbes/microsoft result above). A datacenter IP does better, which is the real reason
 //     the SMTP route belongs on the droplet rather than on a laptop.

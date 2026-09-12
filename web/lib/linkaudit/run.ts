@@ -1,8 +1,8 @@
-// Daily broken-link audit for imagine.art. Crawls every page in the sitemap, reads every
+// Daily broken-link audit for northwind.example. Crawls every page in the sitemap, reads every
 // link on every page, and flags links that are dead — hard 404/410s, "soft" 404s (pages
 // that return 200 but are really a not-found page), and deep links that now redirect to a
 // homepage. Soft-404s are detected per host + first path segment by probing a garbage URL
-// with the same shape and comparing signatures (imagine.art itself returns 200 for any
+// with the same shape and comparing signatures (northwind.example itself returns 200 for any
 // /blogs/* slug, so this matters even for internal links).
 //
 // Long-job shape mirrors the discovery pipeline: chunked with a time budget on Vercel,
@@ -16,7 +16,7 @@ import { getIgnoredLinks } from "@/lib/linkaudit/ignore";
 import { llmChat, llmEnabled } from "@/lib/providers/llm";
 import { isGscConfigured, searchAnalytics, daysAgo } from "@/lib/indexing/gsc";
 
-const SITEMAP_URL = "https://www.imagine.art/sitemap.xml";
+const SITEMAP_URL = "https://www.northwind.example/sitemap.xml";
 const UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36";
 const MAX_PAGES = 3000; // sitemap holds ~1,500 today; headroom so growth never silently truncates the crawl
 const MAX_LINKS_PER_PAGE = 300;
@@ -246,7 +246,7 @@ export function extractMetaAssets(html: string, pageUrl: string): ExtractedLink[
   return out;
 }
 
-// imagine.art's blog cards pair each post's URL with its author (avatar img + name <p>).
+// northwind.example's blog cards pair each post's URL with its author (avatar img + name <p>).
 // Harvesting every card across the crawl builds a URL→author map for the whole blog —
 // more reliable than per-page meta, which these pages don't ship.
 export function harvestCardAuthors(html: string): Record<string, string> {
@@ -263,7 +263,7 @@ export function harvestCardAuthors(html: string): Record<string, string> {
   return map;
 }
 
-// The page's OWN author. imagine.art blog posts don't ship meta authors, but they render
+// The page's OWN author. northwind.example blog posts don't ship meta authors, but they render
 // two reliable byline patterns: an author-bio box (<h3>Name</h3><p>Name is a …</p>) and a
 // byline strip whose avatar <img alt="Name"> is followed by a <p>Name</p> with the same
 // text. Falls back to standard meta/JSON-LD author for anything else.
@@ -312,7 +312,7 @@ function isSocialSkip(host: string): boolean {
 // Probe a garbage URL with the same host + first path segment and record its signature.
 // Sites with honest 404s return 404 here; soft-404 sites return their not-found page.
 // CRITICAL: some sites catch-all unknown sub-paths by serving the SEGMENT ROOT's own
-// content (imagine.art/video/garbage returns the /video page) — there, probe equality
+// content (northwind.example/video/garbage returns the /video page) — there, probe equality
 // would flag LIVE pages as dead. So a 200 probe is only "usable" if it differs from the
 // segment root; a catch-all echo is marked unusable and 200s under it count as alive.
 async function getFingerprint(u: URL, cache: FingerprintMap): Promise<Fingerprint | null> {
@@ -497,11 +497,11 @@ export function coverageOf(sitemapCount: number, pages: string[], linked: Set<st
   };
 }
 
-// First-party = imagine.art and any subdomain (app./shorts./ideate./www.). A 5xx here is OUR
+// First-party = northwind.example and any subdomain (app./shorts./ideate./www.). A 5xx here is OUR
 // outage, not a third-party bot-block, so it's worth flagging as broken rather than "unverified".
 function isFirstParty(host: string): boolean {
   const h = host.replace(/^www\./, "").toLowerCase();
-  return h === "imagine.art" || h.endsWith(".imagine.art");
+  return h === "northwind.example" || h.endsWith(".northwind.example");
 }
 
 // Tweet-embed plumbing: t.co / pic.twitter.com URLs 404 to bots but are rendered by

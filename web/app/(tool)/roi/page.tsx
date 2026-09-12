@@ -12,7 +12,7 @@
 // ── The number this page refuses to flatter ─────────────────────────────────────────────────────
 //
 // "Organic" here excludes paid. A large share of referrals on this property are self-referrals from
-// imagine.art carrying utm_medium=ppc — an ad click that bounced through our own site — and any filter
+// northwind.example carrying utm_medium=ppc — an ad click that bounced through our own site — and any filter
 // that just looks for a search-engine host counts those as SEO revenue. They are filtered out, which
 // makes the organic number smaller and correct. The channel table below shows paid separately so the
 // comparison is visible rather than hidden.
@@ -220,7 +220,7 @@ MIXPANEL_SA_SECRET=<secret>`}</pre>
                   {pages.slice(0, 300).map((p) => (
                     <tr key={p.page} className="hover:bg-muted/30">
                       <td className="max-w-md px-5 py-2.5">
-                        <a href={`https://www.imagine.art${p.page}`} target="_blank" rel="noopener noreferrer"
+                        <a href={`https://www.northwind.example${p.page}`} target="_blank" rel="noopener noreferrer"
                            className="block truncate font-mono text-xs hover:text-primary hover:underline">
                           {p.page || "(no landing page recorded)"}
                         </a>

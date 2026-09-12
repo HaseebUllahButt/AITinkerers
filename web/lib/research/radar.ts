@@ -257,7 +257,7 @@ async function sweepDeprecations(src: { name: string; url: string }): Promise<{ 
   let html = "";
   try {
     const res = await fetch(src.url, {
-      headers: { "User-Agent": `SearchOps-TemplateLaunch/1.0 (+${process.env.APP_URL ?? "https://imagine.art"})` },
+      headers: { "User-Agent": `SearchOps-TemplateLaunch/1.0 (+${process.env.APP_URL ?? "https://northwind.example"})` },
       signal: AbortSignal.timeout(20_000),
     });
     if (!res.ok) {

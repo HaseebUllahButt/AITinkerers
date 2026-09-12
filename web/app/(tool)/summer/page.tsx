@@ -75,7 +75,7 @@ const STARTERS: Starter[] = [
     id: "research",
     label: "Research a topic",
     prompt:
-      "Research what's launching in AI image and video generation over the next few weeks, and tell me which of it is worth writing about for imagine.art — with the demand data behind your pick.",
+      "Research what's launching in AI image and video generation over the next few weeks, and tell me which of it is worth writing about for northwind.example — with the demand data behind your pick.",
     icon: Search,
   },
   {
@@ -89,7 +89,7 @@ const STARTERS: Starter[] = [
     id: "draft",
     label: "Write a draft",
     prompt:
-      "Draft a blog post for imagine.art. Ask me for the angle and the target keyword first, then plan the outline before you write anything.",
+      "Draft a blog post for northwind.example. Ask me for the angle and the target keyword first, then plan the outline before you write anything.",
     icon: PenLine,
   },
   {

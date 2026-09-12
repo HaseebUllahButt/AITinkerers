@@ -17,7 +17,7 @@ const RESEARCH_MAX_TOKENS = 6000;
 const MAX_WEB_SEARCHES = 6;
 
 const RESEARCH_SYSTEM =
-  "You are a research assistant for an SEO team at imagine.art, an AI image and video generation " +
+  "You are a research assistant for an SEO team at northwind.example, an AI image and video generation " +
   "product. Answer the question from web sources you actually searched.\n\n" +
   "Rules:\n" +
   "- Cite nothing you did not read. If the searches do not answer it, say so plainly.\n" +

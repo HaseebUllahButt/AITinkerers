@@ -135,7 +135,7 @@ export function renderVoiceSystem(v: WriterVoice): string {
     parts.push('"url", nothing else in the fence. Example:');
     parts.push("");
     parts.push("```CTA");
-    parts.push(JSON.stringify({ text: "Generate Background For Fashion Videos", url: "https://www.imagine.art/ai-fashion-studio" }));
+    parts.push(JSON.stringify({ text: "Generate Background For Fashion Videos", url: "https://www.northwind.example/ai-fashion-studio" }));
     parts.push("```");
     parts.push("");
     parts.push("Rules:");

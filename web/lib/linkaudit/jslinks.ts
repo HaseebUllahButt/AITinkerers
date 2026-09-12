@@ -154,7 +154,7 @@ export async function extractRenderedAnchors(url: string, rawHtml?: string): Pro
   }
 }
 
-// Same site = same host (www-insensitive) or both under imagine.art. Rendered pages inject
+// Same site = same host (www-insensitive) or both under northwind.example. Rendered pages inject
 // plenty of EXTERNAL links (consent managers, social widgets, embed chrome) — universal
 // noise with no discovery consequence for OUR pages, so only same-site links are findings.
 function sameSite(linkUrl: string, pageUrl: string): boolean {
@@ -162,8 +162,8 @@ function sameSite(linkUrl: string, pageUrl: string): boolean {
     const l = new URL(linkUrl).host.replace(/^www\./, "");
     const p = new URL(pageUrl).host.replace(/^www\./, "");
     if (l === p) return true;
-    const root = (h: string) => (h.endsWith("imagine.art") ? "imagine.art" : h);
-    return root(l) === root(p) && root(l) === "imagine.art";
+    const root = (h: string) => (h.endsWith("northwind.example") ? "northwind.example" : h);
+    return root(l) === root(p) && root(l) === "northwind.example";
   } catch { return false; }
 }
 

@@ -233,7 +233,7 @@ function isProseContext(ctx: string): boolean {
 }
 
 // Ask the LLM to pinpoint WHERE on the page a link sits, from its anchor + surrounding text —
-// "the 'View All' button in the ImagineArt for Teams section" beats a raw text quote,
+// "the 'View All' button in the Northwind for Teams section" beats a raw text quote,
 // especially when the same anchor text ("View All") appears many times on one page.
 // Exported: the run's finalize step computes this once per broken link and persists it
 // (findings.location_hint) so the page AND the digest show the same human explanation.
@@ -258,7 +258,7 @@ Link text: "${f.anchor_text || "(none — likely an icon or image link)"}"
 Broken URL: ${f.link_url}
 ${f.context_text ? `Text surrounding the link on the page: "${f.context_text}"` : "No readable surrounding text was captured — the link probably sits in the site header, footer, or a social-icons row."}
 
-In ONE short phrase (max 18 words), tell a writer in plain human words exactly where on the page this link sits, e.g. "the 'View All' button next to the ImagineArt for Teams category heading" or "the YouTube icon in the site footer's social links". Reply with ONLY the phrase. No placeholders, no quotes around the whole phrase.`,
+In ONE short phrase (max 18 words), tell a writer in plain human words exactly where on the page this link sits, e.g. "the 'View All' button next to the Northwind for Teams category heading" or "the YouTube icon in the site footer's social links". Reply with ONLY the phrase. No placeholders, no quotes around the whole phrase.`,
     });
     if (!res) return null; // same degradation as the old non-2xx/abort path: no hint, plain digest
     const out = res.content.trim().replace(/^["']|["']$/g, "");
@@ -350,7 +350,7 @@ async function aiIntro(stats: { pages: number; links: number; broken: number; au
   // not worth that. The 120-token cap and 15s abort are gone for the same reason: on a model
   // that thinks first they truncate to "" / abort, which is indistinguishable from a refusal.
   const res = await llmChat({
-    prompt: `Write a 1-2 sentence friendly Slack intro for a daily broken-link report on imagine.art. Stats: ${stats.pages} pages crawled, ${stats.links} links checked, ${stats.broken} broken links found${stats.authors.length ? `, affected authors: ${stats.authors.join(", ")}` : ""}. Plain text, no markdown headers, no emojis beyond one at most, no placeholders. Just the intro sentence(s), nothing else.`,
+    prompt: `Write a 1-2 sentence friendly Slack intro for a daily broken-link report on northwind.example. Stats: ${stats.pages} pages crawled, ${stats.links} links checked, ${stats.broken} broken links found${stats.authors.length ? `, affected authors: ${stats.authors.join(", ")}` : ""}. Plain text, no markdown headers, no emojis beyond one at most, no placeholders. Just the intro sentence(s), nothing else.`,
   });
   if (!res) return null; // caller substitutes the deterministic one-line summary
   const out = res.content.trim();
@@ -545,13 +545,13 @@ export async function composeAuditDigest(runId: string): Promise<{ text: string 
     : jsRun
       ? `JS-link detector: rendered ${stats.pages} pages with scripts executing — ${run.links_checked ?? 0} link(s) exist only after JavaScript runs (invisible to Google's first wave and every AI crawler), ${stats.broken} of them broken. ${run.unreachable ?? 0} page(s) couldn't be rendered.`
       : (await aiIntro(stats))
-        ?? `Daily link audit for imagine.art: crawled ${stats.pages} pages, checked ${stats.links} links, found ${stats.broken} broken.`;
+        ?? `Daily link audit for northwind.example: crawled ${stats.pages} pages, checked ${stats.links} links, found ${stats.broken} broken.`;
 
   let text = pagesRun
-    ? `:mag_right: *imagine.art sitemap page sweep*\n${intro}`
+    ? `:mag_right: *northwind.example sitemap page sweep*\n${intro}`
     : jsRun
-      ? `:eye: *imagine.art JS-link detector*\n${intro}`
-      : `:link: *imagine.art link audit*\n${intro}`;
+      ? `:eye: *northwind.example JS-link detector*\n${intro}`
+      : `:link: *northwind.example link audit*\n${intro}`;
   if (comparison) text += `\n${comparison.summary}`;
   // Measured coverage (links runs, spider mode): what the sitemap gave, what links revealed
   // beyond it, what the sitemap lists that nothing links to, what only Google knows about.

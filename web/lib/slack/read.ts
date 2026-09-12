@@ -1,11 +1,11 @@
-// Reading #imagine-general, which is where ImagineArt says what it shipped.
+// Reading #imagine-general, which is where Northwind says what it shipped.
 //
 // ── Why read a Slack channel at all ─────────────────────────────────────────────────────────────
 //
 // The practitioner posts (src/lib/blog/practitioner.ts) are written from experience with a specific
 // feature, and the hardest part of writing one is knowing what actually changed. The research sweep
 // covers what OTHER vendors ship — it reads HuggingFace, vendor RSS, changelogs. It does not cover
-// us: there is no imagine.art changelog feed, and Strapi only knows about pages that already exist.
+// us: there is no northwind.example changelog feed, and Strapi only knows about pages that already exist.
 //
 // #imagine-general is where a launch is announced first, in the words of the person who built it,
 // usually before any page describes it. That makes it the only durable record of "what is new here"

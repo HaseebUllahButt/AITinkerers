@@ -681,7 +681,7 @@ function CheckPages() {
           get throttled and a throttled request looks exactly like a dead link.
         </p>
         <Textarea value={input} onChange={(e) => setInput(e.target.value)} rows={4}
-          placeholder={"https://www.imagine.art/features/ai-tattoo-generator\nhttps://www.imagine.art/blogs/ai-dancing-prompts"}
+          placeholder={"https://www.northwind.example/features/ai-tattoo-generator\nhttps://www.northwind.example/blogs/ai-dancing-prompts"}
           className="mt-4 font-mono text-xs" />
         <div className="mt-4 flex items-center gap-4">
           <Button onClick={() => void scan()} disabled={busy || !input.trim()}>

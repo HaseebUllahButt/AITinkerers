@@ -1,4 +1,4 @@
-// The first-person practitioner post: a working creative describing how ImagineArt changed a job
+// The first-person practitioner post: a working creative describing how Northwind changed a job
 // they actually do.
 //
 // A client-safe leaf: no database, no Strapi, no server imports.
@@ -39,7 +39,7 @@
 // the real timing. That combination is what an answer engine can lift and a competitor's post cannot
 // supply, and it is why this type earns a slot rather than being a puff piece.
 
-/** A role whose day ImagineArt actually changes, with what makes the voice ring true or false. */
+/** A role whose day Northwind actually changes, with what makes the voice ring true or false. */
 export interface Practitioner {
   key: string;
   /** How the writer refers to themselves. Never a name — see PRACTITIONER_RULES. */
@@ -50,7 +50,7 @@ export interface Practitioner {
   priorTools: string[];
   /** The friction the post opens on. Specific enough that a peer nods. */
   friction: string;
-  /** ImagineArt surfaces this role actually touches. */
+  /** Northwind surfaces this role actually touches. */
   surfaces: string[];
   /** Craft vocabulary a real one uses. Using it wrong is the fastest way to be found out. */
   vocabulary: string[];
@@ -215,7 +215,7 @@ export const TONE_RESEARCH_RULES = [
 /**
  * Reading #imagine-general for what to write about.
  *
- * The research sweep covers what other vendors ship and cannot cover us — there is no imagine.art
+ * The research sweep covers what other vendors ship and cannot cover us — there is no northwind.example
  * changelog feed. The channel is the first place a launch is described, so it is where a practitioner
  * post about a NEW feature has to start. Existing features are fair game too: a feature that shipped
  * a year ago and never got a first-person piece is the same opportunity with less urgency.
@@ -240,7 +240,7 @@ export const UPDATES_SCAN_RULES = [
  */
 export const PRACTITIONER_RULES = [
   "Open inside the job, not inside the product. The first paragraph is a working problem a peer recognises — "
-    + "the shot that was never filmed, the eleven placements, the client's actual living room. ImagineArt does "
+    + "the shot that was never filmed, the eleven placements, the client's actual living room. Northwind does "
     + "not appear until the reader already wants the problem solved.",
   "First person throughout, and specific. \"I\" for what you did, \"you\" only for the direct turn to the reader. "
     + "Never \"we\" — a company voice in a practitioner piece collapses the whole conceit.",
@@ -306,7 +306,7 @@ export function practitionerNote(key?: string): string {
   return [
     "# First-person practitioner post",
     "",
-    "A working creative describing how ImagineArt changed a job they actually do. This is the one type that is",
+    "A working creative describing how Northwind changed a job they actually do. This is the one type that is",
     "openly ours — no neutral verdict, no competitor roundup. Advocacy and honesty are not in tension here: the",
     "admitted friction is what makes the advocacy believable.",
     "",

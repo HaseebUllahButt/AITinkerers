@@ -8,7 +8,7 @@
 // editor. A draft bound for /features looked identical to one bound for /blogs.
 //
 // Measured, on draft a21111ed: Summer was asked for a landing page, wrote a blog draft, and set
-// `canonical_tag = https://www.imagine.art/features/grok-4-6` while leaving `strapi_collection` null.
+// `canonical_tag = https://www.northwind.example/features/grok-4-6` while leaving `strapi_collection` null.
 // That draft would publish at /blogs/grok-4-6 carrying a canonical pointing at a /features/ URL that
 // does not exist — a self-inflicted de-index, since a canonical tag tells Google to index the OTHER
 // page instead of this one. The prompt already forbade it in words. Words are not a guard.

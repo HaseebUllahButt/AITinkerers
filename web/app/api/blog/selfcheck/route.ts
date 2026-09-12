@@ -145,7 +145,7 @@ export async function GET() {
     const ready = baseRow({
       title: "A title that is comfortably longer than thirty-five characters",
       description: "x".repeat(120),
-      thumbnail_media_id: 5, hero_cta_text: "Try it", hero_cta_url: "https://imagine.art", slug: "ok",
+      thumbnail_media_id: 5, hero_cta_text: "Try it", hero_cta_url: "https://northwind.example", slug: "ok",
     });
     eq(c, "publishReadiness passes a complete draft", publishReadiness(ready), []);
     check(c, "publishReadiness blocks a missing thumbnail (Strapi requires it)",
@@ -410,13 +410,13 @@ export async function GET() {
           { level: "h2" as const, heading: "How does it work?", is_faq: true },
         ],
         source_plan: [{ url: "https://ex.com/a", insight: "costs 3x", anchor_text: "cost breakdown", section_index: 0 }],
-        link_plan: [{ url: "https://www.imagine.art/", anchor_text: "ImagineArt", section_index: 0 }],
+        link_plan: [{ url: "https://www.northwind.example/", anchor_text: "Northwind", section_index: 0 }],
       },
     } as any;
 
     const a0 = writingAssignment(session, 0);
     check(c, "writingAssignment restates the section's assigned source URL", a0.includes("https://ex.com/a"));
-    check(c, "writingAssignment restates the section's assigned internal link", a0.includes("https://www.imagine.art/"));
+    check(c, "writingAssignment restates the section's assigned internal link", a0.includes("https://www.northwind.example/"));
     check(c, "writingAssignment includes the anchor text to use", a0.includes("cost breakdown"));
 
     // Index matching must be exact. Fuzzy heading matching silently found nothing, and the
@@ -451,7 +451,7 @@ export async function GET() {
       id: "v", name: "V", slug: "v", is_default: true,
       tone_doc: "", banned_words: ["unlock", "seamless"], banned_phrases: ["pain points"],
       workflow_rules: "", sitemap_links: [], default_word_count: 100,
-      allowed_link_hosts: ["www.imagine.art"], archived: false, prompt_revision: 1,
+      allowed_link_hosts: ["www.northwind.example"], archived: false, prompt_revision: 1,
       created_at: "", updated_at: "",
     } as unknown as WriterVoice;
 
@@ -459,11 +459,11 @@ export async function GET() {
       search_intent: "", h1: "Using AI product photography to cut costs",
       sections: [{ level: "h2" as const, heading: "S1" }],
       source_plan: [{ url: "https://ex.com/a", insight: "i", anchor_text: "a", section_index: 0 }],
-      link_plan: [{ url: "https://www.imagine.art/", anchor_text: "b", section_index: 0 }],
+      link_plan: [{ url: "https://www.northwind.example/", anchor_text: "b", section_index: 0 }],
     };
     const brief = { primary_keyword: "AI product photography", word_count: 100, negative_keywords: ["cheap"] };
     const ledger = new Set(["https://ex.com/a"]);
-    const sitemap = new Set(["https://www.imagine.art/"]);
+    const sitemap = new Set(["https://www.northwind.example/"]);
     const run = (body: string, over: Partial<Parameters<typeof validateArticle>[0]> = {}) =>
       validateArticle({ body, voice, outline, brief, ledgerUrls: ledger, sitemapUrls: sitemap, ...over });
 
@@ -512,7 +512,7 @@ export async function GET() {
         verdictFor(r.violations) === "failed");
     }
     {
-      const r = run("From [the source](https://ex.com/a) and [us](https://www.imagine.art/).");
+      const r = run("From [the source](https://ex.com/a) and [us](https://www.northwind.example/).");
       check(c, "ledger and sitemap URLs pass provenance",
         !r.violations.some((v) => v.gate === "link_provenance"));
       eq(c, "internal vs external links are counted separately",
@@ -652,8 +652,8 @@ export async function GET() {
 
     // ── the ```CTA fenced block: a mid-body button distinct from the single required hero CTA ──
     {
-      const sitemapWithCta = new Set([...sitemap, "https://www.imagine.art/ai-fashion-studio"]);
-      const good = '```CTA\n{"text": "Generate Background For Fashion Videos", "url": "https://www.imagine.art/ai-fashion-studio"}\n```';
+      const sitemapWithCta = new Set([...sitemap, "https://www.northwind.example/ai-fashion-studio"]);
+      const good = '```CTA\n{"text": "Generate Background For Fashion Videos", "url": "https://www.northwind.example/ai-fashion-studio"}\n```';
       const r = run(`Body text before.\n\n${good}\n\nBody text after.`, { sitemapUrls: sitemapWithCta });
       check(c, "a well-formed CTA block pointing at a sitemap URL passes",
         !r.violations.some((v) => v.gate === "cta_block"));
@@ -848,7 +848,7 @@ export async function GET() {
       // CTA comes from the voice, never from thin air.
       const cta = planAutofill({
         draft: baseRow(), meta: null,
-        voice: { default_cta_text: "Try it free", default_cta_url: "https://www.imagine.art/" },
+        voice: { default_cta_text: "Try it free", default_cta_url: "https://www.northwind.example/" },
       });
       eq(c, "autofill takes the CTA from the voice", cta.patch.hero_cta_text, "Try it free");
       const noCta = planAutofill({ draft: baseRow(), meta: null, voice: null });
@@ -911,10 +911,10 @@ export async function GET() {
       ]) {
         eq(c, `safeUrl rejects ${bad.slice(0, 28)}`, safeUrl(bad), null);
       }
-      eq(c, "safeUrl allows https", safeUrl("https://imagine.art/x"), "https://imagine.art/x");
-      eq(c, "safeUrl allows http", safeUrl("http://imagine.art"), "http://imagine.art");
+      eq(c, "safeUrl allows https", safeUrl("https://northwind.example/x"), "https://northwind.example/x");
+      eq(c, "safeUrl allows http", safeUrl("http://northwind.example"), "http://northwind.example");
       eq(c, "safeUrl upgrades protocol-relative to https",
-        safeUrl("//cdn.imagine.art/a.png"), "https://cdn.imagine.art/a.png");
+        safeUrl("//cdn.northwind.example/a.png"), "https://cdn.northwind.example/a.png");
       eq(c, "safeUrl allows a site-relative internal link",
         safeUrl("/ai-video-generator"), "/ai-video-generator");
       eq(c, "safeUrl allows a fragment", safeUrl("#faq"), "#faq");
@@ -1010,7 +1010,7 @@ export async function GET() {
       check(c, "fal: a localhost reference is rejected (fal cannot reach it)",
         !refIsReachable("http://localhost:3000/a.png") && !refIsReachable("http://127.0.0.1/a.png"));
       check(c, "fal: a data URL and a public URL are both reachable",
-        refIsReachable("data:image/jpeg;base64,AAA") && refIsReachable("https://cdn.imagine.art/a.png"));
+        refIsReachable("data:image/jpeg;base64,AAA") && refIsReachable("https://cdn.northwind.example/a.png"));
 
       // A moderation refusal is a 200 with an empty images array. Treating that as success is how a
       // pipeline silently produces nothing.
@@ -1047,7 +1047,7 @@ export async function GET() {
       check(c, "prompt: a body image forbids text", /no text|purely visual/i.test(buildImagePrompt(MODELS.gptImage, { asset: assets.find((a) => a.role === "inline")!, topic: "x" })));
 
       // A brand may only ever be a wordmark in type — models invent distorted logos.
-      const branded = buildImagePrompt(MODELS.gptImage, { asset: ogAsset, topic: "x", title: "T", brand: "ImagineArt" });
+      const branded = buildImagePrompt(MODELS.gptImage, { asset: ogAsset, topic: "x", title: "T", brand: "Northwind" });
       check(c, "prompt: a brand is a wordmark, never a drawn logo",
         /Do not design a graphical logo/.test(branded));
 
@@ -1221,10 +1221,10 @@ export async function GET() {
     {
       const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://www.imagine.art</loc><lastmod>2025-08-28</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
-<url><loc>https://www.imagine.art/blogs/best-ai-headshot-generator</loc><lastmod>2026-07-15T10:30:00+00:00</lastmod><priority>0.8</priority></url>
-<url><loc>https://www.imagine.art/features/ai-kids-headshot-generator/</loc></url>
-<url><loc>https://www.imagine.art/blogs/best-ai-headshot-generator</loc></url>
+<url><loc>https://www.northwind.example</loc><lastmod>2025-08-28</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
+<url><loc>https://www.northwind.example/blogs/best-ai-headshot-generator</loc><lastmod>2026-07-15T10:30:00+00:00</lastmod><priority>0.8</priority></url>
+<url><loc>https://www.northwind.example/features/ai-kids-headshot-generator/</loc></url>
+<url><loc>https://www.northwind.example/blogs/best-ai-headshot-generator</loc></url>
 <url><loc>not-a-url</loc></url>
 </urlset>`;
       const { urls, children } = parseSitemap(xml);
@@ -1360,7 +1360,7 @@ export async function GET() {
     }
 
     // ── the SEO department's voice rules, as gates rather than advice ──
-    // These four come from the imagineart-seo-department skill, where all three brand-voice guides agree
+    // These four come from the northwind-seo-department skill, where all three brand-voice guides agree
     // on them. SKILL_PROMPT already asked for sentence case twice, but nothing enforced it, so it was
     // advice the model could ignore silently.
     //
@@ -1401,7 +1401,7 @@ export async function GET() {
 
     // ── cleanExternalUrl: tracking params must never reach a published page ──
     // The motivating case: a model hands back the URL it was given, and those now routinely carry the
-    // referring tool's own name. Publishing `?utm_source=chatgpt.com` on an imagine.art page credits a
+    // referring tool's own name. Publishing `?utm_source=chatgpt.com` on an northwind.example page credits a
     // third party for traffic from our own content, in the destination's analytics.
     {
       eq(c, "utm_source naming an LLM is stripped",

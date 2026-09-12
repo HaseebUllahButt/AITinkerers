@@ -42,8 +42,8 @@ export async function generateNote(authorName: string, pubName: string, articles
 
   const fallback = clampNote(
     leadTitle
-      ? `Hi ${first}, I really enjoyed your piece "${leadTitle}". I work at ImagineArt (AI creative tools) and would love to connect and follow your work.`
-      : `Hi ${first}, I've been following your writing${pubName && pubName !== "your work" ? ` at ${pubName}` : ""} and would love to connect. I work at ImagineArt building AI creative tools.`
+      ? `Hi ${first}, I really enjoyed your piece "${leadTitle}". I work at Northwind (AI creative tools) and would love to connect and follow your work.`
+      : `Hi ${first}, I've been following your writing${pubName && pubName !== "your work" ? ` at ${pubName}` : ""} and would love to connect. I work at Northwind building AI creative tools.`
   );
   if (!OPENROUTER_KEY || (!leadTitle && !leadTopic)) return fallback;
 
@@ -59,7 +59,7 @@ HARD RULES (follow ALL):
 - Reference their work specifically but briefly. NEVER invent details not listed above.
 - NEVER use bracketed placeholders like [topic] or {{name}}.
 - NEVER use em-dashes or en-dashes. Warm, human, not salesy. No hashtags, no emojis, no links.
-- I'm from ImagineArt (AI creative tools). A light reason to connect is good; don't hard-pitch.${guidance ? `\n\nSENDER'S DIRECTION (obey, still under ${MAX_CHARS} chars):\n${guidance}` : ""}`;
+- I'm from Northwind (AI creative tools). A light reason to connect is good; don't hard-pitch.${guidance ? `\n\nSENDER'S DIRECTION (obey, still under ${MAX_CHARS} chars):\n${guidance}` : ""}`;
 
   // No model pin, no temperature, no max_tokens, no timeout. All four were sized for Haiku and all
   // four break SILENTLY on the Opus-class default: a sampling param is a 400 on the frontier models,
