@@ -1,9 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 
 import type { AuditResult, Finding, Severity } from "@/lib/audit/run";
 import { engineLabel } from "@/lib/audit/engines";
+import { recordAudit } from "@/lib/audit/history";
 
 const SEVERITY_ORDER: Record<Severity, number> = { critical: 0, warning: 1, ok: 2 };
 
@@ -47,15 +50,14 @@ function FindingCard({ f }: { f: Finding }) {
   );
 }
 
-export default function AuditClient() {
+function AuditInner() {
   const [url, setUrl] = useState("");
   const [rivals, setRivals] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<AuditResult | null>(null);
 
-  async function run(e: React.FormEvent) {
-    e.preventDefault();
+  const audit = useCallback(async (target: string, competitors: string[]) => {
     setBusy(true);
     setError(null);
     setResult(null);
@@ -63,16 +65,44 @@ export default function AuditClient() {
       const res = await fetch("/api/audit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url, competitors: rivals.split(",").map((c) => c.trim()).filter(Boolean) }),
+        body: JSON.stringify({ url: target, competitors }),
       });
       const data = await res.json();
-      if (!res.ok) setError(data.error ?? "The audit failed.");
-      else setResult(data as AuditResult);
+      if (!res.ok) {
+        setError(data.error ?? "The audit failed.");
+      } else {
+        const r = data as AuditResult;
+        setResult(r);
+        recordAudit({
+          url: r.url,
+          domain: r.domain,
+          brand: r.brand,
+          score: r.score,
+          criticals: r.findings.filter((f) => f.severity === "critical").length,
+          at: r.fetchedAt,
+        });
+      }
     } catch {
       setError("Could not reach the audit service.");
     } finally {
       setBusy(false);
     }
+  }, []);
+
+  // Arriving from the dashboard with ?url=… should just run, not make you retype it.
+  const params = useSearchParams();
+  const deepLink = params.get("url");
+  const ranDeepLink = useRef<string | null>(null);
+  useEffect(() => {
+    if (!deepLink || ranDeepLink.current === deepLink) return;
+    ranDeepLink.current = deepLink;
+    setUrl(deepLink);
+    void audit(deepLink, []);
+  }, [deepLink, audit]);
+
+  function run(e: React.FormEvent) {
+    e.preventDefault();
+    void audit(url, rivals.split(",").map((c) => c.trim()).filter(Boolean));
   }
 
   const findings = result ? [...result.findings].sort((a, b) => SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity]) : [];
@@ -80,7 +110,12 @@ export default function AuditClient() {
   return (
     <div className="mx-auto w-full max-w-4xl px-5 py-10">
       <header>
-        <p className="text-[10px] uppercase tracking-[0.3em] text-primary">SearchOps</p>
+        <div className="flex items-baseline justify-between gap-3">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-primary">SearchOps</p>
+          <Link href="/dashboard" className="text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground">
+            ← Dashboard
+          </Link>
+        </div>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight">Audit a site</h1>
         <p className="mt-2 max-w-prose text-sm text-muted-foreground">
           Reads the page, its robots.txt, llms.txt and sitemap. Runs synthetic buyer questions
@@ -412,5 +447,13 @@ export default function AuditClient() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function AuditClient() {
+  return (
+    <Suspense fallback={<div className="mx-auto w-full max-w-4xl px-5 py-10" />}>
+      <AuditInner />
+    </Suspense>
   );
 }
