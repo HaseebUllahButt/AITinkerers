@@ -12,6 +12,8 @@ import { GoogleAuth } from "google-auth-library";
 const SEARCH_CONSOLE = "https://searchconsole.googleapis.com/v1";
 const WEBMASTERS = "https://www.googleapis.com/webmasters/v3";
 const SCOPES = ["https://www.googleapis.com/auth/webmasters.readonly"];
+// Sitemap submission is a WRITE — the readonly scope that inspects URLs cannot submit one.
+const WRITE_SCOPES = ["https://www.googleapis.com/auth/webmasters"];
 
 export interface GscInspection {
   coverageState?: string;
@@ -59,6 +61,29 @@ let auth: GoogleAuth | undefined;
 function getAuth(creds: Record<string, unknown>): GoogleAuth {
   auth ??= new GoogleAuth({ credentials: creds, scopes: SCOPES });
   return auth;
+}
+
+let writeAuth: GoogleAuth | undefined;
+function getWriteAuth(creds: Record<string, unknown>): GoogleAuth {
+  writeAuth ??= new GoogleAuth({ credentials: creds, scopes: WRITE_SCOPES });
+  return writeAuth;
+}
+
+/**
+ * Submit (or resubmit) a sitemap for a property. Returns the feedpath Google accepted.
+ * Throws on failure — this runs behind an approved action, so an honest error beats a quiet no-op.
+ */
+export async function submitSitemap(
+  property: string, sitemapUrl: string,
+): Promise<{ property: string; sitemap: string }> {
+  const creds = loadCredentials();
+  if (!creds) throw new Error("No Search Console service-account credentials configured.");
+  const client = await getWriteAuth(creds).getClient();
+  await client.request({
+    url: `${WEBMASTERS}/sites/${encodeURIComponent(property)}/sitemaps/${encodeURIComponent(sitemapUrl)}`,
+    method: "PUT",
+  });
+  return { property, sitemap: sitemapUrl };
 }
 
 /**

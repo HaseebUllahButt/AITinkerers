@@ -5,7 +5,7 @@ import { encrypt } from "@/lib/connections/crypto";
 import { execute, query } from "@/lib/db/pg";
 import { serviceAccountEmail } from "@/lib/indexing/gsc";
 
-type Kind = "github" | "google" | "slack";
+type Kind = "github" | "google" | "slack" | "smtp";
 
 function domainFrom(input: string): { url: string; domain: string } {
   const raw = input.trim();
@@ -39,7 +39,7 @@ export async function POST(req: Request) {
   catch { return NextResponse.json({ error: "Send a JSON body." }, { status: 400 }); }
 
   const kind = body.kind as Kind;
-  if (!["github", "google", "slack"].includes(kind)) {
+  if (!["github", "google", "slack", "smtp"].includes(kind)) {
     return NextResponse.json({ error: "Unknown connection kind." }, { status: 400 });
   }
 
@@ -90,6 +90,24 @@ export async function POST(req: Request) {
       secret = encrypt(token);
     }
 
+    // Gmail app-password SMTP — the outbound half of the backlink outreach path. `user` is the
+    // Gmail address, `pass` the app password (encrypted into secret_enc like every other token).
+    if (kind === "smtp") {
+      const host = String(body.host ?? "smtp.gmail.com").trim();
+      const port = Number(body.port ?? 465);
+      const user = String(body.user ?? "").trim();
+      const pass = String(body.pass ?? "").trim();
+      const fromName = String(body.fromName ?? "").trim();
+      if (!host || !Number.isFinite(port) || !user || !pass) {
+        return NextResponse.json(
+          { error: "SMTP host, port, Gmail address, and app password are required." },
+          { status: 400 },
+        );
+      }
+      config = { host, port, user, fromName };
+      secret = encrypt(pass);
+    }
+
     const sites = await execute<{ id: string }>(
       `insert into sites (url, domain, brand, created_by)
        values ($1, $2, $3, $4)
@@ -109,9 +127,9 @@ export async function POST(req: Request) {
     );
     if (kind === "slack") {
       await execute(
-        `insert into slack_channels (slack_team_id, channel_id, site_id, bound_by)
-         values ($1, $2, $3, $4)
-         on conflict (slack_team_id, channel_id) do update set
+        `insert into surface_channels (surface, workspace_id, channel_id, site_id, bound_by)
+         values ('slack', $1, $2, $3, $4)
+         on conflict (surface, workspace_id, channel_id) do update set
            site_id = excluded.site_id, bound_by = excluded.bound_by, bound_at = now()`,
         [config.teamId, config.channelId, siteId, connectedBy],
       );

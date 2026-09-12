@@ -2,8 +2,8 @@ import { after, NextRequest, NextResponse } from "next/server";
 
 import { getAgentAction, resolveAction } from "@/lib/agent";
 import { updateMessage } from "@/lib/slack/api";
-import { ensureSlackUser, resolveSlackUser } from "@/lib/slack/identity";
 import { verifySlackRequest } from "@/lib/slack/verify";
+import { ensureSurfaceUser, resolveSurfaceUser, surfaceHandle } from "@/lib/surfaces/store";
 
 export async function POST(req: NextRequest) {
   const raw = await req.text();
@@ -34,9 +34,9 @@ export async function POST(req: NextRequest) {
       { type: "section", text: { type: "mrkdwn", text } },
     ]);
     try {
-      await ensureSlackUser(userId, teamId);
-      const identity = await resolveSlackUser(userId, teamId);
-      const actor = identity?.user_email || `slack:${teamId}:${userId}`;
+      await ensureSurfaceUser("slack", teamId, userId);
+      const identity = await resolveSurfaceUser("slack", teamId, userId);
+      const actor = identity?.user_email || surfaceHandle("slack", teamId, userId);
       const existing = await getAgentAction(target);
       if (!existing) return void await note("That proposal no longer exists.");
       const resolved = await resolveAction({
@@ -44,13 +44,14 @@ export async function POST(req: NextRequest) {
         decision: declined ? "declined" : "approved",
         resolvedBy: actor,
         resolvedVia: "slack",
-        result: approved
-          ? { approved: true, note: "Approved for human execution; the agent made no external change." }
-          : { approved: false },
       });
-      await note(resolved
-        ? `${declined ? "Declined" : "Approved"} by <@${userId}>. No external change was run by the agent.`
-        : `Already ${existing.status} — nothing changed.`);
+      if (!resolved) return void await note(`Already ${existing.status} — nothing changed.`);
+      const resultNote = approved
+        ? resolved.status === "executed"
+          ? "Executed."
+          : `Execution failed: ${String((resolved.result as { error?: unknown } | null)?.error ?? "unknown").slice(0, 300)}`
+        : "";
+      await note(`${declined ? "Declined" : "Approved"} by <@${userId}>. ${resultNote}`.trim());
     } catch (error) {
       await note(`Failed: ${error instanceof Error ? error.message : "interaction failed"}`);
     }

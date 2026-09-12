@@ -4,11 +4,11 @@ import { runAgentTurn, type AgentEvent } from "@/lib/agent";
 import { internalUrl, publicUrl } from "@/lib/appUrl";
 import { postMessage, updateMessage } from "@/lib/slack/api";
 import { renderTurn } from "@/lib/slack/blocks";
-import { ensureSlackUser, linkSlackUser, resolveSlackUser } from "@/lib/slack/identity";
-import {
-  bindChannel, boundSite, findOrCreateSession, findSite, unbindChannel,
-} from "@/lib/slack/threads";
 import { verifySlackRequest } from "@/lib/slack/verify";
+import { handleBindingCommand, matchBindingCommand } from "@/lib/surfaces/commands";
+import {
+  ensureSurfaceUser, findOrCreateSession, resolveSurfaceUser, surfaceHandle,
+} from "@/lib/surfaces/store";
 
 export const maxDuration = 300;
 
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
   const text = (form.get("text") ?? "").trim();
 
   try {
-    await ensureSlackUser(userId, teamId);
+    await ensureSurfaceUser("slack", teamId, userId);
   } catch (error) {
     return NextResponse.json({
       response_type: "ephemeral",
@@ -35,8 +35,16 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const sub = /^(link|use|where|unuse)(?:\s+(.+))?$/i.exec(text);
-  if (sub) return bindingReply(sub[1].toLowerCase(), sub[2] ?? "", teamId, channelId, userId);
+  const sub = matchBindingCommand(text);
+  if (sub) {
+    const reply = await handleBindingCommand({
+      surface: "slack", workspaceId: teamId, channelId, userId, verb: sub.verb, arg: sub.arg,
+    });
+    return NextResponse.json({
+      response_type: reply.broadcast ? "in_channel" : "ephemeral",
+      text: reply.text,
+    });
+  }
 
   if (!text) {
     return NextResponse.json({
@@ -45,8 +53,8 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const identity = await resolveSlackUser(userId, teamId);
-  const createdBy = identity?.user_email || `slack:${teamId}:${userId}`;
+  const identity = await resolveSurfaceUser("slack", teamId, userId);
+  const createdBy = identity?.user_email || surfaceHandle("slack", teamId, userId);
   after(async () => {
     const placeholder = await postMessage(channelId, `Working on: ${text.slice(0, 150)}`);
     if (!placeholder.ok || !placeholder.ts) {
@@ -54,7 +62,10 @@ export async function POST(req: NextRequest) {
       return;
     }
     try {
-      const thread = await findOrCreateSession(teamId, channelId, placeholder.ts, createdBy, text);
+      const thread = await findOrCreateSession({
+        surface: "slack", workspaceId: teamId, channelId,
+        threadId: placeholder.ts, createdBy, title: text,
+      });
       const events: AgentEvent[] = [];
       await runAgentTurn(thread.sessionId, text, (event) => { events.push(event); });
       await updateMessage(
@@ -69,40 +80,4 @@ export async function POST(req: NextRequest) {
     }
   });
   return NextResponse.json({ response_type: "ephemeral", text: "On it — posting in this channel." });
-}
-
-async function bindingReply(
-  verb: string, arg: string, teamId: string, channelId: string, userId: string,
-) {
-  if (verb === "link") {
-    const email = arg.trim().toLowerCase();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json({ response_type: "ephemeral", text: "Use `/searchops link you@example.com`." });
-    }
-    await linkSlackUser(userId, teamId, email, `slack:${teamId}:${userId}`);
-    return NextResponse.json({ response_type: "ephemeral", text: `Linked this Slack account to ${email}.` });
-  }
-
-  const current = await boundSite(teamId, channelId);
-  if (verb === "where") {
-    return NextResponse.json({ response_type: "ephemeral", text: current
-      ? `This channel follows *${current.brand || current.domain}* (${current.url}).`
-      : "This channel is not bound. Use `/searchops use example.com`." });
-  }
-  if (verb === "unuse") {
-    await unbindChannel(teamId, channelId);
-    return NextResponse.json({ response_type: "in_channel", text: "This channel no longer follows a site." });
-  }
-
-  const site = await findSite(arg.trim());
-  if (!site) {
-    return NextResponse.json({
-      response_type: "ephemeral",
-      text: `No saved site matches \`${arg.trim()}\`. Run it once from the audit page, then connect Slack.`,
-    });
-  }
-  await bindChannel(teamId, channelId, site.id, `slack:${teamId}:${userId}`);
-  return NextResponse.json({
-    response_type: "in_channel", text: `This channel now follows *${site.brand || site.domain}* (${site.url}).`,
-  });
 }

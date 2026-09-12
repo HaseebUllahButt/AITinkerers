@@ -34,7 +34,7 @@ function Panel({ title, subtitle, children }: { title: string; subtitle?: string
   );
 }
 
-type ConnectionKind = "github" | "google" | "slack";
+type ConnectionKind = "github" | "google" | "slack" | "smtp";
 
 function FindingCard({ f, onConnect }: { f: Finding; onConnect: (kind: ConnectionKind) => void }) {
   const s = SEVERITY_STYLE[f.severity];
@@ -57,6 +57,11 @@ function FindingCard({ f, onConnect }: { f: Finding; onConnect: (kind: Connectio
           Fix this · connect Search Console
         </button>
       )}
+      {f.fix && f.needs === "offsite" && (
+        <button type="button" onClick={() => onConnect("smtp")} className="mt-3 border border-primary px-3 py-1.5 text-xs text-primary hover:bg-primary hover:text-primary-foreground">
+          Fix this · connect Gmail for outreach
+        </button>
+      )}
     </article>
   );
 }
@@ -75,6 +80,9 @@ function ConnectionPanel({
   const [property, setProperty] = useState(`sc-domain:${result.domain}`);
   const [teamId, setTeamId] = useState("");
   const [channelId, setChannelId] = useState("");
+  const [smtpUser, setSmtpUser] = useState("");
+  const [smtpPass, setSmtpPass] = useState("");
+  const [smtpFromName, setSmtpFromName] = useState("");
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
@@ -104,7 +112,7 @@ function ConnectionPanel({
   return (
     <div className="border border-border bg-background p-4">
       <div className="flex items-center justify-between gap-3">
-        <h3 className="text-sm font-medium">{kind === "github" ? "GitHub" : kind === "google" ? "Google Search Console" : "Slack updates"}</h3>
+        <h3 className="text-sm font-medium">{kind === "github" ? "GitHub" : kind === "google" ? "Google Search Console" : kind === "smtp" ? "Gmail for outreach" : "Slack updates"}</h3>
         {connected && <span className="text-[10px] uppercase tracking-wider text-success">connected</span>}
       </div>
 
@@ -145,6 +153,18 @@ function ConnectionPanel({
           <input type="password" value={token} onChange={(e) => setToken(e.target.value)} placeholder="Bot token · optional if server configured" className="h-10 border border-input bg-transparent px-3 text-sm sm:col-span-2" />
           <button type="button" disabled={saving || !teamId || !channelId} onClick={() => void connect({ teamId, channelId, token })} className="h-10 bg-primary px-4 text-sm text-primary-foreground disabled:opacity-50">Get updates in Slack</button>
           <p className="text-xs text-warning sm:col-span-2">Invite the bot into this channel first. The chat:write scope alone does not grant channel membership.</p>
+        </div>
+      )}
+
+      {kind === "smtp" && (
+        <div className="mt-3 grid gap-2 sm:grid-cols-2">
+          <input value={smtpUser} onChange={(e) => setSmtpUser(e.target.value)} placeholder="you@gmail.com" className="h-10 border border-input bg-transparent px-3 text-sm" />
+          <input type="password" value={smtpPass} onChange={(e) => setSmtpPass(e.target.value)} placeholder="App password · 16 letters" className="h-10 border border-input bg-transparent px-3 text-sm" />
+          <input value={smtpFromName} onChange={(e) => setSmtpFromName(e.target.value)} placeholder="From name · optional" className="h-10 border border-input bg-transparent px-3 text-sm sm:col-span-2" />
+          <button type="button" disabled={saving || !smtpUser || !smtpPass} onClick={() => void connect({ host: "smtp.gmail.com", port: 465, user: smtpUser, pass: smtpPass, fromName: smtpFromName })} className="h-10 bg-primary px-4 text-sm text-primary-foreground disabled:opacity-50">Connect Gmail</button>
+          <p className="text-xs text-muted-foreground sm:col-span-2">
+            Google Account → Security → 2-Step Verification → App passwords. The app password is stored encrypted; mail sends only after you approve each one.
+          </p>
         </div>
       )}
 
@@ -310,9 +330,9 @@ function AuditInner() {
 
           <Panel title="Connect the fix" subtitle="Connections are shown as connected only after they have been saved.">
             <div className="mb-3 flex flex-wrap gap-2">
-              {(["github", "google", "slack"] as ConnectionKind[]).map((kind) => (
+              {(["github", "google", "slack", "smtp"] as ConnectionKind[]).map((kind) => (
                 <button key={kind} type="button" onClick={() => setConnectKind(kind)} className={`border px-3 py-1.5 text-xs ${connectKind === kind ? "border-primary bg-primary text-primary-foreground" : "border-input text-muted-foreground"}`}>
-                  {kind === "github" ? "GitHub" : kind === "google" ? "Search Console" : "Get updates in Slack"}{connected.has(kind) ? " · connected" : ""}
+                  {kind === "github" ? "GitHub" : kind === "google" ? "Search Console" : kind === "smtp" ? "Gmail outreach" : "Get updates in Slack"}{connected.has(kind) ? " · connected" : ""}
                 </button>
               ))}
             </div>

@@ -1,0 +1,21 @@
+{
+  "name": "searchops-whatsapp-bridge",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Baileys (WhatsApp Web) socket ↔ HTTP bridge for the SearchOps app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --env-file=../../web/.env.local index.js"
+  },
+  "engines": {
+    "node": ">=20.6"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "7.0.0-rc14",
+    "qrcode": "^1.5.4"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["@whiskeysockets/baileys", "protobufjs"]
+  }
+}

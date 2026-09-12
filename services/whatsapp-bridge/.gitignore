@@ -1,0 +1,7 @@
+# The linked-device session — WhatsApp credentials. Committing these would hand
+# whoever reads the repo a logged-in session on the account.
+creds/
+outbox/
+node_modules/
+.env
+.env.local

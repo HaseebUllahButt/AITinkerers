@@ -5,6 +5,7 @@ import type {
 
 import { runAudit, type AuditResult } from "@/lib/audit/run";
 import { execute, query, queryOne } from "@/lib/db/pg";
+import { executeAction } from "@/lib/executor";
 import { DEEPSEEK_MODEL } from "@/lib/providers/llm";
 
 export type AgentEvent =
@@ -27,6 +28,7 @@ export interface AgentAction {
   params: Record<string, unknown>;
   summary: string;
   status: "proposed" | "approved" | "executed" | "declined" | "expired" | "failed";
+  result?: Record<string, unknown> | null;
 }
 
 type Emit = (event: AgentEvent) => void | Promise<void>;
@@ -112,8 +114,14 @@ const tools: ChatCompletionTool[] = [
 const SYSTEM = `You are the SearchOps audit agent. You diagnose AI-search visibility using the tools.
 Never claim a check ran unless a tool returned it. Evidence and recommendations must stay distinct.
 Any change outside the SearchOps database must use propose_external_action. That tool records a
-proposal for a human; it does not perform the change. Never ask for or place secrets in tool input.
-Be concise. When an audit lacks configured model providers, say which measurement did not run.`;
+proposal for a human; it does not perform the change. When a human approves one, it executes.
+Use these action kinds so the executor can run them:
+  open_pr            {title, body, repository?, files?: [{path, content}]} — branch+commit+PR on the connected repo
+  resubmit_sitemap   {sitemapUrl?} — submit the site's sitemap to Search Console
+  send_email         {to, subject, body} — outreach email via the site's connected Gmail/SMTP
+  post_update        {text} — post a message to every channel bound to the site
+Never ask for or place secrets in tool input. Be concise. When an audit lacks configured model
+providers, say which measurement did not run.`;
 
 export async function createAgentSession(input: {
   siteId?: string | null;
@@ -137,7 +145,7 @@ export function getAgentSession(id: string): Promise<AgentSession | null> {
 
 export function getAgentAction(id: string): Promise<AgentAction | null> {
   return queryOne<AgentAction>(
-    `select id, session_id, kind, params, summary, status from agent_actions where id = $1`, [id],
+    `select id, session_id, kind, params, summary, status, result from agent_actions where id = $1`, [id],
   );
 }
 
@@ -345,16 +353,28 @@ export async function resolveAction(input: {
   actionId: string;
   decision: "approved" | "declined";
   resolvedBy: string;
-  resolvedVia: "web" | "slack";
-  result?: Record<string, unknown>;
+  resolvedVia: "web" | "slack" | "discord" | "whatsapp" | "telegram";
 }): Promise<AgentAction | null> {
-  const rows = await execute<AgentAction>(
-    `update agent_actions set status = $2, resolved_at = now(), resolved_by = $3,
-       resolved_via = $4, result = $5::jsonb
+  // Claim first: `where status = 'proposed'` makes the decision single-use — two surfaces racing
+  // the same card can only both say "already resolved", never both execute.
+  const claimed = await execute<AgentAction>(
+    `update agent_actions set status = $2, resolved_at = now(), resolved_by = $3, resolved_via = $4
      where id = $1 and status = 'proposed'
-     returning id, session_id, kind, params, summary, status`,
-    [input.actionId, input.decision, input.resolvedBy, input.resolvedVia,
-      JSON.stringify(input.result ?? { note: "Resolved by a human; no external mutation was performed by the agent." })],
+     returning id, session_id, kind, params, summary, status, result`,
+    [input.actionId, input.decision, input.resolvedBy, input.resolvedVia],
   );
-  return rows[0] ?? null;
+  const action = claimed[0] ?? null;
+  if (!action || input.decision === "declined") return action;
+
+  // Approved proposals EXECUTE. The result — PR url, message id, channel posts, or the honest
+  // error — is stored on the action so the record says what actually happened, not that a
+  // human clicked a button.
+  const exec = await executeAction(action);
+  const rows = await execute<AgentAction>(
+    `update agent_actions set status = $2, result = $3::jsonb
+     where id = $1
+     returning id, session_id, kind, params, summary, status, result`,
+    [action.id, exec.ok ? "executed" : "failed", JSON.stringify(exec.result)],
+  );
+  return rows[0] ?? action;
 }

@@ -2,12 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { runAudit } from "@/lib/audit/run";
 import { identifyCaller } from "@/lib/auth/service";
-import { query, queryOne } from "@/lib/db/pg";
-import { internalUrl, publicUrl } from "@/lib/appUrl";
-import { postMessage } from "@/lib/slack/api";
-import { renderAuditPost } from "@/lib/slack/blocks";
+import { queryOne } from "@/lib/db/pg";
+import { channelsForSite } from "@/lib/surfaces/store";
+import { notifySurfacesOfAudit } from "@/lib/surfaces/notify";
 
-// Stage trigger:
+// Stage trigger — re-runs an audit and posts it to every bound channel on every surface:
 // curl -X POST http://localhost:3000/api/slack/post \
 //   -H "Authorization: Bearer $CRON_SECRET" -H "Content-Type: application/json" \
 //   -d '{"domain":"example.com"}'
@@ -33,31 +32,25 @@ export async function POST(req: NextRequest) {
   ).catch(() => null);
   if (!site) return NextResponse.json({ error: "Site not found." }, { status: 404 });
 
-  const channels = await query<{ channel_id: string }>(
-    `select channel_id from slack_channels where site_id = $1 order by bound_at`, [site.id],
-  );
+  const channels = await channelsForSite(site.id);
   if (!channels.length) {
-    return NextResponse.json({ error: "No Slack channel is bound to this site." }, { status: 409 });
+    return NextResponse.json({ error: "No channel is bound to this site on any surface." }, { status: 409 });
   }
 
   try {
     const result = await runAudit(site.url, { competitors: body.competitors ?? [] });
-    const blocks = renderAuditPost(result, publicUrl() ?? internalUrl());
-    const posts = await Promise.all(channels.map((channel) =>
-      postMessage(channel.channel_id, `${result.brand} audit: ${result.score}/100`, blocks),
-    ));
-    const failed = posts.filter((post) => !post.ok);
-    if (failed.length) {
+    const outcome = await notifySurfacesOfAudit(result);
+    if (outcome.errors?.length) {
       return NextResponse.json({
-        error: "Slack rejected one or more posts.",
-        posted: posts.length - failed.length,
-        failed: failed.map((post) => post.error ?? "unknown"),
+        error: "One or more surfaces rejected the post.",
+        posted: outcome.posted,
+        failed: outcome.errors,
       }, { status: 502 });
     }
-    return NextResponse.json({ ok: true, site: site.domain, score: result.score, posted: posts.length });
+    return NextResponse.json({ ok: true, site: site.domain, score: result.score, posted: outcome.posted });
   } catch (error) {
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Audit or Slack post failed." },
+      { error: error instanceof Error ? error.message : "Audit or post failed." },
       { status: 500 },
     );
   }

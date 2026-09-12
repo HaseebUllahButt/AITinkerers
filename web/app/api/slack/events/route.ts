@@ -4,9 +4,10 @@ import { runAgentTurn, type AgentEvent } from "@/lib/agent";
 import { internalUrl, publicUrl } from "@/lib/appUrl";
 import { postMessage, updateMessage } from "@/lib/slack/api";
 import { renderTurn } from "@/lib/slack/blocks";
-import { ensureSlackUser, resolveSlackUser } from "@/lib/slack/identity";
-import { findOrCreateSession } from "@/lib/slack/threads";
 import { verifySlackRequest } from "@/lib/slack/verify";
+import {
+  ensureSurfaceUser, findOrCreateSession, resolveSurfaceUser, surfaceHandle,
+} from "@/lib/surfaces/store";
 
 export const maxDuration = 300;
 
@@ -40,13 +41,16 @@ export async function POST(req: NextRequest) {
 
   after(async () => {
     try {
-      await ensureSlackUser(userId, teamId);
-      const identity = await resolveSlackUser(userId, teamId);
-      const createdBy = identity?.user_email || `slack:${teamId}:${userId}`;
+      await ensureSurfaceUser("slack", teamId, userId);
+      const identity = await resolveSurfaceUser("slack", teamId, userId);
+      const createdBy = identity?.user_email || surfaceHandle("slack", teamId, userId);
       if (!text) return void await postMessage(channelId, "Tell me what to audit or ask for your progress.", undefined, replyThreadTs);
       const placeholder = await postMessage(channelId, `Working on: ${text.slice(0, 150)}`, undefined, replyThreadTs);
       if (!placeholder.ok || !placeholder.ts) return;
-      const thread = await findOrCreateSession(teamId, channelId, sessionThreadKey, createdBy, text);
+      const thread = await findOrCreateSession({
+        surface: "slack", workspaceId: teamId, channelId,
+        threadId: sessionThreadKey, createdBy, title: text,
+      });
       const events: AgentEvent[] = [];
       await runAgentTurn(thread.sessionId, text, (eventItem) => { events.push(eventItem); });
       await updateMessage(

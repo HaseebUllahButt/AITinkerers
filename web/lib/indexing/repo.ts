@@ -22,10 +22,12 @@ export interface PullRequestResult {
   branch: string;
 }
 
-function client(): Octokit {
-  const token = process.env.GITHUB_BOT_TOKEN;
-  if (!token) throw new Error("GITHUB_BOT_TOKEN not set in .env.local.");
-  return new Octokit({ auth: token });
+function client(token?: string): Octokit {
+  // A per-site connection token wins over the shared env bot token: when a customer connects
+  // their repo the PR should come from their account, not ours.
+  const auth = token?.trim() || process.env.GITHUB_BOT_TOKEN;
+  if (!auth) throw new Error("No GitHub token — connect a repository or set GITHUB_BOT_TOKEN.");
+  return new Octokit({ auth });
 }
 
 /**
@@ -38,8 +40,9 @@ export async function openPullRequest(input: {
   title: string;
   body: string;
   changes: FileChange[];
+  token?: string;
 }): Promise<PullRequestResult> {
-  const octokit = client();
+  const octokit = client(input.token);
   const { owner, repo, baseBranch } = input.repo;
 
   const baseRef = await octokit.git.getRef({ owner, repo, ref: `heads/${baseBranch}` });

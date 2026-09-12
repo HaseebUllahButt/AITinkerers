@@ -57,6 +57,101 @@ function Panel({ title, subtitle, children, action }: {
   );
 }
 
+interface PendingAction {
+  id: string;
+  kind: string;
+  summary: string;
+  status: string;
+  proposed_at: string;
+  result?: { error?: string; pr?: string; messageId?: string } | null;
+}
+
+function ApprovalsPanel({ domain }: { domain: string }) {
+  const [actions, setActions] = useState<PendingAction[]>([]);
+  const [busy, setBusy] = useState<string | null>(null);
+
+  const load = () => {
+    fetch(`/api/actions?domain=${encodeURIComponent(domain)}`)
+      .then((r) => r.json())
+      .then((d) => setActions(d.actions ?? []))
+      .catch(() => setActions([]));
+  };
+  useEffect(load, [domain]);
+
+  async function decide(actionId: string, decision: "approved" | "declined") {
+    setBusy(actionId);
+    try {
+      await fetch("/api/actions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ actionId, decision }),
+      });
+      load();
+    } finally {
+      setBusy(null);
+    }
+  }
+
+  const pending = actions.filter((a) => a.status === "proposed");
+  const recent = actions.filter((a) => a.status !== "proposed").slice(0, 5);
+
+  return (
+    <Panel
+      title="Approvals"
+      subtitle="What the agent wants to do outside SearchOps. Approving runs it — a PR opens, an email sends, a post lands."
+    >
+      {actions.length === 0 ? (
+        <p className="text-sm text-muted-foreground">
+          Nothing proposed yet. Ask the agent — in Slack, Discord, WhatsApp, or Telegram — to act on this audit.
+        </p>
+      ) : (
+        <div className="space-y-3">
+          {pending.map((a) => (
+            <article key={a.id} className="border border-border p-3">
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">{a.kind.replaceAll("_", " ")}</span>
+                <span className="text-xs text-muted-foreground tabular-nums">{new Date(a.proposed_at).toLocaleDateString()}</span>
+              </div>
+              <p className="mt-1 text-sm">{a.summary}</p>
+              <div className="mt-3 flex gap-2">
+                <button
+                  type="button"
+                  disabled={busy === a.id}
+                  onClick={() => void decide(a.id, "approved")}
+                  className="bg-primary px-3 py-1.5 text-xs text-primary-foreground disabled:opacity-50"
+                >
+                  Approve — run it
+                </button>
+                <button
+                  type="button"
+                  disabled={busy === a.id}
+                  onClick={() => void decide(a.id, "declined")}
+                  className="border border-input px-3 py-1.5 text-xs text-muted-foreground disabled:opacity-50"
+                >
+                  Decline
+                </button>
+              </div>
+            </article>
+          ))}
+          {recent.map((a) => (
+            <article key={a.id} className="border-l-2 border-border py-1 pl-3">
+              <div className="flex items-baseline justify-between gap-3 text-xs">
+                <span className="text-muted-foreground">{a.kind.replaceAll("_", " ")}</span>
+                <span className={a.status === "executed" ? "text-success" : a.status === "failed" ? "text-destructive" : "text-muted-foreground"}>
+                  {a.status}
+                </span>
+              </div>
+              <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                {a.result?.error ? String(a.result.error) : a.result?.pr ? String(a.result.pr) : a.summary}
+              </p>
+            </article>
+          ))}
+        </div>
+      )}
+    </Panel>
+  );
+}
+
 const SEVERITY_ORDER: Record<Severity, number> = { critical: 0, warning: 1, ok: 2 };
 const SEVERITY_INK: Record<Severity, string> = {
   critical: "text-destructive",
@@ -161,6 +256,7 @@ export default function DashboardClient() {
           <ComparisonTable result={result} />
           <Actions result={result} />
           <FindingsPanel result={result} />
+          <ApprovalsPanel domain={result.domain} />
         </div>
       )}
 

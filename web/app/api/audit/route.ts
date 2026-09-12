@@ -2,7 +2,7 @@ import { NextResponse, after } from "next/server";
 
 import { runAudit } from "@/lib/audit/run";
 import { dbConfigured, execute } from "@/lib/db/pg";
-import { notifySlackOfAudit } from "@/lib/slack/notify";
+import { notifySurfacesOfAudit } from "@/lib/surfaces/notify";
 
 // The render pass drives a real browser and the market read makes five sequential model calls,
 // so this is nowhere near a default serverless budget.
@@ -39,9 +39,9 @@ export async function POST(req: Request) {
           [result.url, result.domain, result.brand],
         ).catch((e) => console.warn("[audit] could not register site:", e instanceof Error ? e.message : e));
       }
-      const outcome = await notifySlackOfAudit(result);
-      if (outcome.posted) console.log(`[slack] posted ${result.domain} audit to ${outcome.posted} channel(s)`);
-      else if (outcome.errors?.length) console.warn(`[slack] could not post ${result.domain}:`, outcome.errors.join("; "));
+      const outcome = await notifySurfacesOfAudit(result);
+      if (outcome.posted) console.log(`[notify] posted ${result.domain} audit to ${outcome.posted} channel(s)`);
+      else if (outcome.errors?.length) console.warn(`[notify] could not post ${result.domain}:`, outcome.errors.join("; "));
     });
 
     return NextResponse.json(result);
