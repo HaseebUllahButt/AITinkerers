@@ -83,6 +83,7 @@ export const NAV_GROUPS: NavGroup[] = [
   {
     label: "SEO",
     items: [
+      { name: "Audit", href: "/audit", icon: ScanSearch, exact: true },
       { name: "SEO ROI", href: "/roi", icon: TrendingUp },
       { name: "Site Audit", href: "/site-audit", icon: ScanSearch },
       { name: "404s", href: "/404s", icon: Unlink },

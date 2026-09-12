@@ -43,6 +43,16 @@ export function SideNav() {
 
   return (
     <nav className="fixed left-0 top-0 z-50 h-screen w-16 md:w-20 hidden md:flex flex-col justify-center border-r border-border/30 bg-background/80 backdrop-blur-sm">
+      {/* Fixed, so the way into the tool is reachable from any scroll position. */}
+      <a
+        href="/dashboard"
+        title="Open Dashboard"
+        aria-label="Open Dashboard"
+        className="absolute top-6 left-1/2 -translate-x-1/2 border border-accent/60 px-2 py-1.5 font-mono text-[9px] uppercase tracking-widest text-accent hover:bg-accent hover:text-accent-foreground transition-colors duration-200"
+      >
+        App
+      </a>
+
       <div className="flex flex-col gap-6 px-4">
         {navItems.map(({ id, label }) => (
           <button key={id} onClick={() => scrollToSection(id)} className="group relative flex items-center gap-3">

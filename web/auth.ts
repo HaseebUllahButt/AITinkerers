@@ -12,8 +12,11 @@ import Credentials from "next-auth/providers/credentials";
 // risk. It is fine while the only reachable instance is on localhost; it is not fine on a public
 // hostname.
 //
-// To restore real auth: add back a provider (`Google({ clientId, clientSecret })`), reinstate the
-// domain check in the signIn callback, and delete this provider.
+// The login page has been removed, so there is no sign-in UI at all — a session is minted by
+// whatever calls signIn, and every surface is reachable without one.
+//
+// To restore real auth: add back a provider (`Google({ clientId, clientSecret })`), a page to sign
+// in on, a `pages.signIn` pointing at it, and the domain check in the signIn callback.
 const isProd = process.env.NODE_ENV === "production";
 
 // next-auth v5 refuses to start without a secret. With an open provider the secret is not what is
@@ -52,9 +55,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session;
     },
-  },
-  pages: {
-    signIn: "/login",
-    error: "/login",
   },
 });
