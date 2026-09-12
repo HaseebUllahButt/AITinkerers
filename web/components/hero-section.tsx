@@ -16,12 +16,12 @@ gsap.registerPlugin(ScrollTrigger)
 // spinner for that long reads as a hang; naming the stage it is on is the difference between
 // "working" and "broken".
 const STAGES = [
-  "Fetching the page and its machine-readable files…",
-  "Reading robots.txt, llms.txt and the sitemap…",
-  "Searching for competitors and verifying they resolve…",
-  "Asking the assistants your buyer questions…",
-  "Profiling each competitor on the same checks…",
-  "Writing the findings…",
+  { label: "Fetching the page", detail: "and reading its HTML" },
+  { label: "Reading robots.txt, llms.txt and the sitemap", detail: "what the site publishes about itself" },
+  { label: "Finding competitors", detail: "searching alternatives, then verifying each one resolves" },
+  { label: "Asking the assistants", detail: "buyer questions that name no brand" },
+  { label: "Profiling competitors", detail: "the identical pass, so the comparison is fair" },
+  { label: "Writing the findings", detail: "evidence first, then the fix" },
 ]
 
 export function HeroSection() {
@@ -31,6 +31,7 @@ export function HeroSection() {
   const [url, setUrl] = useState("")
   const [busy, setBusy] = useState(false)
   const [stage, setStage] = useState(0)
+  const [elapsed, setElapsed] = useState(0)
   const [error, setError] = useState<string | null>(null)
 
   // Advances on a timer rather than from real progress: the API returns one response at the end,
@@ -38,8 +39,13 @@ export function HeroSection() {
   useEffect(() => {
     if (!busy) return
     setStage(0)
-    const id = setInterval(() => setStage((s) => Math.min(s + 1, STAGES.length - 1)), 18_000)
-    return () => clearInterval(id)
+    setElapsed(0)
+    const tick = setInterval(() => setElapsed((e) => e + 1), 1000)
+    const step = setInterval(() => setStage((s) => Math.min(s + 1, STAGES.length - 1)), 18_000)
+    return () => {
+      clearInterval(tick)
+      clearInterval(step)
+    }
   }, [busy])
 
   async function runAudit(e: React.FormEvent) {
@@ -150,16 +156,60 @@ export function HeroSection() {
           </div>
 
           {busy && (
-            <div className="mt-4" role="status" aria-live="polite">
-              <div className="h-px w-full bg-foreground/10">
+            <div className="mt-6 border border-foreground/15 bg-foreground/[0.03] p-5 text-left" role="status" aria-live="polite">
+              <div className="flex items-baseline justify-between gap-4">
+                <span className="font-mono text-[10px] uppercase tracking-widest text-accent">
+                  Auditing {url.trim()}
+                </span>
+                <span className="font-mono text-[10px] tabular-nums text-muted-foreground">
+                  {String(Math.floor(elapsed / 60)).padStart(2, "0")}:{String(elapsed % 60).padStart(2, "0")}
+                </span>
+              </div>
+
+              {/* A checklist rather than a bar: each line is a thing that actually happens, so the
+                  wait reads as work being done instead of time passing. */}
+              <ul className="mt-4 space-y-2.5">
+                {STAGES.map((s, i) => {
+                  const done = i < stage
+                  const current = i === stage
+                  return (
+                    <li key={s.label} className="flex items-start gap-3">
+                      <span className="mt-[3px] flex h-3 w-3 shrink-0 items-center justify-center">
+                        {done ? (
+                          <svg viewBox="0 0 12 12" className="h-3 w-3 text-accent" aria-hidden>
+                            <path d="M2 6.5l2.5 2.5L10 3.5" fill="none" stroke="currentColor" strokeWidth="2" />
+                          </svg>
+                        ) : current ? (
+                          <span className="h-2 w-2 animate-ping rounded-full bg-accent" />
+                        ) : (
+                          <span className="h-1 w-1 rounded-full bg-muted-foreground/40" />
+                        )}
+                      </span>
+                      <span className="min-w-0">
+                        <span
+                          className={`block font-mono text-xs ${
+                            done ? "text-muted-foreground line-through decoration-muted-foreground/40" : current ? "text-foreground" : "text-muted-foreground/60"
+                          }`}
+                        >
+                          {s.label}
+                        </span>
+                        {current && (
+                          <span className="mt-0.5 block font-mono text-[10px] text-muted-foreground">{s.detail}</span>
+                        )}
+                      </span>
+                    </li>
+                  )
+                })}
+              </ul>
+
+              <div className="mt-4 h-px w-full bg-foreground/10">
                 <div
-                  className="h-px bg-accent transition-all duration-1000 ease-linear"
+                  className="h-px bg-accent transition-all duration-700 ease-out"
                   style={{ width: `${((stage + 1) / STAGES.length) * 100}%` }}
                 />
               </div>
-              <p className="mt-2 text-center font-mono text-xs text-muted-foreground">{STAGES[stage]}</p>
-              <p className="mt-1 text-center font-mono text-[10px] uppercase tracking-widest text-muted-foreground/70">
-                A minute or two — real crawls and real model calls
+              <p className="mt-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/70">
+                Real crawls and real model calls — a minute or two
               </p>
             </div>
           )}

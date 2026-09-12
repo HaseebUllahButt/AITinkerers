@@ -7,7 +7,15 @@ import type { ProviderStatus } from "@/app/api/status/route";
 import { clearHistory, clearLastResult, loadHistory, loadLastResult, type AuditRecord } from "@/lib/audit/history";
 import type { AuditResult, Severity } from "@/lib/audit/run";
 import { DEMO_AUDIT } from "@/lib/demo";
-import { ScoreComparison, Scorecards, ShareByEngine, ShareOfVoiceChart } from "@/components/audit/ResultCharts";
+import {
+  Actions,
+  ComparisonTable,
+  ScoreComparison,
+  Scorecards,
+  ShareByEngine,
+  ShareOfVoiceChart,
+  Verdict,
+} from "@/components/audit/ResultCharts";
 
 const GROUP_LABEL: Record<ProviderStatus["group"], string> = {
   model: "Reasoning",
@@ -137,18 +145,28 @@ export default function DashboardClient() {
       </header>
 
       {result && (
-        <div className="mt-8 space-y-5">
+        <div className="mt-6 space-y-6">
+          {/* Verdict first: what happened, before the numbers that justify it. */}
+          <Verdict result={result} />
           <Scorecards result={result} />
-          <ShareOfVoiceChart result={result} />
+
+          {/* Two columns on desktop — these panels are short, and stacking them left a column of
+              white space beside every one. */}
+          <div className="grid gap-6 lg:grid-cols-2">
+            <ShareOfVoiceChart result={result} />
+            <ScoreComparison result={result} />
+          </div>
+
           <ShareByEngine result={result} />
-          <ScoreComparison result={result} />
+          <ComparisonTable result={result} />
+          <Actions result={result} />
           <FindingsPanel result={result} />
         </div>
       )}
 
       <div className="mt-8 space-y-5">
         <Panel
-          title="What's working"
+          title={result ? "Providers" : "What's working"}
           subtitle={
             providers === null
               ? "Checking…"

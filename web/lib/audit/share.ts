@@ -14,6 +14,8 @@ import PQueue from "p-queue";
 
 import { llmChat, llmEnabled } from "@/lib/providers/llm";
 
+import { isGenericName } from "./generic-words";
+
 import { ask, ENGINES, engineLabel, engineStatus, type EngineId, type EngineStatus } from "./engines";
 
 export interface SyntheticPrompt {
@@ -133,6 +135,10 @@ function namesBrand(answer: string, brand: BrandRef): boolean {
   if (brand.domain && hay.includes(brand.domain.toLowerCase())) return true;
   const name = brand.name.toLowerCase().trim();
   if (name.length < 3) return false;
+  // A name that is also an ordinary word cannot be matched as prose — "English" would score a
+  // mention in any answer that happens to discuss language. Its domain is the only safe signal,
+  // and that was already checked above.
+  if (isGenericName(name)) return false;
   // Word boundaries, so "Ada" does not match "Adapter".
   const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   return new RegExp(`(^|[^a-z0-9])${escaped}([^a-z0-9]|$)`, "i").test(hay);

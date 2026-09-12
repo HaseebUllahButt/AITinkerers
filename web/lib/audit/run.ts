@@ -8,6 +8,7 @@ import { extractOnPage, type OnPageSignals } from "@/lib/indexing/onpage";
 import { classifyRenderMode, type RenderModeResult } from "@/lib/indexing/renderMode";
 import { fetchLlmsTxt, fetchRobots, fetchSitemap, type LlmsTxtReport, type RobotsReport, type SitemapReport } from "./discovery";
 import { compareWithCompetitors, scoreProfile, type CompetitorComparison, type SiteProfile } from "./compare";
+import { tidyName } from "./generic-words";
 import { discoverCompetitors, type CompetitorDiscovery } from "./competitors";
 import { deriveMarket, readDemand, type MarketRead } from "./market";
 import { measureShareOfVoice, type ShareOfVoice } from "./share";
@@ -70,8 +71,8 @@ function brandFrom(title: string, domain: string): string {
   // names like "Well-Known" in half.
   const parts = title.split(/\s[-–—·|:]\s|[|–—·]/).map((p) => p.trim()).filter(Boolean);
   const candidate = parts.length > 1 ? parts.sort((a, b) => a.length - b.length)[0] : parts[0];
-  if (candidate && candidate.length >= 2 && candidate.length <= 40) return candidate;
-  return domain.replace(/\.[a-z.]+$/, "");
+  if (candidate && candidate.length >= 2 && candidate.length <= 40) return tidyName(candidate);
+  return tidyName(domain.replace(/\.[a-z.]+$/, ""));
 }
 
 function buildFindings(r: {

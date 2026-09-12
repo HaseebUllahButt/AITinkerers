@@ -51,22 +51,22 @@ interface Row {
 /** One horizontal bar chart. Thin marks, recessive axes, values labelled directly. */
 function Bars({ rows, suffix, max }: { rows: Row[]; suffix: string; max?: number }) {
   if (!rows.length) return <p className="text-sm text-muted-foreground">Nothing to chart yet.</p>;
-  // 28px a row keeps bars thin and the panel proportional to its content.
-  const height = Math.max(120, rows.length * 30 + 16);
+  // 26px a row, and no floor: a two-row panel should be two rows tall, not a third of a screen.
+  const height = rows.length * 26 + 8;
   return (
     <ResponsiveContainer width="100%" height={height}>
-      <BarChart data={rows} layout="vertical" margin={{ top: 0, right: 44, bottom: 0, left: 0 }} barCategoryGap={6}>
+      <BarChart data={rows} layout="vertical" margin={{ top: 0, right: 44, bottom: 0, left: 0 }} barCategoryGap={4}>
         <XAxis type="number" domain={[0, max ?? "dataMax"]} hide />
         <YAxis
           type="category"
           dataKey="name"
-          width={132}
+          width={112}
           tickLine={false}
           axisLine={false}
           tick={{ fill: AXIS, fontSize: 12 }}
         />
         <Tooltip cursor={{ fill: "color-mix(in srgb, var(--muted-foreground) 12%, transparent)" }} content={<Tip suffix={suffix} />} />
-        <Bar dataKey="value" radius={[0, 4, 4, 0]} maxBarSize={18} isAnimationActive={false}>
+        <Bar dataKey="value" radius={[0, 4, 4, 0]} maxBarSize={14} isAnimationActive={false}>
           {rows.map((r) => (
             <Cell key={r.name} fill={r.isUs ? US : THEM} />
           ))}
@@ -93,8 +93,12 @@ function Panel({ title, subtitle, children }: { title: string; subtitle?: string
 }
 
 export function ScoreComparison({ result }: { result: AuditResult }) {
+  // Our own profile score, NOT result.score. The two are different measures — result.score is
+  // derived from the findings, a competitor's is the profile weighting — and charting one against
+  // the other put two scales on one axis, which is the fastest way to a confidently wrong chart.
+  const ourScore = result.comparison.us?.score ?? result.score;
   const rows: Row[] = [
-    { name: result.domain, value: result.score, isUs: true },
+    { name: result.domain, value: ourScore, isUs: true },
     ...result.comparison.competitors
       .filter((c) => c.reachable)
       .map((c) => ({ name: c.domain, value: c.score, isUs: false })),
@@ -202,5 +206,126 @@ export function Scorecards({ result }: { result: AuditResult }) {
         </div>
       ))}
     </div>
+  );
+}
+
+/** One sentence naming where the site stands, above the numbers that justify it. */
+export function Verdict({ result }: { result: AuditResult }) {
+  const critical = result.findings.filter((f) => f.severity === "critical").length;
+  const share = result.share.ran ? Math.round(result.share.ourShare * 100) : null;
+  const rival = result.share.brands.find((b) => !b.isUs && b.share > result.share.ourShare);
+  const behind = result.comparison.ran ? result.comparison.gaps.length : 0;
+
+  const parts: string[] = [];
+  parts.push(
+    critical > 0
+      ? `${critical} critical ${critical === 1 ? "issue" : "issues"} is costing you visibility right now.`
+      : "Nothing critical is blocking you.",
+  );
+  if (share !== null) {
+    parts.push(
+      rival
+        ? `Assistants name you in ${share}% of buyer questions — ${rival.brand} beats you at ${Math.round(rival.share * 100)}%.`
+        : `Assistants name you in ${share}% of buyer questions, ahead of every competitor tracked.`,
+    );
+  }
+  if (behind) parts.push(`You trail on ${behind} ${behind === 1 ? "check" : "checks"} in the comparison below.`);
+
+  return (
+    <p className="max-w-3xl text-base leading-relaxed text-foreground">
+      {parts.join(" ")}
+    </p>
+  );
+}
+
+/** The comparison as a table — a grid of values is read by scanning, not by charting. */
+export function ComparisonTable({ result }: { result: AuditResult }) {
+  const cmp = result.comparison;
+  if (!cmp.ran || !cmp.rows.length) return null;
+  const rivals = cmp.competitors.filter((c) => c.reachable);
+
+  return (
+    <Panel
+      title="Side by side"
+      subtitle={cmp.weLead ? "You lead overall on the same checks." : `${cmp.leaderDomain} leads overall.`}
+    >
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[520px] border-collapse text-sm">
+          <thead>
+            <tr className="border-b border-border">
+              <th className="py-2 pr-4 text-left text-[10px] font-normal uppercase tracking-[0.2em] text-muted-foreground">Check</th>
+              <th className="py-2 pr-4 text-right text-[10px] font-normal uppercase tracking-[0.2em] text-primary">{result.domain}</th>
+              {rivals.map((c) => (
+                <th key={c.domain} className="py-2 pr-4 text-right text-[10px] font-normal uppercase tracking-[0.2em] text-muted-foreground">
+                  {c.domain.replace(/\.[a-z.]+$/, "")}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {cmp.rows.map((row) => (
+              <tr key={row.check} className="border-b border-border/50 last:border-b-0">
+                <td className="py-2 pr-4 text-muted-foreground">{row.check}</td>
+                <td className={`py-2 pr-4 text-right tabular-nums ${row.weLead ? "text-foreground" : "text-destructive"}`}>
+                  {row.us}
+                </td>
+                {rivals.map((c) => (
+                  <td key={c.domain} className="py-2 pr-4 text-right tabular-nums text-muted-foreground">
+                    {row.them[c.domain] ?? "—"}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Panel>
+  );
+}
+
+/** What to do, with the generated files beside it. */
+export function Actions({ result }: { result: AuditResult }) {
+  const { suggestions, artifacts } = result.comparison;
+  if (!suggestions.length && !artifacts.length) return null;
+  const impactInk = { high: "text-destructive", medium: "text-warning", low: "text-muted-foreground" };
+
+  return (
+    <Panel title="What to do" subtitle="Built from the gaps above. Every rationale cites the comparison.">
+      <ol className="space-y-3">
+        {suggestions.map((s, i) => (
+          <li key={i} className="flex gap-3 border-b border-border/50 pb-3 last:border-b-0 last:pb-0">
+            <span className="mt-0.5 shrink-0 text-xs tabular-nums text-muted-foreground">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-baseline gap-2">
+                <span className="text-sm font-medium">{s.title}</span>
+                <span className={`text-[10px] uppercase tracking-wider ${impactInk[s.impact]}`}>{s.impact} impact</span>
+                <span className="text-[10px] uppercase tracking-wider text-muted-foreground">{s.effort} effort</span>
+              </div>
+              <p className="mt-1 text-sm text-muted-foreground">{s.rationale}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      {artifacts.length > 0 && (
+        <div className="mt-5 space-y-3 border-t border-border pt-5">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            Written for you — paste these in
+          </p>
+          {artifacts.map((a) => (
+            <details key={a.id} className="border border-border">
+              <summary className="cursor-pointer px-3 py-2 text-sm">
+                {a.label} <code className="ml-2 text-xs text-muted-foreground">{a.target}</code>
+              </summary>
+              <pre className="max-h-72 overflow-auto border-t border-border bg-background p-3 text-xs leading-relaxed">
+                <code>{a.content}</code>
+              </pre>
+            </details>
+          ))}
+        </div>
+      )}
+    </Panel>
   );
 }

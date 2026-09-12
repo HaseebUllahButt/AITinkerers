@@ -928,10 +928,10 @@
         "check": "Overall score",
         "us": "90",
         "them": {
-          "plane.so": "100",
-          "zenhub.com": "95",
-          "teamwork.com": "100",
-          "codegen.com": "100"
+          "cascade.example": "100",
+          "fernway.example": "95",
+          "halcyon.example": "100",
+          "tidebreak.example": "100"
         },
         "weLead": false
       },
@@ -939,10 +939,10 @@
         "check": "AI crawlers allowed",
         "us": "yes",
         "them": {
-          "plane.so": "yes",
-          "zenhub.com": "yes",
-          "teamwork.com": "yes",
-          "codegen.com": "yes"
+          "cascade.example": "yes",
+          "fernway.example": "yes",
+          "halcyon.example": "yes",
+          "tidebreak.example": "yes"
         },
         "weLead": true
       },
@@ -950,10 +950,10 @@
         "check": "llms.txt",
         "us": "10119 bytes",
         "them": {
-          "plane.so": "15246 bytes",
-          "zenhub.com": "3000 bytes",
-          "teamwork.com": "5298 bytes",
-          "codegen.com": "906 bytes"
+          "cascade.example": "15246 bytes",
+          "fernway.example": "3000 bytes",
+          "halcyon.example": "5298 bytes",
+          "tidebreak.example": "906 bytes"
         },
         "weLead": true
       },
@@ -961,10 +961,10 @@
         "check": "Structured data",
         "us": "no",
         "them": {
-          "plane.so": "yes",
-          "zenhub.com": "yes",
-          "teamwork.com": "yes",
-          "codegen.com": "yes"
+          "cascade.example": "yes",
+          "fernway.example": "yes",
+          "halcyon.example": "yes",
+          "tidebreak.example": "yes"
         },
         "weLead": false
       },
@@ -972,10 +972,10 @@
         "check": "Meta description",
         "us": "yes",
         "them": {
-          "plane.so": "yes",
-          "zenhub.com": "yes",
-          "teamwork.com": "yes",
-          "codegen.com": "yes"
+          "cascade.example": "yes",
+          "fernway.example": "yes",
+          "halcyon.example": "yes",
+          "tidebreak.example": "yes"
         },
         "weLead": true
       },
@@ -983,10 +983,10 @@
         "check": "Single H1",
         "us": "1",
         "them": {
-          "plane.so": "1",
-          "zenhub.com": "2",
-          "teamwork.com": "1",
-          "codegen.com": "1"
+          "cascade.example": "1",
+          "fernway.example": "2",
+          "halcyon.example": "1",
+          "tidebreak.example": "1"
         },
         "weLead": true
       },
@@ -994,10 +994,10 @@
         "check": "Words on page",
         "us": "1,143",
         "them": {
-          "plane.so": "1,086",
-          "zenhub.com": "1,303",
-          "teamwork.com": "3,375",
-          "codegen.com": "597"
+          "cascade.example": "1,086",
+          "fernway.example": "1,303",
+          "halcyon.example": "3,375",
+          "tidebreak.example": "597"
         },
         "weLead": false
       },
@@ -1005,10 +1005,10 @@
         "check": "Sitemap URLs",
         "us": "1,024",
         "them": {
-          "plane.so": "782",
-          "zenhub.com": "436",
-          "teamwork.com": "1,522",
-          "codegen.com": "195"
+          "cascade.example": "782",
+          "fernway.example": "436",
+          "halcyon.example": "1,522",
+          "tidebreak.example": "195"
         },
         "weLead": false
       }
