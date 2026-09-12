@@ -9,7 +9,7 @@ import { classifyRenderMode, type RenderModeResult } from "@/lib/indexing/render
 import { fetchLlmsTxt, fetchRobots, fetchSitemap, type LlmsTxtReport, type RobotsReport, type SitemapReport } from "./discovery";
 import { compareWithCompetitors, scoreProfile, type CompetitorComparison, type SiteProfile } from "./compare";
 import { discoverCompetitors, type CompetitorDiscovery } from "./competitors";
-import { readMarket, type MarketRead } from "./market";
+import { deriveMarket, readDemand, type MarketRead } from "./market";
 import { measureShareOfVoice, type ShareOfVoice } from "./share";
 
 export type Severity = "critical" | "warning" | "ok";
@@ -231,16 +231,7 @@ export async function runAudit(inputUrl: string, options: AuditOptions = {}): Pr
 
   // Independent of each other, so they go together.
   const [robots, llmsTxt] = await Promise.all([fetchRobots(origin), fetchLlmsTxt(origin)]);
-  const [sitemap, market] = await Promise.all([
-    fetchSitemap(origin, robots.sitemaps),
-    readMarket({
-      brand,
-      domain,
-      title: onpage?.title ?? "",
-      description: "",
-      bodyExcerpt: onpage?.text ?? "",
-    }),
-  ]);
+  const sitemap = await fetchSitemap(origin, robots.sitemaps);
 
   // Our own profile, on exactly the weighting every competitor is scored with — otherwise the
   // comparison is two different measurements pretending to be one.
@@ -276,12 +267,11 @@ export async function runAudit(inputUrl: string, options: AuditOptions = {}): Pr
     category: onpage?.title || brand,
     bodyExcerpt: onpage?.text ?? "",
     supplied: options.competitors,
-    fromAnswers: market.competitors.map((c) => ({ name: c.name, domain: c.domain })),
   });
   const competitorDomains = discovery.competitors.map((c) => c.domain);
   const competitorRefs = discovery.competitors.map((c) => ({ name: c.name, domain: c.domain }));
 
-  const [share, comparison] = await Promise.all([
+  const [share, comparison, demand] = await Promise.all([
     measureShareOfVoice({
       brand,
       domain,
@@ -290,7 +280,9 @@ export async function runAudit(inputUrl: string, options: AuditOptions = {}): Pr
       competitors: competitorRefs,
     }),
     compareWithCompetitors({ us, competitorDomains }),
+    readDemand(brand, onpage?.title || brand),
   ]);
+  const market = deriveMarket({ brand, domain, share, demand });
 
   const findings = buildFindings({ onpage, render, robots, llmsTxt, sitemap, market, share, comparison });
 

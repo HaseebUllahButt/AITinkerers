@@ -1,10 +1,20 @@
 import type React from "react"
 
-// The operator surface is one page for now. The sidebar, top bar and page container that used to
-// live here belonged to the ported tool and went with it; this stays deliberately bare so the
-// audit is the whole screen until there is a second thing worth navigating between.
+import { MobileNav, Sidebar } from "@/components/layout/Sidebar"
+
+// The operator shell: sidebar flush to the left edge, content beside it. Each surface owns its own
+// page — the audit is its own screen, not a panel on the dashboard — and the sidebar is the single
+// place that knows what surfaces exist.
 export default function ToolLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  return <div className="min-h-svh bg-background text-foreground">{children}</div>
+  return (
+    <div className="flex h-svh overflow-hidden bg-background text-foreground">
+      <Sidebar />
+      <div className="flex min-w-0 flex-1 flex-col">
+        <MobileNav />
+        <main className="min-h-0 flex-1 overflow-y-auto">{children}</main>
+      </div>
+    </div>
+  )
 }

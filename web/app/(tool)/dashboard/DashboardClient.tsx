@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import type { ProviderStatus } from "@/app/api/status/route";
@@ -48,8 +47,6 @@ function Panel({ title, subtitle, children, action }: {
 }
 
 export default function DashboardClient() {
-  const router = useRouter();
-  const [url, setUrl] = useState("");
   const [providers, setProviders] = useState<ProviderStatus[] | null>(null);
   const [history, setHistory] = useState<AuditRecord[]>([]);
 
@@ -66,37 +63,13 @@ export default function DashboardClient() {
 
   return (
     <div className="mx-auto w-full max-w-4xl px-5 py-10">
-      <header className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p className="text-[10px] uppercase tracking-[0.3em] text-primary">SearchOps</p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight">Dashboard</h1>
-        </div>
-        <Link href="/audit" className="text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground">
-          Open the audit →
-        </Link>
+      <header>
+        <h1 className="text-3xl font-semibold tracking-tight">Dashboard</h1>
+        <p className="mt-2 max-w-prose text-sm text-muted-foreground">
+          What is answering, and what you have looked at. The audit is its own screen — it is in the
+          sidebar.
+        </p>
       </header>
-
-      <form
-        className="mt-6 flex flex-col gap-2 sm:flex-row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (url.trim()) router.push(`/audit?url=${encodeURIComponent(url.trim())}`);
-        }}
-      >
-        <input
-          id="dash-url"
-          type="text"
-          inputMode="url"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          placeholder="example.com"
-          aria-label="URL to audit"
-          className="h-11 flex-1 border border-input bg-transparent px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        />
-        <button type="submit" disabled={!url.trim()} className="h-11 bg-primary px-6 text-sm font-medium text-primary-foreground disabled:opacity-50">
-          Audit a site
-        </button>
-      </form>
 
       <div className="mt-8 space-y-5">
         <Panel
@@ -154,7 +127,7 @@ export default function DashboardClient() {
         >
           {history.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              Nothing yet. Audit a site above and it will appear here.
+              Nothing yet. Run an audit from the sidebar and it will appear here.
             </p>
           ) : (
             <div className="space-y-1">
