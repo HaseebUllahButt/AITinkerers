@@ -238,7 +238,7 @@ function CapabilityCard({
       <span
         className={cn(
           "absolute bottom-4 right-4 font-mono text-[10px] transition-colors duration-300",
-          isActive ? "text-accent" : "text-muted-foreground/40",
+          isActive ? "text-accent" : "text-muted-foreground/70",
         )}
       >
         {String(index + 1).padStart(2, "0")}

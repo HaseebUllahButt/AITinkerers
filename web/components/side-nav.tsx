@@ -1,6 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useTheme } from "next-themes"
+import { Moon, Sun } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navItems = [
@@ -13,6 +15,11 @@ const navItems = [
 
 export function SideNav() {
   const [activeSection, setActiveSection] = useState("hero")
+  const { resolvedTheme, setTheme } = useTheme()
+  // The icon depends on the resolved theme, which is unknown during SSR; render it only after
+  // mount so the markup matches and React does not warn about a hydration mismatch.
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -52,6 +59,17 @@ export function SideNav() {
       >
         App
       </a>
+
+      {/* The landing page has no top bar, so the theme control lives on the rail with the App link. */}
+      <button
+        type="button"
+        onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+        aria-label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
+        title={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
+        className="absolute top-16 left-1/2 -translate-x-1/2 border border-foreground/20 p-1.5 text-muted-foreground hover:border-accent hover:text-accent transition-colors duration-200"
+      >
+        {mounted && resolvedTheme === "dark" ? <Sun className="h-3 w-3" /> : <Moon className="h-3 w-3" />}
+      </button>
 
       <div className="flex flex-col gap-6 px-4">
         {navItems.map(({ id, label }) => (

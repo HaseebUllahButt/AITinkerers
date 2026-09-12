@@ -4,6 +4,7 @@ import { IBM_Plex_Sans, IBM_Plex_Mono, Bebas_Neue } from "next/font/google"
 import { SessionProvider } from "next-auth/react"
 import { Analytics } from "@vercel/analytics/next"
 import { auth } from "@auth"
+import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
 
@@ -45,14 +46,18 @@ export default async function RootLayout({
   const session = await auth()
 
   return (
-    <html lang="en" className="dark bg-background" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${ibmPlexSans.variable} ${bebasNeue.variable} ${ibmPlexMono.variable} font-sans antialiased`}
       >
-        <SessionProvider session={session}>
-          {children}
-          <Toaster position="bottom-right" />
-        </SessionProvider>
+        {/* defaultTheme dark keeps the look the product shipped with; enableSystem means a
+            visitor who has asked their OS for light gets it without hunting for a toggle. */}
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+          <SessionProvider session={session}>
+            {children}
+            <Toaster position="bottom-right" />
+          </SessionProvider>
+        </ThemeProvider>
         <Analytics />
       </body>
     </html>
