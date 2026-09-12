@@ -1,68 +1,51 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import Google from "next-auth/providers/google";
 
-const ALLOWED_DOMAIN = process.env.ALLOWED_DOMAINS ?? "imagine.art";
-
-const GOOGLE_ID = process.env.GOOGLE_CLIENT_ID;
-const GOOGLE_SECRET = process.env.GOOGLE_CLIENT_SECRET;
-
-// ── Running without Google OAuth ────────────────────────────────────────────────────────────────
+// ── Open sign-in ────────────────────────────────────────────────────────────────────────────────
 //
-// Google is the only real provider. Without a client id and secret there is no way in at all, which
-// makes the whole operator surface unreachable on a fresh checkout. So outside production, and only
-// when Google is genuinely unconfigured, a local provider stands in: type any email, get a session.
+// Google OAuth and the @imagine.art domain allowlist have been removed. There is one provider and
+// it accepts ANY email with no password and no verification: type an address, get a session.
 //
-// Both conditions are required. In production a missing client id is a misconfiguration to shout
-// about, not a reason to hand out sessions — `isProd` alone gates this, so no environment variable
-// can switch it on in a deployed build.
+// Read that plainly before deploying this. Anyone who can reach the URL can sign in AS ANYONE,
+// including as an address the admin gate in lib/auth/admin.ts trusts. This surface can open pull
+// requests against a repo and write to a live site, so an open door here is not only a data-read
+// risk. It is fine while the only reachable instance is on localhost; it is not fine on a public
+// hostname.
+//
+// To restore real auth: add back a provider (`Google({ clientId, clientSecret })`), reinstate the
+// domain check in the signIn callback, and delete this provider.
 const isProd = process.env.NODE_ENV === "production";
-const googleConfigured = Boolean(GOOGLE_ID && GOOGLE_SECRET);
-export const devSignInEnabled = !isProd && !googleConfigured;
-/** Whether the Google button should be offered at all. */
-export const googleSignInEnabled = googleConfigured;
 
-// next-auth v5 refuses to start without a secret. Generating one per process would invalidate every
-// session on restart, so dev gets a fixed, obviously-fake value. Production still requires the real
-// variable and fails loudly without it.
-const secret =
-  process.env.AUTH_SECRET ?? (isProd ? undefined : "dev-only-insecure-secret-do-not-use-in-prod");
-
-const providers = [];
-if (googleConfigured) {
-  providers.push(Google({ clientId: GOOGLE_ID!, clientSecret: GOOGLE_SECRET! }));
+// next-auth v5 refuses to start without a secret. With an open provider the secret is not what is
+// keeping anyone out, so a missing one no longer blocks startup — but say so, once, in production.
+const secret = process.env.AUTH_SECRET ?? "dev-only-insecure-secret-do-not-use-in-prod";
+if (isProd && !process.env.AUTH_SECRET) {
+  console.warn(
+    "[auth] AUTH_SECRET is not set — falling back to a public, well-known value. " +
+    "Session cookies can be forged by anyone who has read this source. Set AUTH_SECRET.",
+  );
 }
-if (devSignInEnabled) {
-  providers.push(
-    Credentials({
-      id: "dev",
-      name: "Local development",
-      credentials: { email: { label: "Email", type: "email" } },
-      async authorize(credentials) {
-        const email = String(credentials?.email ?? "").trim() || "dev@localhost";
-        return { id: "dev-user", name: email.split("@")[0], email };
-      },
-    }),
+if (isProd) {
+  console.warn(
+    "[auth] Open sign-in is enabled: any email is accepted with no password. " +
+    "Do not expose this deployment on a public hostname.",
   );
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   secret,
-  providers,
+  providers: [
+    Credentials({
+      id: "open",
+      name: "Email",
+      credentials: { email: { label: "Email", type: "email" } },
+      async authorize(credentials) {
+        const email = String(credentials?.email ?? "").trim() || "user@localhost";
+        return { id: email.toLowerCase(), name: email.split("@")[0], email };
+      },
+    }),
+  ],
   callbacks: {
-    async signIn({ user, account }) {
-      // The dev provider is already gated on !isProd above; domain rules are about who in the real
-      // organisation may sign in, and do not apply to a local stand-in.
-      if (account?.provider === "dev") return true;
-
-      const email = user.email ?? "";
-      const allowed = ALLOWED_DOMAIN.split(",").map((d) => d.trim());
-      const domain = email.split("@")[1];
-      if (!allowed.includes(domain)) {
-        return `/login?error=domain&email=${encodeURIComponent(email)}`;
-      }
-      return true;
-    },
     async session({ session, token }) {
       if (session.user) {
         (session.user as any).id = token.sub;
