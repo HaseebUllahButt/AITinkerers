@@ -1,9 +1,10 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { getProviders, signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { SummitMark } from "@/components/brand/SummitMark";
 
@@ -11,6 +12,20 @@ function LoginContent() {
   const params = useSearchParams();
   const error = params.get("error");
   const email = params.get("email");
+
+  // Which providers exist is a runtime fact: auth.ts registers the local
+  // stand-in only when Google is unconfigured and we are not in production.
+  type Providers = Awaited<ReturnType<typeof getProviders>>;
+  const [providers, setProviders] = useState<Providers | null>(null);
+  const [devEmail, setDevEmail] = useState("dev@localhost");
+  useEffect(() => {
+    getProviders()
+      .then((p) => setProviders(p ?? ({} as Providers)))
+      .catch(() => setProviders({} as Providers));
+  }, []);
+  // Default to showing Google until we know, so the common case never flashes.
+  const hasGoogle = providers === null || Boolean(providers.google);
+  const hasDev = Boolean(providers?.dev);
 
   return (
     // `h-full`, not `min-h-screen`: the root layout already sizes `main` to `h-svh` and this page
@@ -46,6 +61,32 @@ function LoginContent() {
               </div>
             )}
 
+            {hasDev && (
+              <form
+                className="space-y-2"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  signIn("dev", { email: devEmail, callbackUrl: "/" });
+                }}
+              >
+                <Input
+                  id="dev-email"
+                  type="email"
+                  value={devEmail}
+                  onChange={(e) => setDevEmail(e.target.value)}
+                  placeholder="you@localhost"
+                  aria-label="Email for local sign-in"
+                />
+                <Button type="submit" className="w-full" size="lg">
+                  Continue without Google
+                </Button>
+                <p className="text-xs text-center text-muted-foreground">
+                  Local development only — no Google credentials configured. Any email works.
+                </p>
+              </form>
+            )}
+
+            {hasGoogle && (
             <Button
               onClick={() => signIn("google", { callbackUrl: "/" })}
               className="w-full gap-2"
@@ -59,10 +100,13 @@ function LoginContent() {
               </svg>
               Continue with Google
             </Button>
+            )}
 
-            <p className="text-xs text-center text-muted-foreground">
-              Internal tool — imagine.art accounts only
-            </p>
+            {hasGoogle && (
+              <p className="text-xs text-center text-muted-foreground">
+                Internal tool — imagine.art accounts only
+              </p>
+            )}
           </CardContent>
         </Card>
       </div>

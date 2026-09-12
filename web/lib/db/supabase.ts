@@ -38,6 +38,75 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 let cached: SupabaseClient | null = null;
 
+// ── Running without Supabase ────────────────────────────────────────────────────────────────────
+//
+// Outside production a missing credential yields a stub client instead of throwing, so the whole
+// operator surface can be opened and navigated with no database at all. Every read resolves empty
+// and every write reports "not configured" — pages render their empty states rather than a 500.
+//
+// This is deliberately DEV-ONLY. In production a missing credential still throws: a deployment that
+// silently reads zero rows and silently discards writes is far worse than one that refuses to start.
+const DEV_FALLBACK = process.env.NODE_ENV !== "production";
+
+let warned = false;
+function warnOnce(missing: string[]): void {
+  if (warned) return;
+  warned = true;
+  console.warn(
+    `[supabase] not configured (missing ${missing.join(" and ")}) — running with an empty stub. ` +
+    "Reads return no rows; writes are discarded. Set the variables to use a real database.",
+  );
+}
+
+/** A chainable no-op that mimics the PostgREST builder and resolves to an empty result. */
+function stubBuilder(rowsShape: "many" | "one"): any {
+  const result =
+    rowsShape === "many"
+      ? { data: [], error: null, count: 0, status: 200, statusText: "OK (supabase not configured)" }
+      : { data: null, error: null, count: 0, status: 200, statusText: "OK (supabase not configured)" };
+
+  const builder: any = new Proxy(
+    {},
+    {
+      get(_t, prop) {
+        // Awaiting the builder is what actually runs a query, so this is the exit.
+        if (prop === "then") {
+          return (onFulfilled: any, onRejected: any) =>
+            Promise.resolve(result).then(onFulfilled, onRejected);
+        }
+        if (prop === "catch") return (fn: any) => Promise.resolve(result).catch(fn);
+        if (prop === "finally") return (fn: any) => Promise.resolve(result).finally(fn);
+        // .single()/.maybeSingle() switch the result to a single row.
+        if (prop === "single" || prop === "maybeSingle") return () => stubBuilder("one");
+        if (prop === "then_") return undefined;
+        // Everything else (select, eq, in, order, limit, insert, upsert, delete, …) keeps chaining.
+        return () => builder;
+      },
+    },
+  );
+  return builder;
+}
+
+function stubClient(missing: string[]): SupabaseClient {
+  warnOnce(missing);
+  const notConfigured = { message: "Supabase is not configured", name: "NotConfigured" };
+  return {
+    from: () => stubBuilder("many"),
+    rpc: () => stubBuilder("many"),
+    schema: () => stubClient(missing),
+    storage: {
+      from: () => ({
+        upload: async () => ({ data: null, error: notConfigured }),
+        download: async () => ({ data: null, error: notConfigured }),
+        remove: async () => ({ data: null, error: notConfigured }),
+        list: async () => ({ data: [], error: null }),
+        getPublicUrl: () => ({ data: { publicUrl: "" } }),
+        createSignedUrl: async () => ({ data: null, error: notConfigured }),
+      }),
+    },
+  } as unknown as SupabaseClient;
+}
+
 /** Build the service client on first use, or explain exactly which variable is missing. */
 function serviceClient(): SupabaseClient {
   if (cached) return cached;
@@ -48,8 +117,12 @@ function serviceClient(): SupabaseClient {
   const missing = [
     !url && "SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL)",
     !serviceKey && "SUPABASE_SERVICE_ROLE_KEY",
-  ].filter(Boolean);
+  ].filter(Boolean) as string[];
   if (missing.length) {
+    if (DEV_FALLBACK) {
+      cached = stubClient(missing);
+      return cached;
+    }
     throw new Error(
       `Supabase is not configured — missing ${missing.join(" and ")}. ` +
       "Set it in the deployment's environment (runtime is enough; the build does not need it).",
