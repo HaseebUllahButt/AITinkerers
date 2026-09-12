@@ -243,6 +243,40 @@ export default function AuditClient() {
             </Panel>
           )}
 
+          {/* ── Who we compete with ────────────────────────────────── */}
+          <Panel
+            title="Competitors found"
+            subtitle={
+              result.discovery.ran
+                ? `Searched the web for alternatives, had a model separate real rivals from review sites, then verified each one resolves. Sources used: ${result.discovery.methods.join(", ")}.`
+                : "Not identified."
+            }
+          >
+            {result.discovery.ran ? (
+              <>
+                <div className="space-y-1">
+                  {result.discovery.competitors.map((c) => (
+                    <div key={c.domain} className="flex items-baseline justify-between gap-4 border-b border-border/60 py-2 last:border-b-0">
+                      <div className="min-w-0">
+                        <span className="text-sm">{c.name}</span>
+                        <code className="ml-2 text-xs text-muted-foreground">{c.domain}</code>
+                        <p className="mt-0.5 text-xs text-muted-foreground">{c.reason}</p>
+                      </div>
+                      <span className="shrink-0 text-[10px] uppercase tracking-wider text-muted-foreground">{c.source}</span>
+                    </div>
+                  ))}
+                </div>
+                {result.discovery.queries.length > 0 && (
+                  <p className="mt-3 text-xs text-muted-foreground">
+                    Queries: {result.discovery.queries.map((q) => `"${q}"`).join(", ")}
+                  </p>
+                )}
+              </>
+            ) : (
+              <p className="text-sm text-muted-foreground">{result.discovery.note}</p>
+            )}
+          </Panel>
+
           {/* ── Competitor comparison ──────────────────────────────── */}
           {result.comparison.ran ? (
             <>

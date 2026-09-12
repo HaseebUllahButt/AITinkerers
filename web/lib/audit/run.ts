@@ -8,6 +8,7 @@ import { extractOnPage, type OnPageSignals } from "@/lib/indexing/onpage";
 import { classifyRenderMode, type RenderModeResult } from "@/lib/indexing/renderMode";
 import { fetchLlmsTxt, fetchRobots, fetchSitemap, type LlmsTxtReport, type RobotsReport, type SitemapReport } from "./discovery";
 import { compareWithCompetitors, scoreProfile, type CompetitorComparison, type SiteProfile } from "./compare";
+import { discoverCompetitors, type CompetitorDiscovery } from "./competitors";
 import { readMarket, type MarketRead } from "./market";
 import { measureShareOfVoice, type ShareOfVoice } from "./share";
 
@@ -42,6 +43,7 @@ export interface AuditResult {
   sitemap: SitemapReport;
   market: MarketRead;
   share: ShareOfVoice;
+  discovery: CompetitorDiscovery;
   comparison: CompetitorComparison;
 
   findings: Finding[];
@@ -265,15 +267,19 @@ export async function runAudit(inputUrl: string, options: AuditOptions = {}): Pr
 
   // The competitor set comes from the market read, so both features agree on who the rivals are
   // rather than each deciding separately.
-  const supplied = (options.competitors ?? [])
-    .map((c) => c.trim().toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/.*$/, ""))
-    .filter((c) => c.includes("."));
-  const discovered = market.competitors.map((c) => c.domain).filter((d): d is string => Boolean(d));
-  const competitorDomains = [...new Set([...supplied, ...discovered])];
-  const competitorRefs = competitorDomains.map((domain) => {
-    const known = market.competitors.find((c) => c.domain === domain);
-    return { name: known?.name ?? domain.replace(/\.[a-z.]+$/, ""), domain };
+  // Competitor discovery is its own step, not a by-product of who happened to be mentioned:
+  // search for alternatives, let a model sort real rivals from review sites, then verify each
+  // one actually resolves before it reaches the comparison.
+  const discovery = await discoverCompetitors({
+    brand,
+    domain,
+    category: onpage?.title || brand,
+    bodyExcerpt: onpage?.text ?? "",
+    supplied: options.competitors,
+    fromAnswers: market.competitors.map((c) => ({ name: c.name, domain: c.domain })),
   });
+  const competitorDomains = discovery.competitors.map((c) => c.domain);
+  const competitorRefs = discovery.competitors.map((c) => ({ name: c.name, domain: c.domain }));
 
   const [share, comparison] = await Promise.all([
     measureShareOfVoice({
@@ -311,6 +317,7 @@ export async function runAudit(inputUrl: string, options: AuditOptions = {}): Pr
     sitemap,
     market,
     share,
+    discovery,
     comparison,
     findings,
     score,
