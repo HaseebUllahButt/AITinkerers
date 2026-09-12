@@ -1,3 +1,6 @@
 # sharp ships prebuilt platform binaries, so its install script is not needed.
+# re2 is a native regex engine pulled in by imapflow (IMAP reading) — not on the
+# SearchOps check path, so its build script stays off too.
 allowBuilds:
   sharp: false
+  re2: false
