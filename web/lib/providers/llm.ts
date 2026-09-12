@@ -73,6 +73,47 @@ export function llmEnabled(): boolean {
   return (!!k && k.length > 20) || anthropicFallbackClient() !== null;
 }
 
+/**
+ * Why the last call failed, in words.
+ *
+ * llmChat returns null for every failure — a dead key, a bad model id and "the model had nothing
+ * to say" are indistinguishable to a caller. That ambiguity is what let ~20 features degrade
+ * silently for days (see the note above). This makes one small real call and reports what actually
+ * came back, so a feature can tell a person WHY its panel is empty instead of showing nothing.
+ */
+export async function llmDiagnose(): Promise<{ ok: boolean; reason: string }> {
+  const key = process.env.OPENROUTER_API_KEY;
+  if (key && key.length > 20) {
+    try {
+      const res = await fetch(OPENROUTER, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ model: DEFAULT_LLM_MODEL, messages: [{ role: "user", content: "ok" }], max_tokens: 16 }),
+        signal: AbortSignal.timeout(20_000),
+      });
+      if (res.ok) return { ok: true, reason: "" };
+      const body = (await res.text()).slice(0, 200);
+      if (res.status === 401) return { ok: false, reason: `OpenRouter rejected the key (401). ${body}` };
+      return { ok: false, reason: `OpenRouter returned HTTP ${res.status}. ${body}` };
+    } catch (e) {
+      return { ok: false, reason: `OpenRouter request failed: ${e instanceof Error ? e.message : "unknown error"}` };
+    }
+  }
+  const client = anthropicFallbackClient();
+  if (!client) return { ok: false, reason: "No OPENROUTER_API_KEY or ANTHROPIC_API_KEY is set." };
+  try {
+    await client.messages.create({
+      model: DEFAULT_LLM_MODEL.replace(/^anthropic\//, ""),
+      max_tokens: 16,
+      messages: [{ role: "user", content: "ok" }],
+    });
+    return { ok: true, reason: "" };
+  } catch (e: any) {
+    const status = e?.status ? ` (${e.status})` : "";
+    return { ok: false, reason: `Anthropic rejected the request${status}. ${String(e?.message ?? "").slice(0, 200)}` };
+  }
+}
+
 export interface LlmResult {
   content: string;
   citations: string[];

@@ -110,43 +110,24 @@ async function searchOne(
     }
 
     if (provider === "tavily") {
-      const { trackTavilyCall, flagTavilyError, getActiveTavilyKey, markTavilyKeyExhausted } = await import("./tavilyUsage");
-      // Quota-exhaustion statuses → this key is spent for the month; roll to the next in the pool.
-      const QUOTA = new Set([402, 403, 429, 432]);
-      // Try successive keys from the pool until one works or we run out (cap attempts so a
-      // pool of dead keys can't loop forever).
-      for (let attempt = 0; attempt < 8; attempt++) {
-        const active = await getActiveTavilyKey(true); // reserve: bumps this key's per-key count atomically
-        if (!active) { onError?.("no Tavily key available (pool empty / all exhausted)"); return []; }
-        void trackTavilyCall(); // count toward the global monthly-usage tally (per-key done at reserve)
-        const res = await fetch("https://api.tavily.com/search", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ api_key: active.key, query, max_results: count, search_depth: "basic" }),
-          signal: sig,
-        });
-        if (res.ok) {
-          const d = await res.json();
-          const raw = (d.results ?? []) as any[];
-          const hits = raw.map((r: any) => ({ url: r.url, title: r.title ?? "", snippet: (r.content ?? "").slice(0, 300) })).filter((h: SearchHit) => h.url?.startsWith("http"));
-          // The cloaked-URL mode (see header): results that exist but link nowhere. Not a key
-          // problem — the same key answers other queries with real URLs — so don't rotate,
-          // just report and let the provider loop fall through.
-          if (!hits.length && raw.length) onError?.(`tavily returned ${raw.length} results with unusable relative /goto URLs`);
-          return hits;
-        }
-        if (QUOTA.has(res.status) && active.id && active.id !== "env") {
-          // Pool key hit its quota — mark it exhausted for the month and try the next one.
-          await markTavilyKeyExhausted(active.id);
-          onError?.(`Tavily key ${active.id} exhausted (HTTP ${res.status}) — rotating to next`);
-          continue;
-        }
-        // Non-quota error (e.g. 401 bad key with no id, 5xx) → surface and stop.
-        if ([401, 402, 403, 429, 432].includes(res.status)) void flagTavilyError(`HTTP ${res.status}`);
-        fail(res); return [];
-      }
-      onError?.("Tavily: all keys exhausted");
-      return [];
+      // One key from the environment. The pooled, quota-rotating version needed a database to
+      // track per-key spend; that store is gone, so this is the plain single-key call.
+      const key = process.env.TAVILY_API_KEY;
+      if (!key) { onError?.("TAVILY_API_KEY is not set"); return []; }
+      const res = await fetch("https://api.tavily.com/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ api_key: key, query, max_results: count, search_depth: "basic" }),
+        signal: sig,
+      });
+      if (!res.ok) { fail(res); return []; }
+      const d = await res.json();
+      const raw = (d.results ?? []) as any[];
+      const hits = raw
+        .map((r: any) => ({ url: r.url, title: r.title ?? "", snippet: (r.content ?? "").slice(0, 300) }))
+        .filter((h: SearchHit) => h.url?.startsWith("http"));
+      if (!hits.length && raw.length) onError?.(`tavily returned ${raw.length} results with unusable relative /goto URLs`);
+      return hits;
     }
 
     if (provider === "google") {

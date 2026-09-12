@@ -1,16 +1,10 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
-// Every operator route lives under app/(tool). Route groups are erased from the
-// URL, so the group name cannot be matched — the paths are listed instead, and
-// this list is the one place that knows which surface is which.
-const TOOL_PREFIXES = [
-  "/dashboard", "/site-audit", "/geo", "/js-render-audit", "/render-lab",
-  "/404s", "/research", "/handbook", "/workflows", "/indexing", "/link-audit",
-  "/admin", "/settings", "/hermes", "/drafts", "/backlinks", "/blog",
-  "/campaigns", "/emails", "/inbox", "/notifications", "/media", "/negotiation",
-  "/payments", "/roi", "/sending", "/summer", "/whatsapp", "/email-finder",
-]
+// Routes that require a session. The audit is deliberately NOT on this list: the
+// whole point is that someone can paste a URL and get an answer without an account.
+// Add prefixes here as gated surfaces appear.
+const TOOL_PREFIXES: string[] = []
 
 const SESSION_COOKIES = [
   "authjs.session-token",
