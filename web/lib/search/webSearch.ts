@@ -30,19 +30,9 @@ export interface SearchHit { url: string; title: string; snippet: string }
 
 /** Every configured provider, in order of preference. */
 export function searchProviders(): string[] {
-  const list: string[] = [];
-  if (process.env.SEARXNG_URL) list.push("searxng");
-  // Ahead of the keyword engines deliberately. Exa searches by meaning rather than by matching
-  // words, which is what "who else does the thing this site does" actually asks — a keyword engine
-  // answers that query with pages that happen to contain the same words, which is a different and
-  // worse list. It is a paid API, so it simply is not in the list when no key is set.
-  if (process.env.EXA_API_KEY) list.push("exa");
-  if (process.env.TAVILY_API_KEY) list.push("tavily");
-  if (process.env.GOOGLE_CSE_KEY && process.env.GOOGLE_CSE_CX) list.push("google");
-  if (process.env.BRAVE_SEARCH_API_KEY) list.push("brave");
-  // Metered, so free-only mode drops it from the list entirely (providers/policy.ts).
-  if (meteredKey(process.env.SERPER_API_KEY)) list.push("serper");
-  return list;
+  // SearchOps is deliberately single-provider: never fall through to a key that happens to be
+  // present in a deployment environment. This makes cost and data routing predictable.
+  return process.env.EXA_API_KEY ? ["exa"] : [];
 }
 
 export function searchProvider(): string | null {

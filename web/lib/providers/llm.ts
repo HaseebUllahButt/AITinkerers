@@ -1,14 +1,10 @@
-// Shared OpenRouter chat helper for the SEO agents. Mirrors the pattern already used across the
-// app (src/lib/linkaudit/slack.ts etc.). Returns null on any failure so callers degrade to a
-// heuristic path rather than throwing. `citations` is populated by Perplexity Sonar models.
-import Anthropic from "@anthropic-ai/sdk";
-
+// Shared OpenRouter chat helper for the SEO agents. Every caller is pinned to DeepSeek below;
+// model arguments remain accepted only so legacy call sites do not need a mechanical rewrite.
 const OPENROUTER = "https://openrouter.ai/api/v1/chat/completions";
+export const DEEPSEEK_MODEL = "deepseek/deepseek-v4.1-flash";
 
-/** Default for every caller that doesn't pin a model. Opus-class per the "nothing below Opus"
- *  standard; see the two guards below, which exist because raising this model silently breaks
- *  callers that were tuned for Haiku. */
-export const DEFAULT_LLM_MODEL = "anthropic/claude-opus-5";
+/** The only model this helper is allowed to call. */
+export const DEFAULT_LLM_MODEL = DEEPSEEK_MODEL;
 
 /**
  * Anthropic's current frontier family REMOVED the sampling parameters: a non-default
@@ -68,9 +64,7 @@ function timeoutFor(model: string, requested?: number, hard?: boolean): number {
 
 export function llmEnabled(): boolean {
   const k = process.env.OPENROUTER_API_KEY;
-  // Either credential will do: with no OpenRouter key, llmChat serves anthropic/* models (which
-  // is every default path) straight from the Anthropic fallback below.
-  return (!!k && k.length > 20) || anthropicFallbackClient() !== null;
+  return !!k && k.length > 20;
 }
 
 /**
@@ -99,66 +93,12 @@ export async function llmDiagnose(): Promise<{ ok: boolean; reason: string }> {
       return { ok: false, reason: `OpenRouter request failed: ${e instanceof Error ? e.message : "unknown error"}` };
     }
   }
-  const client = anthropicFallbackClient();
-  if (!client) return { ok: false, reason: "No OPENROUTER_API_KEY or ANTHROPIC_API_KEY is set." };
-  try {
-    await client.messages.create({
-      model: DEFAULT_LLM_MODEL.replace(/^anthropic\//, ""),
-      max_tokens: 16,
-      messages: [{ role: "user", content: "ok" }],
-    });
-    return { ok: true, reason: "" };
-  } catch (e: any) {
-    const status = e?.status ? ` (${e.status})` : "";
-    return { ok: false, reason: `Anthropic rejected the request${status}. ${String(e?.message ?? "").slice(0, 200)}` };
-  }
+  return { ok: false, reason: "OPENROUTER_API_KEY is not set." };
 }
 
 export interface LlmResult {
   content: string;
   citations: string[];
-}
-
-// ── Direct-Anthropic fallback ────────────────────────────────────────────────
-// OpenRouter is the primary path, but it is also a prepaid single point of failure: on
-// 2026-08-15 the key's spend limit ran out and every llmChat call in the app 402'd SILENTLY for
-// days — canned pitches, canned follow-ups, no reply sentiment or intent — because null is
-// indistinguishable from "the model had nothing to say". The app already holds a funded
-// ANTHROPIC_API_KEY (the Hermes brain and the writer call Anthropic directly), so an anthropic/*
-// model that fails on OpenRouter is retried once against Anthropic itself, same budgets and the
-// same no-sampling-params rule. Other providers' models (Perplexity Sonar etc.) still return
-// null — nobody else can serve them. Deliberately NOT routed through @/lib/writer/anthropic:
-// that module is the streaming/caching authoring stack, and this must stay a plain one-shot.
-let _anthropic: Anthropic | null | undefined;
-function anthropicFallbackClient(): Anthropic | null {
-  if (_anthropic !== undefined) return _anthropic;
-  const k = process.env.ANTHROPIC_API_KEY;
-  _anthropic = k && k.length > 20 ? new Anthropic({ apiKey: k }) : null;
-  return _anthropic;
-}
-
-async function anthropicFallback(
-  opts: { prompt: string; system?: string; maxTokens?: number; temperature?: number; timeoutMs?: number; hardTimeout?: boolean },
-  model: string,
-): Promise<LlmResult | null> {
-  const client = anthropicFallbackClient();
-  if (!client || !model.startsWith("anthropic/")) return null;
-  try {
-    const res = await client.messages.create(
-      {
-        model: model.slice("anthropic/".length),
-        max_tokens: outputBudget(model, opts.maxTokens),
-        ...(opts.system ? { system: opts.system } : {}),
-        ...(acceptsSamplingParams(model) ? { temperature: opts.temperature ?? 0.2 } : {}),
-        messages: [{ role: "user", content: opts.prompt }],
-      },
-      { timeout: timeoutFor(model, opts.timeoutMs, opts.hardTimeout) },
-    );
-    const content = res.content.filter((b) => b.type === "text").map((b) => b.text).join("");
-    return { content, citations: [] };
-  } catch {
-    return null;
-  }
 }
 
 export async function llmChat(opts: {
@@ -173,8 +113,10 @@ export async function llmChat(opts: {
   hardTimeout?: boolean;
 }): Promise<LlmResult | null> {
   const key = process.env.OPENROUTER_API_KEY;
-  const model = opts.model ?? DEFAULT_LLM_MODEL;
-  if (!key || key.length < 20) return anthropicFallback(opts, model);
+  // All callers are intentionally pinned here. A feature cannot select a more expensive model by
+  // passing `opts.model`; the option remains in the public shape for compatibility with old code.
+  const model = DEEPSEEK_MODEL;
+  if (!key || key.length < 20) return null;
   try {
     const messages = [
       ...(opts.system ? [{ role: "system", content: opts.system }] : []),
@@ -206,7 +148,7 @@ export async function llmChat(opts: {
     // Any non-2xx — the 402 credit wall above all — falls through to Anthropic rather than
     // silently degrading twenty features at once. Timeouts/aborts land in the catch below and
     // stay null: their time budget is already spent, a second slow call would double it.
-    if (!res.ok) return anthropicFallback(opts, model);
+    if (!res.ok) return null;
     const data: any = await res.json();
     const msg = data.choices?.[0]?.message ?? {};
     const content: string = msg.content ?? "";

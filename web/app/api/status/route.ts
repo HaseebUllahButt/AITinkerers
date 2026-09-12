@@ -26,6 +26,17 @@ let cache: { at: number; payload: unknown } | null = null;
 
 async function probeSearch(provider: string): Promise<{ working: boolean; detail: string }> {
   try {
+    if (provider === "exa") {
+      const res = await fetch("https://api.exa.ai/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-api-key": process.env.EXA_API_KEY ?? "" },
+        body: JSON.stringify({ query: "SearchOps", numResults: 1, type: "auto" }),
+        signal: AbortSignal.timeout(12_000),
+      });
+      return res.ok
+        ? { working: true, detail: "Answering." }
+        : { working: false, detail: `HTTP ${res.status}: ${(await res.text()).slice(0, 120)}` };
+    }
     if (provider === "tavily") {
       const res = await fetch("https://api.tavily.com/search", {
         method: "POST",
@@ -62,8 +73,7 @@ export async function GET() {
   // The model that writes prompts, suggestions and artefacts. Everything degrades without it.
   const llm = await llmDiagnose();
   const llmConfigured = Boolean(
-    (process.env.OPENROUTER_API_KEY && process.env.OPENROUTER_API_KEY.length > 20) ||
-    (process.env.ANTHROPIC_API_KEY && process.env.ANTHROPIC_API_KEY.length > 20),
+    process.env.OPENROUTER_API_KEY && process.env.OPENROUTER_API_KEY.length > 20,
   );
   providers.push({
     id: "llm",
@@ -73,7 +83,7 @@ export async function GET() {
     working: llmConfigured ? llm.ok : false,
     detail: llmConfigured
       ? (llm.ok ? "Answering." : llm.reason)
-      : "No OPENROUTER_API_KEY or ANTHROPIC_API_KEY set.",
+      : "No OPENROUTER_API_KEY set.",
   });
 
   // Answer engines — configuration only. Probing four of them on every load would cost real
@@ -108,7 +118,7 @@ export async function GET() {
       group: "search",
       configured: false,
       working: false,
-      detail: "No search provider configured. Competitor discovery needs one (TAVILY_API_KEY is the cheapest to add).",
+      detail: "No EXA_API_KEY configured. Competitor discovery uses Exa only.",
     });
   }
 

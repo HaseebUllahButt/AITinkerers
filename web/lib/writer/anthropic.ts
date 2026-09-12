@@ -7,12 +7,10 @@
 // existing llmChat call sites through this one — they solve different problems (cheap
 // classification vs. a long, cached, streaming authoring session).
 //
-// ── Two providers behind one client ─────────────────────────────────────────────────────────────
+// ── One provider and one model behind the existing client shape ─────────────────────────────────
 //
-// Everything that thinks in this app comes through anthropicClient(): Summer's chat loop, the blog
-// judge, the article writer, metadata, revisions, cluster planning, landing autofill. All of it was
-// pinned to a direct Anthropic key, and on 2026-08-28 that key hit its configured spend cap and then
-// started returning 401 — which took out the blog pipeline for three days and Summer with it.
+// Everything that thinks in this stack comes through anthropicClient(). The SDK remains as the
+// message/tool transport, but requests go only to OpenRouter and the model is pinned to DeepSeek.
 //
 // OpenRouter exposes an Anthropic-Messages-compatible endpoint ("the Anthropic skin") at
 // https://openrouter.ai/api. Verified against it live before this was written, because the whole
@@ -26,7 +24,7 @@
 //   tools + tool_choice                                  accepted, stop_reason "tool_use"
 //   bare model ids ("claude-opus-5")                     accepted, mapped to anthropic/claude-opus-5
 //
-// So no model-name mapping is needed and no call site changes. `authToken` rather than `apiKey`
+// `authToken` rather than `apiKey`
 // because OpenRouter authenticates with `Authorization: Bearer`, and `apiKey: null` is explicit so
 // the SDK cannot also attach an `x-api-key` header from the ambient ANTHROPIC_API_KEY.
 //
@@ -34,15 +32,12 @@
 // `text`. Nothing depends on thinking blocks being present — agent.ts filters for text and treats
 // thinking as decoration — but Summer's live "thinking" ticker will be quieter on this provider.
 //
-// What is NOT covered: src/lib/agents/managed.ts (the landing-page builder) uses Anthropic's Managed
-// Agents product, not the Messages API. It has no OpenRouter equivalent and still needs a working
-// ANTHROPIC_API_KEY of its own.
 import Anthropic from "@anthropic-ai/sdk";
 
 /** OpenRouter's Anthropic-compatible base. NOT /api/v1 — that path 404s with an HTML page. */
 const OPENROUTER_BASE = "https://openrouter.ai/api";
 
-export type WriterProvider = "anthropic" | "openrouter";
+export type WriterProvider = "openrouter";
 
 /** A credential is only usable if it is actually a value; >20 chars filters empty and placeholder. */
 function credential(name: string): string | null {
@@ -63,25 +58,18 @@ function credential(name: string): string | null {
  * WRITER_PROVIDER=anthropic once the direct key is healthy is the cheaper steady state.
  */
 export function writerProvider(): WriterProvider | null {
-  const forced = process.env.WRITER_PROVIDER?.trim().toLowerCase();
   const openrouter = credential("OPENROUTER_API_KEY");
-  const direct = credential("ANTHROPIC_API_KEY");
-  if (forced === "anthropic") return direct ? "anthropic" : null;
-  if (forced === "openrouter") return openrouter ? "openrouter" : null;
-  return openrouter ? "openrouter" : direct ? "anthropic" : null;
+  return openrouter ? "openrouter" : null;
 }
 
 /** Which credential is missing, for an error a person can act on. */
 export function writerReadiness(): { ready: boolean; provider: WriterProvider | null; detail: string } {
   const provider = writerProvider();
   if (provider) return { ready: true, provider, detail: `Using ${provider}.` };
-  const forced = process.env.WRITER_PROVIDER?.trim().toLowerCase();
-  if (forced === "anthropic") return { ready: false, provider: null, detail: "WRITER_PROVIDER=anthropic but ANTHROPIC_API_KEY is not set." };
-  if (forced === "openrouter") return { ready: false, provider: null, detail: "WRITER_PROVIDER=openrouter but OPENROUTER_API_KEY is not set." };
-  return { ready: false, provider: null, detail: "Neither OPENROUTER_API_KEY nor ANTHROPIC_API_KEY is set." };
+  return { ready: false, provider: null, detail: "OPENROUTER_API_KEY is not set." };
 }
 
-export const WRITER_MODEL = "claude-opus-5";
+export const WRITER_MODEL = "deepseek/deepseek-v4.1-flash";
 
 /**
  * Models a person may switch the chat to, and the only ones accepted.
@@ -96,8 +84,7 @@ export const WRITER_MODEL = "claude-opus-5";
  * "claude-opus-5" before then resolves to the chat default below rather than erroring.
  */
 export const SELECTABLE_MODELS = [
-  { id: "claude-sonnet-5", label: "Sonnet 5", note: "Default. Fast, sharp, and a fraction of the price of the big models." },
-  { id: "claude-haiku-4-5-20251001", label: "Haiku 4.5", note: "Fastest and cheapest. Simple reads only." },
+  { id: WRITER_MODEL, label: "DeepSeek 4.1 Flash", note: "The only enabled model." },
 ] as const;
 
 export type SelectableModel = (typeof SELECTABLE_MODELS)[number]["id"];
@@ -105,7 +92,7 @@ export type SelectableModel = (typeof SELECTABLE_MODELS)[number]["id"];
 /** What a chat conversation runs on when no (valid) choice is stored. Distinct from WRITER_MODEL on
  *  purpose: the blog writer is a few long, high-stakes runs a day and keeps Opus; the chat is many
  *  quick turns and defaults to Sonnet. */
-export const CHAT_MODEL = "claude-sonnet-5";
+export const CHAT_MODEL = WRITER_MODEL;
 
 /** Resolve a requested model to one we will actually call. Anything unrecognised — a typo, a stale
  *  id from an old session, a hand-edited row — falls back to the default rather than erroring the
@@ -144,18 +131,13 @@ export function anthropicClient(): Anthropic | null {
   const provider = writerProvider();
   if (_client !== undefined && _clientProvider === provider) return _client;
   _clientProvider = provider;
-  _client =
-    provider === "openrouter"
-      ? new Anthropic({
-          baseURL: OPENROUTER_BASE,
-          // Bearer, not x-api-key. `apiKey: null` stops the SDK reading ANTHROPIC_API_KEY from the
-          // environment and sending both headers, which OpenRouter rejects as an auth conflict.
-          authToken: credential("OPENROUTER_API_KEY"),
-          apiKey: null,
-        })
-      : provider === "anthropic"
-        ? new Anthropic({ apiKey: credential("ANTHROPIC_API_KEY") })
-        : null;
+  _client = provider
+    ? new Anthropic({
+        baseURL: OPENROUTER_BASE,
+        authToken: credential("OPENROUTER_API_KEY"),
+        apiKey: null,
+      })
+    : null;
   return _client;
 }
 
@@ -177,9 +159,9 @@ export function anthropicClient(): Anthropic | null {
  *     a chat UI, not an error. Omitting `display` here would reproduce that bug.
  */
 export function baseWriterParams(effort: "low" | "medium" | "high" | "xhigh" | "max" = "high", model?: string | null) {
+  void effort;
+  void model;
   return {
-    model: resolveModel(model),
-    thinking: { type: "adaptive" as const, display: "summarized" as const },
-    output_config: { effort },
+    model: WRITER_MODEL,
   };
 }

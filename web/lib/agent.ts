@@ -5,6 +5,7 @@ import type {
 
 import { runAudit, type AuditResult } from "@/lib/audit/run";
 import { execute, query, queryOne } from "@/lib/db/pg";
+import { DEEPSEEK_MODEL } from "@/lib/providers/llm";
 
 export type AgentEvent =
   | { type: "text"; text: string }
@@ -295,7 +296,7 @@ export async function runAgentTurn(sessionId: string, text: string, emit: Emit =
   });
   for (let step = 0; step < 6; step += 1) {
     const response = await client.chat.completions.create({
-      model: process.env.AGENT_MODEL || "deepseek/deepseek-v4.1-flash",
+      model: DEEPSEEK_MODEL,
       max_tokens: 1800,
       tools,
       messages: [{ role: "system", content: SYSTEM }, ...messages],
