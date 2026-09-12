@@ -14,6 +14,22 @@ import { measureShareOfVoice, type ShareOfVoice } from "./share";
 
 export type Severity = "critical" | "warning" | "ok";
 
+/**
+ * What a fix would need access to.
+ *
+ * This is the field the connect flow keys on, so it is set here, next to the check that produced the
+ * finding, rather than guessed from the id in a UI component. A finding that needs a pull request and a
+ * finding that needs a Search Console resubmit are the same shape on the page and completely different
+ * requests to make of a user — asking for GitHub when the fix is in Search Console is the kind of
+ * mistake that costs the one click we get.
+ *
+ *   code            the fix is a change to files the site ships (robots.txt, HTML, llms.txt)
+ *   search-console  the fix is telling Google something (a sitemap resubmit)
+ *   offsite         nothing on the site moves this — it is earned elsewhere
+ *   none            nothing to do; the check passed
+ */
+export type FindingNeeds = "code" | "search-console" | "offsite" | "none";
+
 export interface Finding {
   id: string;
   severity: Severity;
@@ -22,6 +38,7 @@ export interface Finding {
   evidence: string;
   /** What to do about it. */
   fix: string;
+  needs: FindingNeeds;
 }
 
 export interface AuditResult {
@@ -90,7 +107,7 @@ function buildFindings(r: {
   // ── The one that costs real money, first ──────────────────────────────────
   if (robots.retrievalBlocked.length) {
     f.push({
-      id: "ai-retrieval-blocked",
+      id: "ai-retrieval-blocked", needs: "code",
       severity: "critical",
       title: "Blocked to the crawlers that feed AI answers",
       evidence: robots.retrievalBlocked
@@ -101,7 +118,7 @@ function buildFindings(r: {
   } else if (robots.found) {
     const training = robots.aiAccess.filter((a) => a.blocked && a.bot.controls === "training");
     f.push({
-      id: "ai-retrieval-open",
+      id: "ai-retrieval-open", needs: "none",
       severity: "ok",
       title: "AI answer crawlers can read the site",
       evidence: training.length
@@ -113,7 +130,7 @@ function buildFindings(r: {
 
   if (render?.jsGated) {
     f.push({
-      id: "js-gated",
+      id: "js-gated", needs: "code",
       severity: "critical",
       title: "Content only appears after JavaScript",
       evidence: render.reasons.join("; "),
@@ -123,37 +140,37 @@ function buildFindings(r: {
 
   if (onpage) {
     if (!onpage.hasTitle) {
-      f.push({ id: "no-title", severity: "critical", title: "No <title>", evidence: "The document has no title element.", fix: "Add a title that names the thing and what it does." });
+      f.push({ id: "no-title", needs: "code", severity: "critical", title: "No <title>", evidence: "The document has no title element.", fix: "Add a title that names the thing and what it does." });
     }
     if (!onpage.hasMetaDescription) {
-      f.push({ id: "no-description", severity: "warning", title: "No meta description", evidence: "Neither meta description nor og:description is set.", fix: "Write one sentence of description — it is what a model quotes when summarising the page." });
+      f.push({ id: "no-description", needs: "code", severity: "warning", title: "No meta description", evidence: "Neither meta description nor og:description is set.", fix: "Write one sentence of description — it is what a model quotes when summarising the page." });
     }
     if (!onpage.hasH1) {
-      f.push({ id: "no-h1", severity: "warning", title: "No H1", evidence: "The page has no level-one heading.", fix: "Add one H1 stating what the page is about." });
+      f.push({ id: "no-h1", needs: "code", severity: "warning", title: "No H1", evidence: "The page has no level-one heading.", fix: "Add one H1 stating what the page is about." });
     } else if (onpage.h1Count > 1) {
-      f.push({ id: "many-h1", severity: "warning", title: `${onpage.h1Count} H1 headings`, evidence: "More than one H1 competes to describe the page.", fix: "Keep one H1; demote the rest to H2." });
+      f.push({ id: "many-h1", needs: "code", severity: "warning", title: `${onpage.h1Count} H1 headings`, evidence: "More than one H1 competes to describe the page.", fix: "Keep one H1; demote the rest to H2." });
     }
     if (onpage.metaNoindex) {
-      f.push({ id: "noindex", severity: "critical", title: "Page is set to noindex", evidence: "A robots meta tag contains noindex.", fix: "Remove the directive unless this page is deliberately hidden." });
+      f.push({ id: "noindex", needs: "code", severity: "critical", title: "Page is set to noindex", evidence: "A robots meta tag contains noindex.", fix: "Remove the directive unless this page is deliberately hidden." });
     }
     if (!onpage.hasJsonLd) {
-      f.push({ id: "no-jsonld", severity: "warning", title: "No structured data", evidence: "No valid application/ld+json block on the page.", fix: "Add JSON-LD describing the organisation or product. It is the machine-readable version of what the page already says." });
+      f.push({ id: "no-jsonld", needs: "code", severity: "warning", title: "No structured data", evidence: "No valid application/ld+json block on the page.", fix: "Add JSON-LD describing the organisation or product. It is the machine-readable version of what the page already says." });
     }
     if (onpage.wordCount < 120) {
-      f.push({ id: "thin", severity: "warning", title: "Very little text", evidence: `${onpage.wordCount} words of visible copy.`, fix: "A model can only cite what it can read. Give the page enough self-contained prose to answer a question." });
+      f.push({ id: "thin", needs: "code", severity: "warning", title: "Very little text", evidence: `${onpage.wordCount} words of visible copy.`, fix: "A model can only cite what it can read. Give the page enough self-contained prose to answer a question." });
     }
   }
 
   f.push(
     llmsTxt.found
-      ? { id: "llms-txt", severity: "ok", title: "llms.txt published", evidence: `${llmsTxt.bytes} bytes, ${llmsTxt.headings.length} sections, ${llmsTxt.linkCount} links${llmsTxt.fullFound ? ", plus llms-full.txt" : ""}.`, fix: "" }
-      : { id: "no-llms-txt", severity: "warning", title: "No llms.txt", evidence: `Nothing readable at ${llmsTxt.url}.`, fix: "Publish /llms.txt: a short markdown map of what you do and which pages matter. Still a proposal rather than a standard, but it is cheap and it is the file assistants look for." },
+      ? { id: "llms-txt", needs: "none", severity: "ok", title: "llms.txt published", evidence: `${llmsTxt.bytes} bytes, ${llmsTxt.headings.length} sections, ${llmsTxt.linkCount} links${llmsTxt.fullFound ? ", plus llms-full.txt" : ""}.`, fix: "" }
+      : { id: "no-llms-txt", needs: "code", severity: "warning", title: "No llms.txt", evidence: `Nothing readable at ${llmsTxt.url}.`, fix: "Publish /llms.txt: a short markdown map of what you do and which pages matter. Still a proposal rather than a standard, but it is cheap and it is the file assistants look for." },
   );
 
   f.push(
     sitemap.found
-      ? { id: "sitemap", severity: "ok", title: `Sitemap lists ${sitemap.urlCount} URLs`, evidence: `${sitemap.sources.length} sitemap file(s)${sitemap.newestLastmod ? `, newest lastmod ${sitemap.newestLastmod}` : ""}.`, fix: "" }
-      : { id: "no-sitemap", severity: "warning", title: "No readable sitemap", evidence: sitemap.error ?? "Nothing at the declared or conventional locations.", fix: "Publish a sitemap and declare it in robots.txt so crawlers do not have to guess at your URL set." },
+      ? { id: "sitemap", needs: "none", severity: "ok", title: `Sitemap lists ${sitemap.urlCount} URLs`, evidence: `${sitemap.sources.length} sitemap file(s)${sitemap.newestLastmod ? `, newest lastmod ${sitemap.newestLastmod}` : ""}.`, fix: "" }
+      : { id: "no-sitemap", needs: "search-console", severity: "warning", title: "No readable sitemap", evidence: sitemap.error ?? "Nothing at the declared or conventional locations.", fix: "Publish a sitemap and declare it in robots.txt so crawlers do not have to guess at your URL set." },
   );
 
   if (share.ran && share.answersCounted) {
@@ -161,6 +178,8 @@ function buildFindings(r: {
     const rival = share.brands.find((b) => !b.isUs);
     f.push({
       id: "share-of-voice",
+      // Zero share is earned off-site; trailing a rival is answered by the comparison's code fixes.
+      needs: ours === 0 ? "offsite" : rival && rival.share > share.ourShare ? "code" : "none",
       severity: ours === 0 ? "critical" : rival && rival.share > share.ourShare ? "warning" : "ok",
       title: `${ours}% share of voice across ${share.enginesUsed.length} engine(s)`,
       evidence:
@@ -176,7 +195,7 @@ function buildFindings(r: {
 
   if (comparison.ran && comparison.gaps.length) {
     f.push({
-      id: "competitor-gaps",
+      id: "competitor-gaps", needs: "code",
       severity: "warning",
       title: `Behind competitors on ${comparison.gaps.length} check(s)`,
       evidence: `${comparison.leaderDomain} leads overall. You trail on: ${comparison.gaps.join(", ")}.`,
@@ -187,7 +206,7 @@ function buildFindings(r: {
   if (market.enabled && market.answers.length) {
     const pct = Math.round(market.mentionRate * 100);
     f.push({
-      id: "ai-mention-rate",
+      id: "ai-mention-rate", needs: "offsite",
       severity: pct === 0 ? "critical" : pct < 50 ? "warning" : "ok",
       title: `Named in ${pct}% of buyer questions`,
       evidence: `Mentioned in ${market.answers.filter((a) => a.mentionsBrand).length} of ${market.answers.length} answers. Most-named alternatives: ${market.competitors.slice(0, 3).map((c) => c.domain).join(", ") || "none identified"}.`,

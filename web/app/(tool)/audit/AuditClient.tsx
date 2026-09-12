@@ -35,7 +35,9 @@ function Panel({ title, subtitle, children }: { title: string; subtitle?: string
   );
 }
 
-function FindingCard({ f }: { f: Finding }) {
+type ConnectionKind = "github" | "google" | "slack";
+
+function FindingCard({ f, onConnect }: { f: Finding; onConnect: (kind: ConnectionKind) => void }) {
   const s = SEVERITY_STYLE[f.severity];
   return (
     <article className="border-l-2 border-border py-3 pl-4" style={{ borderLeftColor: `var(--${f.severity === "ok" ? "success" : f.severity === "warning" ? "warning" : "destructive"})` }}>
@@ -46,7 +48,109 @@ function FindingCard({ f }: { f: Finding }) {
       <h3 className="mt-1.5 text-sm font-medium">{f.title}</h3>
       <p className="mt-1 text-sm text-muted-foreground">{f.evidence}</p>
       {f.fix && <p className="mt-2 text-sm"><span className="text-muted-foreground">Fix — </span>{f.fix}</p>}
+      {f.fix && f.needs === "code" && (
+        <button type="button" onClick={() => onConnect("github")} className="mt-3 border border-primary px-3 py-1.5 text-xs text-primary hover:bg-primary hover:text-primary-foreground">
+          Fix this · connect GitHub
+        </button>
+      )}
+      {f.fix && f.needs === "search-console" && (
+        <button type="button" onClick={() => onConnect("google")} className="mt-3 border border-primary px-3 py-1.5 text-xs text-primary hover:bg-primary hover:text-primary-foreground">
+          Fix this · connect Search Console
+        </button>
+      )}
     </article>
+  );
+}
+
+function ConnectionPanel({
+  kind, result, connected, serviceEmail, onConnected,
+}: {
+  kind: ConnectionKind;
+  result: AuditResult;
+  connected: boolean;
+  serviceEmail: string | null;
+  onConnected: (kind: ConnectionKind) => void;
+}) {
+  const [repository, setRepository] = useState("");
+  const [token, setToken] = useState("");
+  const [property, setProperty] = useState(`sc-domain:${result.domain}`);
+  const [teamId, setTeamId] = useState("");
+  const [channelId, setChannelId] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+
+  async function connect(extra: Record<string, unknown>) {
+    setSaving(true);
+    setMessage(null);
+    try {
+      const response = await fetch("/api/connections", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kind, url: result.url, brand: result.brand, ...extra }),
+      });
+      const data = await response.json();
+      if (!response.ok) setMessage(data.error ?? "Connection failed.");
+      else {
+        onConnected(kind);
+        setMessage("Connected and saved.");
+        setToken("");
+      }
+    } catch {
+      setMessage("Could not reach the connection service.");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="border border-border bg-background p-4">
+      <div className="flex items-center justify-between gap-3">
+        <h3 className="text-sm font-medium">{kind === "github" ? "GitHub" : kind === "google" ? "Google Search Console" : "Slack updates"}</h3>
+        {connected && <span className="text-[10px] uppercase tracking-wider text-success">connected</span>}
+      </div>
+
+      {kind === "github" && (
+        <div className="mt-3 grid gap-2 sm:grid-cols-2">
+          <input value={repository} onChange={(e) => setRepository(e.target.value)} placeholder="owner/repository" className="h-10 border border-input bg-transparent px-3 text-sm" />
+          <input type="password" value={token} onChange={(e) => setToken(e.target.value)} placeholder="GitHub token" className="h-10 border border-input bg-transparent px-3 text-sm" />
+          <button type="button" disabled={saving || !repository || !token} onClick={() => void connect({ repository, token })} className="h-10 bg-primary px-4 text-sm text-primary-foreground disabled:opacity-50">Connect GitHub</button>
+        </div>
+      )}
+
+      {kind === "google" && (
+        <div className="mt-3 space-y-3">
+          <input value={property} onChange={(e) => setProperty(e.target.value)} placeholder="sc-domain:example.com" className="h-10 w-full border border-input bg-transparent px-3 text-sm" />
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="border border-border p-3">
+              <p className="text-sm font-medium">We do it for you</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Add {serviceEmail ? <code>{serviceEmail}</code> : "the SearchOps service account"} as a Full user in Search Console. No Google app review is needed.
+              </p>
+              <button type="button" disabled={saving || !serviceEmail || !property} onClick={() => void connect({ mode: "service_account", property })} className="mt-3 h-9 bg-primary px-3 text-xs text-primary-foreground disabled:opacity-50">
+                {serviceEmail ? "I added it · connect" : "Service account unavailable"}
+              </button>
+            </div>
+            <div className="border border-border p-3">
+              <p className="text-sm font-medium">Connect your own Google account</p>
+              <p className="mt-1 text-xs text-muted-foreground">OAuth needs Google review for the write scope and is not available in this demo.</p>
+              <button type="button" disabled className="mt-3 h-9 border border-input px-3 text-xs text-muted-foreground">OAuth unavailable</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {kind === "slack" && (
+        <div className="mt-3 grid gap-2 sm:grid-cols-2">
+          <input value={teamId} onChange={(e) => setTeamId(e.target.value)} placeholder="Workspace ID · T…" className="h-10 border border-input bg-transparent px-3 text-sm" />
+          <input value={channelId} onChange={(e) => setChannelId(e.target.value)} placeholder="Channel ID · C…" className="h-10 border border-input bg-transparent px-3 text-sm" />
+          <input type="password" value={token} onChange={(e) => setToken(e.target.value)} placeholder="Bot token · optional if server configured" className="h-10 border border-input bg-transparent px-3 text-sm sm:col-span-2" />
+          <button type="button" disabled={saving || !teamId || !channelId} onClick={() => void connect({ teamId, channelId, token })} className="h-10 bg-primary px-4 text-sm text-primary-foreground disabled:opacity-50">Get updates in Slack</button>
+          <p className="text-xs text-warning sm:col-span-2">Invite the bot into this channel first. The chat:write scope alone does not grant channel membership.</p>
+        </div>
+      )}
+
+      {message && <p className={`mt-3 text-xs ${message === "Connected and saved." ? "text-success" : "text-destructive"}`}>{message}</p>}
+    </div>
   );
 }
 
@@ -56,6 +160,9 @@ function AuditInner() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<AuditResult | null>(null);
+  const [connectKind, setConnectKind] = useState<ConnectionKind>("slack");
+  const [connected, setConnected] = useState<Set<ConnectionKind>>(new Set());
+  const [serviceEmail, setServiceEmail] = useState<string | null>(null);
 
   const audit = useCallback(async (target: string, competitors: string[]) => {
     setBusy(true);
@@ -99,6 +206,20 @@ function AuditInner() {
     setUrl(deepLink);
     void audit(deepLink, []);
   }, [deepLink, audit]);
+
+  useEffect(() => {
+    if (!result) return;
+    let current = true;
+    fetch(`/api/connections?url=${encodeURIComponent(result.url)}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (!current) return;
+        setConnected(new Set((data.connections ?? []).map((row: { kind: ConnectionKind }) => row.kind)));
+        setServiceEmail(typeof data.serviceAccountEmail === "string" ? data.serviceAccountEmail : null);
+      })
+      .catch(() => { if (current) setConnected(new Set()); });
+    return () => { current = false; };
+  }, [result]);
 
   function run(e: React.FormEvent) {
     e.preventDefault();
@@ -189,8 +310,26 @@ function AuditInner() {
 
           <Panel title="Findings" subtitle="Ordered by what it costs you. Evidence first, then the fix.">
             <div className="space-y-1">
-              {findings.map((f) => <FindingCard key={f.id} f={f} />)}
+              {findings.map((f) => <FindingCard key={f.id} f={f} onConnect={setConnectKind} />)}
             </div>
+          </Panel>
+
+          <Panel title="Connect the fix" subtitle="Connections are shown as connected only after they have been saved.">
+            <div className="mb-3 flex flex-wrap gap-2">
+              {(["github", "google", "slack"] as ConnectionKind[]).map((kind) => (
+                <button key={kind} type="button" onClick={() => setConnectKind(kind)} className={`border px-3 py-1.5 text-xs ${connectKind === kind ? "border-primary bg-primary text-primary-foreground" : "border-input text-muted-foreground"}`}>
+                  {kind === "github" ? "GitHub" : kind === "google" ? "Search Console" : "Get updates in Slack"}{connected.has(kind) ? " · connected" : ""}
+                </button>
+              ))}
+            </div>
+            <ConnectionPanel
+              key={`${result.domain}:${connectKind}`}
+              kind={connectKind}
+              result={result}
+              connected={connected.has(connectKind)}
+              serviceEmail={serviceEmail}
+              onConnected={(kind) => setConnected((previous) => new Set(previous).add(kind))}
+            />
           </Panel>
 
           <div className="grid gap-5 md:grid-cols-2">

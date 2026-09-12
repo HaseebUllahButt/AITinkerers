@@ -66,7 +66,7 @@ create table if not exists agent_actions (
   params      jsonb not null default '{}'::jsonb,
   summary     text not null,
   status      text not null default 'proposed'
-                check (status in ('proposed', 'executed', 'declined', 'expired', 'failed')),
+                check (status in ('proposed', 'approved', 'executed', 'declined', 'expired', 'failed')),
   proposed_at timestamptz not null default now(),
   resolved_at timestamptz,
   resolved_by text,
@@ -80,3 +80,51 @@ create index if not exists idx_connections_site on connections(site_id);
 create index if not exists idx_messages_session on agent_messages(session_id, created_at);
 create index if not exists idx_actions_session on agent_actions(session_id, proposed_at desc);
 create index if not exists idx_actions_status on agent_actions(status) where status = 'proposed';
+
+-- ── Slack ───────────────────────────────────────────────────────────────────────────────────────
+--
+-- Three small tables, all keyed by Slack's own ids. A Slack user id is only unique within a
+-- workspace and a channel id only within a workspace, so every key carries the team id — without it
+-- an id from a second workspace that happens to collide would resolve to the wrong person or site.
+
+-- Who a Slack user is. A row is created the first time a user id arrives inside a
+-- signature-verified payload (so the id itself is trustworthy — Slack signed it); `user_email` is
+-- filled in by an explicit `/searchops link <email>` and is what attribution uses when present.
+-- No email is not "no identity": the person is still `slack:<team>:<user>`, which is enough to
+-- record who clicked Confirm and to tell two people apart.
+create table if not exists slack_identities (
+  slack_team_id text not null,
+  slack_user_id text not null,
+  user_email    text,
+  linked_by     text,
+  linked_at     timestamptz not null default now(),
+  primary key (slack_team_id, slack_user_id)
+);
+
+-- A channel follows one site. One site per channel — the primary key says so — because the
+-- binding exists so nobody has to type which site they mean; a channel that could mean two sites
+-- would put the question back. A site may own many channels. ON DELETE CASCADE: a deleted site's
+-- channels revert to unbound rather than pointing at nothing.
+create table if not exists slack_channels (
+  slack_team_id text not null,
+  channel_id    text not null,
+  site_id       uuid not null references sites(id) on delete cascade,
+  bound_by      text,
+  bound_at      timestamptz not null default now(),
+  primary key (slack_team_id, channel_id)
+);
+
+-- A thread IS an agent session. Replying in the thread continues the conversation; a new
+-- top-level message starts a fresh one. Cascade with the session: a mapping to a deleted session
+-- would make the next reply fail on a missing row instead of starting over cleanly.
+create table if not exists slack_threads (
+  slack_team_id text not null,
+  channel_id    text not null,
+  thread_ts     text not null,
+  session_id    uuid not null references agent_sessions(id) on delete cascade,
+  created_at    timestamptz not null default now(),
+  primary key (slack_team_id, channel_id, thread_ts)
+);
+
+create index if not exists idx_slack_channels_site on slack_channels(site_id);
+create index if not exists idx_slack_threads_session on slack_threads(session_id);

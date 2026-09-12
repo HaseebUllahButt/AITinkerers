@@ -51,6 +51,17 @@ export function gscProperty(): string | null {
   return process.env.GSC_PROPERTY?.trim() || null;
 }
 
+/**
+ * The service account's email, for the "we do it for you" connection: the user adds this address as a
+ * Full user on their property in Search Console. Null when no credentials are configured, so the UI
+ * can say "unavailable" rather than showing a form that leads nowhere.
+ */
+export function serviceAccountEmail(): string | null {
+  const creds = loadCredentials();
+  const email = creds?.client_email;
+  return typeof email === "string" && email.includes("@") ? email : null;
+}
+
 export function isGscConfigured(): boolean {
   return !!gscProperty() && !!loadCredentials();
 }

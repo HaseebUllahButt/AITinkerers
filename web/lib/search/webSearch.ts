@@ -5,6 +5,7 @@
 //   GOOGLE_CSE_KEY + _CX  — 100/day, no card, renews (real Google)
 //   BRAVE_SEARCH_API_KEY  — 2,000/mo, needs card, renews
 //   SERPER_API_KEY        — 2,500 one-time, no card (real Google)
+//   EXA_API_KEY           — neural/semantic search, not keyword
 //
 // SearXNG goes FIRST because it is the only one with no ceiling: it is our own instance
 // aggregating other engines, so a query costs nothing and there is no monthly cliff. The metered
@@ -31,6 +32,11 @@ export interface SearchHit { url: string; title: string; snippet: string }
 export function searchProviders(): string[] {
   const list: string[] = [];
   if (process.env.SEARXNG_URL) list.push("searxng");
+  // Ahead of the keyword engines deliberately. Exa searches by meaning rather than by matching
+  // words, which is what "who else does the thing this site does" actually asks — a keyword engine
+  // answers that query with pages that happen to contain the same words, which is a different and
+  // worse list. It is a paid API, so it simply is not in the list when no key is set.
+  if (process.env.EXA_API_KEY) list.push("exa");
   if (process.env.TAVILY_API_KEY) list.push("tavily");
   if (process.env.GOOGLE_CSE_KEY && process.env.GOOGLE_CSE_CX) list.push("google");
   if (process.env.BRAVE_SEARCH_API_KEY) list.push("brave");
@@ -86,6 +92,35 @@ async function searchOne(
   const sig = signal ?? AbortSignal.timeout(12000);
   const fail = (res: Response) => onError?.(`${provider} HTTP ${res.status}`);
   try {
+    if (provider === "exa") {
+      // `type: "auto"` lets Exa choose between its neural index and a keyword fallback per query;
+      // forcing "neural" makes a query that is genuinely keyword-shaped (a brand name, a URL)
+      // return semantically-adjacent pages instead of the obvious exact match.
+      const res = await fetch("https://api.exa.ai/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-api-key": process.env.EXA_API_KEY ?? "" },
+        body: JSON.stringify({
+          query,
+          numResults: count,
+          type: "auto",
+          // Ask for a short extract rather than the full page: the callers here want a snippet to
+          // judge relevance, and full text would be megabytes across ten results.
+          contents: { text: { maxCharacters: 400 } },
+        }),
+        signal: sig,
+      });
+      if (!res.ok) { fail(res); return []; }
+      const d = await res.json();
+      return ((d.results ?? []) as Array<{ url?: string; title?: string; text?: string; snippet?: string }>)
+        .slice(0, count)
+        .map((r) => ({
+          url: String(r.url ?? ""),
+          title: String(r.title ?? ""),
+          snippet: String(r.text ?? r.snippet ?? "").replace(/\s+/g, " ").trim().slice(0, 300),
+        }))
+        .filter((h: SearchHit) => h.url.startsWith("http"));
+    }
+
     if (provider === "searxng") {
       // Our own instance. `format=json` must be enabled in its settings.yml (the deploy config
       // does this); a SearXNG that has not been configured for JSON answers 403, which lands in
