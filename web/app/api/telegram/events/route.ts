@@ -2,12 +2,17 @@ import { after, NextRequest, NextResponse } from "next/server";
 
 import { runAgentTurn, type AgentEvent } from "@/lib/agent";
 import { internalUrl, publicUrl } from "@/lib/appUrl";
+import {
+  matchActionCommand, pendingActionByRef, resolveActionForSurface,
+} from "@/lib/surfaces/approvals";
 import { handleBindingCommand, matchBindingCommand } from "@/lib/surfaces/commands";
 import {
   ensureSurfaceUser, findOrCreateSession, resolveSurfaceUser, surfaceHandle,
 } from "@/lib/surfaces/store";
 import { renderTurnText } from "@/lib/surfaces/text";
-import { sendTelegramMessage } from "@/lib/telegram/api";
+import {
+  answerTelegramCallback, editTelegramMessage, sendTelegramMessage, sendTelegramProposal,
+} from "@/lib/telegram/api";
 
 export const maxDuration = 300;
 
@@ -24,6 +29,41 @@ export async function POST(req: NextRequest) {
   let body: Record<string, any>;
   try { body = await req.json() as Record<string, any>; }
   catch { return NextResponse.json({ ok: true }); }
+
+  // A button tap on a proposal card. callback_data carries the full action id; the same
+  // resolveAction claim that guards the Slack card makes a double-tap a no-op, not a double run.
+  const callback = body.callback_query;
+  if (callback?.id && callback.from?.id) {
+    const data = String(callback.data ?? "");
+    const m = data.match(/^agent_(approve|decline):([0-9a-f-]{36})$/);
+    if (!m) {
+      void answerTelegramCallback(callback.id, "Unknown button.");
+      return NextResponse.json({ ok: true });
+    }
+    const chatId = String(callback.message?.chat?.id ?? "");
+    const messageId = Number(callback.message?.message_id ?? 0);
+    const userId = String(callback.from.id);
+    const decision = m[1] === "approve" ? "approved" : "declined";
+    after(async () => {
+      const workspaceId = callback.message?.chat?.type === "private" ? "dm" : chatId;
+      try {
+        await ensureSurfaceUser("telegram", workspaceId, userId);
+        const identity = await resolveSurfaceUser("telegram", workspaceId, userId);
+        const actor = identity?.user_email || surfaceHandle("telegram", workspaceId, userId);
+        const line = await resolveActionForSurface({
+          actionId: m[2], decision, resolvedBy: actor, via: "telegram",
+        });
+        await answerTelegramCallback(callback.id, line);
+        if (chatId && messageId) {
+          const original = String(callback.message?.text ?? "").trim();
+          await editTelegramMessage(chatId, messageId, `${original}\n\n${line}`);
+        }
+      } catch (e) {
+        await answerTelegramCallback(callback.id, `Failed: ${e instanceof Error ? e.message : "error"}`.slice(0, 190));
+      }
+    });
+    return NextResponse.json({ ok: true });
+  }
 
   const message = body.message ?? body.edited_message;
   const chat = message?.chat;
@@ -42,6 +82,18 @@ export async function POST(req: NextRequest) {
     try {
       await ensureSurfaceUser("telegram", workspaceId, userId);
 
+      // Typed approvals — the fallback when the buttons are gone or an older card is quoted.
+      const act = matchActionCommand(text);
+      if (act) {
+        const pending = await pendingActionByRef("telegram", workspaceId, chatId, "chat", act.ref);
+        if (!pending) return void await reply("No pending proposal matches that reference here.");
+        const identity = await resolveSurfaceUser("telegram", workspaceId, userId);
+        const actor = identity?.user_email || surfaceHandle("telegram", workspaceId, userId);
+        return void await reply(await resolveActionForSurface({
+          actionId: pending.id, decision: act.decision, resolvedBy: actor, via: "telegram",
+        }));
+      }
+
       const stripped = text.replace(/^\//, "");
       const sub = matchBindingCommand(stripped);
       if (sub) {
@@ -59,7 +111,17 @@ export async function POST(req: NextRequest) {
       });
       const events: AgentEvent[] = [];
       await runAgentTurn(thread.sessionId, text, (event) => { events.push(event); });
-      await reply(renderTurnText(events, publicUrl() ?? internalUrl(), thread.sessionId));
+      // Proposals go out as their own cards with real buttons, not inline in the reply text —
+      // the card is what a human taps.
+      await reply(renderTurnText(events, publicUrl() ?? internalUrl(), thread.sessionId, { proposals: "separate" }));
+      for (const event of events) {
+        if (event.type !== "proposal") continue;
+        await sendTelegramProposal(
+          chat.id,
+          `*Proposed: ${event.kind}*\n${event.summary}\n\n_Or reply "approve ${event.actionId.slice(0, 8)}"_`,
+          event.actionId,
+        );
+      }
     } catch (e) {
       await reply(`Failed: ${e instanceof Error ? e.message : "agent failed"}`.slice(0, 500));
     }

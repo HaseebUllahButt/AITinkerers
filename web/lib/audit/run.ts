@@ -3,7 +3,7 @@
 // Order matters: the page fetch has to land before anything else, because the brand, title and body
 // text it yields are what the market read is built from. Everything after that is independent and
 // runs together.
-import { fetchRawAndRendered, playwrightEnabled } from "@/lib/indexing/fetchRendered";
+import { fetchRaw, fetchRendered, playwrightEnabled } from "@/lib/indexing/fetchRendered";
 import { extractOnPage, type OnPageSignals } from "@/lib/indexing/onpage";
 import { classifyRenderMode, type RenderModeResult } from "@/lib/indexing/renderMode";
 import { fetchLlmsTxt, fetchRobots, fetchSitemap, type LlmsTxtReport, type RobotsReport, type SitemapReport } from "./discovery";
@@ -239,26 +239,41 @@ export async function runAudit(inputUrl: string, options: AuditOptions = {}): Pr
   const origin = u.origin;
   const domain = u.hostname.replace(/^www\./, "");
 
-  // The page first — everything downstream is derived from it.
-  const page = await fetchRawAndRendered(url);
-  const rawHtml = page.raw?.html ?? "";
-  const onpage = rawHtml ? extractOnPage(rawHtml, url) : null;
-  const renderedOnpage = page.rendered?.html ? extractOnPage(page.rendered.html, url) : null;
-  const renderChecked = playwrightEnabled() && Boolean(page.rendered);
-  const render = renderChecked ? classifyRenderMode(onpage, renderedOnpage) : null;
+  // Everything that only needs the origin starts at once: robots, llms.txt and the sitemap
+  // overlap with the page fetch instead of queueing behind it. The rendered pass is the slowest
+  // single piece (a real browser), so it resolves in the background and is only awaited where
+  // the JS-gating finding needs it — by then the model work has run the whole audit beside it.
+  const rawP = fetchRaw(url);
+  const renderedP = fetchRendered(url);
+  const robotsP = fetchRobots(origin);
+  const llmsTxtP = fetchLlmsTxt(origin);
+  const sitemapP = robotsP.then((r) => fetchSitemap(origin, r.sitemaps));
 
+  // The raw page first — brand, title and body are what the market read is built from.
+  const raw = await rawP;
+  const rawHtml = raw?.html ?? "";
+  const onpage = rawHtml ? extractOnPage(rawHtml, url) : null;
   const brand = brandFrom(onpage?.title ?? "", domain);
 
-  // Independent of each other, so they go together.
-  const [robots, llmsTxt] = await Promise.all([fetchRobots(origin), fetchLlmsTxt(origin)]);
-  const sitemap = await fetchSitemap(origin, robots.sitemaps);
+  // Competitor discovery and the demand read need only the raw page, so they start here and
+  // run beside the render rather than after it.
+  const discoveryP = discoverCompetitors({
+    brand,
+    domain,
+    category: onpage?.title || brand,
+    bodyExcerpt: onpage?.text ?? "",
+    supplied: options.competitors,
+  });
+  const demandP = readDemand(brand, onpage?.title || brand);
+
+  const [robots, llmsTxt, sitemap] = await Promise.all([robotsP, llmsTxtP, sitemapP]);
 
   // Our own profile, on exactly the weighting every competitor is scored with — otherwise the
   // comparison is two different measurements pretending to be one.
   const usBase = {
     url, domain, brand,
-    reachable: Boolean(page.raw?.ok),
-    status: page.raw?.status ?? 0,
+    reachable: Boolean(raw?.ok),
+    status: raw?.status ?? 0,
     hasTitle: onpage?.hasTitle ?? false,
     title: onpage?.title ?? "",
     hasMetaDescription: onpage?.hasMetaDescription ?? false,
@@ -281,17 +296,11 @@ export async function runAudit(inputUrl: string, options: AuditOptions = {}): Pr
   // Competitor discovery is its own step, not a by-product of who happened to be mentioned:
   // search for alternatives, let a model sort real rivals from review sites, then verify each
   // one actually resolves before it reaches the comparison.
-  const discovery = await discoverCompetitors({
-    brand,
-    domain,
-    category: onpage?.title || brand,
-    bodyExcerpt: onpage?.text ?? "",
-    supplied: options.competitors,
-  });
+  const discovery = await discoveryP;
   const competitorDomains = discovery.competitors.map((c) => c.domain);
   const competitorRefs = discovery.competitors.map((c) => ({ name: c.name, domain: c.domain }));
 
-  const [share, comparison, demand] = await Promise.all([
+  const [share, comparison] = await Promise.all([
     measureShareOfVoice({
       brand,
       domain,
@@ -300,9 +309,15 @@ export async function runAudit(inputUrl: string, options: AuditOptions = {}): Pr
       competitors: competitorRefs,
     }),
     compareWithCompetitors({ us, competitorDomains }),
-    readDemand(brand, onpage?.title || brand),
   ]);
-  const market = deriveMarket({ brand, domain, share, demand });
+
+  // The rendered pass only feeds the JS-gating finding — it finishes whenever it finishes.
+  const rendered = await renderedP;
+  const renderedOnpage = rendered?.html ? extractOnPage(rendered.html, url) : null;
+  const renderChecked = playwrightEnabled() && Boolean(rendered);
+  const render = renderChecked ? classifyRenderMode(onpage, renderedOnpage) : null;
+
+  const market = deriveMarket({ brand, domain, share, demand: await demandP });
 
   const findings = buildFindings({ onpage, render, robots, llmsTxt, sitemap, market, share, comparison });
 
@@ -319,8 +334,8 @@ export async function runAudit(inputUrl: string, options: AuditOptions = {}): Pr
     brand,
     fetchedAt: new Date().toISOString(),
     durationMs: Date.now() - started,
-    reachable: Boolean(page.raw?.ok),
-    status: page.raw?.status ?? 0,
+    reachable: Boolean(raw?.ok),
+    status: raw?.status ?? 0,
     onpage,
     render,
     renderChecked,

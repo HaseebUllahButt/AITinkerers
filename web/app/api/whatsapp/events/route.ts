@@ -2,6 +2,9 @@ import { after, NextRequest, NextResponse } from "next/server";
 
 import { runAgentTurn, type AgentEvent } from "@/lib/agent";
 import { internalUrl, publicUrl } from "@/lib/appUrl";
+import {
+  matchActionCommand, pendingActionByRef, resolveActionForSurface,
+} from "@/lib/surfaces/approvals";
 import { handleBindingCommand, matchBindingCommand } from "@/lib/surfaces/commands";
 import {
   ensureSurfaceUser, findOrCreateSession, resolveSurfaceUser, surfaceHandle,
@@ -38,6 +41,19 @@ export async function POST(req: NextRequest) {
     const reply = (t: string) => sendWhatsApp(chat, t);
     try {
       await ensureSurfaceUser("whatsapp", workspaceId, from);
+
+      // "approve a1b2c3d4" — resolves the pending proposal this chat's session produced. WhatsApp
+      // has no reliable buttons over Baileys, so the typed command IS the control here.
+      const act = matchActionCommand(text);
+      if (act) {
+        const pending = await pendingActionByRef("whatsapp", workspaceId, chat, "chat", act.ref);
+        if (!pending) return void await reply("No pending proposal matches that reference here.");
+        const identity = await resolveSurfaceUser("whatsapp", workspaceId, from);
+        const actor = identity?.user_email || surfaceHandle("whatsapp", workspaceId, from);
+        return void await reply(await resolveActionForSurface({
+          actionId: pending.id, decision: act.decision, resolvedBy: actor, via: "whatsapp",
+        }));
+      }
 
       const stripped = text.replace(/^\//, "");
       const sub = matchBindingCommand(stripped);

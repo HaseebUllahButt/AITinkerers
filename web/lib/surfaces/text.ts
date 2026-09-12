@@ -28,7 +28,10 @@ export function renderAuditText(result: AuditResult, appUrl: string): string {
   ].join("\n");
 }
 
-export function renderTurnText(events: AgentEvent[], appUrl: string, sessionId: string): string {
+export function renderTurnText(
+  events: AgentEvent[], appUrl: string, sessionId: string,
+  opts: { proposals?: "inline" | "separate" } = {},
+): string {
   const answer: string[] = [];
   const tools: string[] = [];
   const proposals: string[] = [];
@@ -43,10 +46,13 @@ export function renderTurnText(events: AgentEvent[], appUrl: string, sessionId: 
         if (typeof u === "string" && u.trim()) audited = u.trim();
       }
     }
-    if (event.type === "proposal") {
-      // No approve/decline buttons on these surfaces yet — name the id so a human can act on it
-      // wherever the cards do exist (Slack, web).
-      proposals.push(`*Proposed: ${event.kind}*\n${event.summary}\n_(action ${event.actionId.slice(0, 8)} — approve in Slack or the dashboard)_`);
+    if (event.type === "proposal" && (opts.proposals ?? "inline") === "inline") {
+      // The typed command resolves through this chat's own session — every text surface speaks
+      // it, and the short ref is the same one the surface's native buttons carry in full.
+      proposals.push(
+        `*Proposed: ${event.kind}*\n${event.summary}\n` +
+        `_Reply "approve ${event.actionId.slice(0, 8)}" to run it or "decline ${event.actionId.slice(0, 8)}" to drop it._`,
+      );
     }
   }
 

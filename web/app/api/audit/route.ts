@@ -1,5 +1,6 @@
 import { NextResponse, after } from "next/server";
 
+import { recordAudit } from "@/lib/audit/recheck";
 import { runAudit } from "@/lib/audit/run";
 import { dbConfigured, execute } from "@/lib/db/pg";
 import { notifySurfacesOfAudit } from "@/lib/surfaces/notify";
@@ -38,6 +39,10 @@ export async function POST(req: Request) {
            on conflict (domain) do update set url = excluded.url, brand = excluded.brand`,
           [result.url, result.domain, result.brand],
         ).catch((e) => console.warn("[audit] could not register site:", e instanceof Error ? e.message : e));
+        // Keep the result so the next scheduled re-check can answer "what moved" — the diff is
+        // the only thing worth posting to a bound channel.
+        await recordAudit(result)
+          .catch((e) => console.warn("[audit] could not record result:", e instanceof Error ? e.message : e));
       }
       const outcome = await notifySurfacesOfAudit(result);
       if (outcome.posted) console.log(`[notify] posted ${result.domain} audit to ${outcome.posted} channel(s)`);

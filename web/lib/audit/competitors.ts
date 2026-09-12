@@ -12,6 +12,8 @@
 //
 // Everything is then verified by actually fetching it, because a competitor that does not resolve
 // is a hallucination or a dead company, and either way it must not reach the comparison table.
+import PQueue from "p-queue";
+
 import { isGenericName, tidyName } from "./generic-words";
 import { llmChat, llmEnabled } from "@/lib/providers/llm";
 import { searchEnabled, webSearch } from "@/lib/search/webSearch";
@@ -113,8 +115,9 @@ async function fromSearch(brand: string, category: string, ownDomain: string) {
   const counts = new Map<string, number>();
   if (!searchEnabled()) return { queries, counts };
 
-  for (const q of queries) {
-    const hits = await webSearch(q, 10).catch(() => []);
+  // The queries are independent — running them in a row paid four search latencies for nothing.
+  const results = await Promise.all(queries.map((q) => webSearch(q, 10).catch(() => [])));
+  for (const hits of results) {
     for (const h of hits) {
       const host = hostOf(h.url);
       if (!host || !plausible(host, ownDomain)) continue;
@@ -279,13 +282,14 @@ export async function discoverCompetitors(opts: {
   }
   if ((opts.fromAnswers ?? []).length) methods.push("answers");
 
-  // Rank, then verify only as many as we need — every check is a real request.
+  // Rank, then verify. In parallel now: a domain that takes its full 8s timeout no longer blocks
+  // every check behind it. The burst is bounded — enough candidates to fill the list, a few deep.
   const ranked = [...merged.values()].sort((a, b) => b.weight - a.weight);
-  const verified: DiscoveredCompetitor[] = [];
-  for (const c of ranked) {
-    if (verified.length >= limit) break;
-    if (c.source === "supplied" || (await resolves(c.domain))) verified.push(c);
-  }
+  const toCheck = ranked.slice(0, Math.max(limit * 3, limit + 5));
+  const queue = new PQueue({ concurrency: 5 });
+  const oks = await Promise.all(toCheck.map((c) =>
+    queue.add(() => c.source === "supplied" ? Promise.resolve(true) : resolves(c.domain))));
+  const verified = toCheck.filter((_, i) => oks[i]).slice(0, limit);
 
   if (!verified.length) {
     return {
