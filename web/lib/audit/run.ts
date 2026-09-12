@@ -7,7 +7,9 @@ import { fetchRawAndRendered, playwrightEnabled } from "@/lib/indexing/fetchRend
 import { extractOnPage, type OnPageSignals } from "@/lib/indexing/onpage";
 import { classifyRenderMode, type RenderModeResult } from "@/lib/indexing/renderMode";
 import { fetchLlmsTxt, fetchRobots, fetchSitemap, type LlmsTxtReport, type RobotsReport, type SitemapReport } from "./discovery";
+import { compareWithCompetitors, scoreProfile, type CompetitorComparison, type SiteProfile } from "./compare";
 import { readMarket, type MarketRead } from "./market";
+import { measureShareOfVoice, type ShareOfVoice } from "./share";
 
 export type Severity = "critical" | "warning" | "ok";
 
@@ -39,6 +41,8 @@ export interface AuditResult {
   llmsTxt: LlmsTxtReport;
   sitemap: SitemapReport;
   market: MarketRead;
+  share: ShareOfVoice;
+  comparison: CompetitorComparison;
 
   findings: Finding[];
   score: number;
@@ -75,9 +79,11 @@ function buildFindings(r: {
   llmsTxt: LlmsTxtReport;
   sitemap: SitemapReport;
   market: MarketRead;
+  share: ShareOfVoice;
+  comparison: CompetitorComparison;
 }): Finding[] {
   const f: Finding[] = [];
-  const { onpage, render, robots, llmsTxt, sitemap, market } = r;
+  const { onpage, render, robots, llmsTxt, sitemap, market, share, comparison } = r;
 
   // ── The one that costs real money, first ──────────────────────────────────
   if (robots.retrievalBlocked.length) {
@@ -148,6 +154,34 @@ function buildFindings(r: {
       : { id: "no-sitemap", severity: "warning", title: "No readable sitemap", evidence: sitemap.error ?? "Nothing at the declared or conventional locations.", fix: "Publish a sitemap and declare it in robots.txt so crawlers do not have to guess at your URL set." },
   );
 
+  if (share.ran && share.answersCounted) {
+    const ours = Math.round(share.ourShare * 100);
+    const rival = share.brands.find((b) => !b.isUs);
+    f.push({
+      id: "share-of-voice",
+      severity: ours === 0 ? "critical" : rival && rival.share > share.ourShare ? "warning" : "ok",
+      title: `${ours}% share of voice across ${share.enginesUsed.length} engine(s)`,
+      evidence:
+        `Named in ${share.brands.find((b) => b.isUs)?.mentions ?? 0} of ${share.answersCounted} answers to ${share.prompts.length} synthetic buyer questions` +
+        (rival ? `. Highest competitor: ${rival.brand} at ${Math.round(rival.share * 100)}%.` : "."),
+      fix: ours === 0
+        ? "No assistant volunteers you for your own category. That is earned through mentions on sites the models already trust — on-page changes alone will not move it."
+        : rival && rival.share > share.ourShare
+          ? `${rival.brand} is named more often than you. The comparison below shows where their site is measurably ahead.`
+          : "",
+    });
+  }
+
+  if (comparison.ran && comparison.gaps.length) {
+    f.push({
+      id: "competitor-gaps",
+      severity: "warning",
+      title: `Behind competitors on ${comparison.gaps.length} check(s)`,
+      evidence: `${comparison.leaderDomain} leads overall. You trail on: ${comparison.gaps.join(", ")}.`,
+      fix: "The suggestions below are built from these gaps, with the generated files ready to ship.",
+    });
+  }
+
   if (market.enabled && market.answers.length) {
     const pct = Math.round(market.mentionRate * 100);
     f.push({
@@ -164,7 +198,18 @@ function buildFindings(r: {
   return f;
 }
 
-export async function runAudit(inputUrl: string): Promise<AuditResult> {
+export interface AuditOptions {
+  /**
+   * Competitors named by the person running the audit.
+   *
+   * The model's list is a guess about who you compete with; yours is not. Supplied names take
+   * precedence and the discovered ones fill any remaining slots, so the comparison still works
+   * when no model key is configured at all.
+   */
+  competitors?: string[];
+}
+
+export async function runAudit(inputUrl: string, options: AuditOptions = {}): Promise<AuditResult> {
   const started = Date.now();
   const url = normalizeUrl(inputUrl);
   if (!url) throw new Error("That does not look like a URL.");
@@ -195,7 +240,53 @@ export async function runAudit(inputUrl: string): Promise<AuditResult> {
     }),
   ]);
 
-  const findings = buildFindings({ onpage, render, robots, llmsTxt, sitemap, market });
+  // Our own profile, on exactly the weighting every competitor is scored with — otherwise the
+  // comparison is two different measurements pretending to be one.
+  const usBase = {
+    url, domain, brand,
+    reachable: Boolean(page.raw?.ok),
+    status: page.raw?.status ?? 0,
+    hasTitle: onpage?.hasTitle ?? false,
+    title: onpage?.title ?? "",
+    hasMetaDescription: onpage?.hasMetaDescription ?? false,
+    h1Count: onpage?.h1Count ?? 0,
+    hasJsonLd: onpage?.hasJsonLd ?? false,
+    wordCount: onpage?.wordCount ?? 0,
+    metaNoindex: onpage?.metaNoindex ?? false,
+    llmsTxt: llmsTxt.found,
+    llmsFullTxt: llmsTxt.fullFound,
+    llmsBytes: llmsTxt.bytes,
+    sitemapFound: sitemap.found,
+    sitemapUrls: sitemap.urlCount,
+    robotsFound: robots.found,
+    retrievalBlocked: robots.retrievalBlocked.map((a) => a.bot.label),
+  };
+  const us: SiteProfile = { ...usBase, score: scoreProfile(usBase) };
+
+  // The competitor set comes from the market read, so both features agree on who the rivals are
+  // rather than each deciding separately.
+  const supplied = (options.competitors ?? [])
+    .map((c) => c.trim().toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/.*$/, ""))
+    .filter((c) => c.includes("."));
+  const discovered = market.competitors.map((c) => c.domain).filter((d): d is string => Boolean(d));
+  const competitorDomains = [...new Set([...supplied, ...discovered])];
+  const competitorRefs = competitorDomains.map((domain) => {
+    const known = market.competitors.find((c) => c.domain === domain);
+    return { name: known?.name ?? domain.replace(/\.[a-z.]+$/, ""), domain };
+  });
+
+  const [share, comparison] = await Promise.all([
+    measureShareOfVoice({
+      brand,
+      domain,
+      category: onpage?.title || brand,
+      bodyExcerpt: onpage?.text ?? "",
+      competitors: competitorRefs,
+    }),
+    compareWithCompetitors({ us, competitorDomains }),
+  ]);
+
+  const findings = buildFindings({ onpage, render, robots, llmsTxt, sitemap, market, share, comparison });
 
   // Blunt on purpose: criticals cost more than warnings, and the number only exists to order
   // one audit against the next one for the same site.
@@ -219,6 +310,8 @@ export async function runAudit(inputUrl: string): Promise<AuditResult> {
     llmsTxt,
     sitemap,
     market,
+    share,
+    comparison,
     findings,
     score,
   };

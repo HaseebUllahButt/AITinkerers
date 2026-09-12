@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import type { AuditResult, Finding, Severity } from "@/lib/audit/run";
+import { engineLabel } from "@/lib/audit/engines";
 
 const SEVERITY_ORDER: Record<Severity, number> = { critical: 0, warning: 1, ok: 2 };
 
@@ -48,6 +49,7 @@ function FindingCard({ f }: { f: Finding }) {
 
 export default function AuditClient() {
   const [url, setUrl] = useState("");
+  const [rivals, setRivals] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<AuditResult | null>(null);
@@ -61,7 +63,7 @@ export default function AuditClient() {
       const res = await fetch("/api/audit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({ url, competitors: rivals.split(",").map((c) => c.trim()).filter(Boolean) }),
       });
       const data = await res.json();
       if (!res.ok) setError(data.error ?? "The audit failed.");
@@ -81,8 +83,9 @@ export default function AuditClient() {
         <p className="text-[10px] uppercase tracking-[0.3em] text-primary">SearchOps</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight">Audit a site</h1>
         <p className="mt-2 max-w-prose text-sm text-muted-foreground">
-          Reads the page, its robots.txt, llms.txt and sitemap, then asks a model what it says about
-          you and who it names instead.
+          Reads the page, its robots.txt, llms.txt and sitemap. Runs synthetic buyer questions
+          across several assistants to measure your share of voice against competitors, audits
+          their sites on the same checks, then writes the fixes.
         </p>
       </header>
 
@@ -106,10 +109,27 @@ export default function AuditClient() {
         </button>
       </form>
 
+      <div className="mt-2">
+        <input
+          id="audit-rivals"
+          type="text"
+          value={rivals}
+          onChange={(e) => setRivals(e.target.value)}
+          placeholder="competitors, comma separated — optional"
+          aria-label="Competitor domains"
+          className="h-10 w-full border border-input bg-transparent px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        />
+        <p className="mt-1 text-xs text-muted-foreground">
+          You know your competitors better than a model does. Leave it blank and the audit works
+          out who they are from what the assistants name.
+        </p>
+      </div>
+
       {busy && (
         <p className="mt-4 text-sm text-muted-foreground">
-          Fetching the page, reading robots.txt, llms.txt and the sitemap, then running the prompt
-          set. The model calls are sequential, so this takes a minute or so.
+          Fetching the page and its machine-readable files, running synthetic prompts across every
+          configured assistant, profiling each competitor on the same checks, then writing the
+          suggestions. This is a few minutes of real calls, not a spinner.
         </p>
       )}
 
@@ -172,6 +192,136 @@ export default function AuditClient() {
               ))}
             </div>
           </Panel>
+
+          {/* ── Share of voice ─────────────────────────────────────── */}
+          {result.share.ran ? (
+            <Panel
+              title="Share of voice"
+              subtitle={`${result.share.prompts.length} synthetic buyer questions across ${result.share.enginesUsed.map(engineLabel).join(", ")}. None of them name a brand — the measurement is who the assistant volunteers. ${result.share.answersCounted} answers counted.`}
+            >
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[520px] text-sm">
+                  <thead>
+                    <tr className="border-b border-border text-left">
+                      <th className="py-2 pr-4 text-xs font-normal uppercase tracking-wider text-muted-foreground">Brand</th>
+                      <th className="py-2 pr-4 text-right text-xs font-normal uppercase tracking-wider text-muted-foreground">Share</th>
+                      {result.share.enginesUsed.map((e) => (
+                        <th key={e} className="py-2 pr-4 text-right text-xs font-normal uppercase tracking-wider text-muted-foreground">{engineLabel(e)}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {result.share.brands.map((b) => (
+                      <tr key={b.brand} className={`border-b border-border/60 ${b.isUs ? "text-primary" : ""}`}>
+                        <td className="py-2 pr-4">
+                          {b.brand}
+                          {b.isUs && <span className="ml-2 text-[10px] uppercase tracking-wider">you</span>}
+                        </td>
+                        <td className="py-2 pr-4 text-right tabular-nums">
+                          <div className="flex items-center justify-end gap-2">
+                            <span className="inline-block h-1.5 w-16 bg-muted">
+                              <span className={`block h-full ${b.isUs ? "bg-primary" : "bg-muted-foreground/50"}`} style={{ width: `${Math.round(b.share * 100)}%` }} />
+                            </span>
+                            {Math.round(b.share * 100)}%
+                          </div>
+                        </td>
+                        {result.share.enginesUsed.map((e) => (
+                          <td key={e} className="py-2 pr-4 text-right tabular-nums text-muted-foreground">
+                            {Math.round((b.byEngine[e] ?? 0) * 100)}%
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              {result.share.note && <p className="mt-3 text-xs text-muted-foreground">{result.share.note}</p>}
+            </Panel>
+          ) : (
+            <Panel title="Share of voice" subtitle="Not run.">
+              <p className="text-sm text-muted-foreground">{result.share.note}</p>
+            </Panel>
+          )}
+
+          {/* ── Competitor comparison ──────────────────────────────── */}
+          {result.comparison.ran ? (
+            <>
+              <Panel
+                title="Compared with competitors"
+                subtitle={result.comparison.weLead ? "You lead overall on the same checks." : `${result.comparison.leaderDomain} leads overall. Every site is measured on the identical pass.`}
+              >
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[560px] text-sm">
+                    <thead>
+                      <tr className="border-b border-border text-left">
+                        <th className="py-2 pr-4 text-xs font-normal uppercase tracking-wider text-muted-foreground">Check</th>
+                        <th className="py-2 pr-4 text-xs font-normal uppercase tracking-wider text-primary">{result.domain}</th>
+                        {result.comparison.competitors.filter((c) => c.reachable).map((c) => (
+                          <th key={c.domain} className="py-2 pr-4 text-xs font-normal uppercase tracking-wider text-muted-foreground">{c.domain}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {result.comparison.rows.map((row) => (
+                        <tr key={row.check} className="border-b border-border/60">
+                          <td className="py-2 pr-4 text-muted-foreground">{row.check}</td>
+                          <td className={`py-2 pr-4 tabular-nums ${row.weLead ? "text-success" : "text-destructive"}`}>{row.us}</td>
+                          {result.comparison.competitors.filter((c) => c.reachable).map((c) => (
+                            <td key={c.domain} className="py-2 pr-4 tabular-nums text-muted-foreground">{row.them[c.domain] ?? "—"}</td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                {result.comparison.competitors.some((c) => !c.reachable) && (
+                  <p className="mt-3 text-xs text-muted-foreground">
+                    Not compared: {result.comparison.competitors.filter((c) => !c.reachable).map((c) => `${c.domain} (${c.error})`).join(", ")}
+                  </p>
+                )}
+              </Panel>
+
+              {result.comparison.suggestions.length > 0 && (
+                <Panel title="What to do about it" subtitle="Built from the gaps above, ordered as given. Every rationale cites the comparison.">
+                  <ol className="space-y-4">
+                    {result.comparison.suggestions.map((s, i) => (
+                      <li key={i} className="border-b border-border/60 pb-4 last:border-b-0 last:pb-0">
+                        <div className="flex flex-wrap items-baseline gap-2">
+                          <span className="text-xs tabular-nums text-muted-foreground">{String(i + 1).padStart(2, "0")}</span>
+                          <span className="text-sm font-medium">{s.title}</span>
+                          <span className="text-[10px] uppercase tracking-wider text-primary">{s.impact} impact</span>
+                          <span className="text-[10px] uppercase tracking-wider text-muted-foreground">{s.effort} effort</span>
+                        </div>
+                        <p className="mt-1 pl-7 text-sm text-muted-foreground">{s.rationale}</p>
+                      </li>
+                    ))}
+                  </ol>
+                </Panel>
+              )}
+
+              {result.comparison.artifacts.length > 0 && (
+                <Panel title="Done for you" subtitle="The suggestions carried out as far as possible from here — finished files, not descriptions. Paste them in.">
+                  <div className="space-y-4">
+                    {result.comparison.artifacts.map((a) => (
+                      <div key={a.id}>
+                        <div className="flex flex-wrap items-baseline justify-between gap-2">
+                          <span className="text-sm font-medium">{a.label}</span>
+                          <code className="text-xs text-muted-foreground">{a.target}</code>
+                        </div>
+                        <pre className="mt-2 max-h-72 overflow-auto border border-border bg-background p-3 text-xs leading-relaxed">
+                          <code>{a.content}</code>
+                        </pre>
+                      </div>
+                    ))}
+                  </div>
+                </Panel>
+              )}
+            </>
+          ) : (
+            <Panel title="Compared with competitors" subtitle="Not run.">
+              <p className="text-sm text-muted-foreground">{result.comparison.note}</p>
+            </Panel>
+          )}
 
           {result.market.enabled ? (
             <>

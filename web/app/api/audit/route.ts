@@ -10,15 +10,20 @@ export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   let url = "";
+  let competitors: string[] = [];
   try {
-    url = String(((await req.json()) as { url?: string })?.url ?? "");
+    const body = (await req.json()) as { url?: string; competitors?: unknown };
+    url = String(body?.url ?? "");
+    if (Array.isArray(body?.competitors)) {
+      competitors = body.competitors.filter((c): c is string => typeof c === "string").slice(0, 6);
+    }
   } catch {
     return NextResponse.json({ error: "Send a JSON body with a url." }, { status: 400 });
   }
   if (!url.trim()) return NextResponse.json({ error: "Enter a URL to audit." }, { status: 400 });
 
   try {
-    return NextResponse.json(await runAudit(url));
+    return NextResponse.json(await runAudit(url, { competitors }));
   } catch (err) {
     // Name what failed. "Something went wrong" is not a finding.
     const message = err instanceof Error ? err.message : "The audit failed.";
