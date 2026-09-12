@@ -7,7 +7,7 @@ export default function MarketingLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className="overflow-x-hidden">
+    <div className="marketing-surface overflow-x-hidden">
       <div className="noise-overlay" aria-hidden="true" />
       <SmoothScroll>{children}</SmoothScroll>
     </div>

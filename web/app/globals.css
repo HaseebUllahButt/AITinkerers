@@ -1,10 +1,655 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "shadcn/tailwind.css";
+/* The Summit Agent chat surface owns three animations (shimmer, cursor pulse, step accordion).
+   They live beside their components; this is the only line globals.css needs to know about them.
+   CSS @import must precede every rule, so it stays up here with the others. */
+@import "../components/agent/agent.css";
 
 @custom-variant dark (&:is(.dark *));
 
-/* Custom editorial design tokens - monochrome with orange accent */
+/* ============================================================
+   Summit — flat surfaces, teal register.
+
+   The original neutral register, restored by request after the teal-glass rebrand: flat white (or
+   near-black) surfaces, gray hairline borders, near-black actions, no wash, no blur. Everything is
+   done by re-valuing tokens — every token and utility class from the glass era still EXISTS (pages
+   reference --glass-border, .glass-panel, text-highlight-ink, …), they just resolve to plain
+   monochrome values now. A future re-skin is again a token edit, not a search-and-replace.
+
+   Only STATE keeps color: --success / --warning / --destructive mark email trust, funnel stages and
+   failures, and turning those gray would erase information, not decoration.
+   ============================================================ */
+
+@theme inline {
+  /* Typography floor. Tailwind's default --text-xs is 12px, and the app had ~250 uses of arbitrary
+     tiny sizes on top of that — the "very very tiny fonts" complaint. Raising the token rather than
+     the call sites keeps one dial for "how small can this get". This is a deliberate divergence:
+     forge runs an 11px metadata layer, which is too small for this much dense tabular data. */
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.45;
+
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+  --font-heading: var(--font-sans);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-highlight: var(--highlight);
+  --color-highlight-soft: var(--highlight-soft);
+  --color-highlight-ink: var(--highlight-ink);
+  --color-quiet: var(--quiet);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Quiet geometry — the old tool's scale: 6px chips up to 16px shells. */
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.2);
+  --radius-2xl: calc(var(--radius) * 1.4);
+  --radius-3xl: calc(var(--radius) * 1.6);
+  --radius-4xl: calc(var(--radius) * 2);
+}
+
 :root {
+  /* ── The wash ────────────────────────────────────────────────────────────────────────────────
+     A cool blue-to-mint field, high-key: pale mint top-left, a wide white haze through the middle
+     where content actually sits, and blue-grey settling into the bottom-right. Radial blobs rather
+     than one linear ramp, because a single ramp bands visibly across a wide viewport and puts its
+     darkest end under whichever corner the content happens to reach.
+
+     The middle stop is deliberately the lightest thing on the page — cards are near-white glass, and
+     they need somewhere bright to sit or the "glass" reads as grey plastic. */
+  /* Flat. The token stays so a re-skin is a token edit, not a rule edit. */
+  --canvas: #ffffff;
+  --wash: none;
+
+  /* The old "glass recipe" tokens, resolved flat: plain surfaces, hairline gray rims, a whisper of
+     shadow. Chrome that referenced these (sidebar, top nav, cards) goes minimal without a touch. */
+  --glass-bg: #ffffff;
+  --glass-border: rgba(15, 118, 110, 0.14);
+  --glass-blur: none;
+  --glass-shadow: 0 1px 2px rgba(18, 38, 43, 0.05);
+  --glass-shadow-lg: 0 2px 6px rgba(18, 38, 43, 0.08);
+
+  /* Quiet fills — segmented tracks, icon buttons, inert chips, inline sticky bars. */
+  --glass-bar: #ffffff;
+  --quiet: rgba(15, 118, 110, 0.06);
+  --quiet-hover: rgba(15, 118, 110, 0.11);
+
+  --background: #ffffff;
+  --foreground: #12262b;
+
+  --card: #ffffff;
+  --card-foreground: #12262b;
+  --popover: #ffffff;
+  --popover-foreground: #12262b;
+
+  /* Teal is the action colour. teal-700 rather than teal-600 because white on teal-600 measures
+     3.6:1 and fails AA for body-size label text; teal-700 clears it. */
+  --primary: #0f766e;
+  --primary-foreground: #ffffff;
+  --primary-shadow: 0 14px 30px -14px rgba(15, 118, 110, 0.45);
+
+  --secondary: #f2f7f7;
+  --secondary-foreground: #12262b;
+  --muted: #f2f7f7;
+  --muted-foreground: rgba(18, 38, 43, 0.62);
+  --accent: #eaf4f3;
+  --accent-foreground: #14262a;
+
+  /* State keeps color — these mark trust tiers, funnel stages and failures, and a gray version of
+     them would erase information rather than decoration. Muted on purpose so they read as marks on
+     a monochrome page, not as a palette. */
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: #ffffff;
+  --success: #1f6b4a;
+  --warning: #7a5a10;
+
+  /* Emphasis is teal again. --highlight-ink is a SEPARATE, darker teal because the accent itself is
+     too light to read as text on a pale pane — one token cannot be both a fill and a label colour. */
+  --highlight: #0d9488;
+  --highlight-soft: rgba(13, 148, 136, 0.12);
+  --highlight-ink: #0b4f4a;
+
+  --border: rgba(15, 118, 110, 0.14);
+  --input: rgba(15, 118, 110, 0.18);
+  --ring: rgba(13, 148, 136, 0.34);
+
+  /* Teal-led, then cool neighbours — distinguishable by hue AND by tone, so a series stays readable
+     printed in grey or seen by a colour-blind reader. */
+  --chart-1: #0d9488;
+  --chart-2: #2f7f9e;
+  --chart-3: #6aa9b8;
+  --chart-4: #9ac6c6;
+  --chart-5: #c3dcdc;
+
+  --radius: 0.625rem;
+
+  /* Teal, not near-black. The back face is the SAME teal at low alpha rather than a neutral grey, so
+     the two faces read as one object lit from one side instead of two unrelated shapes. */
+  --mark-front: #0f766e;
+  --mark-back: rgba(13, 148, 136, 0.5);
+
+  --sidebar: #fafcfc;
+  --sidebar-foreground: rgba(18, 38, 43, 0.74);
+  --sidebar-primary: #0f766e;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eaf4f3;
+  --sidebar-accent-foreground: #12262b;
+  --sidebar-border: rgba(15, 118, 110, 0.12);
+  --sidebar-ring: rgba(15, 118, 110, 0.32);
+}
+
+.dark {
+  /* Teal over near-black. The wash is the same idea as light — blobs, not a ramp — but pitched far
+     darker and desaturated, because on a dark ground a saturated gradient turns every white glyph
+     into coloured fringing. Teal shows up as a lift at the corners, not as a field. */
+  /* Flat near-black. Teal lives in the accents, not in the ground. */
+  --canvas: #12191a;
+  --wash: none;
+
+  --glass-bg: #182122;
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --glass-blur: none;
+  --glass-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --glass-shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.5);
+
+  --glass-bar: #12191a;
+  --quiet: rgba(255, 255, 255, 0.06);
+  --quiet-hover: rgba(255, 255, 255, 0.1);
+
+  --background: #12191a;
+  --foreground: #e6efee;
+
+  --card: #182122;
+  --card-foreground: #e6efee;
+  --popover: #1a2325;
+  --popover-foreground: #e6efee;
+
+  /* teal-500 here, not the light theme's teal-700: on near-black the darker teal reads as a muddy
+     rectangle, and #06231f text on it is what keeps the label legible. */
+  --primary: #14b8a6;
+  --primary-foreground: #06231f;
+  --primary-shadow: 0 14px 30px -14px rgba(0, 0, 0, 0.6);
+
+  --secondary: #1e2829;
+  --secondary-foreground: #e6efee;
+  --muted: #1c2526;
+  --muted-foreground: rgba(230, 239, 238, 0.56);
+  --accent: rgba(255, 255, 255, 0.12);
+  --accent-foreground: #e6efee;
+
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: #ffffff;
+  --success: #6fb392;
+  --warning: #d9a94e;
+
+  /* teal-300 as the accent and a lighter teal again for accent TEXT — the same fill-vs-label split
+     as the light theme, inverted. */
+  --highlight: #5eead4;
+  --highlight-soft: rgba(94, 234, 212, 0.16);
+  --highlight-ink: #7ff0dc;
+
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: rgba(94, 234, 212, 0.36);
+
+  /* Teal-led, lightest first on the dark ground. */
+  --chart-1: #5eead4;
+  --chart-2: #7fc9de;
+  --chart-3: #5f9fb8;
+  --chart-4: #437b93;
+  --chart-5: #325c6e;
+
+  --sidebar: #151d1e;
+  --sidebar-foreground: rgba(230, 239, 238, 0.74);
+  --sidebar-primary: #14b8a6;
+  --sidebar-primary-foreground: #06231f;
+  --sidebar-accent: #1e2829;
+  --sidebar-accent-foreground: #e6efee;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: rgba(94, 234, 212, 0.36);
+
+  /* Fully saturated on the dark ground — teal-500 front, teal-300 back. */
+  --mark-front: #14b8a6;
+  --mark-back: #5eead4;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply text-foreground;
+    -webkit-font-smoothing: antialiased;
+  }
+  html {
+    @apply font-sans;
+  }
+  /* Display type — light weight, tight tracking. The whole system runs on one face; weight and size
+     carry the hierarchy, never a second family. */
+  h1 { font-weight: 300; letter-spacing: -0.02em; }
+  h2, h3 { font-weight: 400; letter-spacing: -0.01em; }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--foreground) 14%, transparent);
+    color: var(--foreground);
+  }
+
+  /* Quiet scrollbars. The content-box inset is what makes the thumb read as a floating lozenge
+     rather than a full-width gutter fill. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--foreground) 18%, transparent) transparent;
+  }
+  *::-webkit-scrollbar { width: 10px; height: 10px; }
+  *::-webkit-scrollbar-track { background: transparent; }
+  *::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--foreground) 18%, transparent);
+    border-radius: 9999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  *::-webkit-scrollbar-thumb:hover { background-color: color-mix(in srgb, var(--foreground) 32%, transparent); }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  /* Numbers must never jitter as they update — every metric here is a live value. */
+  .font-tabular { font-variant-numeric: tabular-nums; }
+  /* Big light numerals and page titles. */
+  .font-display { font-weight: 300; letter-spacing: -0.02em; }
+  /* The small letterspaced section label that sits above a control group. */
+  .label-eyebrow {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--muted-foreground);
+  }
+}
+
+/* ============================================================
+   The canvas — flat in both themes. The rule keeps reading --wash so a future re-skin is a token
+   edit, and `fixed` stays harmless while --wash is `none`.
+   ============================================================ */
+body {
+  background-color: var(--canvas);
+  background-image: var(--wash);
+  background-attachment: fixed;
+}
+
+/* ============================================================
+   Surfaces — one recipe, several sizes of pane. In the components layer so a utility on the element
+   (rounded-2xl, p-5, …) still wins, the way Tailwind expects.
+   ============================================================ */
+@layer components {
+  /* No backdrop-filter: --glass-blur is `none` in both themes, and a filter of `none` still creates
+     a containing block and a compositor layer for no visual gain. Over a flat ground there is nothing
+     behind the pane to blur anyway. */
+  .glass-panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--glass-shadow);
+  }
+  /* A pane inside a pane — no rim, no shadow, just a lift in tone. */
+  .glass-inset {
+    background: var(--muted);
+    border: 1px solid transparent;
+    border-radius: var(--radius-xl);
+  }
+  /* Nested list rows and tiles — flatter again. */
+  .glass-nested { background: var(--muted); border-radius: var(--radius); }
+  /* Segmented tracks and inert chips. */
+  .glass-pill { background: var(--quiet); border: 1px solid transparent; }
+  .glass-modal {
+    background: var(--popover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-2xl);
+    box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.16);
+  }
+  .dark .glass-modal { box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.6); }
+  /* Border emphasis only — on a flat page a lifting card reads as noise. */
+  .glass-lift { transition: border-color 0.15s ease; }
+  .glass-lift:hover { border-color: var(--ring); }
+}
+
+/* ============================================================
+   Primitive sweeps.
+
+   These target data-slot attributes at file scope rather than editing each primitive, which means
+   every existing call site across 22 pages goes minimal without being touched — and any future
+   `shadcn add` output inherits it too. Un-layered on purpose: it must beat the utility classes
+   already sitting on those components.
+   ============================================================ */
+[data-slot="card"] {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Fields are plain: page-colored fill, hairline border. Bare input/textarea elements are swept in
+   too, because pages hand-roll them and would otherwise keep whatever fill they were written with. */
+[data-slot="select-trigger"],
+[data-slot="input"],
+[data-slot="textarea"],
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):not([type="submit"]),
+textarea {
+  background-color: var(--background);
+  border-color: var(--input);
+  border-radius: var(--radius-md);
+}
+.dark [data-slot="select-trigger"],
+.dark [data-slot="input"],
+.dark [data-slot="textarea"],
+.dark input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):not([type="submit"]),
+.dark textarea { background-color: rgba(255, 255, 255, 0.05); }
+
+/* Bare <select> elements, dressed as the Select primitive. 21 files reach for the native element,
+   and the browser's own chrome (its height, its radius, its chevron) sat beside shadcn selects on
+   the same rows. One rule here beats twenty-one migrations; the chevron is drawn in a neutral that
+   reads on both grounds. */
+select:not([data-slot]):not([multiple]) {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 2.25rem;
+  padding: 0 2rem 0 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1;
+  color: var(--foreground);
+  background-color: var(--background);
+  border: 1px solid var(--input);
+  border-radius: var(--radius-md);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238a9a97' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0.55rem center;
+  background-size: 14px 14px;
+}
+select:not([data-slot]):not([multiple]):focus-visible { outline: none; border-color: var(--ring); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent); }
+select:not([data-slot]):not([multiple]):disabled { opacity: 0.5; }
+.dark select:not([data-slot]):not([multiple]) { background-color: rgba(255, 255, 255, 0.05); }
+
+[data-slot="select-content"],
+[data-slot="popover-content"],
+[data-slot="dropdown-menu-content"],
+[data-slot="dialog-content"],
+[data-slot="sheet-content"],
+[data-slot="command"] {
+  background: var(--popover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.16);
+}
+.dark [data-slot="select-content"],
+.dark [data-slot="popover-content"],
+.dark [data-slot="dropdown-menu-content"],
+.dark [data-slot="dialog-content"],
+.dark [data-slot="sheet-content"],
+.dark [data-slot="command"] { box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.6); }
+
+/* ============================================================
+   Motion — gentle. Content rises in on mount; staggering the first few blocks turns a page load
+   from a flash into an arrival.
+   ============================================================ */
+@keyframes summit-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-rise { animation: summit-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.rise-1 { animation-delay: 0.04s; }
+.rise-2 { animation-delay: 0.1s; }
+.rise-3 { animation-delay: 0.16s; }
+.rise-4 { animation-delay: 0.22s; }
+
+/* A sheen sweeping across text, for "Researching…" and the writer's other long phases. Reads as
+   thinking rather than as a spinner, which is the right signal for something that takes 40 seconds. */
+@keyframes summit-sheen { to { background-position: -200% 0; } }
+.text-shimmer {
+  background: linear-gradient(100deg, var(--muted-foreground) 30%, var(--foreground) 50%, var(--muted-foreground) 70%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: summit-sheen 1.8s linear infinite;
+}
+
+/* ============================================================
+   Pending-generation tile — a dotted field with a highlight wandering across it.
+
+   Two stacked dot grids at the same 12px pitch: a dim one always visible, and a brighter one on
+   ::after that is MASKED by a soft radial gradient. Animating the mask's position is what moves the
+   highlight, so only the dots under it light up — the grid itself never moves, which is what makes it
+   read as something scanning the field rather than the field sliding around.
+
+   The waypoints are deliberately uneven in both position and spacing. Evenly spaced points on a
+   circle read as an orbit; uneven ones with ease-in-out read as wandering, which is the point.
+   Masking (rather than a glow overlay) also means there is no bloom on the tile background — the
+   effect is entirely in the dots.
+   ============================================================ */
+.gen-dots {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--glass-bg);
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--foreground) 16%, transparent) 1px, transparent 1px);
+  background-size: 12px 12px;
+  background-position: center;
+}
+.gen-dots::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--highlight) 1.4px, transparent 1.4px);
+  background-size: 12px 12px;
+  background-position: center;
+  -webkit-mask-image: radial-gradient(circle closest-side, #000 0%, rgb(0 0 0 / 0.45) 45%, transparent 72%);
+  mask-image: radial-gradient(circle closest-side, #000 0%, rgb(0 0 0 / 0.45) 45%, transparent 72%);
+  -webkit-mask-size: 170px 170px;
+  mask-size: 170px 170px;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: gen-wander 13s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+@keyframes gen-wander {
+  0%   { -webkit-mask-position: 6% 14%;  mask-position: 6% 14%; }
+  14%  { -webkit-mask-position: 68% 8%;   mask-position: 68% 8%; }
+  27%  { -webkit-mask-position: 88% 54%;  mask-position: 88% 54%; }
+  43%  { -webkit-mask-position: 41% 82%;  mask-position: 41% 82%; }
+  58%  { -webkit-mask-position: 12% 61%;  mask-position: 12% 61%; }
+  71%  { -webkit-mask-position: 56% 34%;  mask-position: 56% 34%; }
+  87%  { -webkit-mask-position: 94% 18%;  mask-position: 94% 18%; }
+  100% { -webkit-mask-position: 6% 14%;   mask-position: 6% 14%; }
+}
+/* A wandering light is decoration, not information — the tile's label already says "Generating". */
+@media (prefers-reduced-motion: reduce) {
+  .gen-dots::after { animation: none; -webkit-mask-position: 50% 50%; mask-position: 50% 50%; }
+}
+
+/* Live markdown preview (src/lib/blog/markdownPreview.tsx).
+   Hand-written because this project has no @tailwindcss/typography, and because the preview should
+   look like a published article rather than like the app chrome around it: a comfortable measure,
+   real heading hierarchy, and images that actually show at page width. Scoped to .md-preview so it
+   can never leak into the editor's own styles. */
+.md-preview {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--foreground);
+  overflow-wrap: break-word;
+}
+/* Compact variant for chat bubbles (Hermes). Same renderer, conversation-scale type: headings are
+   just bold lead-ins, block gaps tighten, and nothing gets an article-style border. */
+.md-preview.md-chat { font-size: 0.875rem; line-height: 1.6; }
+.md-preview.md-chat > * + * { margin-top: 0.6em; }
+.md-preview.md-chat h1, .md-preview.md-chat h2, .md-preview.md-chat h3,
+.md-preview.md-chat h4, .md-preview.md-chat h5, .md-preview.md-chat h6 {
+  font-size: 0.875rem;
+  font-weight: 650;
+  margin-top: 1em;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.md-preview.md-chat p { margin-top: 0.6em; }
+.md-preview.md-chat li { margin-top: 0.2em; }
+.md-preview.md-chat ul, .md-preview.md-chat ol { padding-left: 1.25rem; }
+.md-preview.md-chat .md-table-wrap { margin: 0.6em 0; }
+.md-preview.md-chat hr { margin: 1em 0; }
+.md-preview > * + * { margin-top: 1em; }
+.md-preview h1, .md-preview h2, .md-preview h3, .md-preview h4, .md-preview h5, .md-preview h6 {
+  font-weight: 650;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin-top: 1.6em;
+}
+.md-preview > :first-child { margin-top: 0; }
+.md-preview h1 { font-size: 1.875rem; }
+.md-preview h2 {
+  font-size: 1.375rem;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--border);
+}
+.md-preview h3 { font-size: 1.125rem; }
+.md-preview h4, .md-preview h5, .md-preview h6 { font-size: 1rem; }
+.md-preview p { margin-top: 1em; }
+.md-preview a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.md-preview strong { font-weight: 650; }
+.md-preview ul, .md-preview ol { padding-left: 1.5rem; }
+.md-preview ul { list-style: disc; }
+.md-preview ol { list-style: decimal; }
+.md-preview li { margin-top: 0.35em; }
+.md-preview li::marker { color: color-mix(in oklch, var(--foreground), transparent 55%); }
+.md-preview blockquote {
+  border-left: 3px solid var(--primary);
+  padding: 0.1em 0 0.1em 1rem;
+  color: color-mix(in oklch, var(--foreground), transparent 25%);
+  font-style: italic;
+}
+.md-preview hr { border: 0; border-top: 1px solid var(--border); margin: 2em 0; }
+.md-preview .md-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  margin: 1.25em 0;
+}
+/* A markdown image whose URL we refused to render (not http/https/relative). Visible, not silent. */
+.md-preview .md-broken {
+  display: inline-block;
+  font-size: 0.8em;
+  padding: 0.15em 0.45em;
+  border-radius: 0.25rem;
+  border: 1px dashed var(--border);
+  color: color-mix(in oklch, var(--foreground), transparent 40%);
+}
+.md-preview .md-code {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.85em;
+  padding: 0.15em 0.35em;
+  border-radius: 0.25rem;
+  background: color-mix(in oklch, var(--muted), transparent 20%);
+}
+.md-preview pre {
+  background: color-mix(in oklch, var(--muted), transparent 20%);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+}
+.md-preview pre code {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+.md-preview .md-table-wrap { overflow-x: auto; }
+.md-preview table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.md-preview th, .md-preview td {
+  border: 1px solid var(--border);
+  padding: 0.45rem 0.6rem;
+  text-align: left;
+}
+.md-preview th { background: color-mix(in oklch, var(--muted), transparent 40%); font-weight: 600; }
+.md-preview .md-empty { color: color-mix(in oklch, var(--foreground), transparent 55%); font-size: 0.8125rem; }
+
+/* Cross-pane sync (src/lib/blog/paneSync.ts).
+
+   The caret is var(--primary). It used to need a hardcoded accent because --primary resolved to
+   near-black under the old neutral theme, so a caret drawn with it read as a stray hard line on the
+   text. Now that --primary IS the teal accent in both themes, the token is the correct source and the
+   caret matches the selection tint automatically.
+
+   The selection is painted with the CSS Custom Highlight API, so it lands on the exact characters and
+   reads like a native selection. It replaced a block-level band with a left rule, which highlighted a
+   whole paragraph for a three-word selection and left a hard line sitting on the text. */
+/* NOTE: the ::highlight(md-selection) rule is NOT here. Next's CSS pipeline (Lightning CSS) does not
+   recognise the ::highlight() pseudo-element and fails to parse the whole file — which silently aborts
+   the stylesheet transform and, worse, took client hydration down app-wide while every page still
+   returned HTTP 200. It is injected at runtime instead, from paneSync.ts, next to the CSS.highlights
+   feature detection that is the only reason it is needed. Do not move it back into this file. */
+
+/* Your cursor position, mirrored into the rendered page. Same 1px-and-blinking idiom as a real text
+   caret, so it reads as "you are here" and not as decoration. */
+.md-caret {
+  position: absolute;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--primary);
+  pointer-events: none;
+  animation: md-caret-blink 1.1s steps(1, end) infinite;
+}
+@keyframes md-caret-blink {
+  0%, 45% { opacity: 1; }
+  50%, 95% { opacity: 0.15; }
+  100% { opacity: 1; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   Marketing surface
+   ══════════════════════════════════════════════════════════════════
+   Everything above is Summit's design system — the operator UI was
+   built against it and breaks without it. The landing page has its own
+   identity (pure black, orange accent, square corners), so its palette
+   is scoped to a wrapper instead of fighting :root. Custom properties
+   inherit, so redefining them here re-themes that whole subtree and
+   leaves the tool untouched. */
+.marketing-surface {
   --background: oklch(0.08 0 0);
   --foreground: oklch(0.95 0 0);
   --card: oklch(0.12 0 0);
@@ -33,85 +678,15 @@
   --sidebar-accent-foreground: oklch(0.95 0 0);
   --sidebar-border: oklch(0.25 0 0);
   --sidebar-ring: oklch(0.7 0.2 45);
+
+  /* Square corners are the landing page's whole character. */
+  --radius: 0rem;
+
+  background: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
 }
 
-@theme inline {
-  /* Updated font-sans and font-mono to use IBM Plex */
-  --font-sans: "IBM Plex Sans", "IBM Plex Sans Fallback", sans-serif;
-  --font-mono: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
-  --font-display: "Bebas Neue", "Bebas Neue Fallback", sans-serif;
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  html {
-    overflow-x: hidden;
-    max-width: 100vw;
-    /* Apply scrollbar styles to html element */
-    scrollbar-width: thin;
-    scrollbar-color: hsl(0, 0%, 24%) hsl(0, 0%, 8%);
-  }
-  body {
-    @apply bg-background text-foreground;
-    overflow-x: hidden;
-    max-width: 100vw;
-    scrollbar-width: thin;
-    scrollbar-color: hsl(0, 0%, 24%) hsl(0, 0%, 8%);
-  }
-  /* Webkit scrollbar styling for html and body */
-  html::-webkit-scrollbar,
-  body::-webkit-scrollbar {
-    width: 10px;
-  }
-  html::-webkit-scrollbar-track,
-  body::-webkit-scrollbar-track {
-    background: hsl(0, 0%, 8%);
-  }
-  html::-webkit-scrollbar-thumb,
-  body::-webkit-scrollbar-thumb {
-    background: hsl(0, 0%, 24%);
-    border-radius: 0px;
-  }
-  html::-webkit-scrollbar-thumb:hover,
-  body::-webkit-scrollbar-thumb:hover {
-    background: hsl(0, 0%, 32%);
-  }
-}
-
-/* Custom noise texture overlay */
 .noise-overlay {
   position: fixed;
   top: 0;
@@ -124,15 +699,13 @@
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
-/* Grid background pattern */
 .grid-bg {
   background-image: linear-gradient(to right, oklch(0.2 0 0) 1px, transparent 1px),
     linear-gradient(to bottom, oklch(0.2 0 0) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 
-/* Custom selection color */
-::selection {
+.marketing-surface ::selection {
   background: oklch(0.7 0.2 45);
   color: oklch(0.08 0 0);
 }
