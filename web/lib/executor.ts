@@ -11,9 +11,9 @@
 import nodemailer from "nodemailer";
 
 import { decrypt } from "@/lib/connections/crypto";
-import { query, queryOne } from "@/lib/db/pg";
+import { queryOne } from "@/lib/db/pg";
 import { gscProperty, submitSitemap } from "@/lib/indexing/gsc";
-import { openPullRequest } from "@/lib/indexing/repo";
+import { openPullRequest, repoForSite } from "@/lib/indexing/repo";
 import { postToChannel } from "@/lib/surfaces/post";
 import { channelsForSite, type Surface } from "@/lib/surfaces/store";
 import type { AgentAction } from "@/lib/agent";
@@ -51,29 +51,17 @@ function str(params: Record<string, unknown>, key: string): string {
   return typeof v === "string" ? v.trim() : "";
 }
 
-/** "owner/repo" or "owner/repo#branch" — the same convention REPO_MAP uses. */
-function parseRepo(input: string): { owner: string; repo: string; baseBranch: string } | null {
-  const [ownerRepo, branch] = input.split("#");
-  const [owner, repo] = (ownerRepo ?? "").split("/");
-  if (!owner?.trim() || !repo?.trim()) return null;
-  return {
-    owner: owner.trim(), repo: repo.trim(),
-    baseBranch: (branch ?? "").trim() || process.env.TARGET_REPO_BASE_BRANCH || "main",
-  };
-}
-
 // ── Executors ────────────────────────────────────────────────────────────────────────────────
 
 /** open_pr — {title, body, files?: [{path, content}]}. Real branch → commit → PR on the
  *  connected repo, opened by the connected account. Never merges. */
 async function execOpenPr(action: AgentAction, siteId: string | null): Promise<ExecutionResult> {
-  const conn = siteId ? await connectionFor(siteId, "github") : null;
-  const repoInput = str(action.params, "repository") || String(conn?.config?.repository ?? "");
-  const repo = parseRepo(repoInput);
+  const conn = siteId ? await repoForSite(siteId) : null;
+  const repo = conn ?? null;
   if (!repo) {
     return { ok: false, result: { error: "No GitHub repository connected — connect one first." } };
   }
-  const token = conn?.secret_enc ? decrypt(conn.secret_enc) : undefined;
+  const token = conn?.token ?? undefined;
   const title = str(action.params, "title") || action.summary;
   const body = str(action.params, "body") || action.summary;
   const files = Array.isArray(action.params.files)

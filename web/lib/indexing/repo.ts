@@ -8,12 +8,91 @@
 // never a guessed edit to a real template file — there is no URL-to-source-file mapping for
 // this target, and inventing one would be actively wrong.
 import { Octokit } from "@octokit/rest";
+import { decrypt } from "@/lib/connections/crypto";
+import { queryOne } from "@/lib/db/pg";
 import type { ChangeRequestPreview } from "./routing";
 import type { RepoTarget } from "./repoMap";
 
 export interface FileChange {
   path: string;
   content: string;
+}
+
+/** A resolved repository target plus the credential that can write it. */
+export interface RepoConnection {
+  owner: string;
+  repo: string;
+  baseBranch: string;
+  /** Per-site token from the connections table, or null → env GITHUB_BOT_TOKEN. */
+  token: string | null;
+}
+
+/** "owner/repo" or "owner/repo#branch" — the same convention REPO_MAP uses. */
+function parseRepo(input: string): { owner: string; repo: string; baseBranch: string } | null {
+  const [ownerRepo, branch] = input.split("#");
+  const [owner, repo] = (ownerRepo ?? "").split("/");
+  if (!owner?.trim() || !repo?.trim()) return null;
+  return {
+    owner: owner.trim(), repo: repo.trim(),
+    baseBranch: (branch ?? "").trim() || process.env.TARGET_REPO_BASE_BRANCH || "main",
+  };
+}
+
+/**
+ * The repo a site's agent may read and PR into: the site's `github` connection. Returns null
+ * when nothing is connected — callers answer "connect GitHub" rather than guessing at a repo.
+ */
+export async function repoForSite(siteId: string): Promise<RepoConnection | null> {
+  const conn = await queryOne<{ config: { repository?: unknown }; secret_enc: string | null }>(
+    `select config, secret_enc from connections where site_id = $1 and kind = 'github'`,
+    [siteId],
+  );
+  const repo = parseRepo(String(conn?.config?.repository ?? ""));
+  if (!repo) return null;
+  const token = conn?.secret_enc ? decrypt(conn.secret_enc) : null;
+  return { ...repo, token };
+}
+
+// Paths worth reading for SEO/page edits. Lockfiles, binaries and build output are skipped —
+// listing a repo is for finding the file that renders a page, not for inventorying it.
+const READABLE = /\.(tsx?|jsx?|mjs|cjs|html?|mdx?|css|scss|json|ya?ml|toml|xml|txt|svelte|vue|astro)$/i;
+const SKIP = /(^|\/)(node_modules|dist|build|out|\.next|\.git|coverage|vendor|public\/(images|assets|fonts)|__generated__)\//i;
+const SKIP_NAME = /(lock|\.min\.|\.map$|package-lock|pnpm-lock|yarn\.lock)/i;
+
+export interface RepoFile {
+  path: string;
+  size: number;
+}
+
+/** The repo's file tree — readable source files only, capped so a monorepo can't blow the
+ *  tool response. */
+export async function listRepoFiles(conn: RepoConnection, limit = 600): Promise<RepoFile[]> {
+  const octokit = client(conn.token ?? undefined);
+  const tree = await octokit.git.getTree({
+    owner: conn.owner, repo: conn.repo,
+    tree_sha: conn.baseBranch, recursive: "1",
+  });
+  return (tree.data.tree ?? [])
+    .filter((n) => n.type === "blob" && n.path && READABLE.test(n.path) && !SKIP.test(n.path) && !SKIP_NAME.test(n.path))
+    .map((n) => ({ path: n.path as string, size: n.size ?? 0 }))
+    .slice(0, limit);
+}
+
+const MAX_FILE_CHARS = 24_000;
+
+/** One file's contents, truncated past the cap — enough to edit a page component, never enough
+ *  to swallow a context window. */
+export async function readRepoFile(
+  conn: RepoConnection, path: string,
+): Promise<{ path: string; content: string; truncated: boolean } | null> {
+  const octokit = client(conn.token ?? undefined);
+  const res = await octokit.repos.getContent({
+    owner: conn.owner, repo: conn.repo, path, ref: conn.baseBranch,
+  });
+  const data = res.data as { content?: string; encoding?: string; type?: string };
+  if (data.type !== "file" || !data.content) return null;
+  const text = Buffer.from(data.content, "base64").toString("utf8");
+  return { path, content: text.slice(0, MAX_FILE_CHARS), truncated: text.length > MAX_FILE_CHARS };
 }
 
 export interface PullRequestResult {

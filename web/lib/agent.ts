@@ -6,6 +6,7 @@ import type {
 import { runAudit, type AuditResult } from "@/lib/audit/run";
 import { execute, query, queryOne } from "@/lib/db/pg";
 import { executeAction } from "@/lib/executor";
+import { listRepoFiles, readRepoFile, repoForSite } from "@/lib/indexing/repo";
 import { DEEPSEEK_MODEL } from "@/lib/providers/llm";
 
 export type AgentEvent =
@@ -96,6 +97,26 @@ const tools: ChatCompletionTool[] = [
   {
     type: "function",
     function: {
+      name: "repo_list_files",
+      description: "List readable source files in the site's connected GitHub repository. Use before proposing a code fix so an open_pr proposal can carry real file edits.",
+      parameters: { type: "object", properties: {} },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "repo_read_file",
+      description: "Read one file from the site's connected GitHub repository. Read before editing — an open_pr proposal should carry the file's full corrected content.",
+      parameters: {
+        type: "object",
+        properties: { path: { type: "string", description: "File path from repo_list_files" } },
+        required: ["path"],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
       name: "propose_external_action",
       description: "Propose, but never perform, an action outside SearchOps. Use for code changes, GitHub, Google Search Console, Slack, email, or any other external mutation.",
       parameters: {
@@ -120,8 +141,10 @@ Use these action kinds so the executor can run them:
   resubmit_sitemap   {sitemapUrl?} — submit the site's sitemap to Search Console
   send_email         {to, subject, body} — outreach email via the site's connected Gmail/SMTP
   post_update        {text} — post a message to every channel bound to the site
-Never ask for or place secrets in tool input. Be concise. When an audit lacks configured model
-providers, say which measurement did not run.`;
+Never ask for or place secrets in tool input. For code fixes: list the repo's files, read the
+ones the finding implicates, and propose open_pr with the files' full corrected content — a
+proposal with no files lands as a document, not a fix. Be concise. When an audit lacks configured
+model providers, say which measurement did not run.`;
 
 export async function createAgentSession(input: {
   siteId?: string | null;
@@ -269,6 +292,26 @@ async function callTool(sessionId: string, name: string, input: ToolInput, emit:
         [site.id],
       );
       return { found: true, site, connections, recentSessions: sessions, actions };
+    }
+    case "repo_list_files": {
+      const session = await getAgentSession(sessionId);
+      const repo = session?.site_id ? await repoForSite(session.site_id) : null;
+      if (!repo) {
+        return { error: "No GitHub repository connected to this site — the report's connect card is the fix." };
+      }
+      const files = await listRepoFiles(repo);
+      return { repo: `${repo.owner}/${repo.repo}#${repo.baseBranch}`, count: files.length, files: files.map((f) => f.path) };
+    }
+    case "repo_read_file": {
+      const session = await getAgentSession(sessionId);
+      const repo = session?.site_id ? await repoForSite(session.site_id) : null;
+      if (!repo) {
+        return { error: "No GitHub repository connected to this site." };
+      }
+      const path = requiredString(input, "path");
+      const file = await readRepoFile(repo, path);
+      if (!file) return { error: `No readable file at ${path}.` };
+      return file;
     }
     case "propose_external_action": {
       const action = await propose(sessionId, input);

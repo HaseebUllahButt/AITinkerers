@@ -21,7 +21,7 @@ export async function GET(req: Request) {
   const domain = domainFrom(new URL(req.url).searchParams.get("domain") ?? "");
   if (!domain) return NextResponse.json({ actions: [] });
   const actions = await query(
-    `select a.id, a.kind, a.summary, a.status, a.proposed_at, a.resolved_at, a.resolved_by, a.result
+    `select a.id, a.kind, a.summary, a.params, a.status, a.proposed_at, a.resolved_at, a.resolved_by, a.result
        from agent_actions a join agent_sessions s on s.id = a.session_id
       join sites si on si.id = s.site_id
       where si.domain = $1

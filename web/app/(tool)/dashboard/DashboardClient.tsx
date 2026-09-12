@@ -63,6 +63,7 @@ interface PendingAction {
   summary: string;
   status: string;
   proposed_at: string;
+  params?: { files?: { path?: string }[]; to?: string; sitemapUrl?: string; text?: string } | null;
   result?: { error?: string; pr?: string; messageId?: string } | null;
 }
 
@@ -113,6 +114,14 @@ function ApprovalsPanel({ domain }: { domain: string }) {
                 <span className="text-xs text-muted-foreground tabular-nums">{new Date(a.proposed_at).toLocaleDateString()}</span>
               </div>
               <p className="mt-1 text-sm">{a.summary}</p>
+              {a.params?.files?.length ? (
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Changes: {a.params.files.map((f) => f.path).filter(Boolean).join(", ")}
+                </p>
+              ) : null}
+              {a.params?.to ? (
+                <p className="mt-1 text-xs text-muted-foreground">To: {a.params.to}</p>
+              ) : null}
               <div className="mt-3 flex gap-2">
                 <button
                   type="button"
