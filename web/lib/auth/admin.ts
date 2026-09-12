@@ -1,8 +1,8 @@
-// Admin allowlist. The app itself is gated to the imagine.art domain by sign-in; "admin" is a
+// Admin allowlist. The app itself is gated to the northwind.example domain by sign-in; "admin" is a
 // smaller set allowed to do powerful things like send AS another teammate. Configured via the
-// ADMIN_EMAILS env (comma-separated); defaults to abdullah.zubair@imagine.art when unset.
+// ADMIN_EMAILS env (comma-separated); defaults to admin@northwind.example when unset.
 export function getAdminEmails(): string[] {
-  const raw = process.env.ADMIN_EMAILS?.trim() || "abdullah.zubair@imagine.art";
+  const raw = process.env.ADMIN_EMAILS?.trim() || "admin@northwind.example";
   return raw.split(",").map((s) => s.trim().toLowerCase()).filter(Boolean);
 }
 
@@ -23,7 +23,7 @@ export function isAdminEmail(email?: string | null): boolean {
  * change rather than happening as a side effect of someone being made an admin.
  */
 export function getSuperUserEmails(): string[] {
-  const raw = process.env.SUPERUSER_EMAILS?.trim() || "raamiz.niazi@imagine.art";
+  const raw = process.env.SUPERUSER_EMAILS?.trim() || "owner@northwind.example";
   return raw.split(",").map((s) => s.trim().toLowerCase()).filter(Boolean);
 }
 

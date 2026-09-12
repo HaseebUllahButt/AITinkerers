@@ -43,7 +43,7 @@ export function isBlockedUrl(url: string): boolean {
  *
  * The reason this matters enough to be a hard rule: a language model asked for a source URL will often
  * hand back the URL it was itself given, and those increasingly carry the referring tool's own name —
- * `utm_source=chatgpt.com`, `ref=perplexity`, `utm_source=openai`. Publishing that on an imagine.art page
+ * `utm_source=chatgpt.com`, `ref=perplexity`, `utm_source=openai`. Publishing that on an northwind.example page
  * credits a third party for the traffic in the destination's analytics, from our own content. It is not a
  * cosmetic problem and it cannot be caught by reading the prose.
  *

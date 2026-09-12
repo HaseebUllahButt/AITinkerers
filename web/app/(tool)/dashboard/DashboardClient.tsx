@@ -1,11 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import type { ProviderStatus } from "@/app/api/status/route";
-import { loadHistory, clearHistory, type AuditRecord } from "@/lib/audit/history";
+import { clearHistory, clearLastResult, loadHistory, loadLastResult, type AuditRecord } from "@/lib/audit/history";
+import type { AuditResult, Severity } from "@/lib/audit/run";
+import { DEMO_AUDIT } from "@/lib/demo";
+import {
+  Actions,
+  ComparisonTable,
+  ScoreComparison,
+  Scorecards,
+  ShareByEngine,
+  ShareOfVoiceChart,
+  Verdict,
+} from "@/components/audit/ResultCharts";
 
 const GROUP_LABEL: Record<ProviderStatus["group"], string> = {
   model: "Reasoning",
@@ -47,14 +57,61 @@ function Panel({ title, subtitle, children, action }: {
   );
 }
 
+const SEVERITY_ORDER: Record<Severity, number> = { critical: 0, warning: 1, ok: 2 };
+const SEVERITY_INK: Record<Severity, string> = {
+  critical: "text-destructive",
+  warning: "text-warning",
+  ok: "text-success",
+};
+
+function FindingsPanel({ result }: { result: AuditResult }) {
+  const findings = [...result.findings].sort(
+    (a, b) => SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity],
+  );
+  return (
+    <Panel title="Findings" subtitle="Ordered by what it costs you. Evidence first, then the fix.">
+      <div className="space-y-3">
+        {findings.map((f) => (
+          <article
+            key={f.id}
+            className="border-l-2 py-2 pl-4"
+            style={{
+              borderLeftColor:
+                f.severity === "ok"
+                  ? "var(--success)"
+                  : f.severity === "warning"
+                    ? "var(--warning)"
+                    : "var(--destructive)",
+            }}
+          >
+            <div className="flex flex-wrap items-baseline gap-2">
+              <span className={`text-[10px] uppercase tracking-[0.2em] ${SEVERITY_INK[f.severity]}`}>
+                {f.severity}
+              </span>
+              <span className="text-sm font-medium">{f.title}</span>
+            </div>
+            <p className="mt-1 text-sm text-muted-foreground">{f.evidence}</p>
+            {f.fix && (
+              <p className="mt-1 text-sm">
+                <span className="text-muted-foreground">Fix — </span>
+                {f.fix}
+              </p>
+            )}
+          </article>
+        ))}
+      </div>
+    </Panel>
+  );
+}
+
 export default function DashboardClient() {
-  const router = useRouter();
-  const [url, setUrl] = useState("");
   const [providers, setProviders] = useState<ProviderStatus[] | null>(null);
   const [history, setHistory] = useState<AuditRecord[]>([]);
+  const [result, setResult] = useState<AuditResult | null>(null);
 
   useEffect(() => {
     setHistory(loadHistory());
+    setResult(loadLastResult<AuditResult>());
     fetch("/api/status")
       .then((r) => r.json())
       .then((d) => setProviders(d.providers ?? []))
@@ -68,39 +125,48 @@ export default function DashboardClient() {
     <div className="mx-auto w-full max-w-4xl px-5 py-10">
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="text-[10px] uppercase tracking-[0.3em] text-primary">SearchOps</p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight">Dashboard</h1>
+          <h1 className="text-3xl font-semibold tracking-tight">
+            {result ? result.brand : "Dashboard"}
+          </h1>
+          <p className="mt-2 max-w-prose text-sm text-muted-foreground">
+            {result
+              ? `${result.domain} · audited ${new Date(result.fetchedAt).toLocaleString()} in ${(result.durationMs / 1000).toFixed(0)}s`
+              : "What is answering, and what you have looked at. Run an audit from the landing page or the sidebar."}
+          </p>
         </div>
-        <Link href="/audit" className="text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground">
-          Open the audit →
-        </Link>
+        {result && (
+          <button
+            onClick={() => { clearLastResult(); setResult(null); }}
+            className="text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground"
+          >
+            Dismiss results
+          </button>
+        )}
       </header>
 
-      <form
-        className="mt-6 flex flex-col gap-2 sm:flex-row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (url.trim()) router.push(`/audit?url=${encodeURIComponent(url.trim())}`);
-        }}
-      >
-        <input
-          id="dash-url"
-          type="text"
-          inputMode="url"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          placeholder="example.com"
-          aria-label="URL to audit"
-          className="h-11 flex-1 border border-input bg-transparent px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        />
-        <button type="submit" disabled={!url.trim()} className="h-11 bg-primary px-6 text-sm font-medium text-primary-foreground disabled:opacity-50">
-          Audit a site
-        </button>
-      </form>
+      {result && (
+        <div className="mt-6 space-y-6">
+          {/* Verdict first: what happened, before the numbers that justify it. */}
+          <Verdict result={result} />
+          <Scorecards result={result} />
+
+          {/* Two columns on desktop — these panels are short, and stacking them left a column of
+              white space beside every one. */}
+          <div className="grid gap-6 lg:grid-cols-2">
+            <ShareOfVoiceChart result={result} />
+            <ScoreComparison result={result} />
+          </div>
+
+          <ShareByEngine result={result} />
+          <ComparisonTable result={result} />
+          <Actions result={result} />
+          <FindingsPanel result={result} />
+        </div>
+      )}
 
       <div className="mt-8 space-y-5">
         <Panel
-          title="What's working"
+          title={result ? "Providers" : "What's working"}
           subtitle={
             providers === null
               ? "Checking…"
@@ -153,9 +219,21 @@ export default function DashboardClient() {
           }
         >
           {history.length === 0 ? (
-            <p className="text-sm text-muted-foreground">
-              Nothing yet. Audit a site above and it will appear here.
-            </p>
+            <div className="space-y-3">
+              <p className="text-sm text-muted-foreground">
+                Nothing yet. Run an audit from the landing page or the sidebar.
+              </p>
+              <button
+                onClick={() => setResult(DEMO_AUDIT)}
+                className="border border-border px-4 py-2 text-xs uppercase tracking-wider text-muted-foreground hover:border-primary hover:text-primary"
+              >
+                Load demo data
+              </button>
+              <p className="text-xs text-muted-foreground">
+                A complete audit of a site that does not exist, so every panel can be seen without
+                spending a minute of real crawls and model calls.
+              </p>
+            </div>
           ) : (
             <div className="space-y-1">
               {history.map((h) => (

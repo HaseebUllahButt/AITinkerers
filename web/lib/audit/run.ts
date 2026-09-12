@@ -8,8 +8,9 @@ import { extractOnPage, type OnPageSignals } from "@/lib/indexing/onpage";
 import { classifyRenderMode, type RenderModeResult } from "@/lib/indexing/renderMode";
 import { fetchLlmsTxt, fetchRobots, fetchSitemap, type LlmsTxtReport, type RobotsReport, type SitemapReport } from "./discovery";
 import { compareWithCompetitors, scoreProfile, type CompetitorComparison, type SiteProfile } from "./compare";
+import { tidyName } from "./generic-words";
 import { discoverCompetitors, type CompetitorDiscovery } from "./competitors";
-import { readMarket, type MarketRead } from "./market";
+import { deriveMarket, readDemand, type MarketRead } from "./market";
 import { measureShareOfVoice, type ShareOfVoice } from "./share";
 
 export type Severity = "critical" | "warning" | "ok";
@@ -87,8 +88,8 @@ function brandFrom(title: string, domain: string): string {
   // names like "Well-Known" in half.
   const parts = title.split(/\s[-–—·|:]\s|[|–—·]/).map((p) => p.trim()).filter(Boolean);
   const candidate = parts.length > 1 ? parts.sort((a, b) => a.length - b.length)[0] : parts[0];
-  if (candidate && candidate.length >= 2 && candidate.length <= 40) return candidate;
-  return domain.replace(/\.[a-z.]+$/, "");
+  if (candidate && candidate.length >= 2 && candidate.length <= 40) return tidyName(candidate);
+  return tidyName(domain.replace(/\.[a-z.]+$/, ""));
 }
 
 function buildFindings(r: {
@@ -250,16 +251,7 @@ export async function runAudit(inputUrl: string, options: AuditOptions = {}): Pr
 
   // Independent of each other, so they go together.
   const [robots, llmsTxt] = await Promise.all([fetchRobots(origin), fetchLlmsTxt(origin)]);
-  const [sitemap, market] = await Promise.all([
-    fetchSitemap(origin, robots.sitemaps),
-    readMarket({
-      brand,
-      domain,
-      title: onpage?.title ?? "",
-      description: "",
-      bodyExcerpt: onpage?.text ?? "",
-    }),
-  ]);
+  const sitemap = await fetchSitemap(origin, robots.sitemaps);
 
   // Our own profile, on exactly the weighting every competitor is scored with — otherwise the
   // comparison is two different measurements pretending to be one.
@@ -295,12 +287,11 @@ export async function runAudit(inputUrl: string, options: AuditOptions = {}): Pr
     category: onpage?.title || brand,
     bodyExcerpt: onpage?.text ?? "",
     supplied: options.competitors,
-    fromAnswers: market.competitors.map((c) => ({ name: c.name, domain: c.domain })),
   });
   const competitorDomains = discovery.competitors.map((c) => c.domain);
   const competitorRefs = discovery.competitors.map((c) => ({ name: c.name, domain: c.domain }));
 
-  const [share, comparison] = await Promise.all([
+  const [share, comparison, demand] = await Promise.all([
     measureShareOfVoice({
       brand,
       domain,
@@ -309,7 +300,9 @@ export async function runAudit(inputUrl: string, options: AuditOptions = {}): Pr
       competitors: competitorRefs,
     }),
     compareWithCompetitors({ us, competitorDomains }),
+    readDemand(brand, onpage?.title || brand),
   ]);
+  const market = deriveMarket({ brand, domain, share, demand });
 
   const findings = buildFindings({ onpage, render, robots, llmsTxt, sitemap, market, share, comparison });
 

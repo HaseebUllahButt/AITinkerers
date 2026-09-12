@@ -1,6 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useTheme } from "next-themes"
+import { Moon, Sun } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navItems = [
@@ -13,6 +15,11 @@ const navItems = [
 
 export function SideNav() {
   const [activeSection, setActiveSection] = useState("hero")
+  const { resolvedTheme, setTheme } = useTheme()
+  // The icon depends on the resolved theme, which is unknown during SSR; render it only after
+  // mount so the markup matches and React does not warn about a hydration mismatch.
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -43,6 +50,27 @@ export function SideNav() {
 
   return (
     <nav className="fixed left-0 top-0 z-50 h-screen w-16 md:w-20 hidden md:flex flex-col justify-center border-r border-border/30 bg-background/80 backdrop-blur-sm">
+      {/* Fixed, so the way into the tool is reachable from any scroll position. */}
+      <a
+        href="/dashboard"
+        title="Open Dashboard"
+        aria-label="Open Dashboard"
+        className="absolute top-6 left-1/2 -translate-x-1/2 border border-accent/60 px-2 py-1.5 font-mono text-[9px] uppercase tracking-widest text-accent hover:bg-accent hover:text-accent-foreground transition-colors duration-200"
+      >
+        App
+      </a>
+
+      {/* The landing page has no top bar, so the theme control lives on the rail with the App link. */}
+      <button
+        type="button"
+        onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+        aria-label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
+        title={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
+        className="absolute top-16 left-1/2 -translate-x-1/2 border border-foreground/20 p-1.5 text-muted-foreground hover:border-accent hover:text-accent transition-colors duration-200"
+      >
+        {mounted && resolvedTheme === "dark" ? <Sun className="h-3 w-3" /> : <Moon className="h-3 w-3" />}
+      </button>
+
       <div className="flex flex-col gap-6 px-4">
         {navItems.map(({ id, label }) => (
           <button key={id} onClick={() => scrollToSection(id)} className="group relative flex items-center gap-3">

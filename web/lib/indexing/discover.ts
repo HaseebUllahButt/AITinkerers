@@ -101,14 +101,14 @@ function seedUrls(domain: string): string[] {
  * want backlinks/links to") where the point is complete coverage of real candidates, not a
  * bounded crawl sample. Just parses sitemap.xml; no rendering, no per-page fetches.
  */
-export async function listMoneyPages(domain = "imagine.art"): Promise<string[]> {
+export async function listMoneyPages(domain = "northwind.example"): Promise<string[]> {
   const all = await collectSitemapUrls(`https://${domain}/sitemap.xml`);
   const paths = (all.length ? all : seedUrls(domain)).map(toPath).filter((p) => isMoneyPage(p));
   return [...new Set(paths)].sort();
 }
 
 export async function discover(opts: DiscoverOptions = {}): Promise<Discovery> {
-  const domain = opts.domain ?? "imagine.art";
+  const domain = opts.domain ?? "northwind.example";
   const sitemapUrl = opts.sitemapUrl ?? `https://${domain}/sitemap.xml`;
   const robotsUrl = opts.robotsUrl ?? `https://${domain}/robots.txt`;
   const limit = opts.limit ?? 20;

@@ -162,7 +162,7 @@ function tally(answers: EngineAnswer[], ownDomain: string): Competitor[] {
     .map(([domain, mentions]) => ({ name: domain.replace(/\.[a-z.]+$/, ""), domain, mentions }));
 }
 
-async function readDemand(brand: string, category: string): Promise<DemandRead | null> {
+export async function readDemand(brand: string, category: string): Promise<DemandRead | null> {
   if (!llmEnabled()) return null;
   const res = await llmChat({
     system: "You are a market analyst. Return STRICT JSON only, no prose.",
@@ -235,4 +235,58 @@ export async function readMarket(opts: {
     mentionRate: answers.length ? answers.filter((a) => a.mentionsBrand).length / answers.length : 0,
     demand,
   };
+}
+
+/**
+ * The market view, built from the share-of-voice runs rather than its own calls.
+ *
+ * These two features were asking the same kind of question — buyer prompts, then who gets named —
+ * and paying for it twice, which is most of why a full audit ran past four minutes. Share of voice
+ * already asks across every engine, so it is the richer source; this reshapes it for the market
+ * panel and adds only the one call share does not make.
+ */
+export function deriveMarket(opts: {
+  brand: string;
+  domain: string;
+  share: ShareLike;
+  demand: DemandRead | null;
+}): MarketRead {
+  const { brand, share, demand } = opts;
+  if (!share.ran || !share.runs.length) {
+    return {
+      enabled: false, brand, prompts: [], answers: [], competitors: [],
+      mentionRate: 0, demand, note: share.note,
+    };
+  }
+  const answers: EngineAnswer[] = share.runs.map((r) => ({
+    question: r.question,
+    answer: r.excerpt,
+    mentionsBrand: r.mentioned.includes(brand),
+    namedDomains: [],
+    namedBrands: r.mentioned.filter((m) => m !== brand),
+  }));
+  return {
+    enabled: true,
+    brand,
+    prompts: share.prompts.map((p) => ({
+      question: p.question,
+      rationale: `${p.intent} question — the brand should surface unprompted.`,
+    })),
+    answers,
+    competitors: share.brands
+      .filter((b) => !b.isUs && b.mentions > 0)
+      .map((b) => ({ name: b.brand, domain: b.domain, mentions: b.mentions })),
+    mentionRate: share.ourShare,
+    demand,
+  };
+}
+
+/** The slice of ShareOfVoice this needs, kept structural to avoid an import cycle. */
+export interface ShareLike {
+  ran: boolean;
+  runs: { question: string; excerpt: string; mentioned: string[] }[];
+  prompts: { question: string; intent: string }[];
+  brands: { brand: string; domain: string | null; isUs: boolean; mentions: number }[];
+  ourShare: number;
+  note?: string;
 }

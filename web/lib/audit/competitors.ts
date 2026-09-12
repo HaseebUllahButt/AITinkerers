@@ -12,6 +12,7 @@
 //
 // Everything is then verified by actually fetching it, because a competitor that does not resolve
 // is a hallucination or a dead company, and either way it must not reach the comparison table.
+import { isGenericName, tidyName } from "./generic-words";
 import { llmChat, llmEnabled } from "@/lib/providers/llm";
 import { searchEnabled, webSearch } from "@/lib/search/webSearch";
 
@@ -65,12 +66,15 @@ function plausible(domain: string, ownDomain: string): boolean {
   if (NOT_A_COMPETITOR.test(domain)) return false;
   // A registrable name plus a TLD; anything longer is usually a subdomain of a platform.
   if (domain.split(".").length > 3) return false;
+  // english.<tld> is a domain, not a rival. Letting one through puts a word that appears in almost
+  // every answer into the share-of-voice tally.
+  if (isGenericName(domain.replace(/\.[a-z.]+$/, "").split(".").pop() ?? "")) return false;
   return true;
 }
 
 function nameFromDomain(domain: string): string {
   const base = domain.replace(/\.[a-z.]+$/, "").split(".").pop() ?? domain;
-  return base.charAt(0).toUpperCase() + base.slice(1);
+  return tidyName(base);
 }
 
 // ── 1. Search ─────────────────────────────────────────────────────────────────

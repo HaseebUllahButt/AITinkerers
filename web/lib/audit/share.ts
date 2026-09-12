@@ -10,7 +10,11 @@
 //   2. A brand is counted once per answer, not once per occurrence. Otherwise whoever is described
 //      at greatest length wins, which measures verbosity rather than preference.
 //   3. The prompt set is fixed and dated, so two runs are comparable. One reply is not a trend.
+import PQueue from "p-queue";
+
 import { llmChat, llmEnabled } from "@/lib/providers/llm";
+
+import { isGenericName } from "./generic-words";
 
 import { ask, ENGINES, engineLabel, engineStatus, type EngineId, type EngineStatus } from "./engines";
 
@@ -131,6 +135,10 @@ function namesBrand(answer: string, brand: BrandRef): boolean {
   if (brand.domain && hay.includes(brand.domain.toLowerCase())) return true;
   const name = brand.name.toLowerCase().trim();
   if (name.length < 3) return false;
+  // A name that is also an ordinary word cannot be matched as prose — "English" would score a
+  // mention in any answer that happens to discuss language. Its domain is the only safe signal,
+  // and that was already checked above.
+  if (isGenericName(name)) return false;
   // Word boundaries, so "Ada" does not match "Adapter".
   const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   return new RegExp(`(^|[^a-z0-9])${escaped}([^a-z0-9]|$)`, "i").test(hay);
@@ -161,7 +169,7 @@ export async function measureShareOfVoice(opts: {
     brand: opts.brand,
     category: opts.category,
     bodyExcerpt: opts.bodyExcerpt,
-    count: opts.promptCount ?? 6,
+    count: opts.promptCount ?? 5,
   });
 
   const tracked: BrandRef[] = [
@@ -174,25 +182,31 @@ export async function measureShareOfVoice(opts: {
   const runs: PromptRun[] = [];
   let failures = 0;
 
+  // Every (engine, prompt) pair is independent, so they all go at once behind one bound. Fully
+  // sequential took minutes; unbounded trips provider rate limits, which would show up as engine
+  // failures and quietly shrink the denominator.
+  const queue = new PQueue({ concurrency: 6 });
   await Promise.all(
-    usable.map(async (engine) => {
-      for (const p of prompts) {
-        const reply = await ask(engine, p.question);
-        if (!reply) {
-          failures++;
-          continue; // Rule 1: a failed call is excluded, never a zero.
-        }
-        const haystack = `${reply.content}\n${reply.citations.join("\n")}`;
-        runs.push({
-          question: p.question,
-          intent: p.intent,
-          engine,
-          // Rule 2: once per answer, not once per occurrence.
-          mentioned: tracked.filter((b) => namesBrand(haystack, b)).map((b) => b.name),
-          excerpt: reply.content.slice(0, 320),
-        });
-      }
-    }),
+    usable.flatMap((engine) =>
+      prompts.map((p) =>
+        queue.add(async () => {
+          const reply = await ask(engine, p.question);
+          if (!reply) {
+            failures++;
+            return; // Rule 1: a failed call is excluded, never a zero.
+          }
+          const haystack = `${reply.content}\n${reply.citations.join("\n")}`;
+          runs.push({
+            question: p.question,
+            intent: p.intent,
+            engine,
+            // Rule 2: once per answer, not once per occurrence.
+            mentioned: tracked.filter((b) => namesBrand(haystack, b)).map((b) => b.name),
+            excerpt: reply.content.slice(0, 320),
+          });
+        }),
+      ),
+    ),
   );
 
   if (!runs.length) {

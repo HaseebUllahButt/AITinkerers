@@ -83,7 +83,7 @@ interface Fetched {
 
 export async function runIndexingReport(opts: RunOptions = {}): Promise<IndexingReport> {
   const startedAt = new Date();
-  const domain = opts.domain ?? "imagine.art";
+  const domain = opts.domain ?? "northwind.example";
   const limit = Math.min(opts.limit ?? 20, 100);
   const device: Device = opts.device ?? "mobile";
   const concurrency = opts.concurrency ?? 4;

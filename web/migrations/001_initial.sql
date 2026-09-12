@@ -170,7 +170,7 @@ create index if not exists idx_discovery_processed on discovery_hits(processed);
 
 -- ─── Seed default tools ───────────────────────────────────────────────────────
 insert into seed_tools (name, aliases, enabled) values
-  ('imagineart', '["imagine.art","ImagineArt"]', true),
+  ('northwind', '["northwind.example","Northwind"]', true),
   ('kling', '["Kling AI","Kuaishou"]', true),
   ('seedance', '["Seedance"]', true),
   ('runway', '["Runway ML","RunwayML"]', true),

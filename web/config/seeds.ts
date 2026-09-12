@@ -1,5 +1,5 @@
 export const DEFAULT_TOOLS = [
-  { name: "imagineart", aliases: ["imagine.art", "ImagineArt"] },
+  { name: "northwind", aliases: ["northwind.example", "Northwind"] },
   { name: "kling", aliases: ["Kling AI", "Kuaishou"] },
   { name: "seedance", aliases: ["Seedance"] },
   { name: "runway", aliases: ["Runway ML", "RunwayML"] },

@@ -51,19 +51,27 @@ function anthropic(): Anthropic | null {
 }
 
 async function askClaude(prompt: string): Promise<EngineReply | null> {
+  // Direct first when a key is present — one less hop, and it is the canonical endpoint.
   const client = anthropic();
-  if (!client) return null;
-  try {
-    // No temperature: the current frontier models reject sampling parameters outright.
-    const res = await client.messages.create(
-      { model: "claude-opus-5", max_tokens: 4000, messages: [{ role: "user", content: prompt }] },
-      { timeout: TIMEOUT },
-    );
-    const content = res.content.filter((b) => b.type === "text").map((b) => (b as { text: string }).text).join("");
-    return content ? { engine: "claude", content, citations: [] } : null;
-  } catch {
-    return null;
+  if (client) {
+    try {
+      // No temperature: the current frontier models reject sampling parameters outright.
+      const res = await client.messages.create(
+        { model: "claude-opus-5", max_tokens: 4000, messages: [{ role: "user", content: prompt }] },
+        { timeout: TIMEOUT },
+      );
+      const content = res.content.filter((b) => b.type === "text").map((b) => (b as { text: string }).text).join("");
+      if (content) return { engine: "claude", content, citations: [] };
+    } catch {
+      // Fall through. A dead or revoked ANTHROPIC_API_KEY should not remove Claude from the
+      // measurement when OpenRouter can serve the same model — losing an engine silently is
+      // exactly what makes a share-of-voice number wrong rather than merely incomplete.
+    }
   }
+  // A reasoning model thinks before it writes, and that thinking counts against both the token
+  // budget and the clock. 45s is ample for a chat model and not for this one — under concurrency
+  // it was aborting every call, which the tally then read as "Claude declined to answer".
+  return askOpenRouter("claude", "anthropic/claude-opus-5", prompt, 8000, 120_000);
 }
 
 // ── ChatGPT, with web search on ───────────────────────────────────────────────
@@ -109,15 +117,24 @@ async function askChatGpt(prompt: string): Promise<EngineReply | null> {
 }
 
 // ── Perplexity and Gemini, through OpenRouter ────────────────────────────────
-async function askOpenRouter(engine: EngineId, model: string, prompt: string): Promise<EngineReply | null> {
+// maxTokens is per-model on purpose. On a reasoning model the budget covers thinking AND the
+// answer, so a figure sized for a chat model is spent before a single visible word is produced —
+// the call returns 200 with empty content and looks exactly like "the engine had nothing to say".
+async function askOpenRouter(
+  engine: EngineId,
+  model: string,
+  prompt: string,
+  maxTokens = 1200,
+  timeoutMs = TIMEOUT,
+): Promise<EngineReply | null> {
   const key = process.env.OPENROUTER_API_KEY;
   if (!key || key.length < 20) return null;
   try {
     const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ model, messages: [{ role: "user", content: prompt }], max_tokens: 1200 }),
-      signal: AbortSignal.timeout(TIMEOUT),
+      body: JSON.stringify({ model, messages: [{ role: "user", content: prompt }], max_tokens: maxTokens }),
+      signal: AbortSignal.timeout(timeoutMs),
     });
     if (!res.ok) return null;
     const data: any = await res.json();
@@ -146,7 +163,11 @@ export function engineStatus(): EngineStatus[] {
   const hasOpenAi = Boolean(process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY.length > 20);
   const hasRouter = Boolean(process.env.OPENROUTER_API_KEY && process.env.OPENROUTER_API_KEY.length > 20);
   return [
-    { engine: "claude", available: hasAnthropic, reason: hasAnthropic ? "" : "ANTHROPIC_API_KEY is not set." },
+    {
+      engine: "claude",
+      available: hasAnthropic || hasRouter,
+      reason: hasAnthropic || hasRouter ? "" : "Neither ANTHROPIC_API_KEY nor OPENROUTER_API_KEY is set.",
+    },
     { engine: "chatgpt", available: hasOpenAi, reason: hasOpenAi ? "" : "OPENAI_API_KEY is not set." },
     { engine: "perplexity", available: hasRouter, reason: hasRouter ? "" : "OPENROUTER_API_KEY is not set." },
     { engine: "gemini", available: hasRouter, reason: hasRouter ? "" : "OPENROUTER_API_KEY is not set." },

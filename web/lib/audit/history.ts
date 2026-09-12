@@ -52,3 +52,37 @@ export function clearHistory(): void {
     /* nothing to do */
   }
 }
+
+// ── The last full result ──────────────────────────────────────────────────────
+// The landing page runs the audit and the dashboard renders it, so the result has to survive one
+// navigation. It is handed over here rather than re-fetched: the audit costs real model calls and
+// takes over a minute, and running it twice to draw the same charts would be indefensible.
+const LAST = "searchops.lastAudit.v1";
+
+export function saveLastResult(result: unknown): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.sessionStorage.setItem(LAST, JSON.stringify(result));
+  } catch {
+    // Quota or a private window. The dashboard falls back to its empty state rather than breaking.
+  }
+}
+
+export function loadLastResult<T>(): T | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.sessionStorage.getItem(LAST);
+    return raw ? (JSON.parse(raw) as T) : null;
+  } catch {
+    return null;
+  }
+}
+
+export function clearLastResult(): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.sessionStorage.removeItem(LAST);
+  } catch {
+    /* nothing to do */
+  }
+}

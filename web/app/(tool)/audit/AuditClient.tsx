@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 
@@ -231,12 +230,7 @@ function AuditInner() {
   return (
     <div className="mx-auto w-full max-w-4xl px-5 py-10">
       <header>
-        <div className="flex items-baseline justify-between gap-3">
-          <p className="text-[10px] uppercase tracking-[0.3em] text-primary">SearchOps</p>
-          <Link href="/dashboard" className="text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground">
-            ← Dashboard
-          </Link>
-        </div>
+        <p className="text-[10px] uppercase tracking-[0.3em] text-primary">SearchOps</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight">Audit a site</h1>
         <p className="mt-2 max-w-prose text-sm text-muted-foreground">
           Reads the page, its robots.txt, llms.txt and sitemap. Runs synthetic buyer questions
