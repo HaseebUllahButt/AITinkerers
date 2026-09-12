@@ -96,22 +96,22 @@ export function HeroSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} id="hero" className="relative min-h-screen flex items-center pl-6 md:pl-28 pr-6 md:pr-12">
+    <section ref={sectionRef} id="hero" className="relative min-h-screen flex items-center px-6 md:px-28">
       <AnimatedNoise opacity={0.03} />
 
       {/* Left vertical labels */}
-      <div className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2">
+      <div className="absolute left-4 md:left-6 top-1/2 hidden -translate-y-1/2 md:block">
         <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground -rotate-90 origin-left block whitespace-nowrap">
           SEARCHOPS
         </span>
       </div>
 
       {/* Main content */}
-      <div ref={contentRef} className="flex-1 w-full">
+      <div ref={contentRef} className="mx-auto flex w-full max-w-4xl flex-col items-center text-center">
         <SplitFlapAudioProvider>
           <div className="relative">
             <SplitFlapText text="SEARCHOPS" speed={80} />
-            <div className="mt-4">
+            <div className="mt-4 flex justify-center">
               <SplitFlapMuteToggle />
             </div>
           </div>
@@ -121,13 +121,13 @@ export function HeroSection() {
           An SEO, AEO and GEO Agent
         </h2>
 
-        <p className="mt-12 max-w-md font-mono text-sm text-muted-foreground leading-relaxed">
+        <p className="mt-12 mx-auto max-w-xl font-mono text-sm text-muted-foreground leading-relaxed">
           Not another audit tool or content generator. A persistent search-growth operator that understands the
           application, takes a safe action, verifies what happened, and keeps score.
         </p>
 
         {/* The point of the page: put a URL in and get an audit. */}
-        <form onSubmit={runAudit} className="mt-12 max-w-xl">
+        <form onSubmit={runAudit} className="mt-12 w-full max-w-xl">
           <div className="flex flex-col gap-2 sm:flex-row">
             <input
               id="hero-url"
@@ -157,17 +157,17 @@ export function HeroSection() {
                   style={{ width: `${((stage + 1) / STAGES.length) * 100}%` }}
                 />
               </div>
-              <p className="mt-2 font-mono text-xs text-muted-foreground">{STAGES[stage]}</p>
-              <p className="mt-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/70">
+              <p className="mt-2 text-center font-mono text-xs text-muted-foreground">{STAGES[stage]}</p>
+              <p className="mt-1 text-center font-mono text-[10px] uppercase tracking-widest text-muted-foreground/70">
                 A minute or two — real crawls and real model calls
               </p>
             </div>
           )}
 
-          {error && <p className="mt-3 font-mono text-xs text-destructive">{error}</p>}
+          {error && <p className="mt-3 text-center font-mono text-xs text-destructive">{error}</p>}
         </form>
 
-        <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4">
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
           {/* The primary action is now getting into the tool, not reading further down the page. */}
           <a
             href="/dashboard"
