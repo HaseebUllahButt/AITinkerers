@@ -19,6 +19,8 @@ const GOOGLE_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const isProd = process.env.NODE_ENV === "production";
 const googleConfigured = Boolean(GOOGLE_ID && GOOGLE_SECRET);
 export const devSignInEnabled = !isProd && !googleConfigured;
+/** Whether the Google button should be offered at all. */
+export const googleSignInEnabled = googleConfigured;
 
 // next-auth v5 refuses to start without a secret. Generating one per process would invalidate every
 // session on restart, so dev gets a fixed, obviously-fake value. Production still requires the real
