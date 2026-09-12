@@ -10,3 +10,7 @@ Thumbs.db
 # Env
 .env
 .env.local
+
+# Reference copy of Summit — contains .env.local symlink to live secrets,
+# a nested .git, and 1.2G of node_modules. Never commit.
+ref/
