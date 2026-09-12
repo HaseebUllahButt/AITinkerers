@@ -1,0 +1,33 @@
+# Local Postgres for SearchOps.
+#
+# There is no hosted database any more — the app was stripped back and lib/audit/history.ts keeps
+# recent audits in the browser instead. That is fine for a stateless audit, but nothing that has to
+# be remembered ACROSS people or ACROSS visits can live there: which sites exist, what is connected,
+# what the agent proposed and who approved it. That is what this is for.
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: searchops-db
+    environment:
+      POSTGRES_USER: searchops
+      POSTGRES_PASSWORD: searchops
+      POSTGRES_DB: searchops
+    ports:
+      # 5432 is already taken on this machine by a local Postgres, so the container is published
+      # on 5433. DATABASE_URL must match.
+      - "5433:5432"
+    volumes:
+      # Named volume, so `docker compose down` does not throw away the connections you just made.
+      # Use `docker compose down -v` when you actually want a clean slate.
+      - searchops-pgdata:/var/lib/postgresql/data
+      # Anything in here runs ONCE, on an empty data directory. Adding a file later does nothing —
+      # re-running a migration against an existing volume is a manual step on purpose.
+      - ./web/migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U searchops -d searchops"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  searchops-pgdata:
