@@ -1,5 +1,7 @@
 # Schema: site projects and team
 
+> **Status: planned, not migrated.** The live schema is `migrations/002_searchops.sql` — `sites` + `slack_channels`, no members/roles/`site_project_checks` yet. This doc is the intended shape when team features land.
+
 The tables behind docs/flow.md's "Projects" and "Team" sections. Apply in the order written — the
 later statements reference the earlier tables. The same statements sit as comment blocks above the
 queries that read them (`lib/projects/site.ts`, `lib/slack/threads.ts`, `lib/db/queries.ts`), so a

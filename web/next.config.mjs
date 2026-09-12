@@ -15,17 +15,10 @@ const nextConfig = {
   experimental: {
     serverActions: { bodySizeLimit: '10mb' },
   },
-  // Node-only packages that must not be bundled for the browser. imapflow is
-  // added beyond Summit's list: its pino/thread-stream chain drags a test file
-  // requiring pino-elasticsearch into the module trace and fails the build.
+  // Node-only packages that must not be bundled for the browser.
   serverExternalPackages: [
     'playwright',
     'playwright-core',
-    'jsdom',
-    '@mozilla/readability',
-    'imapflow',
-    'pino',
-    'thread-stream',
   ],
 }
 

@@ -1,6 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 
 import { runAudit } from "@/lib/audit/run";
+import { dbConfigured, execute } from "@/lib/db/pg";
+import { notifySlackOfAudit } from "@/lib/slack/notify";
 
 // The render pass drives a real browser and the market read makes five sequential model calls,
 // so this is nowhere near a default serverless budget.
@@ -23,7 +25,26 @@ export async function POST(req: Request) {
   if (!url.trim()) return NextResponse.json({ error: "Enter a URL to audit." }, { status: 400 });
 
   try {
-    return NextResponse.json(await runAudit(url, { competitors }));
+    const result = await runAudit(url, { competitors });
+
+    // Register the site, then post to Slack — AFTER the response, not before it. The audit already
+    // took minutes; making the person who ran it wait on housekeeping they are not waiting to see
+    // would be paying twice. The upsert is what lets `/searchops use <domain>` find the site later:
+    // without it a Slack channel can only ever bind to something that was connected by hand first.
+    after(async () => {
+      if (dbConfigured()) {
+        await execute(
+          `insert into sites (url, domain, brand) values ($1, $2, $3)
+           on conflict (domain) do update set url = excluded.url, brand = excluded.brand`,
+          [result.url, result.domain, result.brand],
+        ).catch((e) => console.warn("[audit] could not register site:", e instanceof Error ? e.message : e));
+      }
+      const outcome = await notifySlackOfAudit(result);
+      if (outcome.posted) console.log(`[slack] posted ${result.domain} audit to ${outcome.posted} channel(s)`);
+      else if (outcome.errors?.length) console.warn(`[slack] could not post ${result.domain}:`, outcome.errors.join("; "));
+    });
+
+    return NextResponse.json(result);
   } catch (err) {
     // Name what failed. "Something went wrong" is not a finding.
     const message = err instanceof Error ? err.message : "The audit failed.";

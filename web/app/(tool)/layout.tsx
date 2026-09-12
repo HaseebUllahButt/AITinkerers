@@ -4,7 +4,6 @@ import { PageContainer } from "@/components/layout/PageContainer"
 import { RouteProgress } from "@/components/layout/RouteProgress"
 import { Sidebar } from "@/components/layout/Sidebar"
 import { TopNav } from "@/components/layout/TopNav"
-import { UsageTracker } from "@/components/layout/UsageTracker"
 
 // The operator shell: sidebar flush to the left edge, flat top bar, content straight below.
 //
@@ -17,7 +16,6 @@ export default function ToolLayout({
   return (
     <>
       <RouteProgress />
-      <UsageTracker />
       <div className="flex h-svh overflow-hidden bg-background text-foreground">
         <Sidebar />
         <div className="flex min-h-0 min-w-0 flex-1 flex-col">

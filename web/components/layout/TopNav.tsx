@@ -1,16 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
-import { Moon, Sun, Search } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { NotificationCenter } from "@/components/layout/NotificationCenter";
-import { KeyHealthIndicator } from "@/components/layout/KeyHealthBanner";
 import { routeLabel } from "@/lib/nav";
 import {
   DropdownMenu,
@@ -20,39 +16,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-// Persistent Tavily usage pill — always visible so search-quota usage doesn't creep up
-// unnoticed. Pool-aware: shows this month's searches against the WHOLE pool's capacity
-// (activeKeys × per-key limit) plus how many keys are still live, so it reflects everything
-// rather than a single key. Polls every 30s.
-function TavilyUsagePill() {
-  const [usage, setUsage] = useState<{ enabled: boolean; used: number; limit: number; perKeyLimit?: number; near: boolean; over: boolean; poolTotal: number; poolActive: number } | null>(null);
-
-  useEffect(() => {
-    const load = () => fetch("/api/health/keys").then((r) => (r.ok ? r.json() : null)).then((d) => d && setUsage(d.tavily)).catch(() => {});
-    load();
-    const t = setInterval(load, 30_000);
-    return () => clearInterval(t);
-  }, []);
-
-  if (!usage?.enabled) return null;
-  const poolTotal = usage.poolTotal ?? 0;
-  // usage.limit is already the aggregate capacity (active pool keys × per-key limit), so use it
-  // directly — multiplying again would square it.
-  const capacity = usage.limit;
-  const tone = usage.over
-    ? "text-destructive border-destructive/30 bg-destructive/10"
-    : (poolTotal > 0 ? usage.poolActive <= 1 : usage.near)
-      ? "text-warning border-warning/30 bg-warning/10"
-      : "text-muted-foreground";
-  return (
-    <Badge variant="outline" className={`flex h-8 items-center gap-1.5 text-xs font-normal ${tone}`} title={poolTotal > 0 ? `${usage.used.toLocaleString()} Tavily searches this month · ${usage.poolActive}/${poolTotal} keys active (capacity ~${capacity.toLocaleString()}/mo)` : "Tavily search API usage this month"}>
-      <Search className="h-3 w-3" />
-      {usage.used.toLocaleString()}/{capacity.toLocaleString()}
-      {poolTotal > 0 && <span className="opacity-60">· {usage.poolActive}/{poolTotal} keys</span>}
-    </Badge>
-  );
-}
 
 /**
  * A path segment that is a record id rather than a page.
@@ -106,13 +69,8 @@ export function TopNav() {
           ))}
         </nav>
 
-        {/* Right side: status pills first, then the three controls, avatar last. */}
+        {/* Right side: theme toggle, then the avatar. */}
         <div className="flex items-center gap-2">
-          <KeyHealthIndicator />
-          <TavilyUsagePill />
-
-          <NotificationCenter />
-
           {/* Theme toggle */}
           <Button
             variant="ghost"
@@ -143,13 +101,6 @@ export function TopNav() {
                     <p className="text-xs text-muted-foreground leading-none mt-1">{user.email}</p>
                   </div>
                 </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => (window.location.href = "/settings")}>
-                  Settings
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => (window.location.href = "/admin")}>
-                  Admin panel
-                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   className="text-destructive focus:text-destructive"

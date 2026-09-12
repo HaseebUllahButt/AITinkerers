@@ -1,5 +1,7 @@
 # Stack
 
+> **Status: superseded.** The built stack is Next.js + local Postgres + OpenRouter + Exa + Slack. This doc describes the earlier Discord/Trigger.dev/CopilotKit plan — kept for the reasoning, not the vendor list. See HANDOFF.md for what exists.
+
 What we're using and the exact job each thing does. If something here has no job, we drop it.
 
 | Tool | Job |

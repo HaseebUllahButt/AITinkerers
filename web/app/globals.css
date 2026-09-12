@@ -1,10 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-/* The Summit Agent chat surface owns three animations (shimmer, cursor pulse, step accordion).
-   They live beside their components; this is the only line globals.css needs to know about them.
-   CSS @import must precede every rule, so it stays up here with the others. */
-@import "../components/agent/agent.css";
 
 @custom-variant dark (&:is(.dark *));
 

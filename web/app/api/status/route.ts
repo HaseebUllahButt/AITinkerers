@@ -37,28 +37,6 @@ async function probeSearch(provider: string): Promise<{ working: boolean; detail
         ? { working: true, detail: "Answering." }
         : { working: false, detail: `HTTP ${res.status}: ${(await res.text()).slice(0, 120)}` };
     }
-    if (provider === "tavily") {
-      const res = await fetch("https://api.tavily.com/search", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ api_key: process.env.TAVILY_API_KEY, query: "test", max_results: 1 }),
-        signal: AbortSignal.timeout(12_000),
-      });
-      return res.ok
-        ? { working: true, detail: "Answering." }
-        : { working: false, detail: `HTTP ${res.status}: ${(await res.text()).slice(0, 120)}` };
-    }
-    if (provider === "serper") {
-      const res = await fetch("https://google.serper.dev/search", {
-        method: "POST",
-        headers: { "X-API-KEY": process.env.SERPER_API_KEY ?? "", "Content-Type": "application/json" },
-        body: JSON.stringify({ q: "test", num: 1 }),
-        signal: AbortSignal.timeout(12_000),
-      });
-      return res.ok
-        ? { working: true, detail: "Answering." }
-        : { working: false, detail: `HTTP ${res.status}: ${(await res.text()).slice(0, 120)}` };
-    }
     return { working: true, detail: "Configured; not probed." };
   } catch (e) {
     return { working: false, detail: e instanceof Error ? e.message : "Request failed." };

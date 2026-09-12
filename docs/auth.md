@@ -1,5 +1,7 @@
 # Auth
 
+> **Status: superseded in part.** The chat surface is Slack (HMAC verify, not Discord). The credential rules still apply; open sign-in caveat in web/auth.ts is the live version of 'must be replaced before public'.
+
 The agent never holds a raw secret. Credentials live server-side, scoped to one thing, with reads and writes separated.
 
 ## What needs credentials

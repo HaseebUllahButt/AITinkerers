@@ -1,5 +1,7 @@
 # Slack connector
 
+> **Status: describes an earlier architecture.** The shipped version uses `/searchops` (not `/hermes`), `sites`/`slack_channels` (not `site_projects`), and `lib/agent.ts` on Postgres (not `lib/hermes/*` + `mintSessionCookie`). See HANDOFF.md + `migrations/002_searchops.sql` for what exists; this remains the fuller intended design.
+
 A Slack thread is a Hermes session. You ask in the thread, Hermes answers in the thread, and a
 confirm card gets a real **Confirm** button that executes from Slack.
 
