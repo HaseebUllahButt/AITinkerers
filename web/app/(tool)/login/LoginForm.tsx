@@ -11,6 +11,8 @@ import { SummitMark } from "@/components/brand/SummitMark";
 function LoginContent() {
   const params = useSearchParams();
   const error = params.get("error");
+  // Honour where the visitor was headed before the redirect; default to the app home.
+  const callbackUrl = params.get("callbackUrl") || "/dashboard";
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
 
@@ -44,7 +46,7 @@ function LoginContent() {
               onSubmit={(e) => {
                 e.preventDefault();
                 setBusy(true);
-                signIn("open", { email: email.trim() || "user@localhost", callbackUrl: "/" });
+                signIn("open", { email: email.trim() || "user@localhost", callbackUrl });
               }}
             >
               <Input

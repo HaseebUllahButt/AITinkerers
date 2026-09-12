@@ -1,4 +1,5 @@
 import {
+  LayoutDashboard,
   Settings,
   Rocket,
   Mail,
@@ -52,6 +53,10 @@ export interface NavGroup {
 }
 
 export const NAV_GROUPS: NavGroup[] = [
+  {
+    label: "Overview",
+    items: [{ name: "Dashboard", href: "/dashboard", icon: LayoutDashboard, exact: true }],
+  },
   {
     label: "Agent",
     items: [{ name: "Summer", href: "/summer", icon: BrainCircuit, exact: true }],
@@ -107,6 +112,7 @@ const NAV_SEGMENT_LABELS: Record<string, string> = Object.fromEntries(
 );
 
 export const ROUTE_LABELS: Record<string, string> = {
+  dashboard: "Dashboard",
   ...NAV_SEGMENT_LABELS,
   // Home
   "": "Prospects",
