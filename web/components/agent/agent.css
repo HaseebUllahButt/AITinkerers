@@ -1,0 +1,113 @@
+/* ============================================================
+   SearchOps Agent — the three animations the chat surface owns.
+
+   Spec: SUMMIT-AGENT-UI-SPEC.md §7.4 (cursor), §7.5 (shimmer), §7.8 (accordion).
+
+   Imported from src/app/globals.css. It lives next to the components instead of inside globals
+   because every rule here is meaningless outside src/components/agent — and because deleting the
+   surface should be one directory, not a scavenger hunt through a 600-line stylesheet.
+
+   All three animate paint-only properties (opacity, background-position) or an explicitly measured
+   height. Nothing here can perturb layout mid-stream, which matters: the stick-to-bottom write in
+   scroll/useStickToBottom.ts is running in the same frames.
+   ============================================================ */
+
+/* ── running step label (§7.5) ──────────────────────────────────────────────────────────────────
+   The running state is a shimmer on the LABEL ITSELF, not a spinner beside it — a spinner that
+   unmounts on completion shifts the row, once per step, which is D10.
+
+   4s, deliberately slower than the cursor's 2s so the two animations do not beat against each
+   other. Animating `background-position` is paint-only; a shimmering label cannot perturb the
+   scroll follow running beside it. */
+.loading-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--muted-foreground),
+    var(--foreground),
+    var(--muted-foreground)
+  );
+  background-size: 50% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: -100% top;
+  }
+  to {
+    background-position: 250% top;
+  }
+}
+
+/* MANDATORY, not defensive. Without it an engine that lacks `background-clip: text` paints the
+   running label in `transparent` — i.e. the step you are waiting on is the one you cannot read. */
+@supports not ((background-clip: text) or (-webkit-background-clip: text)) {
+  .loading-shimmer {
+    -webkit-text-fill-color: currentColor;
+    color: inherit;
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-shimmer {
+    animation: none;
+    background-position: 50%;
+  }
+}
+
+/* ── streaming cursor (§7.4) ────────────────────────────────────────────────────────────────────
+   content/StreamCursor.tsx drives this with the Web Animations API, because the exact triple
+   (2s / cubic-bezier(0.4,0,0.6,1) / 1→0.4→1) belongs next to the constants that define it. A
+   script-driven animation wins over a CSS one in the cascade, so the rule below is the FALLBACK
+   for the path that component explicitly guards against: `typeof el.animate !== "function"`.
+
+   Gated on `prefers-reduced-motion: no-preference` because that fallback path cannot consult the
+   media query in JS the way StreamCursor does. */
+@keyframes agent-cursor-pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-agent-cursor] {
+    animation: agent-cursor-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+/* ── step accordion (§7.8) ──────────────────────────────────────────────────────────────────────
+   `--acc-h` is written imperatively by StepNode.tsx immediately before the animation starts and
+   removed on `animationend`. That is the whole contract: the measured height is valid FOR THE
+   TRANSITION ONLY. Content that streams in while the panel is open must not sit under a height or
+   max-height rule, or it clips — so the open edge animates and then releases to `height: auto`.
+
+   200ms ease-out is applied inline by the component (ACCORDION_MS), not here, so the constant has
+   exactly one home. */
+@keyframes acc-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--acc-h);
+  }
+}
+
+@keyframes acc-up {
+  from {
+    height: var(--acc-h);
+  }
+  to {
+    height: 0;
+  }
+}

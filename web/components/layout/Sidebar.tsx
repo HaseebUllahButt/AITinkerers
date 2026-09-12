@@ -26,7 +26,46 @@ const NAV: NavGroup[] = [
   },
   {
     label: "Search",
-    items: [{ name: "Audit", href: "/audit" }],
+    items: [
+      { name: "Audit", href: "/audit" },
+      { name: "Site Audit", href: "/site-audit" },
+      { name: "GEO", href: "/geo" },
+      { name: "404s", href: "/404s" },
+      { name: "SEO ROI", href: "/roi" },
+      { name: "Render Lab", href: "/render-lab" },
+    ],
+  },
+  {
+    label: "Agent",
+    items: [{ name: "Summer", href: "/summer", exact: true }],
+  },
+  {
+    label: "Outreach",
+    items: [
+      { name: "Backlink Outreach", href: "/backlinks", exact: true },
+      { name: "Compose & Send", href: "/emails" },
+      { name: "Status", href: "/sending" },
+      { name: "Inbox", href: "/inbox" },
+      { name: "WhatsApp", href: "/whatsapp" },
+    ],
+  },
+  {
+    label: "Content",
+    items: [
+      { name: "Blogs", href: "/drafts", exact: true },
+      { name: "Research", href: "/research" },
+      { name: "Assets", href: "/media" },
+      { name: "Voices", href: "/blog/voices" },
+    ],
+  },
+  {
+    label: "Workspace",
+    items: [
+      { name: "Handbook", href: "/handbook" },
+      { name: "Notifications", href: "/notifications" },
+      { name: "Admin", href: "/admin" },
+      { name: "Settings", href: "/settings" },
+    ],
   },
 ];
 

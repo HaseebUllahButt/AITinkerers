@@ -1,0 +1,8008 @@
+{
+  "ai-ad-studio-components.ads-showcase-section": {
+    "uid": "ai-ad-studio-components.ads-showcase-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "mainCardVideo": {
+        "kind": "other"
+      },
+      "mainCardPoster": {
+        "kind": "other"
+      },
+      "mainCardTitle": {
+        "kind": "other"
+      },
+      "mainCardDescription": {
+        "kind": "other"
+      },
+      "platforms": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.platform-badge"
+      },
+      "statNumber": {
+        "kind": "other"
+      },
+      "statLabel": {
+        "kind": "other"
+      },
+      "secondaryCardVideo": {
+        "kind": "other"
+      },
+      "secondaryCardPoster": {
+        "kind": "other"
+      },
+      "secondaryCardTitle": {
+        "kind": "other"
+      },
+      "secondaryCardDescription": {
+        "kind": "other"
+      },
+      "features": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.feature-row-item"
+      }
+    }
+  },
+  "ai-ad-studio-components.brand-logo": {
+    "uid": "ai-ad-studio-components.brand-logo",
+    "kind": "component",
+    "attributes": {
+      "logo": {
+        "kind": "other"
+      },
+      "name": {
+        "kind": "other"
+      },
+      "maxHeight": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-ad-studio-components.compare-cell": {
+    "uid": "ai-ad-studio-components.compare-cell",
+    "kind": "component",
+    "attributes": {
+      "value": {
+        "kind": "other"
+      },
+      "status": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-ad-studio-components.compare-column": {
+    "uid": "ai-ad-studio-components.compare-column",
+    "kind": "component",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "subtitle": {
+        "kind": "other"
+      },
+      "isHighlighted": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-ad-studio-components.compare-row": {
+    "uid": "ai-ad-studio-components.compare-row",
+    "kind": "component",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "cells": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.compare-cell"
+      }
+    }
+  },
+  "ai-ad-studio-components.compare-section": {
+    "uid": "ai-ad-studio-components.compare-section",
+    "kind": "component",
+    "attributes": {
+      "eyebrow": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "subtitle": {
+        "kind": "other"
+      },
+      "columns": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.compare-column"
+      },
+      "rows": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.compare-row"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaUrl": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-ad-studio-components.feature-list-item": {
+    "uid": "ai-ad-studio-components.feature-list-item",
+    "kind": "component",
+    "attributes": {
+      "eyebrow": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "bullets": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "poster": {
+        "kind": "other"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaUrl": {
+        "kind": "other"
+      },
+      "reversed": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-ad-studio-components.feature-list-section": {
+    "uid": "ai-ad-studio-components.feature-list-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "items": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.feature-list-item"
+      }
+    }
+  },
+  "ai-ad-studio-components.feature-row-item": {
+    "uid": "ai-ad-studio-components.feature-row-item",
+    "kind": "component",
+    "attributes": {
+      "number": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-ad-studio-components.final-cta-section": {
+    "uid": "ai-ad-studio-components.final-cta-section",
+    "kind": "component",
+    "attributes": {
+      "backgroundVideo": {
+        "kind": "other"
+      },
+      "backgroundPoster": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "primaryCtaText": {
+        "kind": "other"
+      },
+      "primaryCtaUrl": {
+        "kind": "other"
+      },
+      "secondaryCtaText": {
+        "kind": "other"
+      },
+      "secondaryCtaUrl": {
+        "kind": "other"
+      },
+      "stats": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.final-stat-item"
+      }
+    }
+  },
+  "ai-ad-studio-components.final-stat-item": {
+    "uid": "ai-ad-studio-components.final-stat-item",
+    "kind": "component",
+    "attributes": {
+      "number": {
+        "kind": "other"
+      },
+      "label": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-ad-studio-components.gallery-item": {
+    "uid": "ai-ad-studio-components.gallery-item",
+    "kind": "component",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "label": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-ad-studio-components.gallery-section": {
+    "uid": "ai-ad-studio-components.gallery-section",
+    "kind": "component",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "subtitle": {
+        "kind": "other"
+      },
+      "linkText": {
+        "kind": "other"
+      },
+      "linkUrl": {
+        "kind": "other"
+      },
+      "items": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.gallery-item"
+      }
+    }
+  },
+  "ai-ad-studio-components.hero-card": {
+    "uid": "ai-ad-studio-components.hero-card",
+    "kind": "component",
+    "attributes": {
+      "video": {
+        "kind": "other"
+      },
+      "poster": {
+        "kind": "other"
+      },
+      "label": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-ad-studio-components.hero-section": {
+    "uid": "ai-ad-studio-components.hero-section",
+    "kind": "component",
+    "attributes": {
+      "logo": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "cards": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.hero-card"
+      },
+      "placeholderPrompts": {
+        "kind": "other"
+      },
+      "chips": {
+        "kind": "other"
+      },
+      "generateButtonText": {
+        "kind": "other"
+      },
+      "browseLinkText": {
+        "kind": "other"
+      },
+      "browseLinkUrl": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-ad-studio-components.hiw-diagram-section": {
+    "uid": "ai-ad-studio-components.hiw-diagram-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "leftCardImage": {
+        "kind": "other"
+      },
+      "leftCardLabel": {
+        "kind": "other"
+      },
+      "rightCardImage": {
+        "kind": "other"
+      },
+      "rightCardLabel": {
+        "kind": "other"
+      },
+      "centerVideo": {
+        "kind": "other"
+      },
+      "centerPoster": {
+        "kind": "other"
+      },
+      "centerLabel": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-ad-studio-components.platform-badge": {
+    "uid": "ai-ad-studio-components.platform-badge",
+    "kind": "component",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "icon": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-ad-studio-components.step-item": {
+    "uid": "ai-ad-studio-components.step-item",
+    "kind": "component",
+    "attributes": {
+      "number": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "time": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-ad-studio-components.steps-section": {
+    "uid": "ai-ad-studio-components.steps-section",
+    "kind": "component",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "subtitle": {
+        "kind": "other"
+      },
+      "steps": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.step-item"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaUrl": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-ad-studio-components.template-item": {
+    "uid": "ai-ad-studio-components.template-item",
+    "kind": "component",
+    "attributes": {
+      "video": {
+        "kind": "other"
+      },
+      "poster": {
+        "kind": "other"
+      },
+      "tag": {
+        "kind": "other"
+      },
+      "name": {
+        "kind": "other"
+      },
+      "prompt": {
+        "kind": "other"
+      },
+      "url": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-ad-studio-components.templates-gallery-section": {
+    "uid": "ai-ad-studio-components.templates-gallery-section",
+    "kind": "component",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "subtitle": {
+        "kind": "other"
+      },
+      "items": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.template-item"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaUrl": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-ad-studio-components.trusted-by-section": {
+    "uid": "ai-ad-studio-components.trusted-by-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "logos": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.brand-logo"
+      }
+    }
+  },
+  "ai-video-components.ai-models": {
+    "uid": "ai-video-components.ai-models",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "desc": {
+        "kind": "other"
+      },
+      "aiVIdeoModels": {
+        "kind": "component",
+        "targetUid": "ai-video-components.ai-tools"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaRoute": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-video-components.ai-tools": {
+    "uid": "ai-video-components.ai-tools",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "desc": {
+        "kind": "other"
+      },
+      "url": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-video-components.ai-video-card": {
+    "uid": "ai-video-components.ai-video-card",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "desc": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "videoThumbnail": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-video-components.community-section": {
+    "uid": "ai-video-components.community-section",
+    "kind": "component",
+    "attributes": {
+      "communityCards": {
+        "kind": "component",
+        "targetUid": "ai-video-components.featured-community"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "desc": {
+        "kind": "other"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaRoute": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-video-components.creative-suite": {
+    "uid": "ai-video-components.creative-suite",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "desc": {
+        "kind": "other"
+      },
+      "imagineCreateSuite": {
+        "kind": "component",
+        "targetUid": "ai-video-components.ai-tools"
+      }
+    }
+  },
+  "ai-video-components.faqs": {
+    "uid": "ai-video-components.faqs",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "faqs": {
+        "kind": "component",
+        "targetUid": "ai-video-components.question-anwser"
+      }
+    }
+  },
+  "ai-video-components.featured-community": {
+    "uid": "ai-video-components.featured-community",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "desc": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "videoThumbnail": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-video-components.hero-section": {
+    "uid": "ai-video-components.hero-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "CTAText": {
+        "kind": "other"
+      },
+      "heroVideo": {
+        "kind": "other"
+      },
+      "isCreditsRequired": {
+        "kind": "other"
+      },
+      "inputPlaceholder": {
+        "kind": "other"
+      },
+      "videoThumbnail": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-video-components.imagine-art-explorer": {
+    "uid": "ai-video-components.imagine-art-explorer",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "desc": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaRoute": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-video-components.instant-videos": {
+    "uid": "ai-video-components.instant-videos",
+    "kind": "component",
+    "attributes": {
+      "videoTabs": {
+        "kind": "component",
+        "targetUid": "ai-video-components.ai-video-card"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaRoute": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-video-components.question-anwser": {
+    "uid": "ai-video-components.question-anwser",
+    "kind": "component",
+    "attributes": {
+      "question": {
+        "kind": "other"
+      },
+      "answer": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-video-components.reviews": {
+    "uid": "ai-video-components.reviews",
+    "kind": "component",
+    "attributes": {
+      "author": {
+        "kind": "other"
+      },
+      "reviewUrl": {
+        "kind": "other"
+      },
+      "profileImage": {
+        "kind": "other"
+      },
+      "review": {
+        "kind": "other"
+      },
+      "socialMedia": {
+        "kind": "other"
+      },
+      "rating": {
+        "kind": "other"
+      }
+    }
+  },
+  "ai-video-components.user-reviews": {
+    "uid": "ai-video-components.user-reviews",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "desc": {
+        "kind": "other"
+      },
+      "reviews": {
+        "kind": "component",
+        "targetUid": "ai-video-components.reviews"
+      }
+    }
+  },
+  "ai-video-components.video-generator-tools": {
+    "uid": "ai-video-components.video-generator-tools",
+    "kind": "component",
+    "attributes": {
+      "toolsHeading": {
+        "kind": "other"
+      },
+      "AITools": {
+        "kind": "component",
+        "targetUid": "ai-video-components.ai-tools"
+      }
+    }
+  },
+  "ai-video-components.video-generator-zfold": {
+    "uid": "ai-video-components.video-generator-zfold",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "desc": {
+        "kind": "other"
+      },
+      "zfold": {
+        "kind": "component",
+        "targetUid": "ai-video-components.zfold"
+      }
+    }
+  },
+  "ai-video-components.zfold-video-generator": {
+    "uid": "ai-video-components.zfold-video-generator",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "desc": {
+        "kind": "other"
+      },
+      "AIVideoGeneratorZfoldSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.zfold"
+      }
+    }
+  },
+  "ai-video-components.zfold": {
+    "uid": "ai-video-components.zfold",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "desc": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaRoute": {
+        "kind": "other"
+      },
+      "videoThumbnail": {
+        "kind": "other"
+      }
+    }
+  },
+  "author-components.social-link": {
+    "uid": "author-components.social-link",
+    "kind": "component",
+    "attributes": {
+      "platform": {
+        "kind": "other"
+      },
+      "url": {
+        "kind": "other"
+      },
+      "label": {
+        "kind": "other"
+      }
+    }
+  },
+  "avatar-components.avatar-banner-section": {
+    "uid": "avatar-components.avatar-banner-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      }
+    }
+  },
+  "avatar-components.avatar-hero-section": {
+    "uid": "avatar-components.avatar-hero-section",
+    "kind": "component",
+    "attributes": {
+      "tag": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "languages": {
+        "kind": "component",
+        "targetUid": "avatar-components.avatar-language"
+      }
+    }
+  },
+  "avatar-components.avatar-inspiration-section": {
+    "uid": "avatar-components.avatar-inspiration-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "avatarMarqueeItem": {
+        "kind": "component",
+        "targetUid": "avatar-components.avatar-marquee-item"
+      }
+    }
+  },
+  "avatar-components.avatar-language": {
+    "uid": "avatar-components.avatar-language",
+    "kind": "component",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "flag": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      }
+    }
+  },
+  "avatar-components.avatar-marquee-item": {
+    "uid": "avatar-components.avatar-marquee-item",
+    "kind": "component",
+    "attributes": {
+      "src": {
+        "kind": "other"
+      },
+      "label": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "poster": {
+        "kind": "other"
+      }
+    }
+  },
+  "avatar-components.avatar-model-cards": {
+    "uid": "avatar-components.avatar-model-cards",
+    "kind": "component",
+    "attributes": {
+      "serialNumber": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      }
+    }
+  },
+  "avatar-components.avatar-models-section": {
+    "uid": "avatar-components.avatar-models-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "modelCards": {
+        "kind": "component",
+        "targetUid": "avatar-components.avatar-model-cards"
+      }
+    }
+  },
+  "avatar-components.avatar-trusted-partner-section": {
+    "uid": "avatar-components.avatar-trusted-partner-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "icons": {
+        "kind": "component",
+        "targetUid": "avatar-components.icon"
+      }
+    }
+  },
+  "avatar-components.avatar-use-case-section": {
+    "uid": "avatar-components.avatar-use-case-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "subtitle": {
+        "kind": "other"
+      },
+      "mobileSubtitle": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "useCaseTabs": {
+        "kind": "component",
+        "targetUid": "avatar-components.avatar-use-case-tabs"
+      }
+    }
+  },
+  "avatar-components.avatar-use-case-tabs": {
+    "uid": "avatar-components.avatar-use-case-tabs",
+    "kind": "component",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      }
+    }
+  },
+  "avatar-components.avatar-z-fold-section": {
+    "uid": "avatar-components.avatar-z-fold-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "avatarZfoldItem": {
+        "kind": "component",
+        "targetUid": "avatar-components.avatar-zfold-item"
+      }
+    }
+  },
+  "avatar-components.avatar-zfold-item": {
+    "uid": "avatar-components.avatar-zfold-item",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "isVideo": {
+        "kind": "other"
+      },
+      "videoSource": {
+        "kind": "other"
+      }
+    }
+  },
+  "avatar-components.icon": {
+    "uid": "avatar-components.icon",
+    "kind": "component",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "icon_src": {
+        "kind": "other"
+      }
+    }
+  },
+  "avatar-templates.avatar-template-1": {
+    "uid": "avatar-templates.avatar-template-1",
+    "kind": "component",
+    "attributes": {
+      "avatarHeroSection": {
+        "kind": "component",
+        "targetUid": "avatar-components.avatar-hero-section"
+      },
+      "avatarInspirationSection": {
+        "kind": "component",
+        "targetUid": "avatar-components.avatar-inspiration-section"
+      },
+      "avatarUseCaseSection": {
+        "kind": "component",
+        "targetUid": "avatar-components.avatar-use-case-section"
+      },
+      "avatarModelsSection": {
+        "kind": "component",
+        "targetUid": "avatar-components.avatar-models-section"
+      },
+      "avatarZFoldSection": {
+        "kind": "component",
+        "targetUid": "avatar-components.avatar-z-fold-section"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "avatarBannerSection": {
+        "kind": "component",
+        "targetUid": "avatar-components.avatar-banner-section"
+      },
+      "studiosShowcaseSection": {
+        "kind": "component",
+        "targetUid": "components.studios-showcase-section"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      }
+    }
+  },
+  "bg-remover-components.bg-remover-components": {
+    "uid": "bg-remover-components.bg-remover-components",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      }
+    }
+  },
+  "bg-remover-components.target-audience-item": {
+    "uid": "bg-remover-components.target-audience-item",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "icon": {
+        "kind": "other"
+      },
+      "url": {
+        "kind": "other"
+      }
+    }
+  },
+  "bg-remover-components.target-audience-section": {
+    "uid": "bg-remover-components.target-audience-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "targetAudienceItems": {
+        "kind": "component",
+        "targetUid": "bg-remover-components.target-audience-item"
+      }
+    }
+  },
+  "bg-remover-components.tool-suite-item": {
+    "uid": "bg-remover-components.tool-suite-item",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "url": {
+        "kind": "other"
+      }
+    }
+  },
+  "bg-remover-components.tool-suite": {
+    "uid": "bg-remover-components.tool-suite",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "toolSuiteItems": {
+        "kind": "component",
+        "targetUid": "bg-remover-components.tool-suite-item"
+      }
+    }
+  },
+  "bg-remover-components.usage-examples-items": {
+    "uid": "bg-remover-components.usage-examples-items",
+    "kind": "component",
+    "attributes": {
+      "tab": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "beforeImage": {
+        "kind": "other"
+      },
+      "afterImage": {
+        "kind": "other"
+      }
+    }
+  },
+  "bg-remover-components.usage-examples": {
+    "uid": "bg-remover-components.usage-examples",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "usageExamplesItems": {
+        "kind": "component",
+        "targetUid": "bg-remover-components.usage-examples-items"
+      }
+    }
+  },
+  "bg-remover-components.usage-step-items": {
+    "uid": "bg-remover-components.usage-step-items",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      }
+    }
+  },
+  "bg-remover-components.usage-steps": {
+    "uid": "bg-remover-components.usage-steps",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "poster": {
+        "kind": "other"
+      },
+      "usageStepsIems": {
+        "kind": "component",
+        "targetUid": "bg-remover-components.usage-step-items"
+      }
+    }
+  },
+  "bg-remover-templates.bg-remover-template-1": {
+    "uid": "bg-remover-templates.bg-remover-template-1",
+    "kind": "component",
+    "attributes": {
+      "bgRemoverHeroSection": {
+        "kind": "component",
+        "targetUid": "bg-remover-components.bg-remover-components"
+      },
+      "bgRemoverToolSuite": {
+        "kind": "component",
+        "targetUid": "bg-remover-components.tool-suite"
+      },
+      "bgRemoverTargetAudienceSection": {
+        "kind": "component",
+        "targetUid": "bg-remover-components.target-audience-section"
+      },
+      "bgRemoverUsageExamples": {
+        "kind": "component",
+        "targetUid": "bg-remover-components.usage-examples"
+      },
+      "bgRemoverUsageSteps": {
+        "kind": "component",
+        "targetUid": "bg-remover-components.usage-steps"
+      },
+      "bgRemoverZfold": {
+        "kind": "component",
+        "targetUid": "team-components.team-zfold"
+      },
+      "reviewsSection": {
+        "kind": "component",
+        "targetUid": "components.reviews-section"
+      },
+      "trustPilotReviews": {
+        "kind": "component",
+        "targetUid": "ai-video-components.user-reviews"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "blogResources": {
+        "kind": "component",
+        "targetUid": "components.blog-resources"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      }
+    }
+  },
+  "blog-components.blog-hero-cta": {
+    "uid": "blog-components.blog-hero-cta",
+    "kind": "component",
+    "attributes": {
+      "text": {
+        "kind": "other"
+      },
+      "url": {
+        "kind": "other"
+      }
+    }
+  },
+  "chat-model-components.capabilities-section": {
+    "uid": "chat-model-components.capabilities-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "subtitle": {
+        "kind": "other"
+      },
+      "capabilities": {
+        "kind": "component",
+        "targetUid": "chat-model-components.capability-item"
+      }
+    }
+  },
+  "chat-model-components.capability-item": {
+    "uid": "chat-model-components.capability-item",
+    "kind": "component",
+    "attributes": {
+      "icon": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      }
+    }
+  },
+  "chat-model-components.cta-section": {
+    "uid": "chat-model-components.cta-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonUrl": {
+        "kind": "other"
+      }
+    }
+  },
+  "chat-model-components.feature-grid-item": {
+    "uid": "chat-model-components.feature-grid-item",
+    "kind": "component",
+    "attributes": {
+      "icon": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      }
+    }
+  },
+  "chat-model-components.feature-grid-section": {
+    "uid": "chat-model-components.feature-grid-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "subtitle": {
+        "kind": "other"
+      },
+      "items": {
+        "kind": "component",
+        "targetUid": "chat-model-components.feature-grid-item"
+      }
+    }
+  },
+  "chat-model-components.hero-section": {
+    "uid": "chat-model-components.hero-section",
+    "kind": "component",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "eyebrow": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "primaryCtaText": {
+        "kind": "other"
+      },
+      "primaryCtaUrl": {
+        "kind": "other"
+      },
+      "secondaryCtaText": {
+        "kind": "other"
+      },
+      "secondaryCtaUrl": {
+        "kind": "other"
+      }
+    }
+  },
+  "chat-model-components.stat-item": {
+    "uid": "chat-model-components.stat-item",
+    "kind": "component",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "value": {
+        "kind": "other"
+      },
+      "icon": {
+        "kind": "other"
+      }
+    }
+  },
+  "chat-model-components.stats-section": {
+    "uid": "chat-model-components.stats-section",
+    "kind": "component",
+    "attributes": {
+      "stats": {
+        "kind": "component",
+        "targetUid": "chat-model-components.stat-item"
+      }
+    }
+  },
+  "chat-model-template.chat-model-template": {
+    "uid": "chat-model-template.chat-model-template",
+    "kind": "component",
+    "attributes": {
+      "heroSection": {
+        "kind": "component",
+        "targetUid": "chat-model-components.hero-section"
+      },
+      "statsSection": {
+        "kind": "component",
+        "targetUid": "chat-model-components.stats-section"
+      },
+      "capabilitiesSection": {
+        "kind": "component",
+        "targetUid": "chat-model-components.capabilities-section"
+      },
+      "zfoldSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.video-generator-zfold"
+      },
+      "featureGridSection": {
+        "kind": "component",
+        "targetUid": "chat-model-components.feature-grid-section"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "ctaSection": {
+        "kind": "component",
+        "targetUid": "chat-model-components.cta-section"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      }
+    }
+  },
+  "comparison-components.benefit-item": {
+    "uid": "comparison-components.benefit-item",
+    "kind": "component",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      }
+    }
+  },
+  "comparison-components.benefit-section": {
+    "uid": "comparison-components.benefit-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "benefitSection": {
+        "kind": "component",
+        "targetUid": "comparison-components.benefit-item"
+      }
+    }
+  },
+  "comparison-components.compare-hero-section": {
+    "uid": "comparison-components.compare-hero-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "backgroundImage": {
+        "kind": "other"
+      }
+    }
+  },
+  "comparison-components.comparison-hero-section": {
+    "uid": "comparison-components.comparison-hero-section",
+    "kind": "component",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "coloredHeading": {
+        "kind": "other"
+      },
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      }
+    }
+  },
+  "comparison-components.cta-section": {
+    "uid": "comparison-components.cta-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "coloredHeading": {
+        "kind": "other"
+      }
+    }
+  },
+  "comparison-components.feature-acquired": {
+    "uid": "comparison-components.feature-acquired",
+    "kind": "component",
+    "attributes": {
+      "hasFeature": {
+        "kind": "other"
+      },
+      "comment": {
+        "kind": "other"
+      }
+    }
+  },
+  "comparison-components.feature-comparison-table": {
+    "uid": "comparison-components.feature-comparison-table",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "featureColumns": {
+        "kind": "component",
+        "targetUid": "comparison-components.feature-competitors"
+      },
+      "featureRows": {
+        "kind": "component",
+        "targetUid": "comparison-components.feature-list"
+      }
+    }
+  },
+  "comparison-components.feature-competitors": {
+    "uid": "comparison-components.feature-competitors",
+    "kind": "component",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "logo": {
+        "kind": "other"
+      }
+    }
+  },
+  "comparison-components.feature-hero-section": {
+    "uid": "comparison-components.feature-hero-section",
+    "kind": "component",
+    "attributes": {
+      "featureHeading": {
+        "kind": "other"
+      },
+      "featureSubheading": {
+        "kind": "other"
+      },
+      "featureButtonText": {
+        "kind": "other"
+      },
+      "featureButtonNavigation": {
+        "kind": "other"
+      },
+      "featureBackgroundImage": {
+        "kind": "other"
+      }
+    }
+  },
+  "comparison-components.feature-list": {
+    "uid": "comparison-components.feature-list",
+    "kind": "component",
+    "attributes": {
+      "featureName": {
+        "kind": "other"
+      },
+      "featureAcquired": {
+        "kind": "component",
+        "targetUid": "comparison-components.feature-acquired"
+      }
+    }
+  },
+  "comparison-components.more-information-item": {
+    "uid": "comparison-components.more-information-item",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      }
+    }
+  },
+  "comparison-components.more-information-section": {
+    "uid": "comparison-components.more-information-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "moreInformationSection": {
+        "kind": "component",
+        "targetUid": "comparison-components.more-information-item"
+      }
+    }
+  },
+  "comparison-components.review-item": {
+    "uid": "comparison-components.review-item",
+    "kind": "component",
+    "attributes": {
+      "review": {
+        "kind": "other"
+      },
+      "name": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "socialMediaImage": {
+        "kind": "other"
+      }
+    }
+  },
+  "comparison-components.review-section": {
+    "uid": "comparison-components.review-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "reviewSection": {
+        "kind": "component",
+        "targetUid": "comparison-components.review-item"
+      }
+    }
+  },
+  "comparison-components.social-proof-section": {
+    "uid": "comparison-components.social-proof-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      }
+    }
+  },
+  "comparison-components.tiles-section": {
+    "uid": "comparison-components.tiles-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "thumbnail": {
+        "kind": "other"
+      },
+      "url": {
+        "kind": "other"
+      }
+    }
+  },
+  "comparison-templates.comparison-template-1": {
+    "uid": "comparison-templates.comparison-template-1",
+    "kind": "component",
+    "attributes": {
+      "comparsionHeroSection": {
+        "kind": "component",
+        "targetUid": "comparison-components.comparison-hero-section"
+      },
+      "comparsionFeatureSection": {
+        "kind": "component",
+        "targetUid": "comparison-components.feature-comparison-table"
+      },
+      "comparsionCTASection": {
+        "kind": "component",
+        "targetUid": "comparison-components.cta-section"
+      },
+      "comparsionBenefitsSection": {
+        "kind": "component",
+        "targetUid": "comparison-components.benefit-section"
+      },
+      "compareTilesSection": {
+        "kind": "component",
+        "targetUid": "comparison-components.tiles-section"
+      },
+      "comparsionReviewSection": {
+        "kind": "component",
+        "targetUid": "comparison-components.review-section"
+      },
+      "comparsionSocialSection": {
+        "kind": "component",
+        "targetUid": "comparison-components.social-proof-section"
+      },
+      "comparsionMoreInformationSection": {
+        "kind": "component",
+        "targetUid": "comparison-components.more-information-section"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      },
+      "comparsionFooterCTASection": {
+        "kind": "component",
+        "targetUid": "comparison-components.cta-section"
+      },
+      "featureTitle": {
+        "kind": "other"
+      },
+      "featureDescription": {
+        "kind": "other"
+      },
+      "featureButtonText": {
+        "kind": "other"
+      },
+      "featureButtonNavigation": {
+        "kind": "other"
+      },
+      "featureImage": {
+        "kind": "other"
+      },
+      "featureVideo": {
+        "kind": "other"
+      },
+      "compareHeroSection": {
+        "kind": "component",
+        "targetUid": "comparison-components.compare-hero-section"
+      }
+    }
+  },
+  "components.blog-resource-item": {
+    "uid": "components.blog-resource-item",
+    "kind": "component",
+    "attributes": {
+      "blog": {
+        "kind": "relation",
+        "targetUid": "api::imagine-web.imagine-web"
+      }
+    }
+  },
+  "components.blog-resources": {
+    "uid": "components.blog-resources",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "blogResourceItems": {
+        "kind": "component",
+        "targetUid": "components.blog-resource-item"
+      }
+    }
+  },
+  "components.case-study-card": {
+    "uid": "components.case-study-card",
+    "kind": "component",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "url": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.case-study-item": {
+    "uid": "components.case-study-item",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.case-study-stats": {
+    "uid": "components.case-study-stats",
+    "kind": "component",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "caseStudyItem": {
+        "kind": "component",
+        "targetUid": "components.case-study-item"
+      },
+      "caseStudyTags": {
+        "kind": "component",
+        "targetUid": "components.case-study-tags"
+      }
+    }
+  },
+  "components.case-study-tabs": {
+    "uid": "components.case-study-tabs",
+    "kind": "component",
+    "attributes": {
+      "activeTabName": {
+        "kind": "other"
+      },
+      "caseStudyTabs": {
+        "kind": "component",
+        "targetUid": "components.hero-section-tabs"
+      }
+    }
+  },
+  "components.case-study-tags": {
+    "uid": "components.case-study-tags",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.community-creation-with-prompt": {
+    "uid": "components.community-creation-with-prompt",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "prompt": {
+        "kind": "other"
+      },
+      "generation": {
+        "kind": "other"
+      },
+      "generationPoster": {
+        "kind": "other"
+      },
+      "author": {
+        "kind": "relation",
+        "targetUid": "api::author.author"
+      }
+    }
+  },
+  "components.community-creation": {
+    "uid": "components.community-creation",
+    "kind": "component",
+    "attributes": {
+      "category": {
+        "kind": "other"
+      },
+      "creations": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.community-creations-grid-t2": {
+    "uid": "components.community-creations-grid-t2",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "creations": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.community-creations-grid-t3": {
+    "uid": "components.community-creations-grid-t3",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "creations": {
+        "kind": "component",
+        "targetUid": "components.community-creation"
+      }
+    }
+  },
+  "components.community-creations-with-prompt": {
+    "uid": "components.community-creations-with-prompt",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "communityCreationsWithPrompts": {
+        "kind": "component",
+        "targetUid": "components.community-creation-with-prompt"
+      }
+    }
+  },
+  "components.description-item": {
+    "uid": "components.description-item",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "paragraph": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.faq-section": {
+    "uid": "components.faq-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "faqs": {
+        "kind": "component",
+        "targetUid": "components.faq"
+      }
+    }
+  },
+  "components.faq": {
+    "uid": "components.faq",
+    "kind": "component",
+    "attributes": {
+      "question": {
+        "kind": "other"
+      },
+      "answer": {
+        "kind": "other"
+      },
+      "icon": {
+        "kind": "other"
+      },
+      "selectColor": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.feature-item": {
+    "uid": "components.feature-item",
+    "kind": "component",
+    "attributes": {
+      "featureTitle": {
+        "kind": "other"
+      },
+      "featureDescription": {
+        "kind": "other"
+      },
+      "featureImage": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.feature-usecase-media": {
+    "uid": "components.feature-usecase-media",
+    "kind": "component",
+    "attributes": {
+      "usecase": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.footer-hero-section": {
+    "uid": "components.footer-hero-section",
+    "kind": "component",
+    "attributes": {
+      "backgroundVideoUrl": {
+        "kind": "other"
+      },
+      "backgroundVideoPoster": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonLink": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.generation-feature-with-usecases": {
+    "uid": "components.generation-feature-with-usecases",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "featureUsecaseMedia": {
+        "kind": "component",
+        "targetUid": "components.feature-usecase-media"
+      },
+      "description": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.generation-feature": {
+    "uid": "components.generation-feature",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.generation-features-section-t6": {
+    "uid": "components.generation-features-section-t6",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "generationFeatureWithUsecases": {
+        "kind": "component",
+        "targetUid": "components.generation-feature-with-usecases"
+      },
+      "generationFeatures": {
+        "kind": "component",
+        "targetUid": "components.generation-feature"
+      }
+    }
+  },
+  "components.generation-features-section": {
+    "uid": "components.generation-features-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "generationFeatures": {
+        "kind": "component",
+        "targetUid": "components.generation-feature"
+      }
+    }
+  },
+  "components.generation-step-without-media": {
+    "uid": "components.generation-step-without-media",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.generation-step": {
+    "uid": "components.generation-step",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.generation-steps-section-with-youtube-id": {
+    "uid": "components.generation-steps-section-with-youtube-id",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "generationStepsWithoutMedia": {
+        "kind": "component",
+        "targetUid": "components.generation-step-without-media"
+      },
+      "youtubeVideoId": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.generation-steps-section": {
+    "uid": "components.generation-steps-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "generationSteps": {
+        "kind": "component",
+        "targetUid": "components.generation-step"
+      }
+    }
+  },
+  "components.get-started-banner": {
+    "uid": "components.get-started-banner",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "bannerImage": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.hero-section-t4": {
+    "uid": "components.hero-section-t4",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "defaultGenerationResult": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.hero-section-t5": {
+    "uid": "components.hero-section-t5",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "lorasList": {
+        "kind": "component",
+        "targetUid": "components.lora"
+      },
+      "defaultGenerationResult": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.hero-section-t6": {
+    "uid": "components.hero-section-t6",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "inspirations": {
+        "kind": "other"
+      },
+      "randomPromptsWithResults": {
+        "kind": "component",
+        "targetUid": "components.random-prompt-with-result"
+      }
+    }
+  },
+  "components.hero-section-tabs": {
+    "uid": "components.hero-section-tabs",
+    "kind": "component",
+    "attributes": {
+      "tabName": {
+        "kind": "other"
+      },
+      "tabUrl": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.hero-section-v1": {
+    "uid": "components.hero-section-v1",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "inspirations": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.href-langs-item": {
+    "uid": "components.href-langs-item",
+    "kind": "component",
+    "attributes": {
+      "countryCode": {
+        "kind": "other"
+      },
+      "url": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.href-langs": {
+    "uid": "components.href-langs",
+    "kind": "component",
+    "attributes": {
+      "xdefault": {
+        "kind": "other"
+      },
+      "hrefLangs": {
+        "kind": "component",
+        "targetUid": "components.href-langs-item"
+      }
+    }
+  },
+  "components.image-and-video-section": {
+    "uid": "components.image-and-video-section",
+    "kind": "component",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.image-edit-tool": {
+    "uid": "components.image-edit-tool",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaRoute": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.image-enhance-tools": {
+    "uid": "components.image-enhance-tools",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaRoute": {
+        "kind": "other"
+      },
+      "editTools": {
+        "kind": "component",
+        "targetUid": "components.image-edit-tool"
+      }
+    }
+  },
+  "components.lora": {
+    "uid": "components.lora",
+    "kind": "component",
+    "attributes": {
+      "thumbnail": {
+        "kind": "other"
+      },
+      "name": {
+        "kind": "other"
+      },
+      "tag": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.metadata": {
+    "uid": "components.metadata",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "keywords": {
+        "kind": "other"
+      },
+      "ogImage": {
+        "kind": "other"
+      },
+      "twitterImage": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.model-list": {
+    "uid": "components.model-list",
+    "kind": "component",
+    "attributes": {
+      "models": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.performance-page": {
+    "uid": "components.performance-page",
+    "kind": "component",
+    "attributes": {
+      "logo": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "modelListId": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.random-prompt-with-result": {
+    "uid": "components.random-prompt-with-result",
+    "kind": "component",
+    "attributes": {
+      "randomPrompt": {
+        "kind": "component",
+        "targetUid": "components.random-prompt"
+      },
+      "randomPromptResult": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.random-prompt": {
+    "uid": "components.random-prompt",
+    "kind": "component",
+    "attributes": {
+      "key": {
+        "kind": "other"
+      },
+      "value": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.reason-to-use-section": {
+    "uid": "components.reason-to-use-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "reasonsToUse": {
+        "kind": "component",
+        "targetUid": "components.reason-to-use"
+      }
+    }
+  },
+  "components.reason-to-use": {
+    "uid": "components.reason-to-use",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "icon": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.related-page": {
+    "uid": "components.related-page",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "url": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.related-pages-section": {
+    "uid": "components.related-pages-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "relatedPages": {
+        "kind": "component",
+        "targetUid": "components.related-page"
+      }
+    }
+  },
+  "components.review": {
+    "uid": "components.review",
+    "kind": "component",
+    "attributes": {
+      "feedback": {
+        "kind": "other"
+      },
+      "organization": {
+        "kind": "relation",
+        "targetUid": "api::organization.organization"
+      },
+      "reviewer": {
+        "kind": "relation",
+        "targetUid": "api::reviewer.reviewer"
+      }
+    }
+  },
+  "components.reviews-section": {
+    "uid": "components.reviews-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "reviews": {
+        "kind": "component",
+        "targetUid": "components.review"
+      }
+    }
+  },
+  "components.social-media-icons": {
+    "uid": "components.social-media-icons",
+    "kind": "component",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "imageUrl": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.studio": {
+    "uid": "components.studio",
+    "kind": "component",
+    "attributes": {
+      "studio": {
+        "kind": "relation",
+        "targetUid": "api::imagine-studio.imagine-studio"
+      }
+    }
+  },
+  "components.studios-showcase-section": {
+    "uid": "components.studios-showcase-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "imagineStudios": {
+        "kind": "component",
+        "targetUid": "components.studio"
+      }
+    }
+  },
+  "components.use-case": {
+    "uid": "components.use-case",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "img": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.use-cases-section": {
+    "uid": "components.use-cases-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "autoplay": {
+        "kind": "other"
+      },
+      "useCases": {
+        "kind": "component",
+        "targetUid": "components.use-case"
+      }
+    }
+  },
+  "components.video-and-text-section": {
+    "uid": "components.video-and-text-section",
+    "kind": "component",
+    "attributes": {
+      "video": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.video-generation-feature": {
+    "uid": "components.video-generation-feature",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.video-hero-section": {
+    "uid": "components.video-hero-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "randomPromptsWithResults": {
+        "kind": "component",
+        "targetUid": "components.video-random-prompts-with-result"
+      }
+    }
+  },
+  "components.video-random-prompts-with-result": {
+    "uid": "components.video-random-prompts-with-result",
+    "kind": "component",
+    "attributes": {
+      "randomPrompt": {
+        "kind": "component",
+        "targetUid": "components.random-prompt"
+      },
+      "randomPromptResult": {
+        "kind": "other"
+      },
+      "randomPromptResultPoster": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.video-section-item": {
+    "uid": "components.video-section-item",
+    "kind": "component",
+    "attributes": {
+      "videoWithText": {
+        "kind": "component",
+        "targetUid": "components.video-and-text-section"
+      },
+      "imgWithVideo": {
+        "kind": "component",
+        "targetUid": "components.image-and-video-section"
+      }
+    }
+  },
+  "components.youtube-video-section": {
+    "uid": "components.youtube-video-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "youtubeVideoId": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.z-section-t7-item": {
+    "uid": "components.z-section-t7-item",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "component",
+        "targetUid": "components.description-item"
+      },
+      "image": {
+        "kind": "other"
+      }
+    }
+  },
+  "components.z-section-t7": {
+    "uid": "components.z-section-t7",
+    "kind": "component",
+    "attributes": {
+      "section": {
+        "kind": "component",
+        "targetUid": "components.z-section-t7-item"
+      }
+    }
+  },
+  "event-components.collaborators": {
+    "uid": "event-components.collaborators",
+    "kind": "component",
+    "attributes": {
+      "logo": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      }
+    }
+  },
+  "event-components.event-components": {
+    "uid": "event-components.event-components",
+    "kind": "component",
+    "attributes": {
+      "eventTitle": {
+        "kind": "other"
+      },
+      "eventThumbnail": {
+        "kind": "other"
+      },
+      "eventDate": {
+        "kind": "other"
+      },
+      "eventStartTime": {
+        "kind": "other"
+      },
+      "eventLocation": {
+        "kind": "other"
+      },
+      "eventUrl": {
+        "kind": "other"
+      },
+      "eventEndTime": {
+        "kind": "other"
+      }
+    }
+  },
+  "event-components.speaker": {
+    "uid": "event-components.speaker",
+    "kind": "component",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "organization": {
+        "kind": "other"
+      },
+      "role": {
+        "kind": "other"
+      },
+      "picture": {
+        "kind": "other"
+      },
+      "profileUrl": {
+        "kind": "other"
+      }
+    }
+  },
+  "feed-components.ai-covers": {
+    "uid": "feed-components.ai-covers",
+    "kind": "component",
+    "attributes": {
+      "thumbnail": {
+        "kind": "other"
+      },
+      "musicTitle": {
+        "kind": "other"
+      },
+      "musicTags": {
+        "kind": "other"
+      },
+      "lyrics": {
+        "kind": "other"
+      },
+      "audioSrc": {
+        "kind": "other"
+      },
+      "category": {
+        "kind": "relation",
+        "targetUid": "api::music-feed-category.music-feed-category"
+      }
+    }
+  },
+  "feed-components.bg-music": {
+    "uid": "feed-components.bg-music",
+    "kind": "component",
+    "attributes": {
+      "thumbnail": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "tags": {
+        "kind": "other"
+      },
+      "audioFile": {
+        "kind": "other"
+      },
+      "category": {
+        "kind": "relation",
+        "targetUid": "api::audio-feed-category.audio-feed-category"
+      }
+    }
+  },
+  "feed-components.image-feed": {
+    "uid": "feed-components.image-feed",
+    "kind": "component",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "prompt": {
+        "kind": "other"
+      },
+      "settings": {
+        "kind": "other"
+      },
+      "category": {
+        "kind": "relation",
+        "targetUid": "api::image-feed-category.image-feed-category"
+      },
+      "blurhash": {
+        "kind": "other"
+      }
+    }
+  },
+  "feed-components.text-to-instrumental": {
+    "uid": "feed-components.text-to-instrumental",
+    "kind": "component",
+    "attributes": {
+      "thumbnail": {
+        "kind": "other"
+      },
+      "musicTitle": {
+        "kind": "other"
+      },
+      "musicTags": {
+        "kind": "other"
+      },
+      "lyrics": {
+        "kind": "other"
+      },
+      "audioSrc": {
+        "kind": "other"
+      },
+      "category": {
+        "kind": "relation",
+        "targetUid": "api::music-feed-category.music-feed-category"
+      },
+      "settings": {
+        "kind": "other"
+      }
+    }
+  },
+  "feed-components.text-to-song": {
+    "uid": "feed-components.text-to-song",
+    "kind": "component",
+    "attributes": {
+      "thumbnail": {
+        "kind": "other"
+      },
+      "musicTitle": {
+        "kind": "other"
+      },
+      "musicTags": {
+        "kind": "other"
+      },
+      "lyrics": {
+        "kind": "other"
+      },
+      "category": {
+        "kind": "relation",
+        "targetUid": "api::music-feed-category.music-feed-category"
+      },
+      "audioSrc": {
+        "kind": "other"
+      },
+      "settings": {
+        "kind": "other"
+      }
+    }
+  },
+  "feed-components.text-to-speech": {
+    "uid": "feed-components.text-to-speech",
+    "kind": "component",
+    "attributes": {
+      "thumbnail": {
+        "kind": "other"
+      },
+      "narratorName": {
+        "kind": "other"
+      },
+      "previewText": {
+        "kind": "other"
+      },
+      "fullScript": {
+        "kind": "other"
+      },
+      "audioFile": {
+        "kind": "other"
+      },
+      "category": {
+        "kind": "relation",
+        "targetUid": "api::audio-feed-category.audio-feed-category"
+      },
+      "settings": {
+        "kind": "other"
+      }
+    }
+  },
+  "feed-components.video-feed": {
+    "uid": "feed-components.video-feed",
+    "kind": "component",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "prompt": {
+        "kind": "other"
+      },
+      "settings": {
+        "kind": "other"
+      },
+      "videoHd": {
+        "kind": "other"
+      },
+      "category": {
+        "kind": "relation",
+        "targetUid": "api::video-feed-category.video-feed-category"
+      },
+      "blurhash": {
+        "kind": "other"
+      }
+    }
+  },
+  "ideate-components.ideate-banner-section": {
+    "uid": "ideate-components.ideate-banner-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      }
+    }
+  },
+  "ideate-components.ideate-feature-item": {
+    "uid": "ideate-components.ideate-feature-item",
+    "kind": "component",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "heading": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      }
+    }
+  },
+  "ideate-components.ideate-feature": {
+    "uid": "ideate-components.ideate-feature",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "ideateFeature": {
+        "kind": "component",
+        "targetUid": "ideate-components.ideate-feature-item"
+      }
+    }
+  },
+  "ideate-components.ideate-get-started-item": {
+    "uid": "ideate-components.ideate-get-started-item",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "itemNavigation": {
+        "kind": "other"
+      }
+    }
+  },
+  "ideate-components.ideate-get-started-section": {
+    "uid": "ideate-components.ideate-get-started-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "getStartedItem": {
+        "kind": "component",
+        "targetUid": "ideate-components.ideate-get-started-item"
+      }
+    }
+  },
+  "ideate-components.ideate-hero-section": {
+    "uid": "ideate-components.ideate-hero-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      }
+    }
+  },
+  "ideate-components.ideate-review-item": {
+    "uid": "ideate-components.ideate-review-item",
+    "kind": "component",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "review": {
+        "kind": "other"
+      },
+      "profession": {
+        "kind": "other"
+      }
+    }
+  },
+  "ideate-components.ideate-review-section": {
+    "uid": "ideate-components.ideate-review-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "reviews": {
+        "kind": "component",
+        "targetUid": "ideate-components.ideate-review-item"
+      }
+    }
+  },
+  "ideate-components.ideate-type-writer": {
+    "uid": "ideate-components.ideate-type-writer",
+    "kind": "component",
+    "attributes": {
+      "typeWriter": {
+        "kind": "other"
+      }
+    }
+  },
+  "ideate-components.ideate-use-case-item": {
+    "uid": "ideate-components.ideate-use-case-item",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      }
+    }
+  },
+  "ideate-components.ideate-use-case-section": {
+    "uid": "ideate-components.ideate-use-case-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "useCase": {
+        "kind": "component",
+        "targetUid": "ideate-components.ideate-use-case-item"
+      }
+    }
+  },
+  "ideate-components.ideate-z-fold": {
+    "uid": "ideate-components.ideate-z-fold",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      }
+    }
+  },
+  "ideate-components.ideate-zfold-sec": {
+    "uid": "ideate-components.ideate-zfold-sec",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "ideateZfold": {
+        "kind": "component",
+        "targetUid": "ideate-components.ideate-z-fold"
+      }
+    }
+  },
+  "ideate-templates.ideate-template-1": {
+    "uid": "ideate-templates.ideate-template-1",
+    "kind": "component",
+    "attributes": {
+      "ideateHeroSection": {
+        "kind": "component",
+        "targetUid": "ideate-components.ideate-hero-section"
+      },
+      "ideateTypeWriter": {
+        "kind": "component",
+        "targetUid": "ideate-components.ideate-type-writer"
+      },
+      "ideateFeatures": {
+        "kind": "component",
+        "targetUid": "ideate-components.ideate-feature"
+      },
+      "ideateUseCaseSection": {
+        "kind": "component",
+        "targetUid": "ideate-components.ideate-use-case-section"
+      },
+      "ideateZfold": {
+        "kind": "component",
+        "targetUid": "ideate-components.ideate-zfold-sec"
+      },
+      "ideateReviewSection": {
+        "kind": "component",
+        "targetUid": "ideate-components.ideate-review-section"
+      },
+      "ideateGetStartedSection": {
+        "kind": "component",
+        "targetUid": "ideate-components.ideate-get-started-section"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "ideateBannerSection": {
+        "kind": "component",
+        "targetUid": "ideate-components.ideate-banner-section"
+      },
+      "studiosShowcaseSection": {
+        "kind": "component",
+        "targetUid": "components.studios-showcase-section"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      }
+    }
+  },
+  "industry-components.banner-section": {
+    "uid": "industry-components.banner-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "gradientHeading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      }
+    }
+  },
+  "industry-components.creative-tools-section-item": {
+    "uid": "industry-components.creative-tools-section-item",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      }
+    }
+  },
+  "industry-components.creative-tools-section": {
+    "uid": "industry-components.creative-tools-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "creativeTools": {
+        "kind": "component",
+        "targetUid": "industry-components.creative-tools-section-item"
+      }
+    }
+  },
+  "industry-components.generate-anything-item": {
+    "uid": "industry-components.generate-anything-item",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      }
+    }
+  },
+  "industry-components.generate-anything": {
+    "uid": "industry-components.generate-anything",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "generationItem": {
+        "kind": "component",
+        "targetUid": "industry-components.generate-anything-item"
+      }
+    }
+  },
+  "industry-components.generate-pro-visual": {
+    "uid": "industry-components.generate-pro-visual",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      }
+    }
+  },
+  "industry-components.hero-section": {
+    "uid": "industry-components.hero-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "backgroundImage": {
+        "kind": "other"
+      },
+      "backgroundVideo": {
+        "kind": "other"
+      },
+      "leftButtonText": {
+        "kind": "other"
+      },
+      "leftButtonNavigation": {
+        "kind": "other"
+      },
+      "rightButtonText": {
+        "kind": "other"
+      },
+      "rightButtonNavigation": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "isHeroSectionContentWhite": {
+        "kind": "other"
+      }
+    }
+  },
+  "industry-components.review-item": {
+    "uid": "industry-components.review-item",
+    "kind": "component",
+    "attributes": {
+      "organization": {
+        "kind": "relation",
+        "targetUid": "api::organization.organization"
+      },
+      "reviewer": {
+        "kind": "relation",
+        "targetUid": "api::reviewer.reviewer"
+      },
+      "review": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      }
+    }
+  },
+  "industry-components.review-section": {
+    "uid": "industry-components.review-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "reviews": {
+        "kind": "component",
+        "targetUid": "industry-components.review-item"
+      }
+    }
+  },
+  "industry-components.use-case-item-points": {
+    "uid": "industry-components.use-case-item-points",
+    "kind": "component",
+    "attributes": {
+      "point": {
+        "kind": "other"
+      },
+      "icon": {
+        "kind": "other"
+      }
+    }
+  },
+  "industry-components.use-case-item": {
+    "uid": "industry-components.use-case-item",
+    "kind": "component",
+    "attributes": {
+      "category": {
+        "kind": "other"
+      },
+      "categoryIcon": {
+        "kind": "other"
+      },
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "bulletPoints": {
+        "kind": "component",
+        "targetUid": "industry-components.use-case-item-points"
+      }
+    }
+  },
+  "industry-components.use-cases": {
+    "uid": "industry-components.use-cases",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "usecaseItems": {
+        "kind": "component",
+        "targetUid": "industry-components.use-case-item"
+      }
+    }
+  },
+  "industry-components.why-choose-imagine-art-item-bullets": {
+    "uid": "industry-components.why-choose-imagine-art-item-bullets",
+    "kind": "component",
+    "attributes": {
+      "bullet": {
+        "kind": "other"
+      }
+    }
+  },
+  "industry-components.why-choose-imagine-art-item": {
+    "uid": "industry-components.why-choose-imagine-art-item",
+    "kind": "component",
+    "attributes": {
+      "icon": {
+        "kind": "other"
+      },
+      "heading": {
+        "kind": "other"
+      },
+      "bulletPoints": {
+        "kind": "component",
+        "targetUid": "industry-components.why-choose-imagine-art-item-bullets"
+      }
+    }
+  },
+  "industry-components.why-choose-imagine-art": {
+    "uid": "industry-components.why-choose-imagine-art",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "items": {
+        "kind": "component",
+        "targetUid": "industry-components.why-choose-imagine-art-item"
+      }
+    }
+  },
+  "industry-templates.industry-templates": {
+    "uid": "industry-templates.industry-templates",
+    "kind": "component",
+    "attributes": {
+      "industryHeroSection": {
+        "kind": "component",
+        "targetUid": "industry-components.hero-section"
+      },
+      "generationSection": {
+        "kind": "component",
+        "targetUid": "industry-components.generate-anything"
+      },
+      "whyChooseImagineArt": {
+        "kind": "component",
+        "targetUid": "industry-components.why-choose-imagine-art"
+      },
+      "generateProVisual": {
+        "kind": "component",
+        "targetUid": "industry-components.generate-pro-visual"
+      },
+      "usecaseSection": {
+        "kind": "component",
+        "targetUid": "industry-components.use-cases"
+      },
+      "creativeToolsSection": {
+        "kind": "component",
+        "targetUid": "industry-components.creative-tools-section"
+      },
+      "reviewSection": {
+        "kind": "component",
+        "targetUid": "industry-components.review-section"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      },
+      "bannerSection": {
+        "kind": "component",
+        "targetUid": "industry-components.banner-section"
+      }
+    }
+  },
+  "mcp-components.build-item": {
+    "uid": "mcp-components.build-item",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaUrl": {
+        "kind": "other"
+      }
+    }
+  },
+  "mcp-components.build-section": {
+    "uid": "mcp-components.build-section",
+    "kind": "component",
+    "attributes": {
+      "eyebrow": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "rotatingWords": {
+        "kind": "component",
+        "targetUid": "mcp-components.why-item"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaUrl": {
+        "kind": "other"
+      },
+      "items": {
+        "kind": "component",
+        "targetUid": "mcp-components.build-item"
+      }
+    }
+  },
+  "mcp-components.clients-section": {
+    "uid": "mcp-components.clients-section",
+    "kind": "component",
+    "attributes": {
+      "eyebrow": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaUrl": {
+        "kind": "other"
+      }
+    }
+  },
+  "mcp-components.hero-section": {
+    "uid": "mcp-components.hero-section",
+    "kind": "component",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "headline": {
+        "kind": "other"
+      },
+      "subheadline": {
+        "kind": "other"
+      },
+      "clients": {
+        "kind": "component",
+        "targetUid": "mcp-components.mcp-client"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaUrl": {
+        "kind": "other"
+      },
+      "secondaryCtaText": {
+        "kind": "other"
+      },
+      "secondaryCtaUrl": {
+        "kind": "other"
+      }
+    }
+  },
+  "mcp-components.install-section": {
+    "uid": "mcp-components.install-section",
+    "kind": "component",
+    "attributes": {
+      "eyebrow": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "clients": {
+        "kind": "component",
+        "targetUid": "mcp-components.mcp-client-steps"
+      }
+    }
+  },
+  "mcp-components.mcp-client-steps": {
+    "uid": "mcp-components.mcp-client-steps",
+    "kind": "component",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "icon": {
+        "kind": "other"
+      },
+      "steps": {
+        "kind": "other"
+      },
+      "codeSnippet": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      }
+    }
+  },
+  "mcp-components.mcp-client": {
+    "uid": "mcp-components.mcp-client",
+    "kind": "component",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "icon": {
+        "kind": "other"
+      }
+    }
+  },
+  "mcp-components.studio-result": {
+    "uid": "mcp-components.studio-result",
+    "kind": "component",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "caption": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "poster": {
+        "kind": "other"
+      },
+      "aspectRatio": {
+        "kind": "other"
+      }
+    }
+  },
+  "mcp-components.studio-step": {
+    "uid": "mcp-components.studio-step",
+    "kind": "component",
+    "attributes": {
+      "key": {
+        "kind": "other"
+      },
+      "label": {
+        "kind": "other"
+      },
+      "confirmedLabel": {
+        "kind": "other"
+      },
+      "promptText": {
+        "kind": "other"
+      },
+      "screenshot": {
+        "kind": "other"
+      }
+    }
+  },
+  "mcp-components.studio": {
+    "uid": "mcp-components.studio",
+    "kind": "component",
+    "attributes": {
+      "number": {
+        "kind": "other"
+      },
+      "badge": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaUrl": {
+        "kind": "other"
+      },
+      "steps": {
+        "kind": "component",
+        "targetUid": "mcp-components.studio-step"
+      },
+      "result": {
+        "kind": "component",
+        "targetUid": "mcp-components.studio-result"
+      }
+    }
+  },
+  "mcp-components.studios-section": {
+    "uid": "mcp-components.studios-section",
+    "kind": "component",
+    "attributes": {
+      "eyebrow": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "studios": {
+        "kind": "component",
+        "targetUid": "mcp-components.studio"
+      }
+    }
+  },
+  "mcp-components.why-item": {
+    "uid": "mcp-components.why-item",
+    "kind": "component",
+    "attributes": {
+      "text": {
+        "kind": "other"
+      }
+    }
+  },
+  "mcp-components.why-section": {
+    "uid": "mcp-components.why-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "phrases": {
+        "kind": "component",
+        "targetUid": "mcp-components.why-item"
+      }
+    }
+  },
+  "mcp-template.mcp-template-1": {
+    "uid": "mcp-template.mcp-template-1",
+    "kind": "component",
+    "attributes": {
+      "mcpHeroSection": {
+        "kind": "component",
+        "targetUid": "mcp-components.hero-section"
+      },
+      "installSection": {
+        "kind": "component",
+        "targetUid": "mcp-components.install-section"
+      },
+      "whySection": {
+        "kind": "component",
+        "targetUid": "mcp-components.why-section"
+      },
+      "toolsSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.video-generator-zfold"
+      },
+      "studiosSection": {
+        "kind": "component",
+        "targetUid": "mcp-components.studios-section"
+      },
+      "buildSection": {
+        "kind": "component",
+        "targetUid": "mcp-components.build-section"
+      },
+      "clientsSection": {
+        "kind": "component",
+        "targetUid": "mcp-components.clients-section"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "trustPilotReviews": {
+        "kind": "component",
+        "targetUid": "ai-video-components.user-reviews"
+      },
+      "relatedPagesSection": {
+        "kind": "component",
+        "targetUid": "components.related-pages-section"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      }
+    }
+  },
+  "mini-apps-custom-input-components.multiple-angles-input": {
+    "uid": "mini-apps-custom-input-components.multiple-angles-input",
+    "kind": "component",
+    "attributes": {
+      "azimuthName": {
+        "kind": "other"
+      },
+      "elevationName": {
+        "kind": "other"
+      },
+      "zoomName": {
+        "kind": "other"
+      },
+      "azimuthMin": {
+        "kind": "other"
+      },
+      "azimuthMax": {
+        "kind": "other"
+      },
+      "azimuthDefault": {
+        "kind": "other"
+      },
+      "elevationMin": {
+        "kind": "other"
+      },
+      "elevationMax": {
+        "kind": "other"
+      },
+      "elevationDefault": {
+        "kind": "other"
+      },
+      "zoomMin": {
+        "kind": "other"
+      },
+      "zoomMax": {
+        "kind": "other"
+      },
+      "zoomDefault": {
+        "kind": "other"
+      },
+      "label": {
+        "kind": "other"
+      },
+      "centerImageFieldName": {
+        "kind": "other"
+      }
+    }
+  },
+  "mini-apps-custom-input-components.relight-input-config": {
+    "uid": "mini-apps-custom-input-components.relight-input-config",
+    "kind": "component",
+    "attributes": {
+      "presetsConfig": {
+        "kind": "other"
+      },
+      "azimuthRangesConfig": {
+        "kind": "other"
+      },
+      "elevationRangesConfig": {
+        "kind": "other"
+      },
+      "lightIntensityRangesConfig": {
+        "kind": "other"
+      },
+      "label": {
+        "kind": "other"
+      },
+      "azimuthDefaultValue": {
+        "kind": "other"
+      },
+      "elevationDefaultValue": {
+        "kind": "other"
+      },
+      "zoomDefaultValue": {
+        "kind": "other"
+      },
+      "lightIntensityDefaultValue": {
+        "kind": "other"
+      },
+      "name": {
+        "kind": "other"
+      },
+      "centerImageFieldName": {
+        "kind": "other"
+      },
+      "defaultColorHex": {
+        "kind": "other"
+      }
+    }
+  },
+  "mini-apps-input-components.file-input-preset-item": {
+    "uid": "mini-apps-input-components.file-input-preset-item",
+    "kind": "component",
+    "attributes": {
+      "category": {
+        "kind": "other"
+      },
+      "url": {
+        "kind": "other"
+      },
+      "poster": {
+        "kind": "other"
+      },
+      "label": {
+        "kind": "other"
+      }
+    }
+  },
+  "mini-apps-input-components.file-input-presets": {
+    "uid": "mini-apps-input-components.file-input-presets",
+    "kind": "component",
+    "attributes": {
+      "variant": {
+        "kind": "other"
+      },
+      "presets": {
+        "kind": "component",
+        "targetUid": "mini-apps-input-components.file-input-preset-item"
+      },
+      "aspectRatio": {
+        "kind": "other"
+      }
+    }
+  },
+  "mini-apps-input-components.file-input": {
+    "uid": "mini-apps-input-components.file-input",
+    "kind": "component",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "label": {
+        "kind": "other"
+      },
+      "colSpan": {
+        "kind": "other"
+      },
+      "accept": {
+        "kind": "other"
+      },
+      "uploadTriggerText": {
+        "kind": "other"
+      },
+      "uploadTriggerIcon": {
+        "kind": "other"
+      },
+      "sampleInput": {
+        "kind": "other"
+      },
+      "maxFileSizeInMB": {
+        "kind": "other"
+      },
+      "maxVideoDuration": {
+        "kind": "other"
+      },
+      "minVideoDuration": {
+        "kind": "other"
+      },
+      "minAllowedResolution": {
+        "kind": "other"
+      },
+      "maxAllowedResolution": {
+        "kind": "other"
+      },
+      "fileInputPresets": {
+        "kind": "component",
+        "targetUid": "mini-apps-input-components.file-input-presets"
+      },
+      "willDetermineOutputAspectRatio": {
+        "kind": "other"
+      }
+    }
+  },
+  "mini-apps-input-components.select-input-option": {
+    "uid": "mini-apps-input-components.select-input-option",
+    "kind": "component",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "value": {
+        "kind": "other"
+      }
+    }
+  },
+  "mini-apps-input-components.select-input": {
+    "uid": "mini-apps-input-components.select-input",
+    "kind": "component",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "label": {
+        "kind": "other"
+      },
+      "colSpan": {
+        "kind": "other"
+      },
+      "autofocus": {
+        "kind": "other"
+      },
+      "multiple": {
+        "kind": "other"
+      },
+      "size": {
+        "kind": "other"
+      },
+      "options": {
+        "kind": "component",
+        "targetUid": "mini-apps-input-components.select-input-option"
+      },
+      "outputType": {
+        "kind": "other"
+      }
+    }
+  },
+  "mini-apps-input-components.text-input-preset-item": {
+    "uid": "mini-apps-input-components.text-input-preset-item",
+    "kind": "component",
+    "attributes": {
+      "category": {
+        "kind": "other"
+      },
+      "imageUrl": {
+        "kind": "other"
+      },
+      "videoUrl": {
+        "kind": "other"
+      },
+      "label": {
+        "kind": "other"
+      },
+      "value": {
+        "kind": "other"
+      }
+    }
+  },
+  "mini-apps-input-components.text-input-presets": {
+    "uid": "mini-apps-input-components.text-input-presets",
+    "kind": "component",
+    "attributes": {
+      "presets": {
+        "kind": "component",
+        "targetUid": "mini-apps-input-components.text-input-preset-item"
+      },
+      "aspectRatio": {
+        "kind": "other"
+      }
+    }
+  },
+  "mini-apps-input-components.textarea-input": {
+    "uid": "mini-apps-input-components.textarea-input",
+    "kind": "component",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "label": {
+        "kind": "other"
+      },
+      "rows": {
+        "kind": "other"
+      },
+      "cols": {
+        "kind": "other"
+      },
+      "wrap": {
+        "kind": "other"
+      },
+      "maxLength": {
+        "kind": "other"
+      },
+      "minLength": {
+        "kind": "other"
+      },
+      "placeholder": {
+        "kind": "other"
+      },
+      "colSpan": {
+        "kind": "other"
+      },
+      "defaultValue": {
+        "kind": "other"
+      },
+      "textInputPresets": {
+        "kind": "component",
+        "targetUid": "mini-apps-input-components.text-input-presets"
+      }
+    }
+  },
+  "mini-apps-ui-components.app-z-fold-section": {
+    "uid": "mini-apps-ui-components.app-z-fold-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaHref": {
+        "kind": "other"
+      },
+      "appZFoldItems": {
+        "kind": "component",
+        "targetUid": "mini-apps-ui-components.mini-app-z-fold-item"
+      }
+    }
+  },
+  "mini-apps-ui-components.mini-app-banner-section": {
+    "uid": "mini-apps-ui-components.mini-app-banner-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "bgImage": {
+        "kind": "other"
+      }
+    }
+  },
+  "mini-apps-ui-components.mini-app-faq-section": {
+    "uid": "mini-apps-ui-components.mini-app-faq-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "appFAQs": {
+        "kind": "component",
+        "targetUid": "mini-apps-ui-components.mini-app-faq"
+      }
+    }
+  },
+  "mini-apps-ui-components.mini-app-faq": {
+    "uid": "mini-apps-ui-components.mini-app-faq",
+    "kind": "component",
+    "attributes": {
+      "question": {
+        "kind": "other"
+      },
+      "answer": {
+        "kind": "other"
+      }
+    }
+  },
+  "mini-apps-ui-components.mini-app-generation-step-section": {
+    "uid": "mini-apps-ui-components.mini-app-generation-step-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "appGenerationSteps": {
+        "kind": "component",
+        "targetUid": "mini-apps-ui-components.mini-app-generation-step"
+      }
+    }
+  },
+  "mini-apps-ui-components.mini-app-generation-step": {
+    "uid": "mini-apps-ui-components.mini-app-generation-step",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "mediaImage": {
+        "kind": "other"
+      },
+      "mediaVideo": {
+        "kind": "other"
+      }
+    }
+  },
+  "mini-apps-ui-components.mini-app-inspiration-item": {
+    "uid": "mini-apps-ui-components.mini-app-inspiration-item",
+    "kind": "component",
+    "attributes": {
+      "formConfig": {
+        "kind": "other"
+      },
+      "type": {
+        "kind": "other"
+      },
+      "inspirationUrl": {
+        "kind": "other"
+      },
+      "inspirationPoster": {
+        "kind": "other"
+      },
+      "aspectRatio": {
+        "kind": "other"
+      }
+    }
+  },
+  "mini-apps-ui-components.mini-app-inspirations-section": {
+    "uid": "mini-apps-ui-components.mini-app-inspirations-section",
+    "kind": "component",
+    "attributes": {
+      "appInspirations": {
+        "kind": "component",
+        "targetUid": "mini-apps-ui-components.mini-app-inspiration-item"
+      }
+    }
+  },
+  "mini-apps-ui-components.mini-app-preset-section": {
+    "uid": "mini-apps-ui-components.mini-app-preset-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "appPresets": {
+        "kind": "component",
+        "targetUid": "mini-apps-ui-components.mini-app-preset"
+      }
+    }
+  },
+  "mini-apps-ui-components.mini-app-preset": {
+    "uid": "mini-apps-ui-components.mini-app-preset",
+    "kind": "component",
+    "attributes": {
+      "previewImage": {
+        "kind": "other"
+      },
+      "value": {
+        "kind": "other"
+      },
+      "formFieldName": {
+        "kind": "other"
+      }
+    }
+  },
+  "mini-apps-ui-components.mini-app-related-blogs-section": {
+    "uid": "mini-apps-ui-components.mini-app-related-blogs-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "appRelatedBlogs": {
+        "kind": "relation",
+        "targetUid": "api::imagine-web.imagine-web"
+      }
+    }
+  },
+  "mini-apps-ui-components.mini-app-review-item": {
+    "uid": "mini-apps-ui-components.mini-app-review-item",
+    "kind": "component",
+    "attributes": {
+      "reviewText": {
+        "kind": "other"
+      },
+      "rating": {
+        "kind": "other"
+      },
+      "reviewer": {
+        "kind": "relation",
+        "targetUid": "api::reviewer.reviewer"
+      },
+      "org": {
+        "kind": "relation",
+        "targetUid": "api::organization.organization"
+      }
+    }
+  },
+  "mini-apps-ui-components.mini-app-reviews-section": {
+    "uid": "mini-apps-ui-components.mini-app-reviews-section",
+    "kind": "component",
+    "attributes": {
+      "appReviews": {
+        "kind": "component",
+        "targetUid": "mini-apps-ui-components.mini-app-review-item"
+      },
+      "heading": {
+        "kind": "other"
+      }
+    }
+  },
+  "mini-apps-ui-components.mini-app-z-fold-item": {
+    "uid": "mini-apps-ui-components.mini-app-z-fold-item",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaHref": {
+        "kind": "other"
+      },
+      "mediaImage": {
+        "kind": "other"
+      },
+      "mediaVideo": {
+        "kind": "other"
+      }
+    }
+  },
+  "music-components.music-banner-section": {
+    "uid": "music-components.music-banner-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      }
+    }
+  },
+  "music-components.music-commercial-section": {
+    "uid": "music-components.music-commercial-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      }
+    }
+  },
+  "music-components.music-community-section": {
+    "uid": "music-components.music-community-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "musicTransitionImages": {
+        "kind": "component",
+        "targetUid": "music-components.music-transition-image"
+      }
+    }
+  },
+  "music-components.music-feature-item": {
+    "uid": "music-components.music-feature-item",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      }
+    }
+  },
+  "music-components.music-feature-section": {
+    "uid": "music-components.music-feature-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "musicFeatureItems": {
+        "kind": "component",
+        "targetUid": "music-components.music-feature-item"
+      }
+    }
+  },
+  "music-components.music-hero-section": {
+    "uid": "music-components.music-hero-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "randomPrompt": {
+        "kind": "component",
+        "targetUid": "components.random-prompt"
+      }
+    }
+  },
+  "music-components.music-marquee-item": {
+    "uid": "music-components.music-marquee-item",
+    "kind": "component",
+    "attributes": {
+      "poster": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "react": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      }
+    }
+  },
+  "music-components.music-marquee-section": {
+    "uid": "music-components.music-marquee-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "musicMarqueeItems": {
+        "kind": "component",
+        "targetUid": "music-components.music-marquee-item"
+      }
+    }
+  },
+  "music-components.music-transition-image": {
+    "uid": "music-components.music-transition-image",
+    "kind": "component",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "hoverImage": {
+        "kind": "other"
+      }
+    }
+  },
+  "music-components.music-z-fold-item": {
+    "uid": "music-components.music-z-fold-item",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "src": {
+        "kind": "other"
+      },
+      "isImage": {
+        "kind": "other"
+      }
+    }
+  },
+  "music-components.music-z-fold-section": {
+    "uid": "music-components.music-z-fold-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "musicZFoldItems": {
+        "kind": "component",
+        "targetUid": "music-components.music-z-fold-item"
+      }
+    }
+  },
+  "music-templates.music-template-1": {
+    "uid": "music-templates.music-template-1",
+    "kind": "component",
+    "attributes": {
+      "musicHeroSection": {
+        "kind": "component",
+        "targetUid": "music-components.music-hero-section"
+      },
+      "musicMarqueeSection": {
+        "kind": "component",
+        "targetUid": "music-components.music-marquee-section"
+      },
+      "musicFeatureSection": {
+        "kind": "component",
+        "targetUid": "music-components.music-feature-section"
+      },
+      "musicCommercialSection": {
+        "kind": "component",
+        "targetUid": "music-components.music-commercial-section"
+      },
+      "musicZFoldSection": {
+        "kind": "component",
+        "targetUid": "music-components.music-z-fold-section"
+      },
+      "musicCommunitySection": {
+        "kind": "component",
+        "targetUid": "music-components.music-community-section"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "musicBannerSection": {
+        "kind": "component",
+        "targetUid": "music-components.music-banner-section"
+      },
+      "studiosShowcaseSection": {
+        "kind": "component",
+        "targetUid": "components.studios-showcase-section"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      }
+    }
+  },
+  "performance-template.performance-template": {
+    "uid": "performance-template.performance-template",
+    "kind": "component",
+    "attributes": {
+      "performanceTemplate": {
+        "kind": "component",
+        "targetUid": "components.performance-page"
+      }
+    }
+  },
+  "shorts-components.generation-guidelines": {
+    "uid": "shorts-components.generation-guidelines",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "shortGenerationitems": {
+        "kind": "component",
+        "targetUid": "shorts-components.shorts-gen-guide-item"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      }
+    }
+  },
+  "shorts-components.list": {
+    "uid": "shorts-components.list",
+    "kind": "component",
+    "attributes": {
+      "item": {
+        "kind": "other"
+      }
+    }
+  },
+  "shorts-components.shorts-banner-section": {
+    "uid": "shorts-components.shorts-banner-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "gradientTitle": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      }
+    }
+  },
+  "shorts-components.shorts-carousel-item": {
+    "uid": "shorts-components.shorts-carousel-item",
+    "kind": "component",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "type": {
+        "kind": "other"
+      },
+      "prompt": {
+        "kind": "other"
+      }
+    }
+  },
+  "shorts-components.shorts-credit-section": {
+    "uid": "shorts-components.shorts-credit-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "columns": {
+        "kind": "component",
+        "targetUid": "shorts-components.list"
+      },
+      "rows": {
+        "kind": "component",
+        "targetUid": "shorts-components.shorts-credits-row"
+      }
+    }
+  },
+  "shorts-components.shorts-credits-row": {
+    "uid": "shorts-components.shorts-credits-row",
+    "kind": "component",
+    "attributes": {
+      "feature": {
+        "kind": "other"
+      },
+      "subFeatures": {
+        "kind": "component",
+        "targetUid": "shorts-components.shorts-sub-feature"
+      }
+    }
+  },
+  "shorts-components.shorts-gen-guide-item": {
+    "uid": "shorts-components.shorts-gen-guide-item",
+    "kind": "component",
+    "attributes": {
+      "generationAsset": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      }
+    }
+  },
+  "shorts-components.shorts-hero-section": {
+    "uid": "shorts-components.shorts-hero-section",
+    "kind": "component",
+    "attributes": {
+      "subheading": {
+        "kind": "other"
+      },
+      "heading": {
+        "kind": "other"
+      },
+      "gradientHeading": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      }
+    }
+  },
+  "shorts-components.shorts-inspiration-section": {
+    "uid": "shorts-components.shorts-inspiration-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "subtitle": {
+        "kind": "other"
+      },
+      "leftCarousel": {
+        "kind": "component",
+        "targetUid": "shorts-components.shorts-carousel-item"
+      },
+      "rightCarousel": {
+        "kind": "component",
+        "targetUid": "shorts-components.shorts-carousel-item"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      }
+    }
+  },
+  "shorts-components.shorts-model-item": {
+    "uid": "shorts-components.shorts-model-item",
+    "kind": "component",
+    "attributes": {
+      "serialNumber": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      }
+    }
+  },
+  "shorts-components.shorts-model-section": {
+    "uid": "shorts-components.shorts-model-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "boldDescription": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "shortsModelItems": {
+        "kind": "component",
+        "targetUid": "shorts-components.shorts-model-item"
+      }
+    }
+  },
+  "shorts-components.shorts-pricing-section": {
+    "uid": "shorts-components.shorts-pricing-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      }
+    }
+  },
+  "shorts-components.shorts-showcase-card-item": {
+    "uid": "shorts-components.shorts-showcase-card-item",
+    "kind": "component",
+    "attributes": {
+      "logo": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      }
+    }
+  },
+  "shorts-components.shorts-showcase-marquee-item": {
+    "uid": "shorts-components.shorts-showcase-marquee-item",
+    "kind": "component",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "role": {
+        "kind": "other"
+      },
+      "profile": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "logo": {
+        "kind": "other"
+      }
+    }
+  },
+  "shorts-components.shorts-stats-section": {
+    "uid": "shorts-components.shorts-stats-section",
+    "kind": "component",
+    "attributes": {
+      "titleTop": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "showcaseCardItems": {
+        "kind": "component",
+        "targetUid": "shorts-components.shorts-showcase-card-item"
+      },
+      "showcaseMarqueeItems": {
+        "kind": "component",
+        "targetUid": "shorts-components.shorts-showcase-marquee-item"
+      }
+    }
+  },
+  "shorts-components.shorts-sub-feature": {
+    "uid": "shorts-components.shorts-sub-feature",
+    "kind": "component",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "cost": {
+        "kind": "other"
+      }
+    }
+  },
+  "shorts-components.shorts-z-fold-item": {
+    "uid": "shorts-components.shorts-z-fold-item",
+    "kind": "component",
+    "attributes": {
+      "video": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "points": {
+        "kind": "component",
+        "targetUid": "shorts-components.list"
+      }
+    }
+  },
+  "shorts-components.shorts-z-fold-section": {
+    "uid": "shorts-components.shorts-z-fold-section",
+    "kind": "component",
+    "attributes": {
+      "zFoldItems": {
+        "kind": "component",
+        "targetUid": "shorts-components.shorts-z-fold-item"
+      }
+    }
+  },
+  "shorts-template.shorts-template-1": {
+    "uid": "shorts-template.shorts-template-1",
+    "kind": "component",
+    "attributes": {
+      "shortsHeroSection": {
+        "kind": "component",
+        "targetUid": "shorts-components.shorts-hero-section"
+      },
+      "shortsInspirationSection": {
+        "kind": "component",
+        "targetUid": "shorts-components.shorts-inspiration-section"
+      },
+      "shortsModelSection": {
+        "kind": "component",
+        "targetUid": "shorts-components.shorts-model-section"
+      },
+      "shortsGenerationGuidelines": {
+        "kind": "component",
+        "targetUid": "shorts-components.generation-guidelines"
+      },
+      "shortsStatsSection": {
+        "kind": "component",
+        "targetUid": "shorts-components.shorts-stats-section"
+      },
+      "shortsZFoldSection": {
+        "kind": "component",
+        "targetUid": "shorts-components.shorts-z-fold-section"
+      },
+      "relatedPagesSection": {
+        "kind": "component",
+        "targetUid": "components.related-pages-section"
+      },
+      "shortsPricingSection": {
+        "kind": "component",
+        "targetUid": "shorts-components.shorts-pricing-section"
+      },
+      "shortsCreditSection": {
+        "kind": "component",
+        "targetUid": "shorts-components.shorts-credit-section"
+      },
+      "shortsBannerSection": {
+        "kind": "component",
+        "targetUid": "shorts-components.shorts-banner-section"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "studiosShowcaseSection": {
+        "kind": "component",
+        "targetUid": "components.studios-showcase-section"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      }
+    }
+  },
+  "solution-component.blog-section": {
+    "uid": "solution-component.blog-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "blogResourceItems": {
+        "kind": "component",
+        "targetUid": "components.blog-resource-item"
+      }
+    }
+  },
+  "solution-component.fliping-words": {
+    "uid": "solution-component.fliping-words",
+    "kind": "component",
+    "attributes": {
+      "word": {
+        "kind": "other"
+      }
+    }
+  },
+  "solution-component.hero-section": {
+    "uid": "solution-component.hero-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "backgroundImage": {
+        "kind": "other"
+      },
+      "backgroundVideo": {
+        "kind": "other"
+      },
+      "leftButtonText": {
+        "kind": "other"
+      },
+      "leftButtonNavigation": {
+        "kind": "other"
+      },
+      "rightButtonText": {
+        "kind": "other"
+      },
+      "rightButtonNavigation": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "flipingWords": {
+        "kind": "component",
+        "targetUid": "solution-component.fliping-words"
+      },
+      "isHeroSectionContentWhite": {
+        "kind": "other"
+      }
+    }
+  },
+  "solution-component.industries": {
+    "uid": "solution-component.industries",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "industries": {
+        "kind": "component",
+        "targetUid": "solution-component.solution-and-industries"
+      }
+    }
+  },
+  "solution-component.solution-and-industries": {
+    "uid": "solution-component.solution-and-industries",
+    "kind": "component",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "url": {
+        "kind": "other"
+      }
+    }
+  },
+  "solution-component.solution-feature-item": {
+    "uid": "solution-component.solution-feature-item",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "icon": {
+        "kind": "other"
+      }
+    }
+  },
+  "solution-component.solution-features": {
+    "uid": "solution-component.solution-features",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "solutionFeatures": {
+        "kind": "component",
+        "targetUid": "solution-component.solution-feature-item"
+      },
+      "leftButtonText": {
+        "kind": "other"
+      },
+      "leftButtonNavigation": {
+        "kind": "other"
+      },
+      "rightButtonText": {
+        "kind": "other"
+      },
+      "rightButtonNavigation": {
+        "kind": "other"
+      }
+    }
+  },
+  "solution-component.solution-hero-section": {
+    "uid": "solution-component.solution-hero-section",
+    "kind": "component",
+    "attributes": {
+      "chipText": {
+        "kind": "other"
+      },
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      }
+    }
+  },
+  "solution-component.solutions": {
+    "uid": "solution-component.solutions",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "solutions": {
+        "kind": "component",
+        "targetUid": "solution-component.solution-and-industries"
+      }
+    }
+  },
+  "solution-component.team-feature-item": {
+    "uid": "solution-component.team-feature-item",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "icon": {
+        "kind": "other"
+      }
+    }
+  },
+  "solution-component.team-features": {
+    "uid": "solution-component.team-features",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "teamFeatures": {
+        "kind": "component",
+        "targetUid": "solution-component.team-feature-item"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      }
+    }
+  },
+  "solution-component.work-flow-section": {
+    "uid": "solution-component.work-flow-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      }
+    }
+  },
+  "solution-template.solution-template-1": {
+    "uid": "solution-template.solution-template-1",
+    "kind": "component",
+    "attributes": {
+      "solutionHeroSectionTabs": {
+        "kind": "component",
+        "targetUid": "team-components.team-tabs"
+      },
+      "solutionHeroSection": {
+        "kind": "component",
+        "targetUid": "solution-component.solution-hero-section"
+      },
+      "solutionAIToolSuite": {
+        "kind": "component",
+        "targetUid": "team-components.team-ai-tool-suite"
+      },
+      "solutions": {
+        "kind": "component",
+        "targetUid": "solution-component.solutions"
+      },
+      "industries": {
+        "kind": "component",
+        "targetUid": "solution-component.industries"
+      },
+      "solutionZfold": {
+        "kind": "component",
+        "targetUid": "team-components.team-zfold"
+      },
+      "solutionFeatures": {
+        "kind": "component",
+        "targetUid": "team-components.team-feature"
+      },
+      "solutionStats": {
+        "kind": "component",
+        "targetUid": "team-components.team-stats"
+      },
+      "solutionSetup": {
+        "kind": "component",
+        "targetUid": "team-components.team-setup"
+      },
+      "solutionCarousel": {
+        "kind": "component",
+        "targetUid": "team-components.team-carousel"
+      },
+      "solutionAIPlan": {
+        "kind": "component",
+        "targetUid": "team-components.team-ai-plans"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "solutionBanner": {
+        "kind": "component",
+        "targetUid": "team-components.team-banner"
+      }
+    }
+  },
+  "solution-template.solution-template-2": {
+    "uid": "solution-template.solution-template-2",
+    "kind": "component",
+    "attributes": {
+      "solutionHero": {
+        "kind": "component",
+        "targetUid": "solution-component.hero-section"
+      },
+      "whyChooseImagineArt": {
+        "kind": "component",
+        "targetUid": "industry-components.why-choose-imagine-art"
+      },
+      "teamsFeatures": {
+        "kind": "component",
+        "targetUid": "solution-component.team-features"
+      },
+      "usecaseSection": {
+        "kind": "component",
+        "targetUid": "industry-components.use-cases"
+      },
+      "solutionsFeatures": {
+        "kind": "component",
+        "targetUid": "solution-component.solution-features"
+      },
+      "workflowSection": {
+        "kind": "component",
+        "targetUid": "solution-component.work-flow-section"
+      },
+      "blogSection": {
+        "kind": "component",
+        "targetUid": "solution-component.blog-section"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      },
+      "bannerSection": {
+        "kind": "component",
+        "targetUid": "industry-components.banner-section"
+      }
+    }
+  },
+  "team-components.stats-section": {
+    "uid": "team-components.stats-section",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      }
+    }
+  },
+  "team-components.team-ai-plans": {
+    "uid": "team-components.team-ai-plans",
+    "kind": "component",
+    "attributes": {
+      "chipText": {
+        "kind": "other"
+      },
+      "heading": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      }
+    }
+  },
+  "team-components.team-ai-suite-description": {
+    "uid": "team-components.team-ai-suite-description",
+    "kind": "component",
+    "attributes": {
+      "featureDescription": {
+        "kind": "other"
+      }
+    }
+  },
+  "team-components.team-ai-suite-tabs": {
+    "uid": "team-components.team-ai-suite-tabs",
+    "kind": "component",
+    "attributes": {
+      "tabName": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "featureImage": {
+        "kind": "other"
+      },
+      "featureDescription": {
+        "kind": "component",
+        "targetUid": "team-components.team-ai-suite-description"
+      }
+    }
+  },
+  "team-components.team-ai-tool-suite": {
+    "uid": "team-components.team-ai-tool-suite",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "teamAiSuiteToolTabs": {
+        "kind": "component",
+        "targetUid": "team-components.team-ai-suite-tabs"
+      }
+    }
+  },
+  "team-components.team-banner": {
+    "uid": "team-components.team-banner",
+    "kind": "component",
+    "attributes": {
+      "backgroundImage": {
+        "kind": "other"
+      },
+      "heading": {
+        "kind": "other"
+      },
+      "leftBannerImage": {
+        "kind": "other"
+      },
+      "rightBannerImage": {
+        "kind": "other"
+      },
+      "leftButtonText": {
+        "kind": "other"
+      },
+      "rightButtonText": {
+        "kind": "other"
+      },
+      "leftButtonNavigation": {
+        "kind": "other"
+      },
+      "rightButtonNavigation": {
+        "kind": "other"
+      }
+    }
+  },
+  "team-components.team-carousel-tabs": {
+    "uid": "team-components.team-carousel-tabs",
+    "kind": "component",
+    "attributes": {
+      "quote": {
+        "kind": "other"
+      },
+      "tabName": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      }
+    }
+  },
+  "team-components.team-carousel": {
+    "uid": "team-components.team-carousel",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "carouselTabsItems": {
+        "kind": "component",
+        "targetUid": "team-components.team-carousel-tabs"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      }
+    }
+  },
+  "team-components.team-components": {
+    "uid": "team-components.team-components",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "leftButtonText": {
+        "kind": "other"
+      },
+      "rightButtonText": {
+        "kind": "other"
+      },
+      "leftButtonNavigation": {
+        "kind": "other"
+      },
+      "rightButtonNavigation": {
+        "kind": "other"
+      }
+    }
+  },
+  "team-components.team-feature-item": {
+    "uid": "team-components.team-feature-item",
+    "kind": "component",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "heading": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      }
+    }
+  },
+  "team-components.team-feature": {
+    "uid": "team-components.team-feature",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "featuresItem": {
+        "kind": "component",
+        "targetUid": "team-components.team-feature-item"
+      }
+    }
+  },
+  "team-components.team-setup-item": {
+    "uid": "team-components.team-setup-item",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      }
+    }
+  },
+  "team-components.team-setup": {
+    "uid": "team-components.team-setup",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "teamSetupItems": {
+        "kind": "component",
+        "targetUid": "team-components.team-setup-item"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      }
+    }
+  },
+  "team-components.team-stats": {
+    "uid": "team-components.team-stats",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "statsReviewer": {
+        "kind": "component",
+        "targetUid": "team-components.teams-stats-reviewer"
+      },
+      "statsSection": {
+        "kind": "component",
+        "targetUid": "team-components.stats-section"
+      }
+    }
+  },
+  "team-components.team-tabs": {
+    "uid": "team-components.team-tabs",
+    "kind": "component",
+    "attributes": {
+      "teamTabs": {
+        "kind": "component",
+        "targetUid": "components.hero-section-tabs"
+      },
+      "activeTabName": {
+        "kind": "other"
+      }
+    }
+  },
+  "team-components.team-use-case": {
+    "uid": "team-components.team-use-case",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "subheading": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      }
+    }
+  },
+  "team-components.team-zfold-item": {
+    "uid": "team-components.team-zfold-item",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "teamZfoldBulletPoints": {
+        "kind": "component",
+        "targetUid": "team-components.zfold-points"
+      }
+    }
+  },
+  "team-components.team-zfold": {
+    "uid": "team-components.team-zfold",
+    "kind": "component",
+    "attributes": {
+      "heading": {
+        "kind": "other"
+      },
+      "teamZFoldItems": {
+        "kind": "component",
+        "targetUid": "team-components.team-zfold-item"
+      }
+    }
+  },
+  "team-components.teams-stats-reviewer": {
+    "uid": "team-components.teams-stats-reviewer",
+    "kind": "component",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "review": {
+        "kind": "other"
+      }
+    }
+  },
+  "team-components.zfold-points": {
+    "uid": "team-components.zfold-points",
+    "kind": "component",
+    "attributes": {
+      "bulletPoint": {
+        "kind": "other"
+      }
+    }
+  },
+  "team-template.team-template-1": {
+    "uid": "team-template.team-template-1",
+    "kind": "component",
+    "attributes": {
+      "teamHeroSection": {
+        "kind": "component",
+        "targetUid": "team-components.team-components"
+      },
+      "teamHeroSectionTabs": {
+        "kind": "component",
+        "targetUid": "team-components.team-tabs"
+      },
+      "teamUseCase": {
+        "kind": "component",
+        "targetUid": "team-components.team-use-case"
+      },
+      "solutions": {
+        "kind": "component",
+        "targetUid": "solution-component.solutions"
+      },
+      "industries": {
+        "kind": "component",
+        "targetUid": "solution-component.industries"
+      },
+      "teamAIToolSuite": {
+        "kind": "component",
+        "targetUid": "team-components.team-ai-tool-suite"
+      },
+      "teamZFold": {
+        "kind": "component",
+        "targetUid": "team-components.team-zfold"
+      },
+      "teamSetup": {
+        "kind": "component",
+        "targetUid": "team-components.team-setup"
+      },
+      "teamStats": {
+        "kind": "component",
+        "targetUid": "team-components.team-stats"
+      },
+      "teamFeatures": {
+        "kind": "component",
+        "targetUid": "team-components.team-feature"
+      },
+      "teamCarousel": {
+        "kind": "component",
+        "targetUid": "team-components.team-carousel"
+      },
+      "teamAIPlan": {
+        "kind": "component",
+        "targetUid": "team-components.team-ai-plans"
+      },
+      "teamBanner": {
+        "kind": "component",
+        "targetUid": "team-components.team-banner"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      }
+    }
+  },
+  "template-9-components.audience-section": {
+    "uid": "template-9-components.audience-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "tabs": {
+        "kind": "component",
+        "targetUid": "template-9-components.audience-tab"
+      }
+    }
+  },
+  "template-9-components.audience-tab": {
+    "uid": "template-9-components.audience-tab",
+    "kind": "component",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      }
+    }
+  },
+  "template-9-components.brand-logo-item": {
+    "uid": "template-9-components.brand-logo-item",
+    "kind": "component",
+    "attributes": {
+      "logo": {
+        "kind": "other"
+      }
+    }
+  },
+  "template-9-components.capabilities-section": {
+    "uid": "template-9-components.capabilities-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "subtitle": {
+        "kind": "other"
+      },
+      "items": {
+        "kind": "component",
+        "targetUid": "template-9-components.capability-item"
+      }
+    }
+  },
+  "template-9-components.capability-item": {
+    "uid": "template-9-components.capability-item",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaUrl": {
+        "kind": "other"
+      },
+      "reversed": {
+        "kind": "other"
+      }
+    }
+  },
+  "template-9-components.final-cta-section": {
+    "uid": "template-9-components.final-cta-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaUrl": {
+        "kind": "other"
+      }
+    }
+  },
+  "template-9-components.hero-section": {
+    "uid": "template-9-components.hero-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "placeholderText": {
+        "kind": "other"
+      },
+      "sampleLinkText": {
+        "kind": "other"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaUrl": {
+        "kind": "other"
+      }
+    }
+  },
+  "template-9-components.logo-marquee-section": {
+    "uid": "template-9-components.logo-marquee-section",
+    "kind": "component",
+    "attributes": {
+      "items": {
+        "kind": "component",
+        "targetUid": "template-9-components.brand-logo-item"
+      }
+    }
+  },
+  "template-9-components.showcase-item": {
+    "uid": "template-9-components.showcase-item",
+    "kind": "component",
+    "attributes": {
+      "video": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "caption": {
+        "kind": "other"
+      },
+      "badgeText": {
+        "kind": "other"
+      }
+    }
+  },
+  "template-9-components.showcase-section": {
+    "uid": "template-9-components.showcase-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "items": {
+        "kind": "component",
+        "targetUid": "template-9-components.showcase-item"
+      }
+    }
+  },
+  "template-9-components.step-item": {
+    "uid": "template-9-components.step-item",
+    "kind": "component",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      }
+    }
+  },
+  "template-9-components.steps-section": {
+    "uid": "template-9-components.steps-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "steps": {
+        "kind": "component",
+        "targetUid": "template-9-components.step-item"
+      }
+    }
+  },
+  "template-9-components.testimonial-item": {
+    "uid": "template-9-components.testimonial-item",
+    "kind": "component",
+    "attributes": {
+      "quote": {
+        "kind": "other"
+      },
+      "authorName": {
+        "kind": "other"
+      },
+      "authorRole": {
+        "kind": "other"
+      },
+      "avatar": {
+        "kind": "other"
+      },
+      "rating": {
+        "kind": "other"
+      }
+    }
+  },
+  "template-9-components.testimonials-section": {
+    "uid": "template-9-components.testimonials-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "testimonials": {
+        "kind": "component",
+        "targetUid": "template-9-components.testimonial-item"
+      }
+    }
+  },
+  "template-9-components.why-choose-item": {
+    "uid": "template-9-components.why-choose-item",
+    "kind": "component",
+    "attributes": {
+      "icon": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      }
+    }
+  },
+  "template-9-components.why-choose-section": {
+    "uid": "template-9-components.why-choose-section",
+    "kind": "component",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "items": {
+        "kind": "component",
+        "targetUid": "template-9-components.why-choose-item"
+      }
+    }
+  },
+  "templates.template-1": {
+    "uid": "templates.template-1",
+    "kind": "component",
+    "attributes": {
+      "heroSection": {
+        "kind": "component",
+        "targetUid": "components.hero-section-v1"
+      },
+      "generationStepsSection": {
+        "kind": "component",
+        "targetUid": "components.generation-steps-section"
+      },
+      "usecasesSection": {
+        "kind": "component",
+        "targetUid": "components.use-cases-section"
+      },
+      "reasonToUseSection": {
+        "kind": "component",
+        "targetUid": "components.reason-to-use-section"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "getStartedBanner": {
+        "kind": "component",
+        "targetUid": "components.get-started-banner"
+      },
+      "textToImageIntent": {
+        "kind": "other"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      },
+      "randomPrompts": {
+        "kind": "component",
+        "targetUid": "components.random-prompt"
+      }
+    }
+  },
+  "templates.template-2": {
+    "uid": "templates.template-2",
+    "kind": "component",
+    "attributes": {
+      "heroSection": {
+        "kind": "component",
+        "targetUid": "components.hero-section-v1"
+      },
+      "generationStepsSection": {
+        "kind": "component",
+        "targetUid": "components.generation-steps-section"
+      },
+      "generationFeaturesSection": {
+        "kind": "component",
+        "targetUid": "components.generation-features-section"
+      },
+      "communityCreationsGrid": {
+        "kind": "component",
+        "targetUid": "components.community-creations-grid-t2"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "getStartedBanner": {
+        "kind": "component",
+        "targetUid": "components.get-started-banner"
+      },
+      "textToImageIntent": {
+        "kind": "other"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      },
+      "randomPrompts": {
+        "kind": "component",
+        "targetUid": "components.random-prompt"
+      }
+    }
+  },
+  "templates.template-3": {
+    "uid": "templates.template-3",
+    "kind": "component",
+    "attributes": {
+      "heroSection": {
+        "kind": "component",
+        "targetUid": "components.hero-section-v1"
+      },
+      "generationStepsSection": {
+        "kind": "component",
+        "targetUid": "components.generation-steps-section"
+      },
+      "reasonToUseSection": {
+        "kind": "component",
+        "targetUid": "components.reason-to-use-section"
+      },
+      "communityCreationsGrid": {
+        "kind": "component",
+        "targetUid": "components.community-creations-grid-t3"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "getStartedBanner": {
+        "kind": "component",
+        "targetUid": "components.get-started-banner"
+      },
+      "textToImageIntent": {
+        "kind": "other"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      },
+      "randomPrompts": {
+        "kind": "component",
+        "targetUid": "components.random-prompt"
+      }
+    }
+  },
+  "templates.template-4": {
+    "uid": "templates.template-4",
+    "kind": "component",
+    "attributes": {
+      "freeGenerationsLimit": {
+        "kind": "other"
+      },
+      "heroSectionWithoutInspirations": {
+        "kind": "component",
+        "targetUid": "components.hero-section-t4"
+      },
+      "relatedPagesSection": {
+        "kind": "component",
+        "targetUid": "components.related-pages-section"
+      },
+      "generationStepsSection": {
+        "kind": "component",
+        "targetUid": "components.generation-steps-section"
+      },
+      "generationFeaturesSection": {
+        "kind": "component",
+        "targetUid": "components.generation-features-section"
+      },
+      "communityCreationsGrid": {
+        "kind": "component",
+        "targetUid": "components.community-creations-grid-t2"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "getStartedBanner": {
+        "kind": "component",
+        "targetUid": "components.get-started-banner"
+      },
+      "textToImageIntent": {
+        "kind": "other"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      },
+      "randomPrompts": {
+        "kind": "component",
+        "targetUid": "components.random-prompt"
+      }
+    }
+  },
+  "templates.template-5": {
+    "uid": "templates.template-5",
+    "kind": "component",
+    "attributes": {
+      "freeGenerationsLimit": {
+        "kind": "other"
+      },
+      "heroSectionWithoutInspirations": {
+        "kind": "component",
+        "targetUid": "components.hero-section-t5"
+      },
+      "relatedPagesSection": {
+        "kind": "component",
+        "targetUid": "components.related-pages-section"
+      },
+      "generationStepsSection": {
+        "kind": "component",
+        "targetUid": "components.generation-steps-section"
+      },
+      "reasonToUseSection": {
+        "kind": "component",
+        "targetUid": "components.reason-to-use-section"
+      },
+      "communityCreationsGrid": {
+        "kind": "component",
+        "targetUid": "components.community-creations-grid-t3"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "getStartedBanner": {
+        "kind": "component",
+        "targetUid": "components.get-started-banner"
+      },
+      "textToImageIntent": {
+        "kind": "other"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      },
+      "randomPrompts": {
+        "kind": "component",
+        "targetUid": "components.random-prompt"
+      }
+    }
+  },
+  "templates.template-6": {
+    "uid": "templates.template-6",
+    "kind": "component",
+    "attributes": {
+      "freeGenerationsLimit": {
+        "kind": "other"
+      },
+      "heroSection": {
+        "kind": "component",
+        "targetUid": "components.hero-section-t6"
+      },
+      "relatedPagesSection": {
+        "kind": "component",
+        "targetUid": "components.related-pages-section"
+      },
+      "youtubeVideoSection": {
+        "kind": "component",
+        "targetUid": "components.youtube-video-section"
+      },
+      "generationFeaturesSectionT6": {
+        "kind": "component",
+        "targetUid": "components.generation-features-section-t6"
+      },
+      "communityCreationsGridT6": {
+        "kind": "component",
+        "targetUid": "components.community-creations-grid-t2"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "getStartedBanner": {
+        "kind": "component",
+        "targetUid": "components.get-started-banner"
+      },
+      "randomPrompts": {
+        "kind": "component",
+        "targetUid": "components.random-prompt"
+      },
+      "textToImageIntent": {
+        "kind": "other"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      }
+    }
+  },
+  "templates.template-7": {
+    "uid": "templates.template-7",
+    "kind": "component",
+    "attributes": {
+      "freeGenerationsLimit": {
+        "kind": "other"
+      },
+      "studioRedirectTo": {
+        "kind": "other"
+      },
+      "heroSection": {
+        "kind": "component",
+        "targetUid": "components.hero-section-t6"
+      },
+      "relatedPagesSection": {
+        "kind": "component",
+        "targetUid": "components.related-pages-section"
+      },
+      "generationStepsSectionWithYoutubeId": {
+        "kind": "component",
+        "targetUid": "components.generation-steps-section-with-youtube-id"
+      },
+      "generationFeaturesSectionT6": {
+        "kind": "component",
+        "targetUid": "components.generation-features-section-t6"
+      },
+      "communityCreationsWithPromptsSection": {
+        "kind": "component",
+        "targetUid": "components.community-creations-with-prompt"
+      },
+      "zSection": {
+        "kind": "component",
+        "targetUid": "components.z-section-t7"
+      },
+      "reviewsSection": {
+        "kind": "component",
+        "targetUid": "components.reviews-section"
+      },
+      "trustPilotReviews": {
+        "kind": "component",
+        "targetUid": "ai-video-components.user-reviews"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "getStartedBanner": {
+        "kind": "component",
+        "targetUid": "components.get-started-banner"
+      },
+      "blogResources": {
+        "kind": "component",
+        "targetUid": "components.blog-resources"
+      },
+      "studiosShowcaseSection": {
+        "kind": "component",
+        "targetUid": "components.studios-showcase-section"
+      },
+      "randomPrompts": {
+        "kind": "component",
+        "targetUid": "components.random-prompt"
+      },
+      "textToImageIntent": {
+        "kind": "other"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      }
+    }
+  },
+  "templates.template-8": {
+    "uid": "templates.template-8",
+    "kind": "component",
+    "attributes": {
+      "aiImageGeneratorHeroSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.hero-section"
+      },
+      "modelList": {
+        "kind": "component",
+        "targetUid": "components.model-list"
+      },
+      "firstZfoldSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.zfold"
+      },
+      "CommunitySection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.community-section"
+      },
+      "instantImageSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.instant-videos"
+      },
+      "imageGeneratorToolsSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.video-generator-tools"
+      },
+      "AIModelsSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.ai-models"
+      },
+      "userReviewsSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.user-reviews"
+      },
+      "creatingSuiteSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.creative-suite"
+      },
+      "ImagineArtExplorerSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.imagine-art-explorer"
+      },
+      "blogResources": {
+        "kind": "component",
+        "targetUid": "components.blog-resources"
+      },
+      "FAQsSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.faqs"
+      },
+      "imageGeneratorZfold": {
+        "kind": "component",
+        "targetUid": "ai-video-components.video-generator-zfold"
+      },
+      "imageEnhanceToolsSection": {
+        "kind": "component",
+        "targetUid": "components.image-enhance-tools"
+      },
+      "subscriptionPlans": {
+        "kind": "other"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      }
+    }
+  },
+  "templates.template-9": {
+    "uid": "templates.template-9",
+    "kind": "component",
+    "attributes": {
+      "t9HeroSection": {
+        "kind": "component",
+        "targetUid": "template-9-components.hero-section"
+      },
+      "showcaseSection": {
+        "kind": "component",
+        "targetUid": "template-9-components.showcase-section"
+      },
+      "logoMarqueeSection": {
+        "kind": "component",
+        "targetUid": "template-9-components.logo-marquee-section"
+      },
+      "t9CapabilitiesSection": {
+        "kind": "component",
+        "targetUid": "template-9-components.capabilities-section"
+      },
+      "audienceSection": {
+        "kind": "component",
+        "targetUid": "template-9-components.audience-section"
+      },
+      "stepsSection": {
+        "kind": "component",
+        "targetUid": "template-9-components.steps-section"
+      },
+      "whyChooseSection": {
+        "kind": "component",
+        "targetUid": "template-9-components.why-choose-section"
+      },
+      "testimonialsSection": {
+        "kind": "component",
+        "targetUid": "template-9-components.testimonials-section"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "finalCtaSection": {
+        "kind": "component",
+        "targetUid": "template-9-components.final-cta-section"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      }
+    }
+  },
+  "vibe-coded-templates.ai-ad-studio-template": {
+    "uid": "vibe-coded-templates.ai-ad-studio-template",
+    "kind": "component",
+    "attributes": {
+      "adStudioHeroSection": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.hero-section"
+      },
+      "trustedBySection": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.trusted-by-section"
+      },
+      "hiwDiagramSection": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.hiw-diagram-section"
+      },
+      "stepsSection": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.steps-section"
+      },
+      "templatesGallerySection": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.templates-gallery-section"
+      },
+      "featureListSection": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.feature-list-section"
+      },
+      "adsShowcaseSection": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.ads-showcase-section"
+      },
+      "compareSection": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.compare-section"
+      },
+      "gallerySection": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.gallery-section"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "finalCtaSection": {
+        "kind": "component",
+        "targetUid": "ai-ad-studio-components.final-cta-section"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      }
+    }
+  },
+  "video-templates.video-template-1": {
+    "uid": "video-templates.video-template-1",
+    "kind": "component",
+    "attributes": {
+      "freeGenerationsLimit": {
+        "kind": "other"
+      },
+      "studioRedirectTo": {
+        "kind": "other"
+      },
+      "heroSection": {
+        "kind": "component",
+        "targetUid": "components.video-hero-section"
+      },
+      "communityCreationsWithPromptsSection": {
+        "kind": "component",
+        "targetUid": "components.community-creations-with-prompt"
+      },
+      "videoGenerationFeaturesSection": {
+        "kind": "component",
+        "targetUid": "components.video-generation-feature"
+      },
+      "generationStepsSectionWithYoutubeId": {
+        "kind": "component",
+        "targetUid": "components.generation-steps-section-with-youtube-id"
+      },
+      "videoSection": {
+        "kind": "component",
+        "targetUid": "components.video-section-item"
+      },
+      "relatedPagesSection": {
+        "kind": "component",
+        "targetUid": "components.related-pages-section"
+      },
+      "reviewsSection": {
+        "kind": "component",
+        "targetUid": "components.reviews-section"
+      },
+      "trustPilotReviews": {
+        "kind": "component",
+        "targetUid": "ai-video-components.user-reviews"
+      },
+      "faqSection": {
+        "kind": "component",
+        "targetUid": "components.faq-section"
+      },
+      "blogResources": {
+        "kind": "component",
+        "targetUid": "components.blog-resources"
+      },
+      "studiosShowcaseSection": {
+        "kind": "component",
+        "targetUid": "components.studios-showcase-section"
+      },
+      "footerHeroSection": {
+        "kind": "component",
+        "targetUid": "components.footer-hero-section"
+      },
+      "textToVideoIntent": {
+        "kind": "other"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      }
+    }
+  },
+  "video-templates.video-template-2": {
+    "uid": "video-templates.video-template-2",
+    "kind": "component",
+    "attributes": {
+      "aiVideoGeneratorHeroSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.hero-section"
+      },
+      "modelList": {
+        "kind": "component",
+        "targetUid": "components.model-list"
+      },
+      "firstZfoldSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.zfold"
+      },
+      "CommunitySection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.community-section"
+      },
+      "instantVideosSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.instant-videos"
+      },
+      "videoGeneratorToolsSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.video-generator-tools"
+      },
+      "AIModelsSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.ai-models"
+      },
+      "userReviewsSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.user-reviews"
+      },
+      "creatingSuiteSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.creative-suite"
+      },
+      "ImagineArtExplorerSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.imagine-art-explorer"
+      },
+      "blogResources": {
+        "kind": "component",
+        "targetUid": "components.blog-resources"
+      },
+      "FAQsSection": {
+        "kind": "component",
+        "targetUid": "ai-video-components.faqs"
+      },
+      "VideoGeneratorZfold": {
+        "kind": "component",
+        "targetUid": "ai-video-components.video-generator-zfold"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      }
+    }
+  },
+  "api::announcement.announcement": {
+    "uid": "api::announcement.announcement",
+    "kind": "content-type",
+    "pluralApi": "announcements",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "isActive": {
+        "kind": "other"
+      },
+      "date": {
+        "kind": "other"
+      },
+      "isFeatured": {
+        "kind": "other"
+      },
+      "content": {
+        "kind": "other"
+      },
+      "slug": {
+        "kind": "other"
+      },
+      "bannerImage": {
+        "kind": "other"
+      },
+      "btnText": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::audio-feed.audio-feed": {
+    "uid": "api::audio-feed.audio-feed",
+    "kind": "content-type",
+    "pluralApi": "audio-feeds",
+    "attributes": {
+      "thumbnail": {
+        "kind": "other"
+      },
+      "narratorName": {
+        "kind": "other"
+      },
+      "previewText": {
+        "kind": "other"
+      },
+      "fullScript": {
+        "kind": "other"
+      },
+      "audioFile": {
+        "kind": "other"
+      },
+      "category": {
+        "kind": "relation",
+        "targetUid": "api::audio-feed-category.audio-feed-category"
+      },
+      "settings": {
+        "kind": "other"
+      },
+      "type": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::audio-feed-category.audio-feed-category": {
+    "uid": "api::audio-feed-category.audio-feed-category",
+    "kind": "content-type",
+    "pluralApi": "audio-feed-categories",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "value": {
+        "kind": "other"
+      },
+      "trigger": {
+        "kind": "other"
+      },
+      "variant": {
+        "kind": "other"
+      },
+      "priority": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::author.author": {
+    "uid": "api::author.author",
+    "kind": "content-type",
+    "pluralApi": "authors",
+    "attributes": {
+      "username": {
+        "kind": "other"
+      },
+      "avatar": {
+        "kind": "other"
+      },
+      "blogs": {
+        "kind": "relation",
+        "targetUid": "api::imagine-web.imagine-web"
+      },
+      "about": {
+        "kind": "other"
+      },
+      "socialLinks": {
+        "kind": "component",
+        "targetUid": "author-components.social-link"
+      },
+      "contactInformation": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::blog-category.blog-category": {
+    "uid": "api::blog-category.blog-category",
+    "kind": "content-type",
+    "pluralApi": "blog-categories",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "blogs": {
+        "kind": "relation",
+        "targetUid": "api::imagine-web.imagine-web"
+      },
+      "priorityOrder": {
+        "kind": "other"
+      },
+      "slug": {
+        "kind": "other"
+      },
+      "blogCategoryMetaData": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      },
+      "canonicalTag": {
+        "kind": "other"
+      },
+      "shouldIndex": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::case-study.case-study": {
+    "uid": "api::case-study.case-study",
+    "kind": "content-type",
+    "pluralApi": "case-studies",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "body": {
+        "kind": "other"
+      },
+      "tags": {
+        "kind": "other"
+      },
+      "slug": {
+        "kind": "other"
+      },
+      "thumbnail": {
+        "kind": "other"
+      },
+      "isFeatured": {
+        "kind": "other"
+      },
+      "shouldIndex": {
+        "kind": "other"
+      },
+      "canonicalTag": {
+        "kind": "other"
+      },
+      "category": {
+        "kind": "relation",
+        "targetUid": "api::case-study-category.case-study-category"
+      },
+      "bannerBackgroundImage": {
+        "kind": "other"
+      },
+      "bannerHeading": {
+        "kind": "other"
+      },
+      "bannnerDescription": {
+        "kind": "other"
+      },
+      "buttonText": {
+        "kind": "other"
+      },
+      "buttonNavigation": {
+        "kind": "other"
+      },
+      "socialMediaList": {
+        "kind": "component",
+        "targetUid": "components.social-media-icons"
+      },
+      "stats": {
+        "kind": "component",
+        "targetUid": "components.case-study-stats"
+      },
+      "featuredCaseStudyLogo": {
+        "kind": "other"
+      },
+      "featuredCaseStudyTitle": {
+        "kind": "other"
+      },
+      "featuredCaseStudyUserRole": {
+        "kind": "other"
+      },
+      "featuredCaseStudyAuthor": {
+        "kind": "other"
+      },
+      "featuredCaseStudyDescription": {
+        "kind": "other"
+      },
+      "caseStudyTabs": {
+        "kind": "component",
+        "targetUid": "components.case-study-tabs"
+      },
+      "featuredCaseStudyBanner": {
+        "kind": "other"
+      },
+      "featuredCaseStudyButtonText": {
+        "kind": "other"
+      },
+      "featuredCaseStudyButtonNavigation": {
+        "kind": "other"
+      },
+      "metadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      },
+      "caseStudyCard": {
+        "kind": "component",
+        "targetUid": "components.case-study-card"
+      }
+    }
+  },
+  "api::case-study-category.case-study-category": {
+    "uid": "api::case-study-category.case-study-category",
+    "kind": "content-type",
+    "pluralApi": "case-study-categories",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "caseStudy": {
+        "kind": "relation",
+        "targetUid": "api::case-study.case-study"
+      },
+      "slug": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::category-page.category-page": {
+    "uid": "api::category-page.category-page",
+    "kind": "content-type",
+    "pluralApi": "category-pages",
+    "attributes": {
+      "category": {
+        "kind": "other"
+      },
+      "template": {
+        "kind": "dynamiczone"
+      },
+      "cluster_pages": {
+        "kind": "relation",
+        "targetUid": "api::cluster-page.cluster-page"
+      },
+      "hrefLanguage": {
+        "kind": "component",
+        "targetUid": "components.href-langs"
+      },
+      "schemaMarkup": {
+        "kind": "other"
+      },
+      "redirectUrl": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::cluster-page.cluster-page": {
+    "uid": "api::cluster-page.cluster-page",
+    "kind": "content-type",
+    "pluralApi": "cluster-pages",
+    "attributes": {
+      "slug": {
+        "kind": "other"
+      },
+      "category": {
+        "kind": "other"
+      },
+      "template": {
+        "kind": "dynamiczone"
+      },
+      "usecaseCategory": {
+        "kind": "relation",
+        "targetUid": "api::usecase-category.usecase-category"
+      },
+      "clusterPageTitle": {
+        "kind": "other"
+      },
+      "clusterPageDescription": {
+        "kind": "other"
+      },
+      "clusterPageBannerImage": {
+        "kind": "other"
+      },
+      "categoryPage": {
+        "kind": "relation",
+        "targetUid": "api::category-page.category-page"
+      },
+      "shouldIndex": {
+        "kind": "other"
+      },
+      "canonicalTag": {
+        "kind": "other"
+      },
+      "redirectUrl": {
+        "kind": "other"
+      },
+      "schemaMarkup": {
+        "kind": "other"
+      },
+      "clusterPageSlug": {
+        "kind": "other"
+      },
+      "isCompareFeatured": {
+        "kind": "other"
+      },
+      "hrefLanguage": {
+        "kind": "component",
+        "targetUid": "components.href-langs"
+      }
+    }
+  },
+  "api::community-asset.community-asset": {
+    "uid": "api::community-asset.community-asset",
+    "kind": "content-type",
+    "pluralApi": "community-assets",
+    "attributes": {
+      "assetUuid": {
+        "kind": "other"
+      },
+      "metaTitle": {
+        "kind": "other"
+      },
+      "metaDescription": {
+        "kind": "other"
+      },
+      "slug": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::community-category.community-category": {
+    "uid": "api::community-category.community-category",
+    "kind": "content-type",
+    "pluralApi": "community-categories",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "slug": {
+        "kind": "other"
+      },
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "photo": {
+        "kind": "other"
+      },
+      "headerTitle": {
+        "kind": "other"
+      },
+      "headerDescription": {
+        "kind": "other"
+      },
+      "shouldIndex": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::community-model.community-model": {
+    "uid": "api::community-model.community-model",
+    "kind": "content-type",
+    "pluralApi": "community-models",
+    "attributes": {
+      "model_name": {
+        "kind": "other"
+      },
+      "style_id": {
+        "kind": "other"
+      },
+      "model_list_id": {
+        "kind": "other"
+      },
+      "heading_text": {
+        "kind": "other"
+      },
+      "description_text": {
+        "kind": "other"
+      },
+      "slug": {
+        "kind": "other"
+      },
+      "upgrade_banner_end_date": {
+        "kind": "other"
+      },
+      "upgrade_cta_text": {
+        "kind": "other"
+      },
+      "model_type": {
+        "kind": "other"
+      },
+      "is_model_showcased": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::event.event": {
+    "uid": "api::event.event",
+    "kind": "content-type",
+    "pluralApi": "events",
+    "attributes": {
+      "events": {
+        "kind": "component",
+        "targetUid": "event-components.event-components"
+      },
+      "speakers": {
+        "kind": "component",
+        "targetUid": "event-components.speaker"
+      },
+      "collaborators": {
+        "kind": "component",
+        "targetUid": "event-components.collaborators"
+      }
+    }
+  },
+  "api::feed.feed": {
+    "uid": "api::feed.feed",
+    "kind": "content-type",
+    "pluralApi": "feeds",
+    "attributes": {
+      "type": {
+        "kind": "other"
+      },
+      "inspirationData": {
+        "kind": "dynamiczone"
+      }
+    }
+  },
+  "api::film-category-placement.film-category-placement": {
+    "uid": "api::film-category-placement.film-category-placement",
+    "kind": "content-type",
+    "pluralApi": "film-category-placements",
+    "attributes": {
+      "film": {
+        "kind": "relation",
+        "targetUid": "api::film-feed.film-feed"
+      },
+      "category": {
+        "kind": "relation",
+        "targetUid": "api::film-feed-category.film-feed-category"
+      },
+      "priority": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::film-feed.film-feed": {
+    "uid": "api::film-feed.film-feed",
+    "kind": "content-type",
+    "pluralApi": "film-feeds",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "thumbnail": {
+        "kind": "other"
+      },
+      "logo": {
+        "kind": "other"
+      },
+      "isFeatured": {
+        "kind": "other"
+      },
+      "type": {
+        "kind": "other"
+      },
+      "categories": {
+        "kind": "relation",
+        "targetUid": "api::film-feed-category.film-feed-category"
+      },
+      "genres": {
+        "kind": "relation",
+        "targetUid": "api::film-feed-genre.film-feed-genre"
+      },
+      "featureThumbnail": {
+        "kind": "other"
+      },
+      "logoWidth": {
+        "kind": "other"
+      },
+      "logoHeight": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::film-feed-category.film-feed-category": {
+    "uid": "api::film-feed-category.film-feed-category",
+    "kind": "content-type",
+    "pluralApi": "film-feed-categories",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "trigger": {
+        "kind": "other"
+      },
+      "value": {
+        "kind": "other"
+      },
+      "priority": {
+        "kind": "other"
+      },
+      "icon": {
+        "kind": "other"
+      },
+      "badgeText": {
+        "kind": "other"
+      },
+      "filmFeeds": {
+        "kind": "relation",
+        "targetUid": "api::film-feed.film-feed"
+      }
+    }
+  },
+  "api::film-feed-genre.film-feed-genre": {
+    "uid": "api::film-feed-genre.film-feed-genre",
+    "kind": "content-type",
+    "pluralApi": "film-feed-genres",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "value": {
+        "kind": "other"
+      },
+      "priority": {
+        "kind": "other"
+      },
+      "filmFeeds": {
+        "kind": "relation",
+        "targetUid": "api::film-feed.film-feed"
+      }
+    }
+  },
+  "api::global-config.global-config": {
+    "uid": "api::global-config.global-config",
+    "kind": "content-type",
+    "pluralApi": "global-configs",
+    "attributes": {
+      "subscriptionPlans": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::image-feed.image-feed": {
+    "uid": "api::image-feed.image-feed",
+    "kind": "content-type",
+    "pluralApi": "image-feeds",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "prompt": {
+        "kind": "other"
+      },
+      "settings": {
+        "kind": "other"
+      },
+      "category": {
+        "kind": "relation",
+        "targetUid": "api::image-feed-category.image-feed-category"
+      },
+      "blurhash": {
+        "kind": "other"
+      },
+      "type": {
+        "kind": "other"
+      },
+      "priority": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::image-feed-category.image-feed-category": {
+    "uid": "api::image-feed-category.image-feed-category",
+    "kind": "content-type",
+    "pluralApi": "image-feed-categories",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "value": {
+        "kind": "other"
+      },
+      "trigger": {
+        "kind": "other"
+      },
+      "variant": {
+        "kind": "other"
+      },
+      "priority": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::imagine-studio.imagine-studio": {
+    "uid": "api::imagine-studio.imagine-studio",
+    "kind": "content-type",
+    "pluralApi": "imagine-studios",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "image": {
+        "kind": "other"
+      },
+      "href": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::imagine-web.imagine-web": {
+    "uid": "api::imagine-web.imagine-web",
+    "kind": "content-type",
+    "pluralApi": "imagine-webs",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "body": {
+        "kind": "other"
+      },
+      "tags": {
+        "kind": "other"
+      },
+      "slug": {
+        "kind": "other"
+      },
+      "thumbnail": {
+        "kind": "other"
+      },
+      "cover": {
+        "kind": "other"
+      },
+      "isFeatured": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "likes": {
+        "kind": "other"
+      },
+      "author": {
+        "kind": "relation",
+        "targetUid": "api::author.author"
+      },
+      "category": {
+        "kind": "relation",
+        "targetUid": "api::blog-category.blog-category"
+      },
+      "blogHeroCTA": {
+        "kind": "component",
+        "targetUid": "blog-components.blog-hero-cta"
+      },
+      "youtubeVideoId": {
+        "kind": "other"
+      },
+      "shouldIndex": {
+        "kind": "other"
+      },
+      "canonicalTag": {
+        "kind": "other"
+      },
+      "redirectUrl": {
+        "kind": "other"
+      },
+      "markupSchema": {
+        "kind": "other"
+      },
+      "blogsMetaData": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      }
+    }
+  },
+  "api::main-feed-category.main-feed-category": {
+    "uid": "api::main-feed-category.main-feed-category",
+    "kind": "content-type",
+    "pluralApi": "main-feed-categories",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "value": {
+        "kind": "other"
+      },
+      "trigger": {
+        "kind": "other"
+      },
+      "variant": {
+        "kind": "other"
+      },
+      "priority": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::markdown.markdown": {
+    "uid": "api::markdown.markdown",
+    "kind": "content-type",
+    "pluralApi": "markdowns",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "content": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::mini-app.mini-app": {
+    "uid": "api::mini-app.mini-app",
+    "kind": "content-type",
+    "pluralApi": "mini-apps",
+    "attributes": {
+      "slug": {
+        "kind": "other"
+      },
+      "appName": {
+        "kind": "other"
+      },
+      "appThumbnail": {
+        "kind": "other"
+      },
+      "appHeaderThumbnail": {
+        "kind": "other"
+      },
+      "category": {
+        "kind": "relation",
+        "targetUid": "api::mini-app-category.mini-app-category"
+      },
+      "shouldFeature": {
+        "kind": "other"
+      },
+      "appTitle": {
+        "kind": "other"
+      },
+      "appDescription": {
+        "kind": "other"
+      },
+      "appThumbnailAspectRatio": {
+        "kind": "other"
+      },
+      "appThumbnailVideo": {
+        "kind": "other"
+      },
+      "appHeaderThumbnailVideo": {
+        "kind": "other"
+      },
+      "formUIConfig": {
+        "kind": "dynamiczone"
+      },
+      "imageAppId": {
+        "kind": "other"
+      },
+      "videoAppId": {
+        "kind": "other"
+      },
+      "priorityOrder": {
+        "kind": "other"
+      },
+      "appOutputSupportedAspectRatiosMap": {
+        "kind": "other"
+      },
+      "appOutputAspectRatioFormat": {
+        "kind": "other"
+      },
+      "shouldList": {
+        "kind": "other"
+      },
+      "appGenerationStepsSection": {
+        "kind": "component",
+        "targetUid": "mini-apps-ui-components.mini-app-generation-step-section"
+      },
+      "appZFoldSection": {
+        "kind": "component",
+        "targetUid": "mini-apps-ui-components.app-z-fold-section"
+      },
+      "appFAQSection": {
+        "kind": "component",
+        "targetUid": "mini-apps-ui-components.mini-app-faq-section"
+      },
+      "appRelatedBlogsSection": {
+        "kind": "component",
+        "targetUid": "mini-apps-ui-components.mini-app-related-blogs-section"
+      },
+      "appReviewsSection": {
+        "kind": "component",
+        "targetUid": "mini-apps-ui-components.mini-app-reviews-section"
+      },
+      "appMetadata": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      },
+      "featuredAppThumbnail": {
+        "kind": "other"
+      },
+      "featuredAppThumbnailVideo": {
+        "kind": "other"
+      },
+      "platform": {
+        "kind": "other"
+      },
+      "canonicalTag": {
+        "kind": "other"
+      },
+      "shouldIndex": {
+        "kind": "other"
+      },
+      "schemaMarkup": {
+        "kind": "other"
+      },
+      "isAudioSupported": {
+        "kind": "other"
+      },
+      "appBannerSection": {
+        "kind": "component",
+        "targetUid": "mini-apps-ui-components.mini-app-banner-section"
+      },
+      "appPresetsSection": {
+        "kind": "component",
+        "targetUid": "mini-apps-ui-components.mini-app-preset-section"
+      },
+      "audioAppId": {
+        "kind": "other"
+      },
+      "categories": {
+        "kind": "relation",
+        "targetUid": "api::mini-app-category.mini-app-category"
+      },
+      "mobilePriorityOrder": {
+        "kind": "other"
+      },
+      "sidePanelPriorityOrder": {
+        "kind": "other"
+      },
+      "appInspirationsSection": {
+        "kind": "component",
+        "targetUid": "mini-apps-ui-components.mini-app-inspirations-section"
+      },
+      "hrefLangs": {
+        "kind": "component",
+        "targetUid": "components.href-langs"
+      },
+      "generateButtonCtaText": {
+        "kind": "other"
+      },
+      "isGenerateButtonEnabled": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::mini-app-category.mini-app-category": {
+    "uid": "api::mini-app-category.mini-app-category",
+    "kind": "content-type",
+    "pluralApi": "mini-app-categories",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "value": {
+        "kind": "other"
+      },
+      "trigger": {
+        "kind": "other"
+      },
+      "variant": {
+        "kind": "other"
+      },
+      "priority": {
+        "kind": "other"
+      },
+      "mini_apps": {
+        "kind": "relation",
+        "targetUid": "api::mini-app.mini-app"
+      },
+      "platform": {
+        "kind": "other"
+      },
+      "miniApps": {
+        "kind": "relation",
+        "targetUid": "api::mini-app.mini-app"
+      },
+      "mobilePriority": {
+        "kind": "other"
+      },
+      "sidePanelPriority": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::music-feed.music-feed": {
+    "uid": "api::music-feed.music-feed",
+    "kind": "content-type",
+    "pluralApi": "music-feeds",
+    "attributes": {
+      "thumbnail": {
+        "kind": "other"
+      },
+      "musicTitle": {
+        "kind": "other"
+      },
+      "musicTags": {
+        "kind": "other"
+      },
+      "lyrics": {
+        "kind": "other"
+      },
+      "category": {
+        "kind": "relation",
+        "targetUid": "api::music-feed-category.music-feed-category"
+      },
+      "audioSrc": {
+        "kind": "other"
+      },
+      "settings": {
+        "kind": "other"
+      },
+      "type": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::music-feed-category.music-feed-category": {
+    "uid": "api::music-feed-category.music-feed-category",
+    "kind": "content-type",
+    "pluralApi": "music-feed-categories",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "value": {
+        "kind": "other"
+      },
+      "trigger": {
+        "kind": "other"
+      },
+      "variant": {
+        "kind": "other"
+      },
+      "priority": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::organization.organization": {
+    "uid": "api::organization.organization",
+    "kind": "content-type",
+    "pluralApi": "organizations",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "logo": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::promo-banner.promo-banner": {
+    "uid": "api::promo-banner.promo-banner",
+    "kind": "content-type",
+    "pluralApi": "promo-banners",
+    "attributes": {
+      "content": {
+        "kind": "other"
+      },
+      "ctaText": {
+        "kind": "other"
+      },
+      "ctaUrl": {
+        "kind": "other"
+      },
+      "deadline": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::resource.resource": {
+    "uid": "api::resource.resource",
+    "kind": "content-type",
+    "pluralApi": "resources",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "body": {
+        "kind": "other"
+      },
+      "tags": {
+        "kind": "other"
+      },
+      "slug": {
+        "kind": "other"
+      },
+      "thumbnail": {
+        "kind": "other"
+      },
+      "cover": {
+        "kind": "other"
+      },
+      "isFeatured": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "author": {
+        "kind": "relation",
+        "targetUid": "api::author.author"
+      },
+      "category": {
+        "kind": "relation",
+        "targetUid": "api::resource-category.resource-category"
+      },
+      "resourceHeroCTA": {
+        "kind": "component",
+        "targetUid": "blog-components.blog-hero-cta"
+      },
+      "youtubeVideoId": {
+        "kind": "other"
+      },
+      "shouldIndex": {
+        "kind": "other"
+      },
+      "canonicalTag": {
+        "kind": "other"
+      },
+      "redirectUrl": {
+        "kind": "other"
+      },
+      "resourceMetaData": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      }
+    }
+  },
+  "api::resource-category.resource-category": {
+    "uid": "api::resource-category.resource-category",
+    "kind": "content-type",
+    "pluralApi": "resource-categories",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "resources": {
+        "kind": "relation",
+        "targetUid": "api::resource.resource"
+      },
+      "slug": {
+        "kind": "other"
+      },
+      "resourceCategoryMetaData": {
+        "kind": "component",
+        "targetUid": "components.metadata"
+      },
+      "canonicalTag": {
+        "kind": "other"
+      },
+      "shouldIndex": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::reviewer.reviewer": {
+    "uid": "api::reviewer.reviewer",
+    "kind": "content-type",
+    "pluralApi": "reviewers",
+    "attributes": {
+      "name": {
+        "kind": "other"
+      },
+      "jobTitle": {
+        "kind": "other"
+      },
+      "avatar": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::skin.skin": {
+    "uid": "api::skin.skin",
+    "kind": "content-type",
+    "pluralApi": "skins",
+    "attributes": {
+      "skinId": {
+        "kind": "other"
+      },
+      "label": {
+        "kind": "other"
+      },
+      "appearance": {
+        "kind": "other"
+      },
+      "primary": {
+        "kind": "other"
+      },
+      "neutral": {
+        "kind": "other"
+      },
+      "borders": {
+        "kind": "other"
+      },
+      "brand": {
+        "kind": "other"
+      },
+      "font": {
+        "kind": "other"
+      },
+      "hero": {
+        "kind": "other"
+      },
+      "ambient": {
+        "kind": "other"
+      },
+      "bodyTexture": {
+        "kind": "other"
+      },
+      "slots": {
+        "kind": "other"
+      },
+      "setForEveryone": {
+        "kind": "other"
+      },
+      "sound": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::tag.tag": {
+    "uid": "api::tag.tag",
+    "kind": "content-type",
+    "pluralApi": "tags",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "color": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::update.update": {
+    "uid": "api::update.update",
+    "kind": "content-type",
+    "pluralApi": "updates",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "timelineDate": {
+        "kind": "other"
+      },
+      "content": {
+        "kind": "other"
+      },
+      "updateCategory": {
+        "kind": "relation",
+        "targetUid": "api::update-category.update-category"
+      },
+      "tags": {
+        "kind": "relation",
+        "targetUid": "api::tag.tag"
+      }
+    }
+  },
+  "api::update-category.update-category": {
+    "uid": "api::update-category.update-category",
+    "kind": "content-type",
+    "pluralApi": "update-categories",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "value": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::usecase-category.usecase-category": {
+    "uid": "api::usecase-category.usecase-category",
+    "kind": "content-type",
+    "pluralApi": "usecase-categories",
+    "attributes": {
+      "title": {
+        "kind": "other"
+      },
+      "description": {
+        "kind": "other"
+      },
+      "bannerPoster": {
+        "kind": "other"
+      },
+      "bannerVideo": {
+        "kind": "other"
+      },
+      "clusterPages": {
+        "kind": "relation",
+        "targetUid": "api::cluster-page.cluster-page"
+      }
+    }
+  },
+  "api::video-feed.video-feed": {
+    "uid": "api::video-feed.video-feed",
+    "kind": "content-type",
+    "pluralApi": "video-feeds",
+    "attributes": {
+      "image": {
+        "kind": "other"
+      },
+      "video": {
+        "kind": "other"
+      },
+      "prompt": {
+        "kind": "other"
+      },
+      "settings": {
+        "kind": "other"
+      },
+      "videoHd": {
+        "kind": "other"
+      },
+      "category": {
+        "kind": "relation",
+        "targetUid": "api::video-feed-category.video-feed-category"
+      },
+      "blurhash": {
+        "kind": "other"
+      },
+      "type": {
+        "kind": "other"
+      },
+      "priority": {
+        "kind": "other"
+      },
+      "modelId": {
+        "kind": "other"
+      },
+      "modelIds": {
+        "kind": "other"
+      },
+      "referenceImages": {
+        "kind": "other"
+      }
+    }
+  },
+  "api::video-feed-category.video-feed-category": {
+    "uid": "api::video-feed-category.video-feed-category",
+    "kind": "content-type",
+    "pluralApi": "video-feed-categories",
+    "attributes": {
+      "label": {
+        "kind": "other"
+      },
+      "value": {
+        "kind": "other"
+      },
+      "trigger": {
+        "kind": "other"
+      },
+      "variant": {
+        "kind": "other"
+      },
+      "priority": {
+        "kind": "other"
+      }
+    }
+  }
+}
