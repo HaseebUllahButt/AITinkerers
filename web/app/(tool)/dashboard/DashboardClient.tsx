@@ -4,7 +4,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import type { ProviderStatus } from "@/app/api/status/route";
-import { loadHistory, clearHistory, type AuditRecord } from "@/lib/audit/history";
+import { clearHistory, clearLastResult, loadHistory, loadLastResult, type AuditRecord } from "@/lib/audit/history";
+import type { AuditResult, Severity } from "@/lib/audit/run";
+import { ScoreComparison, Scorecards, ShareByEngine, ShareOfVoiceChart } from "@/components/audit/ResultCharts";
 
 const GROUP_LABEL: Record<ProviderStatus["group"], string> = {
   model: "Reasoning",
@@ -46,12 +48,61 @@ function Panel({ title, subtitle, children, action }: {
   );
 }
 
+const SEVERITY_ORDER: Record<Severity, number> = { critical: 0, warning: 1, ok: 2 };
+const SEVERITY_INK: Record<Severity, string> = {
+  critical: "text-destructive",
+  warning: "text-warning",
+  ok: "text-success",
+};
+
+function FindingsPanel({ result }: { result: AuditResult }) {
+  const findings = [...result.findings].sort(
+    (a, b) => SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity],
+  );
+  return (
+    <Panel title="Findings" subtitle="Ordered by what it costs you. Evidence first, then the fix.">
+      <div className="space-y-3">
+        {findings.map((f) => (
+          <article
+            key={f.id}
+            className="border-l-2 py-2 pl-4"
+            style={{
+              borderLeftColor:
+                f.severity === "ok"
+                  ? "var(--success)"
+                  : f.severity === "warning"
+                    ? "var(--warning)"
+                    : "var(--destructive)",
+            }}
+          >
+            <div className="flex flex-wrap items-baseline gap-2">
+              <span className={`text-[10px] uppercase tracking-[0.2em] ${SEVERITY_INK[f.severity]}`}>
+                {f.severity}
+              </span>
+              <span className="text-sm font-medium">{f.title}</span>
+            </div>
+            <p className="mt-1 text-sm text-muted-foreground">{f.evidence}</p>
+            {f.fix && (
+              <p className="mt-1 text-sm">
+                <span className="text-muted-foreground">Fix — </span>
+                {f.fix}
+              </p>
+            )}
+          </article>
+        ))}
+      </div>
+    </Panel>
+  );
+}
+
 export default function DashboardClient() {
   const [providers, setProviders] = useState<ProviderStatus[] | null>(null);
   const [history, setHistory] = useState<AuditRecord[]>([]);
+  const [result, setResult] = useState<AuditResult | null>(null);
 
   useEffect(() => {
     setHistory(loadHistory());
+    setResult(loadLastResult<AuditResult>());
     fetch("/api/status")
       .then((r) => r.json())
       .then((d) => setProviders(d.providers ?? []))
@@ -63,13 +114,36 @@ export default function DashboardClient() {
 
   return (
     <div className="mx-auto w-full max-w-4xl px-5 py-10">
-      <header>
-        <h1 className="text-3xl font-semibold tracking-tight">Dashboard</h1>
-        <p className="mt-2 max-w-prose text-sm text-muted-foreground">
-          What is answering, and what you have looked at. The audit is its own screen — it is in the
-          sidebar.
-        </p>
+      <header className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 className="text-3xl font-semibold tracking-tight">
+            {result ? result.brand : "Dashboard"}
+          </h1>
+          <p className="mt-2 max-w-prose text-sm text-muted-foreground">
+            {result
+              ? `${result.domain} · audited ${new Date(result.fetchedAt).toLocaleString()} in ${(result.durationMs / 1000).toFixed(0)}s`
+              : "What is answering, and what you have looked at. Run an audit from the landing page or the sidebar."}
+          </p>
+        </div>
+        {result && (
+          <button
+            onClick={() => { clearLastResult(); setResult(null); }}
+            className="text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground"
+          >
+            Dismiss results
+          </button>
+        )}
       </header>
+
+      {result && (
+        <div className="mt-8 space-y-5">
+          <Scorecards result={result} />
+          <ShareOfVoiceChart result={result} />
+          <ShareByEngine result={result} />
+          <ScoreComparison result={result} />
+          <FindingsPanel result={result} />
+        </div>
+      )}
 
       <div className="mt-8 space-y-5">
         <Panel
